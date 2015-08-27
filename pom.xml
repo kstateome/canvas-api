@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>edu.ksu.canvas</groupId>
+  <artifactId>canvas-api</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>canvas-api</name>
+
+  <issueManagement>
+    <url>https://tools.ome.ksu.edu/bugzilla/</url>
+  </issueManagement>
+
+  <scm>
+    <connection>scm:git:ssh://git@github.com/kstateome/canvas-api.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/kstateome/canvas-api.git</developerConnection>
+    <url>https://github.com/kstateome/canvas-api</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <distributionManagement>
+    <repository>
+      <id>ome-appdev-release</id>
+      <url>https://tools.ome.ksu.edu/artifactory/ome-appdev-release</url>
+    </repository>
+    <snapshotRepository>
+      <id>ome-appdev-snapshot</id>
+      <url>https://tools.ome.ksu.edu/artifactory/ome-appdev-snapshot</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.1</version>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>1.2.16</version>
+        <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+</project>
