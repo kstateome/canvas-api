@@ -15,6 +15,7 @@ public class HttpParameterBuilder {
         return parameters.entrySet().stream()
                 .map(HttpParameterBuilder::buildParameter)
                 .reduce((a, b) -> a + b)
+                .filter(s -> s.length() > 0)
                 .map(s -> s.substring(1))
                 .map(paramString -> "?" + paramString)
                 .orElse("");
