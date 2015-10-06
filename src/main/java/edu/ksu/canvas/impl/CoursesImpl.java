@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import edu.ksu.canvas.exception.InvalidOauthTokenException;
+import edu.ksu.canvas.interfaces.CourseManager;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -22,7 +24,7 @@ import edu.ksu.canvas.model.User;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.util.CanvasURLBuilder;
 
-public class CoursesImpl extends BaseImpl implements CourseReader {
+public class CoursesImpl extends BaseImpl implements CourseReader,CourseManager {
     private static final Logger LOG = Logger.getLogger(CourseReader.class);
 
     public CoursesImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken) {
@@ -77,6 +79,20 @@ public class CoursesImpl extends BaseImpl implements CourseReader {
             return Optional.empty();
         }
         return responseParser.parseToObject(Course.class, response);
+    }
+
+    @Override
+    public Course createCourse(String oauthToken, String url) throws InvalidOauthTokenException, IOException {
+        //should add parameters to define the couse
+        Response response = canvasMessenger.sendToCanvas(oauthToken, url, null);
+        return null;
+    }
+
+    @Override
+    public Course deleteCourse(String oauthToken, String url) throws InvalidOauthTokenException, IOException {
+        //url should be appended with 'event' type either 'delet' or 'closure'
+        Response response = canvasMessenger.deleteFromCanvas(oauthToken,url);
+        return null;
     }
 
 //    @Override

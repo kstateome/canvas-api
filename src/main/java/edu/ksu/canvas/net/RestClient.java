@@ -160,4 +160,50 @@ public class RestClient {
         }
         return response;
     }
+
+    public static Response sendApiDelete(String token, String url,
+                                       int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+        LOG.debug("sendApiPost");
+        Response response = new Response();
+
+        Long beginTime = System.currentTimeMillis();
+        URL apiUrl = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) apiUrl.openConnection();
+        con.setConnectTimeout(connectTimeout);
+        con.setReadTimeout(readTimeout);
+        con.setRequestMethod("DELETE");
+        con.setRequestProperty("Authorization", "Bearer" + " " + token);
+
+
+        LOG.debug("Sending API DELETE request to URL: " + url);
+        if (con.getResponseCode() == 401) {
+            throw new InvalidOauthTokenException();
+        }
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(
+                con.getInputStream()));
+        String inputLine;
+        StringBuffer content = new StringBuffer();
+        while ((inputLine = in.readLine()) != null) {
+            content.append(inputLine);
+        }
+        response.setContent(content.toString());
+        Long endTime = System.currentTimeMillis();
+        LOG.debug("Canvas API call took: " + (endTime - beginTime) + "ms");
+
+        //deal with pagination
+        String linkHeader = con.getHeaderField("Link");
+        if (linkHeader == null) {
+            return response;
+        }
+        List<String> links = Arrays.asList(linkHeader.split(","));
+        for (String link : links) {
+            if (link.contains("rel=\"next\"")) {
+                LOG.debug("response has more pages");
+                String nextLink = link.substring(1, link.indexOf(';')); //format is <http://.....>; rel="next"
+                response.setNextLink(nextLink);
+            }
+        }
+        return response;
+    }
 }
