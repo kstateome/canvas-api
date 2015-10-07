@@ -35,4 +35,6 @@ public class GsonResponseParser implements ResponseParser {
         Type mapType = new TypeToken<Map<String,T>>(){}.getType();
         return gson.fromJson(response.getContent(), mapType);
     }
+
+
 }

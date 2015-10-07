@@ -126,6 +126,7 @@ public class RestClient {
         if (postParameters != null) {
             for (Map.Entry<String, String> entry : postParameters.entrySet()) {
                 con.setRequestProperty(entry.getKey(), entry.getValue());
+                LOG.debug("key "+ entry.getKey() +"\t value : "+ entry.getValue());
             }
         }
 
@@ -142,9 +143,9 @@ public class RestClient {
             content.append(inputLine);
         }
         response.setContent(content.toString());
+        response.setResponseCode(con.getResponseCode());
         Long endTime = System.currentTimeMillis();
         LOG.debug("Canvas API call took: " + (endTime - beginTime) + "ms");
-
         //deal with pagination
         String linkHeader = con.getHeaderField("Link");
         if (linkHeader == null) {
@@ -161,7 +162,7 @@ public class RestClient {
         return response;
     }
 
-    public static Response sendApiDelete(String token, String url,
+    public static Response sendApiDelete(String token, String url,Map<String, String> deleteParameters,
                                        int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("sendApiPost");
         Response response = new Response();
@@ -173,8 +174,11 @@ public class RestClient {
         con.setReadTimeout(readTimeout);
         con.setRequestMethod("DELETE");
         con.setRequestProperty("Authorization", "Bearer" + " " + token);
-
-
+        if (deleteParameters != null) {
+            for (Map.Entry<String, String> entry : deleteParameters.entrySet()) {
+                con.setRequestProperty(entry.getKey(), entry.getValue());
+            }
+        }
         LOG.debug("Sending API DELETE request to URL: " + url);
         if (con.getResponseCode() == 401) {
             throw new InvalidOauthTokenException();
@@ -188,6 +192,7 @@ public class RestClient {
             content.append(inputLine);
         }
         response.setContent(content.toString());
+        response.setResponseCode(con.getResponseCode());
         Long endTime = System.currentTimeMillis();
         LOG.debug("Canvas API call took: " + (endTime - beginTime) + "ms");
 
