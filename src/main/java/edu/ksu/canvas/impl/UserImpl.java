@@ -10,9 +10,8 @@ import edu.ksu.canvas.util.CanvasURLBuilder;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.net.URLEncoder;
+import java.util.*;
 
 /**
  * Created by prakashreddy on 10/7/15.
@@ -35,16 +34,16 @@ public class UserImpl  extends BaseImpl implements UserManager{
         //should add parameters to define the course
         //set course name and code
         //should do this is a better way
-        Map<String,String> userMap = new HashMap<String,String>();
+        Map<String,List<String>> userMap = new HashMap<String,List<String>>();
         if(user!=null) {
-            userMap.put("account_id", String.valueOf(user.getId()));
-            userMap.put("name",user.getName());
-            userMap.put("pseudonym[unique_id]",user.getEmail());
+            userMap.put("account_id", Collections.singletonList((URLEncoder.encode(String.valueOf(user.getId()), "utf-8"))));
+            userMap.put("name",Collections.singletonList(user.getName()));
+            userMap.put("pseudonym[unique_id]",Collections.singletonList(user.getEmail()));
            // userMap.put("login_id",user.getLoginId());
         }
-        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "accounts/" + String.valueOf(user.getId()) + "/users", null);
+        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "accounts/" + String.valueOf(user.getId()) + "/users", userMap);
         LOG.debug("create URl for user creation : "+ createdUrl);
-        Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, userMap);
+        Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, null);
         if (response.getErrorHappened() || ( response.getResponseCode() != 200)) {
             LOG.debug("Failed to create user, error message: " + response.toString());
             return null;

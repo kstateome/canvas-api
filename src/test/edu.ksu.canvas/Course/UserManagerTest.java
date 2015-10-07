@@ -41,12 +41,11 @@ public class UserManagerTest {
     public void testCreateUser() throws IOException{
         User user = new User();
         user.setId(1);
-        user.setName("Selenium Test User 1");
-        user.setEmail("selenium_test_user@test.test");
-        user.setLoginId("selenium_test_user_loginId");
+        user.setName("somestring3");
+        user.setEmail("somestring3");
+        user.setLoginId("somestring3");
         Optional<User> response = userImpl.createUser(token,user);
-        Assert.assertEquals(response.get().getName(), "Selenium Test User 1");
-        Assert.assertEquals(response.get().getLoginId(),"selenium_test_user_loginId");
+        Assert.assertEquals("somestring3",response.get().getName());
     }
 
     @Test
