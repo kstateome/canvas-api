@@ -97,7 +97,7 @@ public class CoursesImpl extends BaseImpl implements CourseReader,CourseManager 
         Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, courseMap);
         if (response.getErrorHappened() ||  response.getResponseCode() != 200) {
             LOG.debug("Failed to create course, error message: " + response.toString());
-            return null;
+            return Optional.empty();
         }
         return responseParser.parseToObject(Course.class,response);
     }

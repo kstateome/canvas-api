@@ -14,7 +14,7 @@ public interface UserManager {
     /**
      *
      * @param oauthToken
-     * @param user
+     * @param user  user data for creating user account
      * @return
      * @throws InvalidOauthTokenException
      * @throws IOException
@@ -24,12 +24,13 @@ public interface UserManager {
     /**
      *
      * @param oauthToken
-     * @param user
+     * @param userId  canvas user if for the user
+     * @param account_Id This is set to 1 for canvas , most of the time
      * @return
      * @throws InvalidOauthTokenException
      * @throws IOException
      */
-    public Boolean deleteUser(String oauthToken, User user) throws InvalidOauthTokenException, IOException;
+    public Boolean deleteUser(String oauthToken, Integer userId,String account_Id) throws InvalidOauthTokenException, IOException;
 
     /**
      *
