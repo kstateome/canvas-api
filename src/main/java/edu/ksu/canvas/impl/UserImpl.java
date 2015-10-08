@@ -1,5 +1,6 @@
 package edu.ksu.canvas.impl;
 
+import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.CourseReader;
 import edu.ksu.canvas.interfaces.UserManager;
@@ -35,9 +36,9 @@ public class UserImpl  extends BaseImpl implements UserManager{
         if(user!=null) {
             //userMap.put("account_id", Collections.singletonList((URLEncoder.encode(String.valueOf(user.getId()), "utf-8"))));
             userMap.put("name",Collections.singletonList(user.getName()));
-            userMap.put("pseudonym[unique_id]",Collections.singletonList(user.getLoginId()));
+            userMap.put(URLEncoder.encode("pseudonym[unique_id]","UTF-8"),Collections.singletonList(user.getLoginId()));
         }
-        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "accounts/" + String.valueOf(user.getId()) + "/users", userMap);
+        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "accounts/" +CanvasConstants.ACCOUNT_ID + "/users", userMap);
         LOG.debug("create URl for user creation : "+ createdUrl);
         Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, null);
         if (response.getErrorHappened() || ( response.getResponseCode() != 200)) {
@@ -48,10 +49,8 @@ public class UserImpl  extends BaseImpl implements UserManager{
     }
 
     @Override
-    public Boolean deleteUser(String oauthToken, Integer userId,String accountId) throws InvalidOauthTokenException, IOException {
-        Map<String,List<String>> userMap = new HashMap<String,List<String>>();
-            userMap.put("user_id",Collections.singletonList(String.valueOf(userId)));
-        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "accounts/" +accountId+"/users/"+userId, userMap);
+    public Boolean deleteUser(String oauthToken, Integer userId) throws InvalidOauthTokenException, IOException {
+        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "accounts/" + CanvasConstants.ACCOUNT_ID+"/users/"+userId, null);
         LOG.debug("create URl for user creation : "+ createdUrl);
         Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, null);
         if (response.getErrorHappened() || ( response.getResponseCode() != 200)) {

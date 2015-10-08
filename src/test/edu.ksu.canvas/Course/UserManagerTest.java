@@ -29,32 +29,31 @@ public class UserManagerTest {
     String canvasBaseURL = "https://k-state.test.instructure.com";
     Integer apiVersion = 1;
     String token = "1726~MQ8vuaJUbVosHUcvEcUfdHixQobAkS03AxSKVXvRy79lAcSX2uURHc2IHnDINpP2";
-    String account_id="1";
+    private static final String account_id="1";
     Integer userId ;
     UserImpl userImpl;
 
     @Before
     public void setupData(){
         userImpl = new UserImpl(canvasBaseURL,apiVersion,token);
+        userId=0;
     }
 
     @Test
     public void testCreateUser() throws IOException{
         User user = new User();
-        user.setId(1);
-        user.setName("somestring3");
-        user.setLoginId("somestring3");
+        user.setName("somestring4");
+        user.setLoginId("somestring4");
         Optional<User> response = userImpl.createUser(token,user);
-        userId=user.getId();
-        Assert.assertEquals("somestring3",response.get().getName());
+        userId=response.get().getId();
+        Assert.assertEquals("somestring4",response.get().getName());
+        Assert.assertNotNull(response.get().getId());
 
     }
 
     @Test
     public void testDeleteUser() throws IOException{
-        User user = new User();
-        user.setName("Selenium Test User 1");
-        Assert.assertTrue(userImpl.deleteUser(token,userId,account_id));
+        Assert.assertTrue(userImpl.deleteUser(token,userId));
     }
 }
 

@@ -45,7 +45,6 @@ public class CourseManagerTest{
     public void testCourseCreation() throws IOException{
         //setup course
         Course newCourse = new Course();
-        newCourse.setAccountId(1);
         newCourse.setCourseCode("SeleniumTestCourseCode");
         newCourse.setName("SeleniumTestCourse");
         //newCourse.setName("TestCourseCreation");

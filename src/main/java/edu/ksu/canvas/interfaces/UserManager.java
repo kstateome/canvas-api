@@ -25,12 +25,11 @@ public interface UserManager {
      *
      * @param oauthToken
      * @param userId  canvas user if for the user
-     * @param account_Id This is set to 1 for canvas , most of the time
      * @return
      * @throws InvalidOauthTokenException
      * @throws IOException
      */
-    public Boolean deleteUser(String oauthToken, Integer userId,String account_Id) throws InvalidOauthTokenException, IOException;
+    public Boolean deleteUser(String oauthToken, Integer userId) throws InvalidOauthTokenException, IOException;
 
     /**
      *
