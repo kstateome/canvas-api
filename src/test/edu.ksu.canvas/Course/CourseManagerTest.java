@@ -50,17 +50,11 @@ public class CourseManagerTest{
         //newCourse.setName("TestCourseCreation");
         Optional<Course> response = coursesImpl.createCourse(token,newCourse);
         Assert.assertNotNull(response.get().getName());
-        Assert.assertEquals(response.get().getCourseCode(),"SeleniumTestCourseCode");
+        Assert.assertEquals("SeleniumTestCourseCode",response.get().getCourseCode());
     }
 
-    /*@Test
+    @Test
     public void testCourseDeletion() throws IOException{
-        //setup course
-        Course newCourse = new Course();
-        newCourse.setAccountId(1);
-        newCourse.setCourseCode("SeleniumTestCourseCode");
-        newCourse.setName("SeleniumTestCourse");
-        //newCourse.setName("TestCourseCreation");
-        Assert.assertTrue(coursesImpl.deleteCourse(token, newCourse));
-    }*/
+        Assert.assertTrue(coursesImpl.deleteCourse(token, "20732"));
+    }
 }

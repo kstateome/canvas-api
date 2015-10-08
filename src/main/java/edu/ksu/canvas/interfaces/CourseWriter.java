@@ -23,5 +23,5 @@ public interface CourseWriter {
      * @throws InvalidOauthTokenException
      * @throws IOException
      */
-    public Boolean deleteCourse(String oauthToken, Course course) throws InvalidOauthTokenException, IOException;
+    public Boolean deleteCourse(String oauthToken, String course) throws InvalidOauthTokenException, IOException;
 }

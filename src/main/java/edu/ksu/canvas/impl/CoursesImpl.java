@@ -1,6 +1,7 @@
 package edu.ksu.canvas.impl;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -81,18 +82,15 @@ public class CoursesImpl extends BaseImpl implements CourseReader,CourseWriter {
 
     @Override
     public Optional<Course> createCourse(String oauthToken, Course course) throws InvalidOauthTokenException, IOException {
-        //should add parameters to define the course
-        //set course name and code
-        //should do this is a better way
-        Map<String,String> courseMap = new HashMap<String,String>();
+        //TODO to parse object to map<String,List<String>>
+        Map<String,List<String>> courseMap = new HashMap<String,List<String>>();
         if(course!=null) {
-            courseMap.put("course_code", course.getCourseCode());
-            courseMap.put("name", course.getName());
+            courseMap.put(URLEncoder.encode("course[course_code]", "UTF-8"), Collections.singletonList(course.getCourseCode()));
+            courseMap.put(URLEncoder.encode("course[name]","UTF-8"), Collections.singletonList(course.getName()));
         }
-
-        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "accounts/" + CanvasConstants.ACCOUNT_ID + "/courses", null);
+        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "accounts/" + CanvasConstants.ACCOUNT_ID + "/courses", courseMap);
         LOG.debug("create URl for course creation : "+ createdUrl);
-        Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, courseMap);
+        Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, null);
         if (response.getErrorHappened() ||  response.getResponseCode() != 200) {
             LOG.debug("Failed to create course, error message: " + response.toString());
             return Optional.empty();
@@ -101,16 +99,11 @@ public class CoursesImpl extends BaseImpl implements CourseReader,CourseWriter {
     }
 
     @Override
-    public Boolean deleteCourse(String oauthToken, Course course) throws InvalidOauthTokenException, IOException {
-        //url should be appended with 'event' type either 'delet' or 'closure'
-        //append delete data if required
-        Map<String,String> courseMap = new HashMap<String,String>();
-        if(course!=null) {
-            courseMap.put("course_code", course.getCourseCode());
-            courseMap.put("name", course.getName());
-        }
-        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "courses/"+CanvasConstants.ACCOUNT_ID+"?event=delete",null);
-        Response response = canvasMessenger.deleteFromCanvas(oauthToken, createdUrl, courseMap);
+    public Boolean deleteCourse(String oauthToken, String courseId) throws InvalidOauthTokenException, IOException {
+        Map<String,List<String>> courseMap = new HashMap<String,List<String>>();
+        courseMap.put("event",Collections.singletonList("delete"));
+        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "courses/"+courseId,courseMap);
+        Response response = canvasMessenger.deleteFromCanvas(oauthToken, createdUrl, null);
         LOG.debug("response "+ response.toString());
         if (response.getErrorHappened() || response.getResponseCode() != 200) {
             LOG.debug("Failed to delete course, error message: " + response.toString());
