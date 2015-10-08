@@ -5,9 +5,11 @@ import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.CourseReader;
 import edu.ksu.canvas.interfaces.UserManager;
 import edu.ksu.canvas.model.Course;
+import edu.ksu.canvas.model.Enrollment;
 import edu.ksu.canvas.model.User;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.util.CanvasURLBuilder;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -76,5 +78,20 @@ public class UserImpl  extends BaseImpl implements UserManager{
             return Optional.empty();
         }
         return responseParser.parseToObject(User.class,response);
+    }
+
+    @Override
+    public List<Enrollment> getUserEnrollments(String oauthToken, Integer user_Id) throws InvalidOauthTokenException, IOException {
+        List<Enrollment> enrollments = new ArrayList<Enrollment>();
+        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "users/" + user_Id+ "/enrollments", null);
+        LOG.debug("create URl for get enrollments for user : "+ createdUrl);
+        Response response = canvasMessenger.getFromCanvas(oauthToken, createdUrl);
+        if (response.getErrorHappened() || ( response.getResponseCode() != 200)) {
+            LOG.debug("Failed to get enrollments, error message: " + response.toString());
+            return Collections.emptyList();
+        }
+        enrollments.addAll(responseParser.parseToList(Enrollment.class,response));
+        createdUrl=response.getNextLink();
+        return enrollments;
     }
 }

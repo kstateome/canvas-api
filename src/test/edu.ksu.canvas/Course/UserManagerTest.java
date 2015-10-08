@@ -29,7 +29,6 @@ public class UserManagerTest {
     String canvasBaseURL = "https://k-state.test.instructure.com";
     Integer apiVersion = 1;
     String token = "1726~MQ8vuaJUbVosHUcvEcUfdHixQobAkS03AxSKVXvRy79lAcSX2uURHc2IHnDINpP2";
-    private static final String account_id="1";
     Integer userId ;
     UserImpl userImpl;
 
@@ -46,6 +45,7 @@ public class UserManagerTest {
         user.setLoginId("somestring4");
         Optional<User> response = userImpl.createUser(token,user);
         userId=response.get().getId();
+        System.out.println(response.toString());
         Assert.assertEquals("somestring4",response.get().getName());
         Assert.assertNotNull(response.get().getId());
 

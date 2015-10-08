@@ -1,0 +1,33 @@
+{
+  "associated_user_id": null,
+  "course_id": 25,
+  "course_section_id": 36,
+  "created_at": "2015-10-08T16:50:38Z",
+  "end_at": null,
+  "id": 355047,
+  "limit_privileges_to_course_section": false,
+  "root_account_id": 1,
+  "start_at": null,
+  "type": "StudentEnrollment",
+  "updated_at": "2015-10-08T16:50:38Z",
+  "user_id": 78839,
+  "enrollment_state": "invited",
+  "role": "StudentEnrollment",
+  "role_id": 80,
+  "last_activity_at": null,
+  "total_activity_time": 0,
+  "sis_import_id": null,
+  "grades": {
+    "html_url": "https://k-state.test.instructure.com/courses/25/grades/78839",
+    "current_score": null,
+    "final_score": null,
+    "current_grade": null,
+    "final_grade": null
+  },
+  "sis_source_id": null,
+  "sis_course_id": "12345",
+  "course_integration_id": null,
+  "sis_section_id": null,
+  "section_integration_id": null,
+  "html_url": "https://k-state.test.instructure.com/courses/25/users/78839"
+}

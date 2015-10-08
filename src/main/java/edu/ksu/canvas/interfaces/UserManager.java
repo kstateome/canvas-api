@@ -2,9 +2,11 @@ package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.model.Course;
+import edu.ksu.canvas.model.Enrollment;
 import edu.ksu.canvas.model.User;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -40,5 +42,15 @@ public interface UserManager {
      * @throws IOException
      */
     public Optional<User> updateUser(String oauthToken, User user) throws InvalidOauthTokenException, IOException;
+
+    /**
+     *
+     * @param oauthToken
+     * @param user_Id
+     * @return
+     * @throws InvalidOauthTokenException
+     * @throws IOException
+     */
+    public List<Enrollment> getUserEnrollments(String oauthToken, Integer user_Id) throws InvalidOauthTokenException, IOException;
 
 }

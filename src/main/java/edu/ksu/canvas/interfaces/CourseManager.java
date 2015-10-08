@@ -2,6 +2,7 @@ package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.model.Course;
+import edu.ksu.canvas.model.Enrollment;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -29,4 +30,8 @@ public interface CourseManager {
      * @throws IOException
      */
     public Boolean deleteCourse(String oauthToken, Course course) throws InvalidOauthTokenException, IOException;
+
+    public Optional<Enrollment> enrollUser(String oauthToken, Integer course_Id, Integer userId) throws InvalidOauthTokenException, IOException;
+
+    public Optional<Enrollment> dropUser(String oauthToken, Integer course_id, Long enrollment_id) throws InvalidOauthTokenException, IOException;
 }
