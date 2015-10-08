@@ -2,6 +2,7 @@ package Course;
 
 import config.BaseTestConfig;
 import config.CourseTestConfig;
+import edu.ksu.canvas.impl.AccountImpl;
 import edu.ksu.canvas.impl.UserImpl;
 import edu.ksu.canvas.model.Course;
 import edu.ksu.canvas.model.User;
@@ -31,15 +32,18 @@ public class UserManagerTest {
     String token = "1726~MQ8vuaJUbVosHUcvEcUfdHixQobAkS03AxSKVXvRy79lAcSX2uURHc2IHnDINpP2";
     Integer userId ;
     UserImpl userImpl;
+    AccountImpl accountImpl;
 
     @Before
     public void setupData(){
         userImpl = new UserImpl(canvasBaseURL,apiVersion,token);
-        userId=0;
+        accountImpl = new AccountImpl(canvasBaseURL,apiVersion,token);
+
     }
 
     @Test
     public void testCreateUser() throws IOException{
+
         User user = new User();
         user.setName("somestring4");
         user.setLoginId("somestring4");
@@ -53,7 +57,7 @@ public class UserManagerTest {
 
     @Test
     public void testDeleteUser() throws IOException{
-        Assert.assertTrue(userImpl.deleteUser(token,userId));
+        //Assert.assertTrue(accountImpl.deleteUser(token, 78839));
     }
 }
 

@@ -1,16 +1,13 @@
 package edu.ksu.canvas.impl;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import edu.ksu.canvas.constants.CanvasConstants;
-import edu.ksu.canvas.entity.lti.OauthToken;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
-import edu.ksu.canvas.interfaces.CourseManager;
+import edu.ksu.canvas.interfaces.CourseWriter;
 import edu.ksu.canvas.model.Delete;
-import edu.ksu.canvas.model.Enrollment;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -22,11 +19,10 @@ import edu.ksu.canvas.enums.EnrollmentType;
 import edu.ksu.canvas.enums.CourseState;
 import edu.ksu.canvas.interfaces.CourseReader;
 import edu.ksu.canvas.model.Course;
-import edu.ksu.canvas.model.User;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.util.CanvasURLBuilder;
 
-public class CoursesImpl extends BaseImpl implements CourseReader,CourseManager {
+public class CoursesImpl extends BaseImpl implements CourseReader,CourseWriter {
     private static final Logger LOG = Logger.getLogger(CourseReader.class);
 
     public CoursesImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken) {
@@ -126,33 +122,7 @@ public class CoursesImpl extends BaseImpl implements CourseReader,CourseManager 
 
 
 
-    @Override
-    public Optional<Enrollment> enrollUser(String oauthToken, Integer course_Id, Integer userId) throws InvalidOauthTokenException, IOException {
-        Map<String,List<String>> courseMap = new HashMap<String,List<String>>();
-        courseMap.put(URLEncoder.encode("enrollment[user_id]","UTF-8"), Collections.singletonList(String.valueOf(userId)));
-        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "courses/" + course_Id + "/enrollments", courseMap);
-        LOG.debug("create URl for course enrollments: "+ createdUrl);
-        Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, null);
-        if (response.getErrorHappened() ||  response.getResponseCode() != 200) {
-            LOG.debug("Failed to enroll in course, error message: " + response.toString());
-            return Optional.empty();
-        }
-        return responseParser.parseToObject(Enrollment.class,response);
-    }
 
-    @Override
-    public Optional<Enrollment> dropUser(String oauthToken, Integer course_id, Long enrollment_id) throws InvalidOauthTokenException, IOException {
-        Map<String,List<String>> courseMap = new HashMap<String,List<String>>();
-        courseMap.put(URLEncoder.encode("task","UTF-8"),Collections.singletonList(URLEncoder.encode("delete","UTF-8")));
-        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "courses/" + course_id+ "/enrollments/"+enrollment_id, courseMap);
-        LOG.debug("create URl for course enrollments: "+ createdUrl);
-        Response response = canvasMessenger.deleteFromCanvas(oauthToken, createdUrl, null);
-        if (response.getErrorHappened() ||  response.getResponseCode() != 200) {
-            LOG.debug("Failed to enroll in course, error message: " + response.toString());
-            return Optional.empty();
-        }
-        return responseParser.parseToObject(Enrollment.class,response);
-    }
 
 
 //    @Override

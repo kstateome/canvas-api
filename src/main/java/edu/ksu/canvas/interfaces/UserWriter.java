@@ -1,18 +1,15 @@
 package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
-import edu.ksu.canvas.model.Course;
-import edu.ksu.canvas.model.Enrollment;
 import edu.ksu.canvas.model.User;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 
 /**
- * Created by prakashreddy on 10/7/15.
+ * Created by prv on 10/8/15.
  */
-public interface UserManager {
+public interface UserWriter {
     /**
      *
      * @param oauthToken
@@ -23,15 +20,7 @@ public interface UserManager {
      */
     public Optional<User> createUser (String oauthToken,User user) throws InvalidOauthTokenException, IOException;
 
-    /**
-     *
-     * @param oauthToken
-     * @param userId  canvas user if for the user
-     * @return
-     * @throws InvalidOauthTokenException
-     * @throws IOException
-     */
-    public Boolean deleteUser(String oauthToken, Integer userId) throws InvalidOauthTokenException, IOException;
+
 
     /**
      *
@@ -42,15 +31,4 @@ public interface UserManager {
      * @throws IOException
      */
     public Optional<User> updateUser(String oauthToken, User user) throws InvalidOauthTokenException, IOException;
-
-    /**
-     *
-     * @param oauthToken
-     * @param user_Id
-     * @return
-     * @throws InvalidOauthTokenException
-     * @throws IOException
-     */
-    public List<Enrollment> getUserEnrollments(String oauthToken, Integer user_Id) throws InvalidOauthTokenException, IOException;
-
 }
