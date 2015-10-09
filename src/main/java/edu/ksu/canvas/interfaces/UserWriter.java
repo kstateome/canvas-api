@@ -18,7 +18,7 @@ public interface UserWriter {
      * @throws InvalidOauthTokenException
      * @throws IOException
      */
-    public Optional<User> createUser (String oauthToken,User user) throws InvalidOauthTokenException, IOException;
+     Optional<User> createUser (String oauthToken,User user) throws InvalidOauthTokenException, IOException;
 
 
 
@@ -30,5 +30,5 @@ public interface UserWriter {
      * @throws InvalidOauthTokenException
      * @throws IOException
      */
-    public Optional<User> updateUser(String oauthToken, User user) throws InvalidOauthTokenException, IOException;
+     Optional<User> updateUser(String oauthToken, User user) throws InvalidOauthTokenException, IOException;
 }

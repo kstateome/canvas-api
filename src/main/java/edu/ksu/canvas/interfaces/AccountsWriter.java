@@ -16,5 +16,5 @@ public interface AccountsWriter {
      * @throws InvalidOauthTokenException
      * @throws IOException
      */
-    public Boolean deleteUser(String oauthToken, Integer userId) throws InvalidOauthTokenException, IOException;
+     Boolean deleteUser(String oauthToken, Integer userId) throws InvalidOauthTokenException, IOException;
 }

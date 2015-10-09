@@ -18,6 +18,6 @@ public interface EnrollmentsReader {
      * @throws InvalidOauthTokenException
      * @throws IOException
      */
-    public List<Enrollment> getUserEnrollments(String oauthToken, Integer user_Id) throws InvalidOauthTokenException, IOException;
+     List<Enrollment> getUserEnrollments(String oauthToken, Integer user_Id) throws InvalidOauthTokenException, IOException;
 
 }

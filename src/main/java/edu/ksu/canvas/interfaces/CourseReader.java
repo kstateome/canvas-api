@@ -24,7 +24,7 @@ public interface CourseReader {
      * @return List of courses for the user matching any optional criteria
      * @throws IOException
      */
-    public List<Course> listCourses(Optional<EnrollmentType> enrollmentType, Optional<Integer> enrollmentRoleId, List<CourseIncludes> includes, List<CourseState> states) throws IOException;
+     List<Course> listCourses(Optional<EnrollmentType> enrollmentType, Optional<Integer> enrollmentRoleId, List<CourseIncludes> includes, List<CourseState> states) throws IOException;
 
     /**
      * Retrieve a specific course from Canvas by its Canvas ID number
@@ -33,7 +33,7 @@ public interface CourseReader {
      * @return The course returned by Canvas or an empty Optional
      * @throws IOException
      */
-    public Optional<Course> getSingleCourse(String courseId, List<CourseIncludes> includes) throws IOException;
+     Optional<Course> getSingleCourse(String courseId, List<CourseIncludes> includes) throws IOException;
 
     //public List<User> getUsersInCourse(Integer courseId, String searchTerm, EnrollmentType enrollmentType, Integer enrollmentRoleId, List<CourseIncludes> includes, ) throws IOException;
 
