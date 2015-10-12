@@ -9,6 +9,7 @@ import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.CourseWriter;
 import edu.ksu.canvas.model.Delete;
+import edu.ksu.canvas.net.RestClient;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -26,8 +27,8 @@ import edu.ksu.canvas.util.CanvasURLBuilder;
 public class CoursesImpl extends BaseImpl implements CourseReader,CourseWriter {
     private static final Logger LOG = Logger.getLogger(CourseReader.class);
 
-    public CoursesImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken) {
-        super(canvasBaseUrl, apiVersion, oauthToken);
+    public CoursesImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient);
     }
 
     @Override

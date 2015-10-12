@@ -5,10 +5,12 @@ import edu.ksu.canvas.impl.CoursesImpl;
 import edu.ksu.canvas.impl.EnrollmentsImpl;
 import edu.ksu.canvas.impl.UserImpl;
 import edu.ksu.canvas.model.Enrollment;
+import edu.ksu.canvas.net.FakeRestClient;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -26,17 +28,19 @@ import java.util.Optional;
 @ContextConfiguration(classes = {BaseTestConfig.class})
 @WebAppConfiguration
 public class DropCourseUTest {
-    String canvasBaseURL = "https://k-state.test.instructure.com";
-    Integer apiVersion = 1;
-    String token = "1726~MQ8vuaJUbVosHUcvEcUfdHixQobAkS03AxSKVXvRy79lAcSX2uURHc2IHnDINpP2";
-    CoursesImpl coursesImpl;
-    UserImpl userImpl;
-    EnrollmentsImpl enrollmentsImpl;
+    @Autowired
+    private FakeRestClient fakeRestClient;
+    private String canvasBaseURL = "https://k-state.test.instructure.com";
+    private Integer apiVersion = 1;
+    private String token = "1726~MQ8vuaJUbVosHUcvEcUfdHixQobAkS03AxSKVXvRy79lAcSX2uURHc2IHnDINpP2";
+    private CoursesImpl coursesImpl;
+    private UserImpl userImpl;
+    private EnrollmentsImpl enrollmentsImpl;
     @Before
     public void setup(){
-        coursesImpl = new CoursesImpl(canvasBaseURL,apiVersion,token);
-        userImpl = new UserImpl(canvasBaseURL,apiVersion,token);
-        enrollmentsImpl = new EnrollmentsImpl(canvasBaseURL,apiVersion,token);
+        coursesImpl = new CoursesImpl(canvasBaseURL,apiVersion, token, fakeRestClient);
+        userImpl = new UserImpl(canvasBaseURL, apiVersion, token, fakeRestClient);
+        enrollmentsImpl = new EnrollmentsImpl(canvasBaseURL, apiVersion, token, fakeRestClient);
     }
 
     @Test

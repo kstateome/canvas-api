@@ -6,6 +6,7 @@ import edu.ksu.canvas.interfaces.AccountsReader;
 import edu.ksu.canvas.interfaces.AccountsWriter;
 import edu.ksu.canvas.interfaces.CourseReader;
 import edu.ksu.canvas.net.Response;
+import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.util.CanvasURLBuilder;
 import org.apache.log4j.Logger;
 
@@ -23,8 +24,8 @@ public class AccountImpl extends  BaseImpl implements AccountsReader,AccountsWri
      * @param apiVersion    The version of the Canvas API (currently 1)
      * @param oauthToken    OAuth token to use when executing API calls
      */
-    public AccountImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken) {
-        super(canvasBaseUrl, apiVersion, oauthToken);
+    public AccountImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient);
     }
 
     @Override

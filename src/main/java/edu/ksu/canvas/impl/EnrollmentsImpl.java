@@ -1,12 +1,12 @@
 package edu.ksu.canvas.impl;
 
-import com.fasterxml.jackson.databind.deser.Deserializers;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.CourseReader;
 import edu.ksu.canvas.interfaces.EnrollmentsReader;
 import edu.ksu.canvas.interfaces.EnrollmentsWriter;
 import edu.ksu.canvas.model.Enrollment;
 import edu.ksu.canvas.net.Response;
+import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.util.CanvasURLBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -26,9 +26,10 @@ public class EnrollmentsImpl extends BaseImpl implements EnrollmentsReader,Enrol
      * @param canvasBaseUrl The base URL of your canvas instance
      * @param apiVersion    The version of the Canvas API (currently 1)
      * @param oauthToken    OAuth token to use when executing API calls
+     * @param restClient    The rest client implementation to use
      */
-    public EnrollmentsImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken) {
-        super(canvasBaseUrl, apiVersion, oauthToken);
+    public EnrollmentsImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient);
     }
 
     @Override

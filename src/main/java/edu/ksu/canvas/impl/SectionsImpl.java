@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import edu.ksu.canvas.net.RestClient;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -26,8 +27,8 @@ public class SectionsImpl extends BaseImpl implements SectionReader {
 
     private static final Logger LOG = Logger.getLogger(SectionReader.class);
 
-    public SectionsImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken) {
-        super(canvasBaseUrl, apiVersion, oauthToken);
+    public SectionsImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient);
     }
 
     @Override

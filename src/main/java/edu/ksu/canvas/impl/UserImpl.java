@@ -7,6 +7,7 @@ import edu.ksu.canvas.interfaces.UserReader;
 import edu.ksu.canvas.interfaces.UserWriter;
 import edu.ksu.canvas.model.User;
 import edu.ksu.canvas.net.Response;
+import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.util.CanvasURLBuilder;
 import org.apache.log4j.Logger;
 
@@ -25,9 +26,10 @@ public class UserImpl  extends BaseImpl implements UserReader,UserWriter{
      * @param canvasBaseUrl The base URL of your canvas instance
      * @param apiVersion    The version of the Canvas API (currently 1)
      * @param oauthToken    OAuth token to use when executing API calls
+     * @param restClient    The rest client implementation to use
      */
-    public UserImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken) {
-        super(canvasBaseUrl, apiVersion, oauthToken);
+    public UserImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient);
     }
 
     @Override
