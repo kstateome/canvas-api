@@ -2,6 +2,7 @@ package edu.ksu.canvas.course;
 
 import edu.ksu.canvas.config.CourseTestConfig;
 import edu.ksu.canvas.impl.CoursesImpl;
+import edu.ksu.canvas.interfaces.CourseWriter;
 import edu.ksu.canvas.model.Course;
 import edu.ksu.canvas.net.FakeRestClient;
 import org.junit.Assert;
@@ -27,27 +28,25 @@ public class CourseManagerUTest {
     private String canvasBaseURL = "https://k-state.test.instructure.com";
     private Integer apiVersion = 1;
     private String token = "1726~MQ8vuaJUbVosHUcvEcUfdHixQobAkS03AxSKVXvRy79lAcSX2uURHc2IHnDINpP2";
-    private CoursesImpl coursesImpl;
+    private CourseWriter courseWriter;
 
     @Before
     public void setupData() {
-        coursesImpl = new CoursesImpl(canvasBaseURL,apiVersion,null, fakeRestClient);
+        courseWriter = new CoursesImpl(canvasBaseURL,apiVersion,null, fakeRestClient);
     }
 
     @Test
     public void testCourseCreation() throws IOException {
-        //setup course
         Course newCourse = new Course();
         newCourse.setCourseCode("SeleniumTestCourseCode");
         newCourse.setName("SeleniumTestCourse");
-        //newCourse.setName("TestCourseCreation");
-        Optional<Course> response = coursesImpl.createCourse(token,newCourse);
+        Optional<Course> response = courseWriter.createCourse(token,newCourse);
         Assert.assertNotNull(response.get().getName());
         Assert.assertEquals("SeleniumTestCourseCode",response.get().getCourseCode());
     }
 
     @Test
     public void testCourseDeletion() throws IOException {
-        Assert.assertTrue(coursesImpl.deleteCourse(token, "20732"));
+        Assert.assertTrue(courseWriter.deleteCourse(token, "20732"));
     }
 }

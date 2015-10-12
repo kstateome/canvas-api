@@ -1,8 +1,8 @@
 package edu.ksu.canvas.course;
 
 import edu.ksu.canvas.config.BaseTestConfig;
-import edu.ksu.canvas.impl.AccountImpl;
 import edu.ksu.canvas.impl.UserImpl;
+import edu.ksu.canvas.interfaces.UserWriter;
 import edu.ksu.canvas.model.User;
 import edu.ksu.canvas.net.FakeRestClient;
 import org.junit.Assert;
@@ -28,14 +28,11 @@ public class UserManagerUTest {
     private String canvasBaseURL = "https://k-state.test.instructure.com";
     private Integer apiVersion = 1;
     private String token = "1726~MQ8vuaJUbVosHUcvEcUfdHixQobAkS03AxSKVXvRy79lAcSX2uURHc2IHnDINpP2";
-    private Integer userId ;
-    private UserImpl userImpl;
-    private AccountImpl accountImpl;
+    private UserWriter userWriter;
 
     @Before
     public void setupData() {
-        userImpl = new UserImpl(canvasBaseURL, apiVersion, token, fakeRestClient);
-        accountImpl = new AccountImpl(canvasBaseURL, apiVersion, token, fakeRestClient);
+        userWriter = new UserImpl(canvasBaseURL, apiVersion, token, fakeRestClient);
     }
 
     @Test
@@ -43,8 +40,7 @@ public class UserManagerUTest {
         User user = new User();
         user.setName("somestring4");
         user.setLoginId("somestring4");
-        Optional<User> response = userImpl.createUser(token,user);
-        userId=response.get().getId();
+        Optional<User> response = userWriter.createUser(token,user);
         System.out.println(response.toString());
         Assert.assertEquals("somestring4",response.get().getName());
         Assert.assertNotNull(response.get().getId());
