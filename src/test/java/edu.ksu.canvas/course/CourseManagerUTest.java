@@ -17,9 +17,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import java.io.IOException;
 import java.util.Optional;
 
-/**
- * Created by prakashreddy on 10/7/15.
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("dev")
 @ContextConfiguration(classes = {CourseTestConfig.class})

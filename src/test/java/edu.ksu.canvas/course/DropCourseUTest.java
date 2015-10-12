@@ -20,9 +20,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Created by prv on 10/8/15.
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("dev")
 @ContextConfiguration(classes = {BaseTestConfig.class})
