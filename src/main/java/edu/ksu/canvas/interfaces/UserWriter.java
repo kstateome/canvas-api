@@ -6,9 +6,6 @@ import edu.ksu.canvas.model.User;
 import java.io.IOException;
 import java.util.Optional;
 
-/**
- * Created by prv on 10/8/15.
- */
 public interface UserWriter {
     /**
      *

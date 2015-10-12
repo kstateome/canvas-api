@@ -14,7 +14,7 @@ public interface CourseWriter {
      * @throws InvalidOauthTokenException
      * @throws IOException
      */
-     Optional<Course> createCourse (String oauthToken,Course course) throws InvalidOauthTokenException, IOException;
+     Optional<Course> createCourse(String oauthToken,Course course) throws InvalidOauthTokenException, IOException;
 
     /**
      *

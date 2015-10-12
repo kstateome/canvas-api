@@ -4,9 +4,6 @@ import edu.ksu.canvas.exception.InvalidOauthTokenException;
 
 import java.io.IOException;
 
-/**
- * Created by prv on 10/8/15.
- */
 public interface AccountsWriter {
     /**
      *
