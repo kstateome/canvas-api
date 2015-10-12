@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -21,7 +20,6 @@ import java.util.Optional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("dev")
 @ContextConfiguration(classes = {CourseTestConfig.class})
-@WebAppConfiguration
 public class CourseManagerUTest {
     @Autowired
     private FakeRestClient fakeRestClient;
