@@ -84,14 +84,12 @@ public class CoursesImpl extends BaseImpl implements CourseReader,CourseWriter {
     @Override
     public Optional<Course> createCourse(String oauthToken, Course course) throws InvalidOauthTokenException, IOException {
         //TODO to parse object to map<String,List<String>>
-        Map<String,List<String>> courseMap = new HashMap<String,List<String>>();
-        if(course!=null) {
-            courseMap.put(URLEncoder.encode("course[course_code]", "UTF-8"), Collections.singletonList(course.getCourseCode()));
-            courseMap.put(URLEncoder.encode("course[name]","UTF-8"), Collections.singletonList(course.getName()));
-        }
-        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "accounts/" + CanvasConstants.ACCOUNT_ID + "/courses", courseMap);
+        Map<String,String> postParams = new HashMap<>();
+        postParams.put("course[course_code]", course.getCourseCode());
+        postParams.put("course[name]", course.getName());
+        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "accounts/" + CanvasConstants.ACCOUNT_ID + "/courses", Collections.emptyMap());
         LOG.debug("create URl for course creation : "+ createdUrl);
-        Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, null);
+        Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, postParams);
         if (response.getErrorHappened() ||  response.getResponseCode() != 200) {
             LOG.debug("Failed to create course, error message: " + response.toString());
             return Optional.empty();
@@ -101,10 +99,10 @@ public class CoursesImpl extends BaseImpl implements CourseReader,CourseWriter {
 
     @Override
     public Boolean deleteCourse(String oauthToken, String courseId) throws InvalidOauthTokenException, IOException {
-        Map<String,List<String>> courseMap = new HashMap<String,List<String>>();
-        courseMap.put("event",Collections.singletonList("delete"));
-        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "courses/"+courseId,courseMap);
-        Response response = canvasMessenger.deleteFromCanvas(oauthToken, createdUrl, null);
+        Map<String,String> postParams = new HashMap<>();
+        postParams.put("event", "delete");
+        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "courses/" + courseId, Collections.emptyMap());
+        Response response = canvasMessenger.deleteFromCanvas(oauthToken, createdUrl, postParams);
         LOG.debug("response "+ response.toString());
         if (response.getErrorHappened() || response.getResponseCode() != 200) {
             LOG.debug("Failed to delete course, error message: " + response.toString());
@@ -113,17 +111,4 @@ public class CoursesImpl extends BaseImpl implements CourseReader,CourseWriter {
         Optional<Delete> responseParsed = responseParser.parseToObject(Delete.class,response);
         return responseParsed.get().getDelete();
     }
-
-
-
-
-
-
-//    @Override
-//    public List<User> getUsersInCourse(Integer courseId) throws IOException {
-//        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "courses/" + courseId + "/users", Collections.emptyMap());
-//        Response response = canvasMessenger.getFromCanvas(oauthToken, url);
-//        return responseParser.parseToList(User.class, response);
-//    }
-
 }
