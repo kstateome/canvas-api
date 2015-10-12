@@ -10,9 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FakeRestClient implements RestClient {
-    private static final Logger LOG = Logger.getLogger(FakeRestClient.class);
     public static int NO_TIMEOUT = 1000;
-    public static int TIMEOUT = 2000;
     private Map<String, Response> responseMap = new HashMap<>();
 
     @Override
