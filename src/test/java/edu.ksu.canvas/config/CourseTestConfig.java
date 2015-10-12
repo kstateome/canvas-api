@@ -1,4 +1,4 @@
-package config;
+package edu.ksu.canvas.config;
 
 import edu.ksu.canvas.repository.OauthTokenRepository;
 import org.mockito.Mockito;

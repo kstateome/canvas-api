@@ -1,22 +1,16 @@
-package Course;
+package edu.ksu.canvas.course;
 
-import config.CourseTestConfig;
-import edu.ksu.canvas.entity.lti.OauthToken;
+import edu.ksu.canvas.config.CourseTestConfig;
 import edu.ksu.canvas.impl.CoursesImpl;
 import edu.ksu.canvas.model.Course;
-import edu.ksu.canvas.repository.OauthTokenRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.stereotype.Service;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.yaml.snakeyaml.tokens.Token;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -28,7 +22,7 @@ import java.util.Optional;
 @ActiveProfiles("dev")
 @ContextConfiguration(classes = {CourseTestConfig.class})
 @WebAppConfiguration
-public class CourseManagerTest{
+public class CourseManagerUTest {
 
 
     String canvasBaseURL = "https://k-state.test.instructure.com";

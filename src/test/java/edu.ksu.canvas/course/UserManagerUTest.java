@@ -1,10 +1,8 @@
-package Course;
+package edu.ksu.canvas.course;
 
-import config.BaseTestConfig;
-import config.CourseTestConfig;
+import edu.ksu.canvas.config.BaseTestConfig;
 import edu.ksu.canvas.impl.AccountImpl;
 import edu.ksu.canvas.impl.UserImpl;
-import edu.ksu.canvas.model.Course;
 import edu.ksu.canvas.model.User;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,7 +12,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import scala.runtime.TraitSetter;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -26,7 +23,7 @@ import java.util.Optional;
 @ActiveProfiles("dev")
 @ContextConfiguration(classes = {BaseTestConfig.class})
 @WebAppConfiguration
-public class UserManagerTest {
+public class UserManagerUTest {
     String canvasBaseURL = "https://k-state.test.instructure.com";
     Integer apiVersion = 1;
     String token = "1726~MQ8vuaJUbVosHUcvEcUfdHixQobAkS03AxSKVXvRy79lAcSX2uURHc2IHnDINpP2";
