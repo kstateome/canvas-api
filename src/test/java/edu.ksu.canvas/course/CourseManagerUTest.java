@@ -30,12 +30,12 @@ public class CourseManagerUTest {
     private CoursesImpl coursesImpl;
 
     @Before
-    public void setupData(){
+    public void setupData() {
         coursesImpl = new CoursesImpl(canvasBaseURL,apiVersion,null, fakeRestClient);
     }
 
     @Test
-    public void testCourseCreation() throws IOException{
+    public void testCourseCreation() throws IOException {
         //setup course
         Course newCourse = new Course();
         newCourse.setCourseCode("SeleniumTestCourseCode");
@@ -47,7 +47,7 @@ public class CourseManagerUTest {
     }
 
     @Test
-    public void testCourseDeletion() throws IOException{
+    public void testCourseDeletion() throws IOException {
         Assert.assertTrue(coursesImpl.deleteCourse(token, "20732"));
     }
 }

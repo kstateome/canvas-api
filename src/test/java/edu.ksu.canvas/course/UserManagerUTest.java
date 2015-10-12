@@ -54,7 +54,7 @@ public class UserManagerUTest {
     }
 
     @Test
-    public void testDeleteUser() throws IOException{
+    public void testDeleteUser() throws IOException {
         //Assert.assertTrue(accountImpl.deleteUser(token, 78839));
     }
 }
