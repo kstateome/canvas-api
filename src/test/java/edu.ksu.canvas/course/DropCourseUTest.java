@@ -34,7 +34,7 @@ public class DropCourseUTest {
     private UserImpl userImpl;
     private EnrollmentsImpl enrollmentsImpl;
     @Before
-    public void setup(){
+    public void setup() {
         coursesImpl = new CoursesImpl(canvasBaseURL,apiVersion, token, fakeRestClient);
         userImpl = new UserImpl(canvasBaseURL, apiVersion, token, fakeRestClient);
         enrollmentsImpl = new EnrollmentsImpl(canvasBaseURL, apiVersion, token, fakeRestClient);

@@ -36,12 +36,10 @@ public class UserManagerUTest {
     public void setupData() {
         userImpl = new UserImpl(canvasBaseURL, apiVersion, token, fakeRestClient);
         accountImpl = new AccountImpl(canvasBaseURL, apiVersion, token, fakeRestClient);
-
     }
 
     @Test
     public void testCreateUser() throws IOException {
-
         User user = new User();
         user.setName("somestring4");
         user.setLoginId("somestring4");
@@ -50,7 +48,6 @@ public class UserManagerUTest {
         System.out.println(response.toString());
         Assert.assertEquals("somestring4",response.get().getName());
         Assert.assertNotNull(response.get().getId());
-
     }
 
     @Test
