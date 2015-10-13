@@ -11,7 +11,7 @@ import java.util.Optional;
  */
 public interface AssignmentReader {
     /**
-     * Retrieve a specific course from Canvas by its Canvas ID number
+     * Retrieve a specific assignment from Canvas by its Canvas ID number
      * @param oauthToken    OAuth token to use when executing API calls
      * @param courseId The Canvas ID of the course
      * @param assignmentId The Canvas ID of the assignment
@@ -21,7 +21,7 @@ public interface AssignmentReader {
     Optional<Assignment> getSingleAssignment(String oauthToken, String courseId, String assignmentId) throws IOException;
 
     /**
-     * Retrieve a specific course from Canvas by its Canvas ID number
+     * Retrieve a specific list of assignments from Canvas by its Canvas ID number
      * @param oauthToken    OAuth token to use when executing API calls
      * @param courseId The Canvas ID of the course
      * @return List of assignments in the course with the course ID
