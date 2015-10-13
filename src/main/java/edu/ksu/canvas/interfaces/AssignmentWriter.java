@@ -26,5 +26,5 @@ public interface AssignmentWriter {
      * @throws InvalidOauthTokenException
      * @throws IOException
      */
-    Boolean deleteAssigment(String oauthToken, String courseId, String assignmentId) throws InvalidOauthTokenException, IOException;
+    Boolean deleteAssignment(String oauthToken, String courseId, String assignmentId) throws InvalidOauthTokenException, IOException;
 }
