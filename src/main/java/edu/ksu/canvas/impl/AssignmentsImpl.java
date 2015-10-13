@@ -28,7 +28,10 @@ public class AssignmentsImpl extends BaseImpl implements AssignmentReader, Assig
 
     @Override
     public Optional<Assignment> getSingleCourse(String oauthToken, String courseId, String assignmentId) throws IOException {
-        return null;
+        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
+                "courses/" + courseId + "/assignments/" + assignmentId, Collections.emptyMap());
+        Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
+        return responseParser.parseToObject(Assignment.class, response);
     }
 
     @Override
