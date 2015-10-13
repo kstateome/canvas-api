@@ -1,15 +1,22 @@
 package edu.ksu.canvas.impl;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.URLEncoder;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.constants.CanvasConstants;
+import edu.ksu.canvas.entity.lti.OauthToken;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.CourseWriter;
 import edu.ksu.canvas.model.Delete;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.lti.model.CanvasCourse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -45,7 +52,7 @@ public class CoursesImpl extends BaseImpl implements CourseReader,CourseWriter {
         ImmutableMap<String, List<String>> parameters = paramsBuilder.build();
         String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "courses/", parameters);
         LOG.debug("Final URL of API call: " + url);
-        return retrieveCourseListFromCanvas(oauthToken, url);
+        return listCoursesFromCanvas(oauthToken, url);
     }
 
     @Override
@@ -60,21 +67,9 @@ public class CoursesImpl extends BaseImpl implements CourseReader,CourseWriter {
         return retrieveCourseFromCanvas(oauthToken, url);
     }
 
-    private List<Course> retrieveCourseListFromCanvas(String oauthToken, String url) throws IOException {
-        List<Course> courses = new ArrayList<>();
-        while(StringUtils.isNotBlank(url)) {
-            Response response = canvasMessenger.getFromCanvas(oauthToken, url);
-            if (response.getErrorHappened() || response.getResponseCode() != 200) {
-                return Collections.emptyList();
-            }
-            courses.addAll(responseParser.parseToList(Course.class, response));
-            url = response.getNextLink();
-        }
-        return courses;
-    }
 
     private Optional<Course> retrieveCourseFromCanvas(String oauthToken, String url) throws IOException {
-        Response response = canvasMessenger.getFromCanvas(oauthToken, url);
+        Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         if (response.getErrorHappened() || response.getResponseCode() != 200) {
             return Optional.empty();
         }
@@ -110,5 +105,21 @@ public class CoursesImpl extends BaseImpl implements CourseReader,CourseWriter {
         }
         Optional<Delete> responseParsed = responseParser.parseToObject(Delete.class,response);
         return responseParsed.get().getDelete();
+    }
+
+    private List<Course> listCoursesFromCanvas(String oauthToken, String url) throws IOException {
+        List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url);
+        return responses
+                .stream()
+                .map(this::parseCourseList)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+    }
+
+    private List<Course> parseCourseList(final Response response) {
+        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+        LOG.debug(response.getContent());
+        Type listType = new TypeToken<List<CanvasCourse>>(){}.getType();
+        return gson.fromJson(response.getContent(), listType);
     }
 }

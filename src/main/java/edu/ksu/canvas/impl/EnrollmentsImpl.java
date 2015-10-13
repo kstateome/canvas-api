@@ -1,5 +1,10 @@
 package edu.ksu.canvas.impl;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import edu.ksu.canvas.entity.lti.OauthToken;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.CourseReader;
 import edu.ksu.canvas.interfaces.EnrollmentsReader;
@@ -12,7 +17,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class EnrollmentsImpl extends BaseImpl implements EnrollmentsReader,EnrollmentsWriter {
     private static final Logger LOG = Logger.getLogger(CourseReader.class);
@@ -30,19 +37,9 @@ public class EnrollmentsImpl extends BaseImpl implements EnrollmentsReader,Enrol
 
     @Override
     public List<Enrollment> getUserEnrollments(String oauthToken, Integer user_Id) throws InvalidOauthTokenException, IOException {
-        List<Enrollment> enrollments = new ArrayList<Enrollment>();
         String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "users/" + user_Id+ "/enrollments", Collections.emptyMap());
         LOG.debug("create URl for get enrollments for user : "+ createdUrl);
-        Response response = canvasMessenger.getFromCanvas(oauthToken, createdUrl);
-        while(StringUtils.isNotBlank(createdUrl)) {
-            if (response.getErrorHappened() || (response.getResponseCode() != 200)) {
-                LOG.debug("Failed to get enrollments, error message: " + response.toString());
-                return Collections.emptyList();
-            }
-            enrollments.addAll(responseParser.parseToList(Enrollment.class, response));
-            createdUrl = response.getNextLink();
-        }
-        return enrollments;
+        return retrieveEnrollment(oauthToken, createdUrl);
     }
 
     @Override
@@ -70,6 +67,20 @@ public class EnrollmentsImpl extends BaseImpl implements EnrollmentsReader,Enrol
             LOG.debug("Failed to enroll in course, error message: " + response.toString());
             return Optional.empty();
         }
-        return responseParser.parseToObject(Enrollment.class,response);
+        return responseParser.parseToObject(Enrollment.class, response);
+    }
+
+    private List<Enrollment> retrieveEnrollment(String oauthToken, String url) throws IOException {
+        List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url);
+        return responses.stream().
+                map(this::parseEnrollmentList).
+                flatMap(Collection::stream).
+                collect(Collectors.toList());
+    }
+
+    private List<Enrollment> parseEnrollmentList(Response response) {
+        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+        Type listType = new TypeToken<List<edu.ksu.lti.model.Enrollment>>(){}.getType();
+        return gson.fromJson(response.getContent(), listType);
     }
 }

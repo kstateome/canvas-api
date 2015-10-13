@@ -1,7 +1,10 @@
 package edu.ksu.canvas.impl;
 
 
+import edu.ksu.canvas.entity.lti.OauthToken;
+import edu.ksu.canvas.exception.OauthTokenRequiredException;
 import edu.ksu.canvas.net.RestClient;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
@@ -10,6 +13,9 @@ import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClientImpl;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 
@@ -29,14 +35,23 @@ public class RestCanvasMessenger implements CanvasMessenger {
         this.restClient = restClient;
     }
 
+    //Todo: If we really need to do something as each response is received then we should provide a callback parameter
     @Override
-    public Response getFromCanvas(@NotNull String oauthToken, @NotNull String url) throws InvalidOauthTokenException, IOException {
+    public List<Response> getFromCanvas(@NotNull String oauthToken, @NotNull String url) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending GET request to: " + url);
-        final Response response = restClient.sendApiGet(oauthToken, url, connectTimeout, readTimeout);
-        if (response.getResponseCode() == 401) {
-            throw new InvalidOauthTokenException();
+        final List<Response> responses = new ArrayList<>();
+        while (!StringUtils.isBlank(url)) {
+            Response response = getSingleResponseFromCanvas(oauthToken, url);
+            if (response.getResponseCode() == 401) {
+                throw new InvalidOauthTokenException();
+            } else if (response.getErrorHappened() || response.getResponseCode() != 200) {
+                LOG.error("Errors retrieving responses from canvas for url:  " + url);
+                return Collections.emptyList();
+            }
+            responses.add(response);
+            url = response.getNextLink();
         }
-        return response;
+        return responses;
     }
 
     @Override
@@ -55,6 +70,12 @@ public class RestCanvasMessenger implements CanvasMessenger {
             throw new InvalidOauthTokenException();
         }
         return response;
+    }
+
+    @Override
+    public Response getSingleResponseFromCanvas(@NotNull String oauthToken, @NotNull String url) throws InvalidOauthTokenException, IOException {
+        LOG.debug("Sending GET request to: " + url);
+        return restClient.sendApiGet(oauthToken, url, connectTimeout, readTimeout);
     }
 
 }

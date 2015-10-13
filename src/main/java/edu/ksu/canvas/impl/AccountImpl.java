@@ -31,7 +31,7 @@ public class AccountImpl extends  BaseImpl implements AccountsReader,AccountsWri
         String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "accounts/" + CanvasConstants.ACCOUNT_ID + "/users/" + userId, Collections.emptyMap());
         LOG.debug("create URl for user creation : "+ createdUrl);
         Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, null);
-        if (response.getErrorHappened() || ( response.getResponseCode() != 200)) {
+        if (response.getErrorHappened() || (response.getResponseCode() != 200)) {
             LOG.debug("Failed to create user, error message: " + response.toString());
             return false;
         }

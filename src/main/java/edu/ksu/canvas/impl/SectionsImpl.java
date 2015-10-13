@@ -3,6 +3,7 @@ package edu.ksu.canvas.impl;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,18 +39,22 @@ public class SectionsImpl extends BaseImpl implements SectionReader {
                 .put("include[]", includes.stream().map(Enum::name).collect(Collectors.toList()))
                 .build();
         String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "/courses/" + courseId + "/sections", parameters);
-        List<Section> sections = new ArrayList<>();
+        List<Response> response = canvasMessenger.getFromCanvas(oauthToken, url);
+        return parseSections(response);
+    }
+
+    public List<Section> parseSections(List<Response> responses) {
+        return responses
+                .stream()
+                .map(this::parse)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+    }
+
+    public List<Section> parse(Response response) {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
         Type listType = new TypeToken<List<Section>>(){}.getType();
-        while(StringUtils.isNotBlank(url)) {
-            Response response = canvasMessenger.getFromCanvas(oauthToken, url);
-            if (response.getErrorHappened() || response.getResponseCode() != 200) {
-                return Collections.emptyList();
-            }
-            sections.addAll(gson.fromJson(response.getContent(), listType));
-            url = response.getNextLink();
-        }
-        return sections;
+        return gson.fromJson(response.getContent(), listType);
     }
 
 }
