@@ -29,7 +29,7 @@ public class AssignmentsImpl extends BaseImpl implements AssignmentReader, Assig
     }
 
     @Override
-    public Optional<Assignment> createAssignment(String oauthToken, Assignment assignment) throws InvalidOauthTokenException, IOException {
+    public Optional<Assignment> createAssignment(String oauthToken, String assignmentName, String pointsPossible) throws InvalidOauthTokenException, IOException {
         return null;
     }
 

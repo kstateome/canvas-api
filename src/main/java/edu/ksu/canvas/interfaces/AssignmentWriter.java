@@ -10,12 +10,13 @@ public interface AssignmentWriter {
     /**
      *
      * @param oauthToken
-     * @param assignment  assignment data for creating an assignment
+     * @param assignmentName  name of assignment
+     * @param pointsPossible  highest possible number of points of assignment
      * @return CreatedAssignment
      * @throws InvalidOauthTokenException
      * @throws IOException
      */
-    Optional<Assignment> createAssignment (String oauthToken, Assignment assignment) throws InvalidOauthTokenException, IOException;
+    Optional<Assignment> createAssignment (String oauthToken, String assignmentName, String pointsPossible) throws InvalidOauthTokenException, IOException;
 
     /**
      *
