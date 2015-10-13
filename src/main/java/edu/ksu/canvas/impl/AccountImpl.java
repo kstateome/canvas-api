@@ -11,6 +11,7 @@ import edu.ksu.canvas.util.CanvasURLBuilder;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Collections;
 
 /**
  * Created by prv on 10/8/15.
@@ -30,7 +31,7 @@ public class AccountImpl extends  BaseImpl implements AccountsReader,AccountsWri
 
     @Override
     public Boolean deleteUser(String oauthToken, Integer userId) throws InvalidOauthTokenException, IOException {
-        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "accounts/" + CanvasConstants.ACCOUNT_ID + "/users/" + userId, null);
+        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "accounts/" + CanvasConstants.ACCOUNT_ID + "/users/" + userId, Collections.emptyMap());
         LOG.debug("create URl for user creation : "+ createdUrl);
         Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, null);
         if (response.getErrorHappened() || ( response.getResponseCode() != 200)) {

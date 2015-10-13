@@ -12,9 +12,7 @@ public class CanvasURLBuilder {
     public static String buildCanvasUrl(String canvasBaseUrl, int canvasAPIVersion, String canvasMethod, Map<String, List<String>> parameters) {
         canvasMethod = removeForwardSlashIfExists(canvasMethod);
         String url = canvasBaseUrl + "/api/v" +  canvasAPIVersion + "/" + canvasMethod;
-        String finalUrl= url;
-        if(parameters!=null)
-         finalUrl = url + HttpParameterBuilder.buildParameters(parameters);
+        String finalUrl = url + HttpParameterBuilder.buildParameters(parameters);
         LOG.debug("Built Canvas url - " + finalUrl);
         return finalUrl;
     }
