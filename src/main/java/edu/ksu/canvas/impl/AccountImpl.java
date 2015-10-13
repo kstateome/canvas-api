@@ -13,9 +13,6 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.util.Collections;
 
-/**
- * Created by prv on 10/8/15.
- */
 public class AccountImpl extends  BaseImpl implements AccountsReader,AccountsWriter {
     private static final Logger LOG = Logger.getLogger(CourseReader.class);
     /**
