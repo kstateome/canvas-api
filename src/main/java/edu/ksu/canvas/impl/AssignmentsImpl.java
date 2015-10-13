@@ -1,5 +1,7 @@
 package edu.ksu.canvas.impl;
 
+import com.google.common.collect.ImmutableMap;
+import edu.ksu.canvas.enums.AssignmentType;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.AssignmentReader;
 import edu.ksu.canvas.interfaces.AssignmentWriter;
@@ -13,6 +15,7 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -29,8 +32,28 @@ public class AssignmentsImpl extends BaseImpl implements AssignmentReader, Assig
     }
 
     @Override
-    public Optional<Assignment> createAssignment(String oauthToken, String assignmentName, String pointsPossible) throws InvalidOauthTokenException, IOException {
-        return null;
+    public Optional<Assignment> createAssignment(String oauthToken, String courseId, String assignmentName, String pointsPossible) throws InvalidOauthTokenException, IOException {
+        return createAssignment(oauthToken, courseId, assignmentName, pointsPossible,
+                AssignmentType.ON_PAPER, true, true);
+    }
+
+    @Override
+    public Optional<Assignment> createAssignment(String oauthToken, String courseId, String assignmentName, String pointsPossible,
+                                                 AssignmentType assignmentType, boolean published, boolean muted) throws InvalidOauthTokenException, IOException {
+        ImmutableMap<String, List<String>> parameters = ImmutableMap.<String,List<String>>builder()
+                .put("assignment[name]", Collections.singletonList(assignmentName))
+                .put("assignment[submission_types]", Collections.singletonList(assignmentType.toString()))
+                .put("assignment[points_possible]", Collections.singletonList(pointsPossible))
+                .put("assignment[published]", Collections.singletonList(String.valueOf(published)))
+                .put("assignment[muted]", Collections.singletonList(String.valueOf(muted))).build();
+        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
+                "courses/" + courseId + "/assignments", parameters);
+        Response response = canvasMessenger.sendToCanvas(oauthToken, url, Collections.emptyMap());
+        if (response.getErrorHappened() || response.getResponseCode() != 200) {
+            LOG.error("Errors creating assignment for course " + courseId + " with assignmentName " + assignmentName);
+            return Optional.empty();
+        }
+        return responseParser.parseToObject(Assignment.class, response);
     }
 
     @Override
