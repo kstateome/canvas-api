@@ -18,8 +18,13 @@ public class User implements Serializable {
     private String sisImportId;
     private String loginId;
     private String avatarUrl;
-    private String email;
     private List<Enrollment> enrollments;
+    private String email;
+    private String locale;
+    private String last_login;
+    private String time_zone;
+    private String bio;
+
 
     public int getId() {
         return id;
@@ -99,5 +104,37 @@ public class User implements Serializable {
 
     public void setEnrollments(List<Enrollment> enrollments) {
         this.enrollments = enrollments;
+    }
+
+    public String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
+
+    public String getLast_login() {
+        return last_login;
+    }
+
+    public void setLast_login(String last_login) {
+        this.last_login = last_login;
+    }
+
+    public String getTime_zone() {
+        return time_zone;
+    }
+
+    public void setTime_zone(String time_zone) {
+        this.time_zone = time_zone;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 }

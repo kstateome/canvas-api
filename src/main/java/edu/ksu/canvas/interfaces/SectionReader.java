@@ -17,5 +17,5 @@ public interface SectionReader {
      * @return List of sections
      * @throws IOException
      */
-    public List<Section> listCourseSections(Integer courseId, List<SectionIncludes> includes) throws IOException;
+     List<Section> listCourseSections(Integer courseId, List<SectionIncludes> includes) throws IOException;
 }
