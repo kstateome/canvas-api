@@ -23,6 +23,7 @@ public interface QuizReader {
      * @param courseId The Canvas ID of the course
      * @return List of quizzes in the course with the course ID
      * @throws OauthTokenRequiredException
+     * @throws IOException
      */
     List<Quiz> getQuizzesInCourse(String oauthToken, String courseId) throws OauthTokenRequiredException, IOException;
 }
