@@ -3,6 +3,7 @@ package edu.ksu.canvas.impl;
 import edu.ksu.canvas.interfaces.QuizReader;
 import edu.ksu.canvas.interfaces.QuizWriter;
 import edu.ksu.canvas.model.quizzes.Quiz;
+import edu.ksu.canvas.model.quizzes.QuizQuestion;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.util.CanvasURLBuilder;
@@ -42,6 +43,15 @@ public class QuizImpl extends  BaseImpl implements QuizReader, QuizWriter {
     @Override
     public Optional<Quiz> updateQuiz(String oauthToken, String courseId, Quiz quiz) throws MessageUndeliverableException, UnsupportedEncodingException, OauthTokenRequiredException {
         return null;
+    }
+
+    @Override
+    public List<QuizQuestion> getQuizQuestions(String oauthToken, String courseId, String quizId) throws OauthTokenRequiredException, IOException {
+        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
+                "courses/" + courseId + "/quizzes/" + quizId + "/questions", Collections.emptyMap());
+        Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
+        return responseParser.parseToList(QuizQuestion.class, response);
+
     }
 
 }
