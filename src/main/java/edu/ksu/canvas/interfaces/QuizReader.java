@@ -16,7 +16,7 @@ public interface QuizReader {
      * @return The assignment returned by Canvas or an empty Optional
      * @throws OauthTokenRequiredException
      */
-    Optional<Quiz> getSingleQuiz(String oauthToken, String courseId, String quizId) throws OauthTokenRequiredException;
+    Optional<Quiz> getSingleQuiz(String oauthToken, String courseId, String quizId) throws OauthTokenRequiredException, IOException;
     /**
      * Retrieve a specific course from Canvas by its Canvas ID number
      * @param oauthToken OAuth token to use when executing API calls

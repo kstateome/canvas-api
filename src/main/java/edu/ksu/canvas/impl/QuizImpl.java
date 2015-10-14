@@ -24,8 +24,11 @@ public class QuizImpl extends  BaseImpl implements QuizReader, QuizWriter {
     }
 
     @Override
-    public Optional<Quiz> getSingleQuiz(String oauthToken, String courseId, String quizId) throws OauthTokenRequiredException {
-        return null;
+    public Optional<Quiz> getSingleQuiz(String oauthToken, String courseId, String quizId) throws OauthTokenRequiredException, IOException {
+        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
+                "courses/" + courseId + "/quizzes/" + quizId, Collections.emptyMap());
+        Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
+        return responseParser.parseToObject(Quiz.class, response);
     }
 
     @Override
