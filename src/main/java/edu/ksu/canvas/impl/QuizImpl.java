@@ -1,5 +1,8 @@
 package edu.ksu.canvas.impl;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import edu.ksu.canvas.interfaces.QuizReader;
 import edu.ksu.canvas.interfaces.QuizWriter;
 import edu.ksu.canvas.model.quizzes.Quiz;
@@ -13,7 +16,6 @@ import edu.ksu.lti.error.OauthTokenRequiredException;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -42,8 +44,12 @@ public class QuizImpl extends  BaseImpl implements QuizReader, QuizWriter {
     }
 
     @Override
-    public Optional<Quiz> updateQuiz(String oauthToken, String courseId, Quiz quiz) throws MessageUndeliverableException, UnsupportedEncodingException, OauthTokenRequiredException {
-        return null;
+    public Optional<Quiz> updateQuiz(String oauthToken, Quiz quiz, String courseId) throws MessageUndeliverableException, IOException, OauthTokenRequiredException {
+        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
+                "courses/" + courseId + "/quizzes/" + quiz.getId(), Collections.emptyMap());
+        Response response = canvasMessenger.sendToJsonCanvas(oauthToken, url,
+                getDefaultGsonParser().toJsonTree(quiz).getAsJsonObject());
+        return responseParser.parseToObject(Quiz.class, response);
     }
 
     @Override

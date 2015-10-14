@@ -4,6 +4,7 @@ import edu.ksu.canvas.model.quizzes.Quiz;
 import edu.ksu.lti.error.MessageUndeliverableException;
 import edu.ksu.lti.error.OauthTokenRequiredException;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 
@@ -11,13 +12,13 @@ public interface QuizWriter {
     /**
      *
      * @param oauthToken
-     * @param courseId
      * @param quiz
+     * @param courseId
      * @return UpdatedQuiz
      * @throws MessageUndeliverableException
      * @throws UnsupportedEncodingException
      * @throws OauthTokenRequiredException
      */
-    Optional<Quiz> updateQuiz(String oauthToken, String courseId, Quiz quiz)
-            throws MessageUndeliverableException, UnsupportedEncodingException, OauthTokenRequiredException;
+    Optional<Quiz> updateQuiz(String oauthToken, Quiz quiz, String courseId)
+            throws MessageUndeliverableException, IOException, OauthTokenRequiredException;
 }
