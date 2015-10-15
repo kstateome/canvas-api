@@ -181,3 +181,4 @@ public class QuizAnswer {
         result = 31 * result + (blank_id != null ? blank_id.hashCode() : 0);
         return result;
     }
+}
