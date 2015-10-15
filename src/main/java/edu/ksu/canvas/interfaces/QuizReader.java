@@ -29,26 +29,4 @@ public interface QuizReader {
      * @throws IOException
      */
     List<Quiz> getQuizzesInCourse(String oauthToken, String courseId) throws OauthTokenRequiredException, IOException;
-
-    /**
-     * Retrieve a list of quiz questions from Canvas by its course and quiz Canvas ID numbers
-     * @param oauthToken OAuth token to use when executing API calls
-     * @param courseId   The Canvas ID of the course
-     * @param quizId     The Canvas ID of the quiz
-     * @return List of quizzes questions in the course with the course ID
-     * @throws OauthTokenRequiredException
-     * @throws IOException
-     */
-    List<QuizQuestion> getQuizQuestions(String oauthToken, String courseId, String quizId) throws OauthTokenRequiredException, IOException;
-
-    /**
-     * Retrieve a list of quiz submissions from Canvas by its course and quiz Canvas ID numbers
-     * @param oauthToken OAuth token to use when executing API calls
-     * @param courseId   The Canvas ID of the course
-     * @param quizId     The Canvas ID of the quiz
-     * @return List of quiz submissions in the course with the course ID
-     * @throws OauthTokenRequiredException
-     * @throws IOException
-     */
-    List<QuizSubmission> getQuizSubmissions(String oauthToken, String courseId, String quizId) throws OauthTokenRequiredException, IOException;
 }

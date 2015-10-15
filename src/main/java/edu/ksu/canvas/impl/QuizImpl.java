@@ -5,7 +5,6 @@ import edu.ksu.canvas.interfaces.QuizReader;
 import edu.ksu.canvas.interfaces.QuizWriter;
 import edu.ksu.canvas.model.quizzes.Quiz;
 import edu.ksu.canvas.model.quizzes.QuizQuestion;
-import edu.ksu.canvas.model.quizzes.QuizSubmission;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.util.CanvasURLBuilder;
@@ -53,23 +52,6 @@ public class QuizImpl extends  BaseImpl implements QuizReader, QuizWriter {
         return responseParser.parseToObject(Quiz.class, response);
     }
 
-    @Override
-    public List<QuizQuestion> getQuizQuestions(String oauthToken, String courseId, String quizId) throws OauthTokenRequiredException, IOException {
-        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
-                "courses/" + courseId + "/quizzes/" + quizId + "/questions", Collections.emptyMap());
-        Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
-        return responseParser.parseToList(QuizQuestion.class, response);
-
-    }
-
-    @Override
-    public List<QuizSubmission> getQuizSubmissions(String oauthToken, String courseId, String quizId) throws OauthTokenRequiredException, IOException {
-        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
-                "courses/" + courseId + "/quizzes/" + quizId + "/submissions", Collections.emptyMap());
-        Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
-        return responseParser.parseToList(QuizSubmission.class, response);
-    }
-
     private List <Quiz> parseQuizList(final List<Response> responses) {
         return responses.stream().
                 map(this::parseQuizList).
@@ -81,6 +63,4 @@ public class QuizImpl extends  BaseImpl implements QuizReader, QuizWriter {
         Type listType = new TypeToken<List<Quiz>>(){}.getType();
         return getDefaultGsonParser().fromJson(response.getContent(), listType);
     }
-
-
 }
