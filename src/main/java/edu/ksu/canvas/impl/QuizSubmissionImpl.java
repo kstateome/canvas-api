@@ -40,7 +40,26 @@ public class QuizSubmissionImpl extends  BaseImpl implements QuizSubmissionReade
     }
 
     private List<QuizSubmission> parseQuizSubmissionList(final Response response) {
-        Type listType = new TypeToken<List<QuizSubmission>>(){}.getType();
-        return getDefaultGsonParser().fromJson(response.getContent(), listType);
+        QuizSubmissionListWrapper wrapper = getDefaultGsonParser().fromJson(response.getContent(), QuizSubmissionListWrapper.class);
+        return wrapper.getQuiz_submissions();
+    }
+
+    /**
+     * Because Canvas, instead of returning a simple list of quiz submission objects,
+     * instead had the bright idea to return AN OBJECT containing a list of quiz submissions,
+     * we need a wrapper class to represent this object for automatic parsing...
+     * @author alexanda
+     */
+    private class QuizSubmissionListWrapper {
+
+        private List<QuizSubmission> quiz_submissions;
+
+        public List<QuizSubmission> getQuiz_submissions() {
+            return quiz_submissions;
+        }
+
+        public void setQuiz_submissions(List<QuizSubmission> quiz_submissions) {
+            this.quiz_submissions = quiz_submissions;
+        }
     }
 }
