@@ -1,6 +1,5 @@
 package edu.ksu.canvas.impl;
 
-import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.QuizSubmissionReader;
 import edu.ksu.canvas.interfaces.QuizSubmissionWriter;
 import edu.ksu.canvas.model.quizzes.QuizSubmission;
@@ -11,7 +10,6 @@ import edu.ksu.lti.error.OauthTokenRequiredException;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
