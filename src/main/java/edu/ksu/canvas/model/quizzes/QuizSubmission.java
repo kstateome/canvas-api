@@ -1,5 +1,10 @@
 package edu.ksu.canvas.model.quizzes;
 
+/**
+ * Class to represent Canvas quiz submission.
+ * * See <a href="https://canvas.instructure.com/doc/api/quiz_submissions.html#QuizSubmission">Canvas Quiz Submission</a> documentation.
+ */
+
 public class QuizSubmission {
     private Integer id;
     private Integer quiz_id;

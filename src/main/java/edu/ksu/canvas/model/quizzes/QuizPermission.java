@@ -3,7 +3,9 @@ package edu.ksu.canvas.model.quizzes;
 /**
  * Class to hold the permissions returned when querying quizzes.
  * Each one represents whether the user making the query has the permission described
+ * See <a href="https://canvas.instructure.com/doc/api/quizzes.html#QuizPermissions">Canvas Quiz Permission</a> documentation.
  */
+
 public class QuizPermission {
 
     private Boolean read;

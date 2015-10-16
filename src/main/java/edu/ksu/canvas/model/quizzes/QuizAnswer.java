@@ -1,5 +1,10 @@
 package edu.ksu.canvas.model.quizzes;
 
+/**
+ * Class to represent Canvas quiz answer.
+ * * See <a href="https://canvas.instructure.com/doc/api/quiz_questions.html#Answer">Canvas Quiz Answer</a> documentation.
+ */
+
 import java.util.List;
 
 public class QuizAnswer {
