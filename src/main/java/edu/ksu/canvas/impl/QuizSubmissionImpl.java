@@ -64,8 +64,6 @@ public class QuizSubmissionImpl extends  BaseImpl implements QuizSubmissionReade
         return Optional.of(parseQuizSubmissionList(response).get(0));
     }
 
-
-
     private List <QuizSubmission> parseQuizSubmissionList(final List<Response> responses) {
         return responses.stream().
                 map(this::parseQuizSubmissionList).
