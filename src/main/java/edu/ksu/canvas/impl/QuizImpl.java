@@ -4,7 +4,6 @@ import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.QuizReader;
 import edu.ksu.canvas.interfaces.QuizWriter;
 import edu.ksu.canvas.model.quizzes.Quiz;
-import edu.ksu.canvas.model.quizzes.QuizQuestion;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.util.CanvasURLBuilder;
