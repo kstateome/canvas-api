@@ -1,0 +1,46 @@
+{
+  "quiz_submissions": [
+    {
+      "id": 1,
+      "quiz_id": 2,
+      "user_id": 3,
+      "submission_id": 1,
+      "started_at": "2013-11-07T13:16:18Z",
+      "finished_at": "2013-11-07T13:16:18Z",
+      "end_at": "2013-11-07T13:16:18Z",
+      "attempt": 3,
+      "extra_attempts": 1,
+      "extra_time": 60,
+      "manually_unlocked": "true",
+      "time_spent": 300,
+      "score": 3,
+      "score_before_regrade": 2,
+      "kept_score": 5,
+      "fudge_points": 1,
+      "has_seen_results": "true",
+      "workflow_state": "untaken",
+      "overdue_and_needs_submission": "false"
+    },
+    {
+      "id": 2,
+      "quiz_id": 2,
+      "user_id": 3,
+      "submission_id": 1,
+      "started_at": "2013-11-07T13:16:18Z",
+      "finished_at": "2013-11-07T13:16:18Z",
+      "end_at": "2013-11-07T13:16:18Z",
+      "attempt": 3,
+      "extra_attempts": 1,
+      "extra_time": 60,
+      "manually_unlocked": "true",
+      "time_spent": 300,
+      "score": 3,
+      "score_before_regrade": 2,
+      "kept_score": 5,
+      "fudge_points": 1,
+      "has_seen_results": "true",
+      "workflow_state": "untaken",
+      "overdue_and_needs_submission": "false"
+    }
+  ]
+}
