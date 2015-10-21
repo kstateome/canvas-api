@@ -22,7 +22,7 @@ public class Assignment implements Serializable {
     private String course_id;
     private String html_url;
     private String assingment_group_id;
-    private String allowed_extensions;
+    private String[] allowed_extensions;
     private boolean turnitin_enabled;
     private String turnitin_settings;
     private boolean grade_group_students_individually;
@@ -145,11 +145,11 @@ public class Assignment implements Serializable {
         this.assingment_group_id = assingment_group_id;
     }
 
-    public String getAllowed_extensions() {
+    public String[] getAllowed_extensions() {
         return allowed_extensions;
     }
 
-    public void setAllowed_extensions(String allowed_extensions) {
+    public void setAllowed_extensions(String[] allowed_extensions) {
         this.allowed_extensions = allowed_extensions;
     }
 
