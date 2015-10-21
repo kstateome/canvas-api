@@ -40,7 +40,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         notErroredResponse.setErrorHappened(false);
         notErroredResponse.setResponseCode(200);
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments";
-        fakeRestClient.addSuccessResponse(url, "AssignmentList.json");
+        fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/AssignmentList.json");
 
         List<Assignment> assignments = assignmentReader.listCourseAssignments(oauthToken.getToken(), someCourseId);
         Assert.assertEquals(2, assignments.size());
@@ -54,7 +54,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         Response erroredResponse = new Response();
         erroredResponse.setErrorHappened(true);
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments";
-        fakeRestClient.add401Response(url, "Assignment1.json");
+        fakeRestClient.add401Response(url, "SampleJson/assignment/Assignment1.json");
         assignmentReader.listCourseAssignments(oauthToken.getToken(), someCourseId);
     }
 
@@ -74,7 +74,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         String someCourseId = "1234";
         String someAssignmentId = "123";
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments/" + someAssignmentId;
-        fakeRestClient.addSuccessResponse(url, "Assignment1.json");
+        fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/Assignment1.json");
         Optional<Assignment> assignment = assignmentReader.getSingleAssignment(oauthToken.getToken(), someCourseId, someAssignmentId);
         Assert.assertTrue(assignment.isPresent());
         Assert.assertEquals("Assignment1", assignment.map(Assignment::getName).orElse(""));
