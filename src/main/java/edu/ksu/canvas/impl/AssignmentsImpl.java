@@ -98,9 +98,8 @@ public class AssignmentsImpl extends BaseImpl implements AssignmentReader, Assig
     }
 
     private List<Assignment> parseAssignmentList(final Response response) {
-        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
         Type listType = new TypeToken<List<Assignment>>(){}.getType();
-        return gson.fromJson(response.getContent(), listType);
+        return getDefaultGsonParser().fromJson(response.getContent(), listType);
     }
 
 }
