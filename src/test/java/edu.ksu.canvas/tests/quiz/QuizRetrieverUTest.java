@@ -42,7 +42,7 @@ public class QuizRetrieverUTest extends CanvasTestBase {
         notErroredResponse.setResponseCode(200);
         String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion,
                 "courses/" + someCourseId + "/quizzes", Collections.emptyMap());
-        fakeRestClient.addSuccessResponse(url, "QuizList.json");
+        fakeRestClient.addSuccessResponse(url, "SampleJson/quiz/QuizList.json");
 
         List<Quiz> quizzess = quizReader.getQuizzesInCourse(oauthToken.getToken(), someCourseId);
         Assert.assertEquals(2, quizzess.size());
@@ -58,7 +58,7 @@ public class QuizRetrieverUTest extends CanvasTestBase {
         Response erroredResponse = new Response();
         erroredResponse.setErrorHappened(true);
         String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion,
-                "courses/" + someCourseId + "/quizzes", Collections.emptyMap());fakeRestClient.add401Response(url, "Assignment1.json");
+                "courses/" + someCourseId + "/quizzes", Collections.emptyMap());fakeRestClient.add401Response(url, "SampleJson/assignment/Assignment1.json");
         quizReader.getQuizzesInCourse(oauthToken.getToken(), someCourseId);
     }
 
@@ -80,7 +80,7 @@ public class QuizRetrieverUTest extends CanvasTestBase {
         String someQuizId = "123";
         String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion,
                 "courses/" + someCourseId + "/quizzes/" + someQuizId, Collections.emptyMap());
-        fakeRestClient.addSuccessResponse(url, "Quiz1.json");
+        fakeRestClient.addSuccessResponse(url, "SampleJson/quiz/Quiz1.json");
         Optional<Quiz> quiz = quizReader.getSingleQuiz(oauthToken.getToken(), someCourseId, someQuizId);
         Assert.assertTrue(quiz.isPresent());
         Assert.assertEquals("Quiz1", quiz.map(Quiz::getTitle).orElse(""));
