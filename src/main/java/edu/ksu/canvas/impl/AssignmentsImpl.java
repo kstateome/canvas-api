@@ -1,9 +1,11 @@
 package edu.ksu.canvas.impl;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.enums.AssignmentType;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
+import edu.ksu.canvas.exception.OauthTokenRequiredException;
 import edu.ksu.canvas.interfaces.AssignmentReader;
 import edu.ksu.canvas.interfaces.AssignmentWriter;
 import edu.ksu.canvas.model.Assignment;
@@ -11,6 +13,7 @@ import edu.ksu.canvas.model.Delete;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.util.CanvasURLBuilder;
+import edu.ksu.lti.error.MessageUndeliverableException;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -85,6 +88,25 @@ public class AssignmentsImpl extends BaseImpl implements AssignmentReader, Assig
         }
         Optional<Delete> responseParsed = responseParser.parseToObject(Delete.class, response);
         return responseParsed.get().getDelete();
+    }
+
+    @Override
+    public Optional<Assignment> setOnlyVisibleToOverrides(String oauthToken, String courseId, String assignmentId, boolean onlyVisibleToOverrides)
+            throws MessageUndeliverableException, IOException, OauthTokenRequiredException{
+        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
+                "courses/" + courseId + "/assignments/" + assignmentId, Collections.emptyMap());
+        JsonObject requestBody = new JsonObject();
+        JsonObject assignment = new JsonObject();
+        assignment.addProperty("only_visible_to_overrides", onlyVisibleToOverrides);
+        requestBody.add("assignment", assignment);
+
+        Response response = canvasMessenger.sendToJsonCanvas(oauthToken, url, requestBody);
+        if(response.getErrorHappened() || response.getResponseCode() != 201){
+            LOG.error("Error updating assignment override for course: " + courseId + " and assignment: " + assignmentId);
+            LOG.debug(response.getContent());
+            return null;
+        }
+        return responseParser.parseToObject(Assignment.class, response);
     }
 
     private List<Assignment> parseAssignmentList(final List<Response> responses) {
