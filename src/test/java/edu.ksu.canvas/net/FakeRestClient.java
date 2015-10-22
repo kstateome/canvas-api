@@ -14,7 +14,7 @@ public class FakeRestClient implements RestClient {
     private Map<String, Response> responseMap = new HashMap<>();
 
     @Override
-    public Response sendApiGet(@NotNull String token, @NotNull String url, int connectTimeout, int readTimeout) throws IOException {
+    public Response sendApiGet(@NotNull String token, @NotNull String url, Map<String, String> requestParameters, int connectTimeout, int readTimeout) throws IOException {
         checkForTimeout(connectTimeout, readTimeout);
         return response(url);
     }
