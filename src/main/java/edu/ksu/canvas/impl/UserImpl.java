@@ -65,14 +65,14 @@ public class UserImpl  extends BaseImpl implements UserReader,UserWriter{
 
     @Override
     public List<User> getUsersInCourse(String oauthToken, String courseId) throws OauthTokenRequiredException, IOException {
+        Map<String, List<String>> postParameters = new HashMap<>();
+        postParameters.put("enrollment_type", Arrays.asList("student"));
+        postParameters.put("include[]", Arrays.asList("enrollments"));
+        postParameters.put("per_page", Arrays.asList(API_RESULTS_PER_PAGE));
         String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
                 "courses/" + courseId + "/users", Collections.emptyMap());
-        Map<String, String> postParameters = new HashMap<>();
-        postParameters.put("enrollment_type", "student");
-        postParameters.put("include[]", "enrollments");
-        postParameters.put("per_page", API_RESULTS_PER_PAGE);
 
-        List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url, postParameters);
+        List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url);
         return listUsersFromCanvas(responses);
     }
 
