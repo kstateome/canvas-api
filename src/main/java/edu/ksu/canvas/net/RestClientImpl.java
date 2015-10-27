@@ -18,7 +18,7 @@ import java.util.Map;
 public class RestClientImpl implements RestClient {
     private static final Logger LOG = Logger.getLogger(RestClientImpl.class);
 
-    public Response sendApiGet(@NotNull String token, @NotNull String url, Map<String, String> requestParameters,
+    public Response sendApiGet(@NotNull String token, @NotNull String url,
                                       int connectTimeout, int readTimeout) throws IOException {
         LOG.debug("url - " + url);
         Long beginTime = System.currentTimeMillis();
@@ -29,12 +29,6 @@ public class RestClientImpl implements RestClient {
         con.setReadTimeout(readTimeout);
         con.setRequestMethod("GET");
         con.setRequestProperty("Authorization", "Bearer" + " " + token);
-        if (requestParameters != null) {
-            for (Map.Entry<String, String> entry : requestParameters.entrySet()) {
-                con.setRequestProperty(entry.getKey(), entry.getValue());
-                LOG.debug("key "+ entry.getKey() +"\t value : "+ entry.getValue());
-            }
-        }
 
         //deal with the actual content
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));

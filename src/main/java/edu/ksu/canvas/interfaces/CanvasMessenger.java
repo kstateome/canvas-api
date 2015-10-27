@@ -12,11 +12,9 @@ import java.util.Map;
 
 public interface CanvasMessenger {
     List<Response> getFromCanvas(String oauthToken, String url) throws InvalidOauthTokenException, IOException;
-    List<Response> getFromCanvas(String oauthToken, String url, Map<String, String> requestParameters) throws InvalidOauthTokenException, IOException;
     //TODO: Should probably make this parameter list more sane
     Response sendToCanvas(String oauthToken, String url, Map<String, String> parameters) throws InvalidOauthTokenException, IOException;
     Response sendToJsonCanvas(String oauthToken, String url, JsonObject requestBody) throws InvalidOauthTokenException, IOException;
     Response deleteFromCanvas(String oauthToken, String url,Map<String,String> parameters) throws InvalidOauthTokenException, IOException;
-    Response getSingleResponseFromCanvas(String oauthToken, String url, Map<String, String> requestParameters) throws InvalidOauthTokenException, IOException;
     Response getSingleResponseFromCanvas(String oauthToken, String url) throws InvalidOauthTokenException, IOException;
 }

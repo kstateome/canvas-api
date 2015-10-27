@@ -37,17 +37,11 @@ public class RestCanvasMessenger implements CanvasMessenger {
     }
 
     //Todo: If we really need to do something as each response is received then we should provide a callback parameter
-    @Override
     public List<Response> getFromCanvas(@NotNull String oauthToken, @NotNull String url) throws InvalidOauthTokenException, IOException {
-        return getFromCanvas(oauthToken, url, null);
-    }
-
-        @Override
-    public List<Response> getFromCanvas(@NotNull String oauthToken, @NotNull String url, Map<String, String> requestParameters) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending GET request to: " + url);
         final List<Response> responses = new ArrayList<>();
         while (!StringUtils.isBlank(url)) {
-            Response response = getSingleResponseFromCanvas(oauthToken, url, requestParameters);
+            Response response = getSingleResponseFromCanvas(oauthToken, url);
             if (response.getResponseCode() == 401) {
                 throw new InvalidOauthTokenException();
             } else if (response.getErrorHappened() || response.getResponseCode() != 200) {
@@ -89,13 +83,8 @@ public class RestCanvasMessenger implements CanvasMessenger {
 
     @Override
     public Response getSingleResponseFromCanvas(@NotNull String oauthToken, @NotNull String url) throws InvalidOauthTokenException, IOException {
-        return getSingleResponseFromCanvas(oauthToken, url, null);
-    }
-
-    @Override
-    public Response getSingleResponseFromCanvas(@NotNull String oauthToken, @NotNull String url, Map<String, String> requestParameters) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending GET request to: " + url);
-        return restClient.sendApiGet(oauthToken, url, requestParameters, connectTimeout, readTimeout);
+        return restClient.sendApiGet(oauthToken, url, connectTimeout, readTimeout);
     }
 
 }
