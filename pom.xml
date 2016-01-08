@@ -20,11 +20,11 @@
   <distributionManagement>
     <repository>
       <id>ome-appdev-release</id>
-      <url>https://tools.ome.ksu.edu/artifactory/ome-appdev-release</url>
+      <url>https://artifactory.ome.k-state.edu/artifactory/ome-appdev-release</url>
     </repository>
     <snapshotRepository>
       <id>ome-appdev-snapshot</id>
-      <url>https://tools.ome.ksu.edu/artifactory/ome-appdev-snapshot</url>
+      <url>https://artifactory.ome.k-state.edu/artifactory/ome-appdev-snapshot</url>
     </snapshotRepository>
   </distributionManagement>
 
