@@ -1,6 +1,7 @@
 package edu.ksu.canvas.impl;
 
 
+import com.google.gson.JsonObject;
 import edu.ksu.canvas.entity.lti.OauthToken;
 import edu.ksu.canvas.exception.OauthTokenRequiredException;
 import edu.ksu.canvas.net.RestClient;
@@ -36,7 +37,6 @@ public class RestCanvasMessenger implements CanvasMessenger {
     }
 
     //Todo: If we really need to do something as each response is received then we should provide a callback parameter
-    @Override
     public List<Response> getFromCanvas(@NotNull String oauthToken, @NotNull String url) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending GET request to: " + url);
         final List<Response> responses = new ArrayList<>();
@@ -62,6 +62,15 @@ public class RestCanvasMessenger implements CanvasMessenger {
         }
         return response;
    }
+
+    @Override
+    public Response sendToJsonCanvas(String oauthToken, String url, JsonObject requestBody) throws InvalidOauthTokenException, IOException {
+        final Response response = restClient.sendJsonPost(oauthToken, url, requestBody.getAsString(), connectTimeout, readTimeout);
+        if (response.getResponseCode() == 401) {
+            throw new InvalidOauthTokenException();
+        }
+        return response;
+    }
 
     @Override
     public Response deleteFromCanvas(@NotNull String oauthToken, @NotNull String url, @NotNull Map<String,String> parameters) throws InvalidOauthTokenException, IOException {

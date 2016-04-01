@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "quiz_id": 2,
+    "position": 1,
+    "question_name": "Quiz Question 1",
+    "question_type": "multiple_choice_question",
+    "question_text": "Is this quiz question number 1?",
+    "points_possible": 5,
+    "correct_comments": "That's correct!",
+    "incorrect_comments": "Unfortunately, this IS quiz question number 1.",
+    "neutral_comments": "This is a neutral comment for quiz question number 1",
+    "answers": []
+  },
+  {
+    "id": 2,
+    "quiz_id": 2,
+    "position": 2,
+    "question_name": "Quiz Question 2",
+    "question_type": "multiple_choice_question",
+    "question_text": "Is this quiz question number 2?",
+    "points_possible": 5,
+    "correct_comments": "That's correct!",
+    "incorrect_comments": "Unfortunately, this IS quiz question number 2.",
+    "neutral_comments": "This is a neutral comment for quiz question number 2",
+    "answers": []
+  }
+]

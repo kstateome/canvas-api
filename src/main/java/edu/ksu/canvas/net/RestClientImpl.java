@@ -30,7 +30,6 @@ public class RestClientImpl implements RestClient {
         con.setRequestMethod("GET");
         con.setRequestProperty("Authorization", "Bearer" + " " + token);
 
-
         //deal with the actual content
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String inputLine;
