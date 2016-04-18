@@ -1,4 +1,4 @@
-package edu.ksu.canvas.course;
+package edu.ksu.canvas.tests.course;
 
 import edu.ksu.canvas.CanvasTestBase;
 import edu.ksu.canvas.impl.CoursesImpl;
