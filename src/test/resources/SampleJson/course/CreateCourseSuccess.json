@@ -1,0 +1,31 @@
+{
+  "id": 31517,
+  "name": "SeleniumTestCourse",
+  "account_id": 1,
+  "start_at": null,
+  "conclude_at": null,
+  "grading_standard_id": null,
+  "is_public": null,
+  "allow_student_forum_attachments": false,
+  "course_code": "SeleniumTestCourseCode",
+  "default_view": "feed",
+  "root_account_id": 1,
+  "enrollment_term_id": 1,
+  "open_enrollment": null,
+  "allow_wiki_comments": null,
+  "self_enrollment": null,
+  "license": null,
+  "restrict_enrollments_to_course_dates": false,
+  "end_at": null,
+  "public_syllabus": false,
+  "storage_quota_mb": 5000,
+  "is_public_to_auth_users": false,
+  "hide_final_grades": false,
+  "apply_assignment_group_weights": false,
+  "calendar": {
+    "ics": "https://k-state.test.instructure.com/feeds/calendars/course_b22Ue3gLiAfl3D1B9YedUPP1BFsHe3ME6PXTuj2m.ics"
+  },
+  "sis_course_id": null,
+  "integration_id": null,
+  "workflow_state": "unpublished"
+}
