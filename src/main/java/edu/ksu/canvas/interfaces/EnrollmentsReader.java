@@ -1,5 +1,6 @@
 package edu.ksu.canvas.interfaces;
 
+import edu.ksu.canvas.enums.EnrollmentType;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.model.Enrollment;
 
@@ -19,5 +20,8 @@ public interface EnrollmentsReader {
      * @throws IOException
      */
      List<Enrollment> getUserEnrollments(String oauthToken, Integer user_Id) throws InvalidOauthTokenException, IOException;
+
+
+     List<Enrollment> getSectionEnrollments(String oauthToken, Integer sectionId, List<EnrollmentType> enrollmentTypes) throws InvalidOauthTokenException, IOException;
 
 }
