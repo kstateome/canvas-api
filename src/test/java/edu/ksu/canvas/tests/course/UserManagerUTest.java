@@ -28,6 +28,8 @@ public class UserManagerUTest extends CanvasTestBase {
         User user = new User();
         user.setName("somestring4");
         user.setLoginId("somestring4");
+        String url = baseUrl + "/api/v1/accounts/1/users";
+        fakeRestClient.addSuccessResponse(url, "SampleJson/CreateUserResponse.json");
         Optional<User> response = userWriter.createUser(oauthToken.getToken(),user);
         System.out.println(response.toString());
         Assert.assertEquals("somestring4",response.get().getName());
