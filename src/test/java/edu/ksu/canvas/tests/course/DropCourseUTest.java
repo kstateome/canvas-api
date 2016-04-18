@@ -20,8 +20,9 @@ public class DropCourseUTest extends CanvasTestBase {
     private FakeRestClient fakeRestClient;
     private EnrollmentsWriter enrollmentsWriter;
     private EnrollmentsReader enrollmentsReader;
+
     @Before
-    public void setup() {
+    public void setupData() {
         enrollmentsWriter = new EnrollmentsImpl(baseUrl, apiVersion, oauthToken.getToken(), fakeRestClient);
         enrollmentsReader = new EnrollmentsImpl(baseUrl, apiVersion, oauthToken.getToken(), fakeRestClient);
     }
