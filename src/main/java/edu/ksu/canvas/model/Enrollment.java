@@ -32,7 +32,7 @@ public class Enrollment implements Serializable {
     private long totalActivityTime;
     private String htmlUrl;
     private Grade grades;
-    private String user;
+    private User user;
 
     public long getId() {
         return id;
@@ -210,11 +210,11 @@ public class Enrollment implements Serializable {
         this.grades = grades;
     }
 
-    public String getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(String user) {
+    public void setUser(User user) {
         this.user = user;
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(classes = {CommonTestConfig.class})
 @ActiveProfiles("dev")
 public class CanvasTestBase {
+    public static final String SOME_OAUTH_TOKEN = "token";
     @Autowired
     protected CanvasMessenger mockCanvasMessenger;
     protected OauthToken oauthToken;
@@ -25,7 +26,5 @@ public class CanvasTestBase {
     public void setup() {
         oauthToken = new OauthToken();
     }
-
-
 
 }

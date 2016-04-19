@@ -45,7 +45,7 @@ public class EnrollmentsImpl extends BaseImpl implements EnrollmentsReader,Enrol
     @Override
     public List<Enrollment> getSectionEnrollments(String oauthToken, Integer sectionId, List<EnrollmentType> enrollmentTypes) throws InvalidOauthTokenException, IOException {
         Map<String, List<String>> parameters = buildParameters(enrollmentTypes);
-        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "section/" + sectionId + "/enrollments", parameters);
+        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "sections/" + sectionId + "/enrollments", parameters);
         LOG.debug("create URl for get enrollments for section : "+ createdUrl);
         return retrieveEnrollments(oauthToken, createdUrl);
     }
@@ -94,7 +94,7 @@ public class EnrollmentsImpl extends BaseImpl implements EnrollmentsReader,Enrol
 
     private List<Enrollment> parseEnrollmentList(Response response) {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
-        Type listType = new TypeToken<List<edu.ksu.lti.model.Enrollment>>(){}.getType();
+        Type listType = new TypeToken<List<Enrollment>>(){}.getType();
         return gson.fromJson(response.getContent(), listType);
     }
 }
