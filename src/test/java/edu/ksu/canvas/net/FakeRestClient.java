@@ -10,29 +10,34 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FakeRestClient implements RestClient {
+    private static final Logger LOG = Logger.getLogger(FakeRestClient.class);
     public static int NO_TIMEOUT = 1000;
     private Map<String, Response> responseMap = new HashMap<>();
 
     @Override
     public Response sendApiGet(@NotNull String token, @NotNull String url, int connectTimeout, int readTimeout) throws IOException {
+        LOG.debug("Sending fake GET to " + url);
         checkForTimeout(connectTimeout, readTimeout);
         return response(url);
     }
 
     @Override
     public Response sendJsonPost(String token, String url, String json, int connectTimeout, int readTimeout) throws IOException {
+        LOG.debug("Sending fake JSON POST to " + url);
         checkForTimeout(connectTimeout, readTimeout);
         return response(url);
     }
 
     @Override
     public Response sendApiPost(String token, String url, Map<String, String> postParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+        LOG.debug("Sending fake POST to " + url);
         checkForTimeout(connectTimeout, readTimeout);
         return response(url);
     }
 
     @Override
     public Response sendApiDelete(@NotNull String token, @NotNull String url, Map<String, String> deleteParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+        LOG.debug("Sending fake DEL to " + url);
         checkForTimeout(connectTimeout, readTimeout);
         return response(url);
     }
@@ -48,7 +53,7 @@ public class FakeRestClient implements RestClient {
     private Response response(String url) throws IOException {
         Response response = responseMap.get(url);
         if (response == null) {
-            throw new IOException("Url does not exist in responseMap!");
+            throw new IOException("Url does not exist in responseMap: " + url);
         }
         return response;
     }
