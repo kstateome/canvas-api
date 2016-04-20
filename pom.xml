@@ -75,6 +75,8 @@
         <version>1.2.16</version>
         <scope>provided</scope>
     </dependency>
+
+    <!-- Everything below is for testing -->
     <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
@@ -104,11 +106,6 @@
         <artifactId>mockito-core</artifactId>
         <version>1.10.19</version>
         <scope>test</scope>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-core</artifactId>
-        <version>2.6.2</version>
     </dependency>
 
   </dependencies>
