@@ -1,14 +1,10 @@
 package edu.ksu.canvas.config;
 
-import edu.ksu.canvas.impl.EnrollmentsImpl;
 import edu.ksu.canvas.impl.GsonResponseParser;
 import edu.ksu.canvas.impl.RestCanvasMessenger;
-import edu.ksu.canvas.interfaces.EnrollmentsReader;
-import edu.ksu.canvas.repository.ConfigRepository;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.interfaces.CanvasMessenger;
 import edu.ksu.canvas.interfaces.ResponseParser;
-import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -39,10 +35,4 @@ public class CommonTestConfig {
     public ResponseParser canvasResponseParser() {
         return new GsonResponseParser();
     }
-
-    @Bean
-    public ConfigRepository configRepository() {
-        return Mockito.mock(ConfigRepository.class);
-    }
-
 }

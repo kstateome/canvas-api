@@ -81,11 +81,18 @@
         <version>4.12</version>
         <scope>test</scope>
     </dependency>
-      <dependency>
-          <groupId>edu.ksu.ome.lti</groupId>
-          <artifactId>lti-persist</artifactId>
-          <version>1.0.16</version>
-      </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-beans</artifactId>
+        <version>4.2.0.RELEASE</version>
+        <scope>test</scope>
+    </dependency>
+        <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>4.2.0.RELEASE</version>
+        <scope>test</scope>
+    </dependency>
       <dependency>
           <groupId>org.springframework</groupId>
           <artifactId>spring-test</artifactId>
