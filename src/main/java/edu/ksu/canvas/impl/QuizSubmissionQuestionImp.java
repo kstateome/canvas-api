@@ -22,7 +22,7 @@ import edu.ksu.canvas.model.quizzes.QuizSubmissionWrapper;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.util.CanvasURLBuilder;
-import edu.ksu.lti.error.MessageUndeliverableException;
+import edu.ksu.canvas.exception.MessageUndeliverableException;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;

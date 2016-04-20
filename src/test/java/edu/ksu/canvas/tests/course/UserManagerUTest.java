@@ -20,7 +20,7 @@ public class UserManagerUTest extends CanvasTestBase {
 
     @Before
     public void setupData() {
-        userWriter = new UserImpl(baseUrl, apiVersion, oauthToken.getToken(), fakeRestClient);
+        userWriter = new UserImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient);
     }
 
     @Test
@@ -30,7 +30,7 @@ public class UserManagerUTest extends CanvasTestBase {
         user.setLoginId("somestring4");
         String url = baseUrl + "/api/v1/accounts/1/users";
         fakeRestClient.addSuccessResponse(url, "SampleJson/CreateUserResponse.json");
-        Optional<User> response = userWriter.createUser(oauthToken.getToken(),user);
+        Optional<User> response = userWriter.createUser(SOME_OAUTH_TOKEN,user);
         System.out.println(response.toString());
         Assert.assertEquals("somestring4",response.get().getName());
         Assert.assertNotNull(response.get().getId());

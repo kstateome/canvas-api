@@ -44,7 +44,7 @@ public class QuizRetrieverUTest extends CanvasTestBase {
                 "courses/" + someCourseId + "/quizzes", Collections.emptyMap());
         fakeRestClient.addSuccessResponse(url, "SampleJson/quiz/QuizList.json");
 
-        List<Quiz> quizzess = quizReader.getQuizzesInCourse(oauthToken.getToken(), someCourseId);
+        List<Quiz> quizzess = quizReader.getQuizzesInCourse(SOME_OAUTH_TOKEN, someCourseId);
         Assert.assertEquals(2, quizzess.size());
         Assert.assertTrue(quizzess.stream().map(Quiz::getTitle).filter("Quiz1"::equals).findFirst().isPresent());
         Assert.assertTrue(quizzess.stream().map(Quiz::getTitle).filter("Quiz2"::equals).findFirst().isPresent());
@@ -59,7 +59,7 @@ public class QuizRetrieverUTest extends CanvasTestBase {
         erroredResponse.setErrorHappened(true);
         String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion,
                 "courses/" + someCourseId + "/quizzes", Collections.emptyMap());fakeRestClient.add401Response(url, "SampleJson/assignment/Assignment1.json");
-        quizReader.getQuizzesInCourse(oauthToken.getToken(), someCourseId);
+        quizReader.getQuizzesInCourse(SOME_OAUTH_TOKEN, someCourseId);
     }
 
     @Test(expected = JsonSyntaxException.class)
@@ -71,7 +71,7 @@ public class QuizRetrieverUTest extends CanvasTestBase {
                 "courses/" + someCourseId + "/quizzes", Collections.emptyMap());
         fakeRestClient.addSuccessResponse(url, "InvalidJson.json");
 
-        Assert.assertTrue(quizReader.getQuizzesInCourse(oauthToken.getToken(), someCourseId).isEmpty());
+        Assert.assertTrue(quizReader.getQuizzesInCourse(SOME_OAUTH_TOKEN, someCourseId).isEmpty());
     }
 
     @Test
@@ -81,7 +81,7 @@ public class QuizRetrieverUTest extends CanvasTestBase {
         String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion,
                 "courses/" + someCourseId + "/quizzes/" + someQuizId, Collections.emptyMap());
         fakeRestClient.addSuccessResponse(url, "SampleJson/quiz/Quiz1.json");
-        Optional<Quiz> quiz = quizReader.getSingleQuiz(oauthToken.getToken(), someCourseId, someQuizId);
+        Optional<Quiz> quiz = quizReader.getSingleQuiz(SOME_OAUTH_TOKEN, someCourseId, someQuizId);
         Assert.assertTrue(quiz.isPresent());
         Assert.assertEquals("Quiz1", quiz.map(Quiz::getTitle).orElse(""));
     }

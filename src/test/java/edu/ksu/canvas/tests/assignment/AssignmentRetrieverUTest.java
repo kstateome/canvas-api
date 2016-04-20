@@ -42,7 +42,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments";
         fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/AssignmentList.json");
 
-        List<Assignment> assignments = assignmentReader.listCourseAssignments(oauthToken.getToken(), someCourseId);
+        List<Assignment> assignments = assignmentReader.listCourseAssignments(SOME_OAUTH_TOKEN, someCourseId);
         Assert.assertEquals(2, assignments.size());
         Assert.assertTrue(assignments.stream().map(Assignment::getName).filter("Assignment1"::equals).findFirst().isPresent());
         Assert.assertTrue(assignments.stream().map(Assignment::getName).filter("Assignment2"::equals).findFirst().isPresent());
@@ -55,7 +55,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         erroredResponse.setErrorHappened(true);
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments";
         fakeRestClient.add401Response(url, "SampleJson/assignment/Assignment1.json");
-        assignmentReader.listCourseAssignments(oauthToken.getToken(), someCourseId);
+        assignmentReader.listCourseAssignments(SOME_OAUTH_TOKEN, someCourseId);
     }
 
     @Test(expected = JsonSyntaxException.class)
@@ -66,7 +66,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         String url =  baseUrl + "/api/v1/courses/" + someCourseId + "/assignments";
         fakeRestClient.addSuccessResponse(url, "InvalidJson.json");
 
-        Assert.assertTrue(assignmentReader.listCourseAssignments(oauthToken.getToken(), someCourseId).isEmpty());
+        Assert.assertTrue(assignmentReader.listCourseAssignments(SOME_OAUTH_TOKEN, someCourseId).isEmpty());
     }
 
     @Test
@@ -75,7 +75,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         String someAssignmentId = "123";
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments/" + someAssignmentId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/Assignment1.json");
-        Optional<Assignment> assignment = assignmentReader.getSingleAssignment(oauthToken.getToken(), someCourseId, someAssignmentId);
+        Optional<Assignment> assignment = assignmentReader.getSingleAssignment(SOME_OAUTH_TOKEN, someCourseId, someAssignmentId);
         Assert.assertTrue(assignment.isPresent());
         Assert.assertEquals("Assignment1", assignment.map(Assignment::getName).orElse(""));
     }
