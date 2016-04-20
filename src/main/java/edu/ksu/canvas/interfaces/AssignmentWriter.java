@@ -4,7 +4,7 @@ import edu.ksu.canvas.enums.AssignmentType;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.exception.OauthTokenRequiredException;
 import edu.ksu.canvas.model.Assignment;
-import edu.ksu.lti.error.MessageUndeliverableException;
+import edu.ksu.canvas.exception.MessageUndeliverableException;
 
 import java.io.IOException;
 import java.util.Optional;

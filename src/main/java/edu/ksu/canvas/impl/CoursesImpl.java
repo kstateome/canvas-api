@@ -16,7 +16,7 @@ import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.CourseWriter;
 import edu.ksu.canvas.model.Delete;
 import edu.ksu.canvas.net.RestClient;
-import edu.ksu.lti.model.CanvasCourse;
+import edu.ksu.canvas.model.Course;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -119,7 +119,7 @@ public class CoursesImpl extends BaseImpl implements CourseReader,CourseWriter {
     private List<Course> parseCourseList(final Response response) {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
         LOG.debug(response.getContent());
-        Type listType = new TypeToken<List<CanvasCourse>>(){}.getType();
+        Type listType = new TypeToken<List<Course>>(){}.getType();
         return gson.fromJson(response.getContent(), listType);
     }
 }

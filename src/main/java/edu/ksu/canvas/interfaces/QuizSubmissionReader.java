@@ -1,7 +1,7 @@
 package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.quizzes.QuizSubmission;
-import edu.ksu.lti.error.OauthTokenRequiredException;
+import edu.ksu.canvas.exception.OauthTokenRequiredException;
 
 import java.io.IOException;
 import java.util.List;
