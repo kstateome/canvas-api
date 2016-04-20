@@ -2,7 +2,6 @@ package edu.ksu.canvas.impl;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.net.URLEncoder;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -11,13 +10,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.constants.CanvasConstants;
-import edu.ksu.canvas.entity.lti.OauthToken;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.CourseWriter;
 import edu.ksu.canvas.model.Delete;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.model.Course;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.google.common.collect.ImmutableMap;
@@ -27,7 +24,6 @@ import edu.ksu.canvas.enums.CourseIncludes;
 import edu.ksu.canvas.enums.EnrollmentType;
 import edu.ksu.canvas.enums.CourseState;
 import edu.ksu.canvas.interfaces.CourseReader;
-import edu.ksu.canvas.model.Course;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.util.CanvasURLBuilder;
 

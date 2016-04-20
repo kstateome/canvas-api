@@ -2,8 +2,6 @@ package edu.ksu.canvas.impl;
 
 
 import com.google.gson.JsonObject;
-import edu.ksu.canvas.entity.lti.OauthToken;
-import edu.ksu.canvas.exception.OauthTokenRequiredException;
 import edu.ksu.canvas.net.RestClient;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -11,7 +9,6 @@ import org.apache.log4j.Logger;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.CanvasMessenger;
 import edu.ksu.canvas.net.Response;
-import edu.ksu.canvas.net.RestClientImpl;
 
 import java.io.IOException;
 import java.util.ArrayList;
