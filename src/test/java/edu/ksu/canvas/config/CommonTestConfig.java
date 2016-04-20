@@ -1,7 +1,9 @@
 package edu.ksu.canvas.config;
 
+import edu.ksu.canvas.impl.EnrollmentsImpl;
 import edu.ksu.canvas.impl.GsonResponseParser;
 import edu.ksu.canvas.impl.RestCanvasMessenger;
+import edu.ksu.canvas.interfaces.EnrollmentsReader;
 import edu.ksu.canvas.repository.ConfigRepository;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.interfaces.CanvasMessenger;
@@ -17,6 +19,7 @@ import org.springframework.context.annotation.Profile;
 @ComponentScan({"edu.ksu.canvas"})
 @Profile("dev")
 public class CommonTestConfig {
+    public static final int API_VERSION = 1;
     @Bean
     public String canvasBaseUrl() {
         return "domain";

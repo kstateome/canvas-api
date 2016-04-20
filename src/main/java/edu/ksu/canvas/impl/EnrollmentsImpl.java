@@ -1,10 +1,11 @@
 package edu.ksu.canvas.impl;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import edu.ksu.canvas.entity.lti.OauthToken;
+import edu.ksu.canvas.enums.EnrollmentType;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.CourseReader;
 import edu.ksu.canvas.interfaces.EnrollmentsReader;
@@ -13,7 +14,6 @@ import edu.ksu.canvas.model.Enrollment;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.util.CanvasURLBuilder;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -39,7 +39,15 @@ public class EnrollmentsImpl extends BaseImpl implements EnrollmentsReader,Enrol
     public List<Enrollment> getUserEnrollments(String oauthToken, Integer user_Id) throws InvalidOauthTokenException, IOException {
         String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "users/" + user_Id+ "/enrollments", Collections.emptyMap());
         LOG.debug("create URl for get enrollments for user : "+ createdUrl);
-        return retrieveEnrollment(oauthToken, createdUrl);
+        return retrieveEnrollments(oauthToken, createdUrl);
+    }
+
+    @Override
+    public List<Enrollment> getSectionEnrollments(String oauthToken, Integer sectionId, List<EnrollmentType> enrollmentTypes) throws InvalidOauthTokenException, IOException {
+        Map<String, List<String>> parameters = buildParameters(enrollmentTypes);
+        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "sections/" + sectionId + "/enrollments", parameters);
+        LOG.debug("create URl for get enrollments for section : "+ createdUrl);
+        return retrieveEnrollments(oauthToken, createdUrl);
     }
 
     @Override
@@ -70,7 +78,7 @@ public class EnrollmentsImpl extends BaseImpl implements EnrollmentsReader,Enrol
         return responseParser.parseToObject(Enrollment.class, response);
     }
 
-    private List<Enrollment> retrieveEnrollment(String oauthToken, String url) throws IOException {
+    private List<Enrollment> retrieveEnrollments(String oauthToken, String url) throws IOException {
         List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url);
         return responses.stream().
                 map(this::parseEnrollmentList).
@@ -78,9 +86,15 @@ public class EnrollmentsImpl extends BaseImpl implements EnrollmentsReader,Enrol
                 collect(Collectors.toList());
     }
 
+    private Map<String, List<String>> buildParameters(List<EnrollmentType> enrollmentTypes) {
+        return ImmutableMap.<String,List<String>>builder()
+                .put("type[]", enrollmentTypes.stream().map(EnrollmentType::canvasValue).collect(Collectors.toList()))
+                .build();
+    }
+
     private List<Enrollment> parseEnrollmentList(Response response) {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
-        Type listType = new TypeToken<List<edu.ksu.lti.model.Enrollment>>(){}.getType();
+        Type listType = new TypeToken<List<Enrollment>>(){}.getType();
         return gson.fromJson(response.getContent(), listType);
     }
 }
