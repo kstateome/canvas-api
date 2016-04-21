@@ -54,6 +54,9 @@ public class CanvasApiFactory {
 
         @SuppressWarnings("unchecked")
         Class<T> concreteClass = (Class<T>)instanceMap.get(type);
+        if(concreteClass == null) {
+            throw new UnsupportedOperationException("No implementation for requested interface in instanceMap: " + type.getName());
+        }
 
         System.out.println("got class: " + concreteClass);
         try {
@@ -61,7 +64,7 @@ public class CanvasApiFactory {
             T concreteInstance = constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient);
             return concreteInstance;
         } catch(NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
-            LOG.error("Error instantiating a concrete API class " + type.getName(), e);
+            LOG.error("Unknown error instantiating the concrete API class: " + type.getName(), e);
             throw new UnsupportedOperationException();
         }
     }
