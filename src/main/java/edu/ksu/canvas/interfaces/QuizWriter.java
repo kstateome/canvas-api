@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 
-public interface QuizWriter {
+public interface QuizWriter extends CanvasBase {
     /**
      *
      * @param oauthToken

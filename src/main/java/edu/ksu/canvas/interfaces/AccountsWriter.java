@@ -4,7 +4,7 @@ import edu.ksu.canvas.exception.InvalidOauthTokenException;
 
 import java.io.IOException;
 
-public interface AccountsWriter {
+public interface AccountsWriter extends CanvasBase {
     /**
      *
      * @param oauthToken

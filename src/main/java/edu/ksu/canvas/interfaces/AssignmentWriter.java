@@ -9,7 +9,7 @@ import edu.ksu.canvas.exception.MessageUndeliverableException;
 import java.io.IOException;
 import java.util.Optional;
 
-public interface AssignmentWriter {
+public interface AssignmentWriter extends CanvasBase {
     /**
      * Creates an assignment in canvas
      * @param oauthToken
