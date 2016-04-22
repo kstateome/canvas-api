@@ -5,8 +5,12 @@ package edu.ksu.canvas.model.quizzes;
  * * See <a href="https://canvas.instructure.com/doc/api/quiz_questions.html#QuizQuestion">Canvas Quiz Question</a> documentation.
  */
 
+import edu.ksu.canvas.annotation.CanvasField;
+import edu.ksu.canvas.annotation.CanvasObject;
+
 import java.util.List;
 
+@CanvasObject(postKey = "quizQuestion")
 public class QuizQuestion {
     private Integer id;
     private Integer quiz_id;
@@ -20,6 +24,7 @@ public class QuizQuestion {
     private String neutral_comments;
     private List<QuizAnswer> answers;
 
+    @CanvasField(postKey = "id", array = false)
     public Integer getId() {
         return id;
     }
@@ -28,6 +33,7 @@ public class QuizQuestion {
         this.id = id;
     }
 
+    @CanvasField(postKey = "quiz_id", array = false)
     public Integer getQuiz_id() {
         return quiz_id;
     }
@@ -36,6 +42,7 @@ public class QuizQuestion {
         this.quiz_id = quiz_id;
     }
 
+    @CanvasField(postKey = "position")
     public Integer getPosition() {
         return position;
     }
@@ -44,6 +51,7 @@ public class QuizQuestion {
         this.position = position;
     }
 
+    @CanvasField(postKey = "question_name")
     public String getQuestion_name() {
         return question_name;
     }
@@ -52,6 +60,7 @@ public class QuizQuestion {
         this.question_name = question_name;
     }
 
+    @CanvasField(postKey = "question_type")
     public String getQuestion_type() {
         return question_type;
     }
@@ -60,6 +69,7 @@ public class QuizQuestion {
         this.question_type = question_type;
     }
 
+    @CanvasField(postKey = "question_text")
     public String getQuestion_text() {
         return question_text;
     }
@@ -68,6 +78,7 @@ public class QuizQuestion {
         this.question_text = question_text;
     }
 
+    @CanvasField(postKey = "points_possible")
     public Double getPoints_possible() {
         return points_possible;
     }
@@ -76,6 +87,7 @@ public class QuizQuestion {
         this.points_possible = points_possible;
     }
 
+    @CanvasField(postKey = "correct_comments")
     public String getCorrect_comments() {
         return correct_comments;
     }
@@ -84,6 +96,7 @@ public class QuizQuestion {
         this.correct_comments = correct_comments;
     }
 
+    @CanvasField(postKey = "incorrect_comments")
     public String getIncorrect_comments() {
         return incorrect_comments;
     }
@@ -92,6 +105,7 @@ public class QuizQuestion {
         this.incorrect_comments = incorrect_comments;
     }
 
+    @CanvasField(postKey = "neutral_comments")
     public String getNeutral_comments() {
         return neutral_comments;
     }
@@ -100,6 +114,7 @@ public class QuizQuestion {
         this.neutral_comments = neutral_comments;
     }
 
+    @CanvasField(postKey = "answers")
     public List<QuizAnswer> getAnswers() {
         return answers;
     }

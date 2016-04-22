@@ -1,5 +1,8 @@
 package edu.ksu.canvas.model.quizzes;
 
+import edu.ksu.canvas.annotation.CanvasField;
+import edu.ksu.canvas.annotation.CanvasObject;
+
 import java.util.List;
 import java.util.Map;
 
@@ -7,7 +10,7 @@ import java.util.Map;
  * Class to represent Canvas quizzes.
  * See <a href="https://canvas.instructure.com/doc/api/quizzes.html#Quiz">Canvas Quiz</a> documentation.
  */
-
+@CanvasObject(postKey = "quiz")
 public class Quiz {
 
     private Integer id;
@@ -74,6 +77,7 @@ public class Quiz {
         this.id = id;
     }
 
+    @CanvasField(postKey = "title")
     public String getTitle() {
         return title;
     }
@@ -106,6 +110,7 @@ public class Quiz {
         this.preview_url = preview_url;
     }
 
+    @CanvasField(postKey = "description")
     public String getDescription() {
         return description;
     }
@@ -114,6 +119,7 @@ public class Quiz {
         this.description = description;
     }
 
+    @CanvasField(postKey = "quiz_type")
     public String getQuiz_type() {
         return quiz_type;
     }
@@ -122,6 +128,7 @@ public class Quiz {
         this.quiz_type = quiz_type;
     }
 
+    @CanvasField(postKey = "assignment_group_id")
     public Integer getAssignment_group_id() {
         return assignment_group_id;
     }
@@ -130,6 +137,7 @@ public class Quiz {
         this.assignment_group_id = assignment_group_id;
     }
 
+    @CanvasField(postKey = "time_limit")
     public Double getTime_limit() {
         return time_limit;
     }
@@ -138,6 +146,7 @@ public class Quiz {
         this.time_limit = time_limit;
     }
 
+    @CanvasField(postKey = "shuffle_answers")
     public Boolean getShuffle_answers() {
         return shuffle_answers;
     }
@@ -146,6 +155,7 @@ public class Quiz {
         this.shuffle_answers = shuffle_answers;
     }
 
+    @CanvasField(postKey = "hite_results")
     public String getHide_results() {
         return hide_results;
     }
@@ -162,6 +172,7 @@ public class Quiz {
         this.show_correct_answers = show_correct_answers;
     }
 
+    @CanvasField(postKey = "show_correct_answers_last_attempt")
     public Boolean getShow_correct_answers_last_attempt() {
         return show_correct_answers_last_attempt;
     }
@@ -170,6 +181,7 @@ public class Quiz {
         this.show_correct_answers_last_attempt = show_correct_answers_last_attempt;
     }
 
+    @CanvasField(postKey = "show_correct_answers_at")
     public String getShow_correct_answers_at() {
         return show_correct_answers_at;
     }
@@ -178,6 +190,7 @@ public class Quiz {
         this.show_correct_answers_at = show_correct_answers_at;
     }
 
+    @CanvasField(postKey = "hide_correct_answers_at")
     public String getHide_correct_answers_at() {
         return hide_correct_answers_at;
     }
@@ -186,6 +199,7 @@ public class Quiz {
         this.hide_correct_answers_at = hide_correct_answers_at;
     }
 
+    @CanvasField(postKey = "one_time_results")
     public Boolean getOne_time_results() {
         return one_time_results;
     }
@@ -202,6 +216,7 @@ public class Quiz {
         this.scoring_policy = scoring_policy;
     }
 
+    @CanvasField(postKey = "one_question_at_a_time")
     public Boolean getOne_question_at_a_time() {
         return one_question_at_a_time;
     }
@@ -226,6 +241,7 @@ public class Quiz {
         this.points_possible = points_possible;
     }
 
+    @CanvasField(postKey = "cant_go_back")
     public Boolean getCant_go_back() {
         return cant_go_back;
     }
@@ -234,6 +250,7 @@ public class Quiz {
         this.cant_go_back = cant_go_back;
     }
 
+    @CanvasField(postKey = "access_code")
     public String getAccess_code() {
         return access_code;
     }
@@ -242,6 +259,7 @@ public class Quiz {
         this.access_code = access_code;
     }
 
+    @CanvasField(postKey = "ip_filter")
     public String getIp_filter() {
         return ip_filter;
     }
@@ -250,6 +268,7 @@ public class Quiz {
         this.ip_filter = ip_filter;
     }
 
+    @CanvasField(postKey = "due_at")
     public String getDue_at() {
         return due_at;
     }
@@ -258,6 +277,7 @@ public class Quiz {
         this.due_at = due_at;
     }
 
+    @CanvasField(postKey = "lock_at")
     public String getLock_at() {
         return lock_at;
     }
@@ -266,6 +286,7 @@ public class Quiz {
         this.lock_at = lock_at;
     }
 
+    @CanvasField(postKey = "unlock_at")
     public String getUnlock_at() {
         return unlock_at;
     }
@@ -274,6 +295,7 @@ public class Quiz {
         this.unlock_at = unlock_at;
     }
 
+    @CanvasField(postKey = "published")
     public Boolean getPublished() {
         return published;
     }
