@@ -9,19 +9,17 @@ import java.util.Optional;
 public interface CourseWriter extends CanvasBase {
     /**
      *
-     * @param oauthToken
      * @return CreatedCourse
      * @throws InvalidOauthTokenException
      * @throws IOException
      */
-     Optional<Course> createCourse(String oauthToken,Course course) throws InvalidOauthTokenException, IOException;
+     Optional<Course> createCourse(Course course) throws InvalidOauthTokenException, IOException;
 
     /**
      *
-     * @param oauthToken
      * @return
      * @throws InvalidOauthTokenException
      * @throws IOException
      */
-     Boolean deleteCourse(String oauthToken, String course) throws InvalidOauthTokenException, IOException;
+     Boolean deleteCourse(String course) throws InvalidOauthTokenException, IOException;
 }

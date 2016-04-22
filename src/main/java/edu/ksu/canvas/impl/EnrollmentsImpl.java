@@ -36,14 +36,14 @@ public class EnrollmentsImpl extends BaseImpl implements EnrollmentsReader,Enrol
     }
 
     @Override
-    public List<Enrollment> getUserEnrollments(String oauthToken, Integer user_Id) throws InvalidOauthTokenException, IOException {
+    public List<Enrollment> getUserEnrollments(Integer user_Id) throws InvalidOauthTokenException, IOException {
         String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "users/" + user_Id+ "/enrollments", Collections.emptyMap());
         LOG.debug("create URl for get enrollments for user : "+ createdUrl);
         return retrieveEnrollments(oauthToken, createdUrl);
     }
 
     @Override
-    public List<Enrollment> getSectionEnrollments(String oauthToken, Integer sectionId, List<EnrollmentType> enrollmentTypes) throws InvalidOauthTokenException, IOException {
+    public List<Enrollment> getSectionEnrollments(Integer sectionId, List<EnrollmentType> enrollmentTypes) throws InvalidOauthTokenException, IOException {
         Map<String, List<String>> parameters = buildParameters(enrollmentTypes);
         String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "sections/" + sectionId + "/enrollments", parameters);
         LOG.debug("create URl for get enrollments for section : "+ createdUrl);
@@ -51,7 +51,7 @@ public class EnrollmentsImpl extends BaseImpl implements EnrollmentsReader,Enrol
     }
 
     @Override
-    public Optional<Enrollment> enrollUser(String oauthToken, Integer course_Id, Integer userId) throws InvalidOauthTokenException, IOException {
+    public Optional<Enrollment> enrollUser(Integer course_Id, Integer userId) throws InvalidOauthTokenException, IOException {
         Map<String,String> courseMap = new HashMap<>();
         courseMap.put("enrollment[user_id]", String.valueOf(userId));
         String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "courses/" + course_Id + "/enrollments", Collections.emptyMap());
@@ -65,7 +65,7 @@ public class EnrollmentsImpl extends BaseImpl implements EnrollmentsReader,Enrol
     }
 
     @Override
-    public Optional<Enrollment> dropUser(String oauthToken, Integer course_id, Long enrollment_id) throws InvalidOauthTokenException, IOException {
+    public Optional<Enrollment> dropUser(Integer course_id, Long enrollment_id) throws InvalidOauthTokenException, IOException {
         Map<String,String> postParams = new HashMap<>();
         postParams.put("task", "delete");
         String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "courses/" + course_id+ "/enrollments/"+enrollment_id, Collections.emptyMap());

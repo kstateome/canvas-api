@@ -26,7 +26,7 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
 
     @Before
     public void setupData() {
-        quizQuestionReader = new QuizQuestionImpl(baseUrl, apiVersion, null, fakeRestClient);
+        quizQuestionReader = new QuizQuestionImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
         notErroredResponse.setResponseCode(200);
         fakeRestClient.addSuccessResponse(url, "SampleJson/quiz/QuizQuestionList.json");
 
-        List<QuizQuestion> quizQuestions = quizQuestionReader.getQuizQuestions(SOME_OAUTH_TOKEN, someCourseId, someQUizId);
+        List<QuizQuestion> quizQuestions = quizQuestionReader.getQuizQuestions(someCourseId, someQUizId);
         Assert.assertEquals(2, quizQuestions.size());
         Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestion_name).filter("Quiz Question 1"::equals).findFirst().isPresent());
         Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestion_name).filter("Quiz Question 2"::equals).findFirst().isPresent());
@@ -53,7 +53,7 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
         String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion,
                 "courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions", Collections.emptyMap());  Response notErroredResponse = new Response();
         fakeRestClient.add401Response(url, "SampleJson/quiz/QuizQuestionList.json");
-        quizQuestionReader.getQuizQuestions(SOME_OAUTH_TOKEN, someCourseId, someQUizId);
+        quizQuestionReader.getQuizQuestions(someCourseId, someQUizId);
     }
 
     @Test(expected = JsonSyntaxException.class)
@@ -66,7 +66,7 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
                 "courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions", Collections.emptyMap());  Response notErroredResponse = new Response();
         fakeRestClient.addSuccessResponse(url, "InvalidJson.json");
 
-        Assert.assertTrue(quizQuestionReader.getQuizQuestions(SOME_OAUTH_TOKEN, someCourseId, someQUizId).isEmpty());
+        Assert.assertTrue(quizQuestionReader.getQuizQuestions(someCourseId, someQUizId).isEmpty());
     }
 
 }
