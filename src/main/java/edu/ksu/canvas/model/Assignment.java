@@ -1,5 +1,8 @@
 package edu.ksu.canvas.model;
 
+import edu.ksu.canvas.annotation.CanvasField;
+import edu.ksu.canvas.annotation.CanvasObject;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -7,6 +10,7 @@ import java.util.List;
  * Class to represent Canvas assigmnents.
  * See <a href="https://canvas.instructure.com/doc/api/assignments.html#Assignment">Canvas assignment</a> documentation.
  */
+@CanvasObject(postKey = "assignment")
 public class Assignment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,6 +53,10 @@ public class Assignment implements Serializable {
     private boolean locked_for_user;
 
 
+
+    private boolean notify_of_update;
+
+
     public String getId() {
         return id;
     }
@@ -57,6 +65,7 @@ public class Assignment implements Serializable {
         this.id = id;
     }
 
+    @CanvasField(postKey = "name")
     public String getName() {
         return name;
     }
@@ -65,6 +74,7 @@ public class Assignment implements Serializable {
         this.name = name;
     }
 
+    @CanvasField(postKey = "description")
     public String getDescription() {
         return description;
     }
@@ -89,6 +99,7 @@ public class Assignment implements Serializable {
         this.updated_at = updated_at;
     }
 
+    @CanvasField(postKey = "due_at")
     public String getDue_at() {
         return due_at;
     }
@@ -97,6 +108,7 @@ public class Assignment implements Serializable {
         this.due_at = due_at;
     }
 
+    @CanvasField(postKey = "lock_at")
     public String getLock_at() {
         return lock_at;
     }
@@ -105,6 +117,7 @@ public class Assignment implements Serializable {
         this.lock_at = lock_at;
     }
 
+    @CanvasField(postKey = "unlock_at")
     public String getUnlock_at() {
         return unlock_at;
     }
@@ -153,6 +166,7 @@ public class Assignment implements Serializable {
         this.allowed_extensions = allowed_extensions;
     }
 
+    @CanvasField(postKey = "turnitin_enabled")
     public boolean isTurnitin_enabled() {
         return turnitin_enabled;
     }
@@ -169,6 +183,7 @@ public class Assignment implements Serializable {
         this.turnitin_settings = turnitin_settings;
     }
 
+    @CanvasField(postKey = "grade_group_students_individually")
     public boolean isGrade_group_students_individually() {
         return grade_group_students_individually;
     }
@@ -185,6 +200,7 @@ public class Assignment implements Serializable {
         this.external_tool_tag_attributes = external_tool_tag_attributes;
     }
 
+    @CanvasField(postKey = "peer_reviews")
     public boolean isPeer_reviews() {
         return peer_reviews;
     }
@@ -193,6 +209,7 @@ public class Assignment implements Serializable {
         this.peer_reviews = peer_reviews;
     }
 
+    @CanvasField(postKey = "automatic_peer_reviews")
     public boolean isAutomatic_peer_reviews() {
         return automatic_peer_reviews;
     }
@@ -217,6 +234,7 @@ public class Assignment implements Serializable {
         this.peer_reviews_assign_at = peer_reviews_assign_at;
     }
 
+    @CanvasField(postKey = "group_category_id")
     public String getGroup_category_id() {
         return group_category_id;
     }
@@ -241,6 +259,7 @@ public class Assignment implements Serializable {
         this.needs_grading_count_by_section = needs_grading_count_by_section;
     }
 
+    @CanvasField(postKey = "position")
     public String getPosition() {
         return position;
     }
@@ -257,6 +276,7 @@ public class Assignment implements Serializable {
         this.post_to_sis = post_to_sis;
     }
 
+    @CanvasField(postKey = "integration_id")
     public String getIntegration_id() {
         return integration_id;
     }
@@ -265,6 +285,7 @@ public class Assignment implements Serializable {
         this.integration_id = integration_id;
     }
 
+    @CanvasField(postKey = "integration_data")
     public String getIntegration_data() {
         return integration_data;
     }
@@ -273,6 +294,7 @@ public class Assignment implements Serializable {
         this.integration_data = integration_data;
     }
 
+    @CanvasField(postKey = "muted")
     public String getMuted() {
         return muted;
     }
@@ -281,6 +303,7 @@ public class Assignment implements Serializable {
         this.muted = muted;
     }
 
+    @CanvasField(postKey = "points_possible")
     public String getPoints_possible() {
         return points_possible;
     }
@@ -297,6 +320,7 @@ public class Assignment implements Serializable {
         this.submission_types = submission_types;
     }
 
+    @CanvasField(postKey = "grading_type")
     public String getGrading_type() {
         return grading_type;
     }
@@ -305,6 +329,7 @@ public class Assignment implements Serializable {
         this.grading_type = grading_type;
     }
 
+    @CanvasField(postKey = "grading_standard_id")
     public String getGrading_standard_id() {
         return grading_standard_id;
     }
@@ -313,6 +338,7 @@ public class Assignment implements Serializable {
         this.grading_standard_id = grading_standard_id;
     }
 
+    @CanvasField(postKey = "published")
     public boolean isPublished() {
         return published;
     }
@@ -325,10 +351,7 @@ public class Assignment implements Serializable {
         return unpublishable;
     }
 
-    public void setUnpublishable(boolean unpublishable) {
-        this.unpublishable = unpublishable;
-    }
-
+    @CanvasField(postKey = "only_visible_to_overrides")
     public boolean isOnly_visible_to_overrides() {
         return only_visible_to_overrides;
     }
@@ -343,5 +366,14 @@ public class Assignment implements Serializable {
 
     public void setLocked_for_user(boolean locked_for_user) {
         this.locked_for_user = locked_for_user;
+    }
+
+    @CanvasField(postKey = "notify_of_update")
+    public boolean isNotify_of_update() {
+        return notify_of_update;
+    }
+
+    public void setNotify_of_update(boolean notify_of_update) {
+        this.notify_of_update = notify_of_update;
     }
 }
