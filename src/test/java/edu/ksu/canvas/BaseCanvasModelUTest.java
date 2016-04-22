@@ -27,7 +27,7 @@ public class BaseCanvasModelUTest {
         Assert.assertEquals("Field1Value from canvasModel.toPostMap() did not have expected value for field1", FIELD1_VALUE, postMap.get(expectedKey));
     }
 
-    /* Make sure canvasFields with arrays = false are of form object[field] */
+    /* Make sure canvasFields with arrays = false are of form 'field' */
     @Test
     public void postKeysAsNonArraysSetCorrectly() throws Exception {
         String expectedKey = FIELD2_POST_KEY;
