@@ -19,52 +19,74 @@ public class CanvasApiFactory {
     public static final Integer CANVAS_API_VERSION = 1;
     private String canvasBaseUrl;
 
-    Map<Class<? extends CanvasBase>, Class<? extends BaseImpl>> instanceMap;
+    Map<Class<? extends CanvasReader>, Class<? extends BaseImpl>> readerMap;
+    Map<Class<? extends CanvasWriter>, Class<? extends BaseImpl>> writerMap;
 
     public CanvasApiFactory(String canvasBaseUrl) {
         LOG.debug("Creating Canvas API factory with base URL: " + canvasBaseUrl);
         this.canvasBaseUrl = canvasBaseUrl;
-        instanceMap = new HashMap<>();
-        instanceMap.put(AccountsReader.class, AccountImpl.class);
-        instanceMap.put(AccountsWriter.class, AccountImpl.class);
-        instanceMap.put(AssignmentOverrideReader.class, AssignmentOverrideImp.class);
-        instanceMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImp.class);
-        instanceMap.put(AssignmentReader.class, AssignmentsImpl.class);
-        instanceMap.put(AssignmentWriter.class, AssignmentsImpl.class);
-        instanceMap.put(CourseReader.class, CoursesImpl.class);
-        instanceMap.put(CourseWriter.class, CoursesImpl.class);
-        instanceMap.put(EnrollmentsReader.class, EnrollmentsImpl.class);
-        instanceMap.put(EnrollmentsWriter.class, EnrollmentsImpl.class);
-        instanceMap.put(QuizQuestionReader.class, QuizQuestionImpl.class);
-        instanceMap.put(QuizQuestionWriter.class, QuizQuestionImpl.class);
-        instanceMap.put(QuizReader.class, QuizImpl.class);
-        instanceMap.put(QuizWriter.class, QuizImpl.class);
-        instanceMap.put(QuizSubmissionQuestionReader.class, QuizSubmissionImpl.class);
-        instanceMap.put(QuizSubmissionQuestionWriter.class, QuizSubmissionImpl.class);
-        instanceMap.put(QuizSubmissionReader.class, QuizSubmissionImpl.class);
-        instanceMap.put(QuizSubmissionWriter.class, QuizSubmissionImpl.class);
-        instanceMap.put(SectionReader.class, SectionsImpl.class);
-        instanceMap.put(UserReader.class, UserImpl.class);
-        instanceMap.put(UserWriter.class, UserImpl.class);
+        readerMap = new HashMap<>();
+        writerMap = new HashMap<>();
+        readerMap.put(AccountsReader.class, AccountImpl.class);
+        readerMap.put(AssignmentOverrideReader.class, AssignmentOverrideImp.class);
+        readerMap.put(AssignmentReader.class, AssignmentsImpl.class);
+        readerMap.put(CourseReader.class, CoursesImpl.class);
+        readerMap.put(EnrollmentsReader.class, EnrollmentsImpl.class);
+        readerMap.put(QuizQuestionReader.class, QuizQuestionImpl.class);
+        readerMap.put(QuizReader.class, QuizImpl.class);
+        readerMap.put(QuizSubmissionQuestionReader.class, QuizSubmissionImpl.class);
+        readerMap.put(QuizSubmissionReader.class, QuizSubmissionImpl.class);
+        readerMap.put(SectionReader.class, SectionsImpl.class);
+        readerMap.put(UserReader.class, UserImpl.class);
+
+        writerMap.put(AccountsWriter.class, AccountImpl.class);
+        writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImp.class);
+        writerMap.put(AssignmentWriter.class, AssignmentsImpl.class);
+        writerMap.put(CourseWriter.class, CoursesImpl.class);
+        writerMap.put(EnrollmentsWriter.class, EnrollmentsImpl.class);
+        writerMap.put(QuizQuestionWriter.class, QuizQuestionImpl.class);
+        writerMap.put(QuizWriter.class, QuizImpl.class);
+        writerMap.put(QuizSubmissionQuestionWriter.class, QuizSubmissionImpl.class);
+        writerMap.put(QuizSubmissionWriter.class, QuizSubmissionImpl.class);
+        writerMap.put(UserWriter.class, UserImpl.class);
     }
 
-    public <T extends CanvasBase> T getApiClass(Class<T> type, String oauthToken) {
+    public <T extends CanvasReader> T getReader(Class<T> type, String oauthToken) {
         LOG.debug("Factory call to instantiate class: " + type.getName());
         RestClient restClient = new RestClientImpl();
 
         @SuppressWarnings("unchecked")
-        Class<T> concreteClass = (Class<T>)instanceMap.get(type);
+        Class<T> concreteClass = (Class<T>)readerMap.get(type);
 
-        if(concreteClass == null) {
-            throw new UnsupportedOperationException("No implementation for requested interface in instanceMap: " + type.getName());
+        if (concreteClass == null) {
+            throw new UnsupportedOperationException("No implementation for requested interface found: " + type.getName());
         }
 
         LOG.debug("got class: " + concreteClass);
         try {
             Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, String.class, RestClient.class);
-            T concreteInstance = constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient);
-            return concreteInstance;
-        } catch(NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
+            return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient);
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
+            throw new UnsupportedOperationException("Unknown error instantiating the concrete API class: " + type.getName(), e);
+        }
+    }
+
+    public <T extends CanvasWriter> T getWriter(Class<T> type, String oauthToken) {
+        LOG.debug("Factory call to instantiate class: " + type.getName());
+        RestClient restClient = new RestClientImpl();
+
+        @SuppressWarnings("unchecked")
+        Class<T> concreteClass = (Class<T>) writerMap.get(type);
+
+        if (concreteClass == null) {
+            throw new UnsupportedOperationException("No implementation for requested interface found: " + type.getName());
+        }
+
+        LOG.debug("got class: " + concreteClass);
+        try {
+            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, String.class, RestClient.class);
+            return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient);
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
             throw new UnsupportedOperationException("Unknown error instantiating the concrete API class: " + type.getName(), e);
         }
     }

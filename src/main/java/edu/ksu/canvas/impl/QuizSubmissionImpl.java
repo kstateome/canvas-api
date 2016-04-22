@@ -93,5 +93,16 @@ public class QuizSubmissionImpl extends  BaseImpl implements QuizSubmissionReade
         public void setQuiz_submissions(List<QuizSubmission> quiz_submissions) {
             this.quiz_submissions = quiz_submissions;
         }
+
+    }
+
+    @Override
+    protected List parseListResponse(Response response) {
+        return null;
+    }
+
+    @Override
+    protected Optional parseObjectResponse(Response response) {
+        return null;
     }
 }

@@ -12,6 +12,8 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 public class AccountImpl extends  BaseImpl implements AccountsReader,AccountsWriter {
     private static final Logger LOG = Logger.getLogger(CourseReader.class);
@@ -36,5 +38,15 @@ public class AccountImpl extends  BaseImpl implements AccountsReader,AccountsWri
             return false;
         }
         return true;
+    }
+
+    @Override
+    protected List parseListResponse(Response response) {
+        return null;
+    }
+
+    @Override
+    protected Optional parseObjectResponse(Response response) {
+        return null;
     }
 }

@@ -30,6 +30,7 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 public class QuizSubmissionQuestionImp extends  BaseImpl implements QuizSubmissionQuestionReader, QuizSubmissionQuestionWriter {
     private static final Logger LOG = Logger.getLogger(QuizSubmissionQuestionImp.class);
@@ -107,5 +108,15 @@ public class QuizSubmissionQuestionImp extends  BaseImpl implements QuizSubmissi
             }
             return wrapper;
         }
+
+    }
+
+    @Override
+    protected List parseListResponse(Response response) {
+        return null;
+    }
+    @Override
+    protected Optional parseObjectResponse(Response response) {
+        return null;
     }
 }

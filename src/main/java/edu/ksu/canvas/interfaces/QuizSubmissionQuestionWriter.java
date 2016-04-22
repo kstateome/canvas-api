@@ -8,7 +8,7 @@ import edu.ksu.canvas.exception.MessageUndeliverableException;
 import java.io.IOException;
 import java.util.List;
 
-public interface QuizSubmissionQuestionWriter extends CanvasBase {
+public interface QuizSubmissionQuestionWriter extends CanvasWriter {
     /**
      * Answers questions on behalf of a user.
      * Uses Masquerading, thus requires Admin access

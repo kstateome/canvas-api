@@ -90,5 +90,13 @@ public class UserImpl  extends BaseImpl implements UserReader,UserWriter{
         return getDefaultGsonParser().fromJson(response.getContent(), listType);
     }
 
+    @Override
+    protected List parseListResponse(Response response) {
+        return null;
+    }
 
+    @Override
+    protected Optional parseObjectResponse(Response response) {
+        return null;
+    }
 }

@@ -62,4 +62,14 @@ public class QuizImpl extends  BaseImpl implements QuizReader, QuizWriter {
         Type listType = new TypeToken<List<Quiz>>(){}.getType();
         return getDefaultGsonParser().fromJson(response.getContent(), listType);
     }
+
+    @Override
+    protected List parseListResponse(Response response) {
+        return null;
+    }
+
+    @Override
+    protected Optional parseObjectResponse(Response response) {
+        return null;
+    }
 }

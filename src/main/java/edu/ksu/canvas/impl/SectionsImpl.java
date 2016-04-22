@@ -2,10 +2,7 @@ package edu.ksu.canvas.impl;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import edu.ksu.canvas.net.RestClient;
@@ -55,6 +52,16 @@ public class SectionsImpl extends BaseImpl implements SectionReader {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
         Type listType = new TypeToken<List<Section>>(){}.getType();
         return gson.fromJson(response.getContent(), listType);
+    }
+
+    @Override
+    protected List parseListResponse(Response response) {
+        return null;
+    }
+
+    @Override
+    protected Optional parseObjectResponse(Response response) {
+        return null;
     }
 
 }

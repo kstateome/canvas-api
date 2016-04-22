@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * Methods to read information from and about Assignments
  */
-public interface AssignmentReader extends CanvasBase {
+public interface AssignmentReader extends CanvasReader {
     /**
      * Retrieve a specific assignment from Canvas by its Canvas ID number
      * @param oauthToken    OAuth token to use when executing API calls

@@ -97,4 +97,14 @@ public class EnrollmentsImpl extends BaseImpl implements EnrollmentsReader,Enrol
         Type listType = new TypeToken<List<Enrollment>>(){}.getType();
         return gson.fromJson(response.getContent(), listType);
     }
+
+    @Override
+    protected List parseListResponse(Response response) {
+        return null;
+    }
+
+    @Override
+    protected Optional parseObjectResponse(Response response) {
+        return null;
+    }
 }

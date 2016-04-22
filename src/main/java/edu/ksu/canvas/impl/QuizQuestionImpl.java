@@ -15,6 +15,7 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class QuizQuestionImpl extends  BaseImpl implements QuizQuestionReader, QuizQuestionWriter {
@@ -43,5 +44,15 @@ public class QuizQuestionImpl extends  BaseImpl implements QuizQuestionReader, Q
     private List<QuizQuestion> parseQuizQuestionList(final Response response) {
         Type listType = new TypeToken<List<QuizQuestion>>(){}.getType();
         return getDefaultGsonParser().fromJson(response.getContent(), listType);
+    }
+
+    @Override
+    protected List parseListResponse(Response response) {
+        return null;
+    }
+
+    @Override
+    protected Optional parseObjectResponse(Response response) {
+        return null;
     }
 }

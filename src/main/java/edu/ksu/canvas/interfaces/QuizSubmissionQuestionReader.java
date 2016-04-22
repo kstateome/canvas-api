@@ -1,4 +1,4 @@
 package edu.ksu.canvas.interfaces;
 
-public interface QuizSubmissionQuestionReader extends CanvasBase {
+public interface QuizSubmissionQuestionReader extends CanvasReader {
 }

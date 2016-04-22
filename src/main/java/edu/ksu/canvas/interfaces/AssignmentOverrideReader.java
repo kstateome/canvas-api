@@ -1,4 +1,4 @@
 package edu.ksu.canvas.interfaces;
 
-public interface AssignmentOverrideReader extends CanvasBase {
+public interface AssignmentOverrideReader extends CanvasReader {
 }

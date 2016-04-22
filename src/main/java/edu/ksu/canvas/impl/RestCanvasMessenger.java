@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 
 import javax.validation.constraints.NotNull;
@@ -33,8 +34,13 @@ public class RestCanvasMessenger implements CanvasMessenger {
         this.restClient = restClient;
     }
 
-    //Todo: If we really need to do something as each response is received then we should provide a callback parameter
     public List<Response> getFromCanvas(@NotNull String oauthToken, @NotNull String url) throws InvalidOauthTokenException, IOException {
+        return getFromCanvas(oauthToken, url, null);
+    }
+
+
+    //Todo: If we really need to do something as each response is received then we should provide a callback parameter
+    public List<Response> getFromCanvas(@NotNull String oauthToken, @NotNull String url, Consumer<Response> callback) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending GET request to: " + url);
         final List<Response> responses = new ArrayList<>();
         while (!StringUtils.isBlank(url)) {
@@ -47,6 +53,9 @@ public class RestCanvasMessenger implements CanvasMessenger {
             }
             responses.add(response);
             url = response.getNextLink();
+            if (callback != null) {
+                callback.accept(response);
+            }
         }
         return responses;
     }

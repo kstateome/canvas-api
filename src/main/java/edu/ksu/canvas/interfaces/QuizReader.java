@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-public interface QuizReader extends CanvasBase {
+public interface QuizReader extends CanvasReader {
     /**
      * Retrieve a specific quiz from Canvas by its course and quiz Canvas ID numbers
      * @param oauthToken OAuth token to use when executing API calls

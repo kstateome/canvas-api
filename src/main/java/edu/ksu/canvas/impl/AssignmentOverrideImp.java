@@ -42,4 +42,14 @@ public class AssignmentOverrideImp extends BaseImpl implements AssignmentOverrid
         }
         return responseParser.parseToObject(AssignmentOverride.class, response);
     }
+
+    @Override
+    protected List parseListResponse(Response response) {
+        return null;
+    }
+
+    @Override
+    protected Optional parseObjectResponse(Response response) {
+        return null;
+    }
 }

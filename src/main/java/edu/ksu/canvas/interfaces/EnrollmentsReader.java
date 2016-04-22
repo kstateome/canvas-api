@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by prv on 10/8/15.
  */
-public interface EnrollmentsReader extends CanvasBase {
+public interface EnrollmentsReader extends CanvasReader {
     /**
      *
      * @param oauthToken

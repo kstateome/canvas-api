@@ -121,4 +121,14 @@ public class AssignmentsImpl extends BaseImpl implements AssignmentReader, Assig
         return getDefaultGsonParser().fromJson(response.getContent(), listType);
     }
 
+    @Override
+    protected List parseListResponse(Response response) {
+        return null;
+    }
+
+    @Override
+    protected Optional parseObjectResponse(Response response) {
+        return null;
+    }
+
 }
