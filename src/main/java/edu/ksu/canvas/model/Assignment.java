@@ -51,9 +51,6 @@ public class Assignment implements Serializable {
     private boolean unpublishable;
     private boolean only_visible_to_overrides;
     private boolean locked_for_user;
-
-
-
     private boolean notify_of_update;
 
 

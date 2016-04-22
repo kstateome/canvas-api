@@ -1,5 +1,8 @@
 package edu.ksu.canvas.model;
 
+import edu.ksu.canvas.annotation.CanvasField;
+import edu.ksu.canvas.annotation.CanvasObject;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,6 +10,7 @@ import java.util.Date;
  * Class to represent Canvas courses.
  * See <a href="https://canvas.instructure.com/doc/api/courses.html#Course">Canvas courses</a> documentation.
  */
+@CanvasObject(postKey = "course")
 public class Course implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -26,6 +30,7 @@ public class Course implements Serializable {
     private String workflowState;
     private Integer totalStudents;
 
+    @CanvasField(postKey = "account_id")
     public Integer getAccountId() {
         return accountId;
     }
@@ -34,6 +39,7 @@ public class Course implements Serializable {
         this.accountId = accountId;
     }
 
+    @CanvasField(postKey = "course_code")
     public String getCourseCode() {
         return courseCode;
     }
@@ -58,6 +64,7 @@ public class Course implements Serializable {
         this.id = id;
     }
 
+    @CanvasField(postKey = "name")
     public String getName() {
         return name;
     }
@@ -66,6 +73,7 @@ public class Course implements Serializable {
         this.name = name;
     }
 
+    @CanvasField(postKey = "start_at")
     public Date getStartAt() {
         return startAt;
     }
@@ -74,6 +82,7 @@ public class Course implements Serializable {
         this.startAt = startAt;
     }
 
+    @CanvasField(postKey = "end_at")
     public Date getEndAt() {
         return endAt;
     }
@@ -82,6 +91,7 @@ public class Course implements Serializable {
         this.endAt = endAt;
     }
 
+    @CanvasField(postKey = "public_syllabus")
     public Boolean getPublicSyllabus() {
         return publicSyllabus;
     }
@@ -98,6 +108,7 @@ public class Course implements Serializable {
         this.sotrageQuotaMb = sotrageQuotaMb;
     }
 
+    @CanvasField(postKey = "hide_final_grades")
     public Boolean getHideFinalGrades() {
         return hideFinalGrades;
     }
@@ -106,6 +117,7 @@ public class Course implements Serializable {
         this.hideFinalGrades = hideFinalGrades;
     }
 
+    @CanvasField(postKey = "apply_assignment_group_weights")
     public Boolean getApplyAssignmentGroupWeights() {
         return applyAssignmentGroupWeights;
     }
@@ -114,6 +126,7 @@ public class Course implements Serializable {
         this.applyAssignmentGroupWeights = applyAssignmentGroupWeights;
     }
 
+    @CanvasField(postKey = "sis_course_id")
     public String getSisCourseId() {
         return sisCourseId;
     }
@@ -122,6 +135,7 @@ public class Course implements Serializable {
         this.sisCourseId = sisCourseId;
     }
 
+    @CanvasField(postKey = "integration_id")
     public Integer getIntegrationId() {
         return integrationId;
     }
