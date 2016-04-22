@@ -1,4 +1,4 @@
 package edu.ksu.canvas.interfaces;
 
-public interface AccountsReader {
+public interface AccountsReader extends CanvasBase {
 }

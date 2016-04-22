@@ -13,7 +13,7 @@ import edu.ksu.canvas.model.User;
 /**
  * Methods to read information from and about courses
  */
-public interface CourseReader {
+public interface CourseReader extends CanvasBase {
 
     /**
      * Returns the list of active courses for the current user 

@@ -1,4 +1,4 @@
 package edu.ksu.canvas.interfaces;
 
-public interface QuizQuestionWriter {
+public interface QuizQuestionWriter extends CanvasBase {
 }

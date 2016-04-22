@@ -6,7 +6,7 @@ import edu.ksu.canvas.model.Course;
 import java.io.IOException;
 import java.util.Optional;
 
-public interface CourseWriter {
+public interface CourseWriter extends CanvasBase {
     /**
      *
      * @param oauthToken

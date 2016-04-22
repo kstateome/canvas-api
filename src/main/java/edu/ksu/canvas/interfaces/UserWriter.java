@@ -6,7 +6,7 @@ import edu.ksu.canvas.model.User;
 import java.io.IOException;
 import java.util.Optional;
 
-public interface UserWriter {
+public interface UserWriter extends CanvasBase {
     /**
      *
      * @param oauthToken
