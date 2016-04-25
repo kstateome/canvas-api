@@ -27,7 +27,7 @@ public class AccountImpl extends  BaseImpl implements AccountsReader,AccountsWri
     }
 
     @Override
-    public Boolean deleteUser(String oauthToken, Integer userId) throws InvalidOauthTokenException, IOException {
+    public Boolean deleteUser(Integer userId) throws InvalidOauthTokenException, IOException {
         String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "accounts/" + CanvasConstants.ACCOUNT_ID + "/users/" + userId, Collections.emptyMap());
         LOG.debug("create URl for user creation : "+ createdUrl);
         Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, null);

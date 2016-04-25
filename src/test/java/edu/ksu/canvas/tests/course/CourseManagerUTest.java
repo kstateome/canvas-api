@@ -21,7 +21,7 @@ public class CourseManagerUTest extends CanvasTestBase {
 
     @Before
     public void setupData() {
-        courseWriter = new CoursesImpl(baseUrl,apiVersion,null, fakeRestClient);
+        courseWriter = new CoursesImpl(baseUrl,apiVersion,SOME_OAUTH_TOKEN, fakeRestClient);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class CourseManagerUTest extends CanvasTestBase {
         newCourse.setName("SeleniumTestCourse");
         String url = baseUrl + "/api/v1/accounts/1/courses";
         fakeRestClient.addSuccessResponse(url, "SampleJson/course/CreateCourseSuccess.json");
-        Optional<Course> response = courseWriter.createCourse(SOME_OAUTH_TOKEN,newCourse);
+        Optional<Course> response = courseWriter.createCourse(newCourse);
         Assert.assertNotNull(response.get().getName());
         Assert.assertEquals("SeleniumTestCourseCode",response.get().getCourseCode());
     }
@@ -41,6 +41,6 @@ public class CourseManagerUTest extends CanvasTestBase {
         String arbitraryCourseId = "20732";
         String url = baseUrl + "/api/v1/courses/" + arbitraryCourseId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/course/DeleteCourseSuccess.json");
-        Assert.assertTrue(courseWriter.deleteCourse(SOME_OAUTH_TOKEN, arbitraryCourseId));
+        Assert.assertTrue(courseWriter.deleteCourse(arbitraryCourseId));
     }
 }

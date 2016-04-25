@@ -7,6 +7,6 @@ import java.io.IOException;
 import java.util.List;
 
 public interface UserReader extends CanvasBase {
-    List<User> getUsersInCourse(String oauthToken, String courseId) throws OauthTokenRequiredException, IOException;
+    List<User> getUsersInCourse(String courseId) throws OauthTokenRequiredException, IOException;
 
 }

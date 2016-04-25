@@ -25,7 +25,7 @@ public class AssignmentOverrideImp extends BaseImpl implements AssignmentOverrid
     }
 
     @Override
-    public Optional<AssignmentOverride> createAssignmentOverride(String oauthToken, String courseId, String assignmentId, List<Integer> studentIds, String title) throws MessageUndeliverableException, IOException, OauthTokenRequiredException {
+    public Optional<AssignmentOverride> createAssignmentOverride(String courseId, String assignmentId, List<Integer> studentIds, String title) throws MessageUndeliverableException, IOException, OauthTokenRequiredException {
         String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
                 "courses/" + courseId + "/assignments/" + assignmentId + "/overrides", Collections.emptyMap());
         JsonObject requestBody = new JsonObject();

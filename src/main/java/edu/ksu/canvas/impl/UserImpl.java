@@ -34,7 +34,7 @@ public class UserImpl  extends BaseImpl implements UserReader,UserWriter{
     }
 
     @Override
-    public Optional<User> createUser(String oauthToken, User user) throws InvalidOauthTokenException, IOException {
+    public Optional<User> createUser(User user) throws InvalidOauthTokenException, IOException {
         Map<String, String> postParameters = new HashMap<>();
         postParameters.put("name", user.getName());
         postParameters.put("pseudonym[unique_id]", user.getLoginId());
@@ -49,7 +49,7 @@ public class UserImpl  extends BaseImpl implements UserReader,UserWriter{
     }
 
     @Override
-    public Optional<User> updateUser(String oauthToken, User user) throws InvalidOauthTokenException, IOException {
+    public Optional<User> updateUser(User user) throws InvalidOauthTokenException, IOException {
         Map<String, String> postParameters = new HashMap<>();
         postParameters.put("name", user.getName());
         postParameters.put("pseudonym[unique_id]", user.getLoginId());
@@ -64,7 +64,7 @@ public class UserImpl  extends BaseImpl implements UserReader,UserWriter{
     }
 
     @Override
-    public List<User> getUsersInCourse(String oauthToken, String courseId) throws OauthTokenRequiredException, IOException {
+    public List<User> getUsersInCourse(String courseId) throws OauthTokenRequiredException, IOException {
         Map<String, List<String>> postParameters = new HashMap<>();
         postParameters.put("enrollment_type", Arrays.asList("student"));
         postParameters.put("include[]", Arrays.asList("enrollments"));

@@ -7,11 +7,10 @@ import java.io.IOException;
 public interface AccountsWriter extends CanvasBase {
     /**
      *
-     * @param oauthToken
      * @param userId  canvas user if for the user
      * @return
      * @throws InvalidOauthTokenException
      * @throws IOException
      */
-     Boolean deleteUser(String oauthToken, Integer userId) throws InvalidOauthTokenException, IOException;
+     Boolean deleteUser(Integer userId) throws InvalidOauthTokenException, IOException;
 }

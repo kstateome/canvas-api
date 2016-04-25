@@ -9,23 +9,21 @@ import java.util.Optional;
 public interface UserWriter extends CanvasBase {
     /**
      *
-     * @param oauthToken
      * @param user  user data for creating user account
      * @return
      * @throws InvalidOauthTokenException
      * @throws IOException
      */
-     Optional<User> createUser (String oauthToken,User user) throws InvalidOauthTokenException, IOException;
+     Optional<User> createUser (User user) throws InvalidOauthTokenException, IOException;
 
 
 
     /**
      *
-     * @param oauthToken
      * @param user
      * @return
      * @throws InvalidOauthTokenException
      * @throws IOException
      */
-     Optional<User> updateUser(String oauthToken, User user) throws InvalidOauthTokenException, IOException;
+     Optional<User> updateUser(User user) throws InvalidOauthTokenException, IOException;
 }
