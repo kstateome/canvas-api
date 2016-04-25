@@ -18,7 +18,7 @@ public class TestCanvasModel extends BaseCanvasModel {
         return field1;
     }
 
-    public void setArrayPostKey(String field1) {
+    public void setField1(String field1) {
         this.field1 = field1;
     }
 
@@ -27,7 +27,7 @@ public class TestCanvasModel extends BaseCanvasModel {
         return field2;
     }
 
-    public void setNonArrayPostKey(String field2) {
+    public void setField2(String field2) {
         this.field2 = field2;
     }
 }

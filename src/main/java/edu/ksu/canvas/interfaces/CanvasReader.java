@@ -10,6 +10,6 @@ public interface CanvasReader<T> {
      * to perform operations on paginated calls before the final
      * response is complete.
      */
-    CanvasReader withCallBack(Consumer<List<T>> responseConsumer);
+    CanvasReader withCallback(Consumer<List<T>> responseConsumer);
 
 }

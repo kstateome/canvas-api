@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 /**
  * Base class for accessing the Canvas API
  */
-public abstract class BaseImpl<T> implements CanvasReader<T> {
+public abstract class BaseImpl<T> implements CanvasReader<T>, CanvasWriter {
     private static Logger LOG = Logger.getLogger(BaseImpl.class);
 
     protected String canvasBaseUrl;
@@ -65,7 +65,7 @@ public abstract class BaseImpl<T> implements CanvasReader<T> {
     }
 
     @Override
-    public CanvasReader withCallBack(Consumer<List<T>> responseReceivedCallBack) {
+    public CanvasReader withCallback(Consumer<List<T>> responseReceivedCallBack) {
         responseCallback = responseReceivedCallBack;
         return this;
     }
