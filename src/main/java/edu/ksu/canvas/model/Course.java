@@ -11,7 +11,7 @@ import java.util.Date;
  * See <a href="https://canvas.instructure.com/doc/api/courses.html#Course">Canvas courses</a> documentation.
  */
 @CanvasObject(postKey = "course")
-public class Course implements Serializable {
+public class Course extends BaseCanvasModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer accountId;

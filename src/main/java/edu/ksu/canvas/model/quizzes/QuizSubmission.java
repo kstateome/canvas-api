@@ -2,6 +2,7 @@ package edu.ksu.canvas.model.quizzes;
 
 import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
+import edu.ksu.canvas.model.BaseCanvasModel;
 
 /**
  * Class to represent Canvas quiz submission.
@@ -9,7 +10,7 @@ import edu.ksu.canvas.annotation.CanvasObject;
  */
 
 @CanvasObject(postKey = "quizSubmission")
-public class QuizSubmission {
+public class QuizSubmission extends BaseCanvasModel {
     private Integer id;
     private Integer quiz_id;
     private Integer user_id;

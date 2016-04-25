@@ -11,7 +11,7 @@ import java.util.List;
  * See <a href="https://canvas.instructure.com/doc/api/assignments.html#Assignment">Canvas assignment</a> documentation.
  */
 @CanvasObject(postKey = "assignment")
-public class Assignment implements Serializable {
+public class Assignment extends BaseCanvasModel implements Serializable{
 
     private static final long serialVersionUID = 1L;
     private String id;

@@ -2,6 +2,7 @@ package edu.ksu.canvas.model.quizzes;
 
 import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
+import edu.ksu.canvas.model.BaseCanvasModel;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,7 @@ import java.util.Map;
  * See <a href="https://canvas.instructure.com/doc/api/quizzes.html#Quiz">Canvas Quiz</a> documentation.
  */
 @CanvasObject(postKey = "quiz")
-public class Quiz {
+public class Quiz extends BaseCanvasModel {
 
     private Integer id;
     private String title;

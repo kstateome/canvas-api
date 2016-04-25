@@ -11,7 +11,7 @@ import java.util.List;
  * See the <a href="https://canvas.instructure.com/doc/api/users.html#User">Canvas User</a> documentation.
  */
 @CanvasObject(postKey = "user")
-public class User implements Serializable {
+public class User extends BaseCanvasModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private int id;

@@ -11,7 +11,7 @@ import java.util.Date;
  * See <a href="https://canvas.instructure.com/doc/api/sections.html#Section">Canvas Section</a> documentation.
  */
 @CanvasObject(postKey = "course_section")
-public class Section implements Serializable {
+public class Section extends BaseCanvasModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private long id;

@@ -7,11 +7,12 @@ package edu.ksu.canvas.model.quizzes;
 
 import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
+import edu.ksu.canvas.model.BaseCanvasModel;
 
 import java.util.List;
 
 @CanvasObject(postKey = "quizQuestion")
-public class QuizQuestion {
+public class QuizQuestion extends BaseCanvasModel {
     private Integer id;
     private Integer quiz_id;
     private Integer position;
