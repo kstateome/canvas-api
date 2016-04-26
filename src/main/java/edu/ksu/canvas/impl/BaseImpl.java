@@ -4,6 +4,7 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.*;
 import edu.ksu.canvas.model.BaseCanvasModel;
 import edu.ksu.canvas.net.Response;
@@ -11,6 +12,7 @@ import edu.ksu.canvas.net.RestClient;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -74,7 +76,7 @@ public abstract class BaseImpl<T> implements CanvasReader<T>, CanvasWriter {
 
     protected abstract Optional<T> parseObjectResponse(Response response);
 
-    protected List<T> parseListOfResponses(List<Response> responses) {
+    protected List<T> parseListOfResponses(List<Response> responses)
         return responses
                 .stream()
                 .map(this::parseListResponse)

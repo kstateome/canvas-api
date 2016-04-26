@@ -39,7 +39,6 @@ public class RestCanvasMessenger implements CanvasMessenger {
     }
 
 
-    //Todo: If we really need to do something as each response is received then we should provide a callback parameter
     public List<Response> getFromCanvas(@NotNull String oauthToken, @NotNull String url, Consumer<Response> callback) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending GET request to: " + url);
         final List<Response> responses = new ArrayList<>();
