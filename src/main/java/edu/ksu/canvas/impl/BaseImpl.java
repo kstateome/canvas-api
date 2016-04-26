@@ -76,7 +76,7 @@ public abstract class BaseImpl<T> implements CanvasReader<T>, CanvasWriter {
 
     protected abstract Optional<T> parseObjectResponse(Response response);
 
-    protected List<T> parseListOfResponses(List<Response> responses)
+    protected List<T> parseListOfResponses(List<Response> responses) {
         return responses
                 .stream()
                 .map(this::parseListResponse)
