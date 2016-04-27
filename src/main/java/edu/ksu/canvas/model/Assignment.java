@@ -1,6 +1,5 @@
 package edu.ksu.canvas.model;
 
-import edu.ksu.canvas.annotation.CanvasObject;
 
 import java.io.Serializable;
 import java.util.List;
