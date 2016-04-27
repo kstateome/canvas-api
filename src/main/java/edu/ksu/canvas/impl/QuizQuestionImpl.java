@@ -15,9 +15,10 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class QuizQuestionImpl extends  BaseImpl implements QuizQuestionReader, QuizQuestionWriter {
+public class QuizQuestionImpl extends BaseImpl<QuizQuestion, QuizQuestionReader> implements QuizQuestionReader, QuizQuestionWriter {
     private static final Logger LOG = Logger.getLogger(QuizQuestionImpl.class);
 
     public QuizQuestionImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {
@@ -43,5 +44,15 @@ public class QuizQuestionImpl extends  BaseImpl implements QuizQuestionReader, Q
     private List<QuizQuestion> parseQuizQuestionList(final Response response) {
         Type listType = new TypeToken<List<QuizQuestion>>(){}.getType();
         return getDefaultGsonParser().fromJson(response.getContent(), listType);
+    }
+
+    @Override
+    protected Type listType() {
+        return new TypeToken<List<QuizQuestion>>(){}.getType();
+    }
+
+    @Override
+    protected Class<QuizQuestion> objectType() {
+        return QuizQuestion.class;
     }
 }

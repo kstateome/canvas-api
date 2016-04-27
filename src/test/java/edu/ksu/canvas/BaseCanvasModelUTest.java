@@ -19,7 +19,7 @@ public class BaseCanvasModelUTest {
     public void postKeysAsArraysSetCorrectly() throws Exception {
         String expectedKey = CLASS_POST_KEY + "[" + FIELD1_POST_KEY + "]";
         TestCanvasModel canvasModel = new TestCanvasModel();
-        canvasModel.setArrayPostKey(FIELD1_VALUE);
+        canvasModel.setField1(FIELD1_VALUE);
 
         Map<String, Object> postMap = canvasModel.toPostMap();
 
@@ -32,7 +32,7 @@ public class BaseCanvasModelUTest {
     public void postKeysAsNonArraysSetCorrectly() throws Exception {
         String expectedKey = FIELD2_POST_KEY;
         TestCanvasModel canvasModel = new TestCanvasModel();
-        canvasModel.setNonArrayPostKey(FIELD2_VALUE);
+        canvasModel.setField2(FIELD2_VALUE);
 
         Map<String, Object> postMap = canvasModel.toPostMap();
 

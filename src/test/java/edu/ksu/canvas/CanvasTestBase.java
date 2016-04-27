@@ -2,6 +2,7 @@ package edu.ksu.canvas;
 
 import edu.ksu.canvas.config.CommonTestConfig;
 import edu.ksu.canvas.interfaces.CanvasMessenger;
+import edu.ksu.canvas.net.FakeRestClient;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
@@ -17,5 +18,7 @@ public class CanvasTestBase {
     protected CanvasMessenger mockCanvasMessenger;
     @Autowired
     protected String baseUrl;
+    @Autowired
+    protected FakeRestClient fakeRestClient;
     protected Integer apiVersion = 1;
 }

@@ -1,4 +1,6 @@
 package edu.ksu.canvas.interfaces;
 
-public interface QuizSubmissionQuestionReader extends CanvasBase {
+import edu.ksu.canvas.model.quizzes.QuizSubmissionQuestion;
+
+public interface QuizSubmissionQuestionReader extends CanvasReader<QuizSubmissionQuestion, QuizSubmissionQuestionReader> {
 }

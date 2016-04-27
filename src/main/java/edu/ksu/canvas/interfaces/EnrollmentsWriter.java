@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * Created by prv on 10/8/15.
  */
-public interface EnrollmentsWriter extends CanvasBase {
+public interface EnrollmentsWriter extends CanvasWriter {
 
      Optional<Enrollment> enrollUser(Integer course_Id, Integer userId) throws InvalidOauthTokenException, IOException;
 

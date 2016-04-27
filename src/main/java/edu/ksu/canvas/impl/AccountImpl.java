@@ -1,5 +1,6 @@
 package edu.ksu.canvas.impl;
 
+import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.AccountsReader;
@@ -11,9 +12,12 @@ import edu.ksu.canvas.util.CanvasURLBuilder;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
-public class AccountImpl extends  BaseImpl implements AccountsReader,AccountsWriter {
+public class AccountImpl extends BaseImpl implements AccountsReader,AccountsWriter {
     private static final Logger LOG = Logger.getLogger(CourseReader.class);
     /**
      * Construct a new CanvasApi class with an OAuth token
@@ -37,4 +41,15 @@ public class AccountImpl extends  BaseImpl implements AccountsReader,AccountsWri
         }
         return true;
     }
+
+    @Override
+    protected Type listType() {
+        return new TypeToken<List<AccountImpl>>(){}.getType();
+    }
+
+    @Override
+    protected Class<AccountImpl> objectType() {
+        return AccountImpl.class;
+    }
+
 }

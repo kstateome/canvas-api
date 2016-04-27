@@ -8,12 +8,11 @@ import edu.ksu.canvas.enums.CourseIncludes;
 import edu.ksu.canvas.enums.EnrollmentType;
 import edu.ksu.canvas.enums.CourseState;
 import edu.ksu.canvas.model.Course;
-import edu.ksu.canvas.model.User;
 
 /**
  * Methods to read information from and about courses
  */
-public interface CourseReader extends CanvasBase {
+public interface CourseReader extends CanvasReader<Course, CourseReader> {
 
     /**
      * Returns the list of active courses for the current user 

@@ -1,0 +1,11 @@
+[
+  {
+    "field1": "object1Field1",
+    "field2": "object1Field2"
+  },
+
+  {
+    "field1": "object2Field1",
+    "field2": "object2Field2"
+  }
+]

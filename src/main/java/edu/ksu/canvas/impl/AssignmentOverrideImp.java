@@ -1,6 +1,7 @@
 package edu.ksu.canvas.impl;
 
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.AssignmentOverrideReader;
 import edu.ksu.canvas.interfaces.AssignmentOverrideWriter;
 import edu.ksu.canvas.model.AssignmentOverride;
@@ -12,11 +13,12 @@ import edu.ksu.canvas.exception.OauthTokenRequiredException;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class AssignmentOverrideImp extends BaseImpl implements AssignmentOverrideReader, AssignmentOverrideWriter {
+public class AssignmentOverrideImp extends BaseImpl<AssignmentOverride, AssignmentOverrideReader> implements AssignmentOverrideReader, AssignmentOverrideWriter {
     private static final Logger LOG = Logger.getLogger(AssignmentOverrideImp.class);
 
 
@@ -42,4 +44,15 @@ public class AssignmentOverrideImp extends BaseImpl implements AssignmentOverrid
         }
         return responseParser.parseToObject(AssignmentOverride.class, response);
     }
+
+    @Override
+    protected Type listType() {
+        return new TypeToken<List<AssignmentOverride>>(){}.getType();
+    }
+
+    @Override
+    protected Class<AssignmentOverride> objectType() {
+        return AssignmentOverride.class;
+    }
+
 }

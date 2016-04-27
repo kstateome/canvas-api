@@ -9,7 +9,7 @@ import edu.ksu.canvas.exception.MessageUndeliverableException;
 import java.io.IOException;
 import java.util.Optional;
 
-public interface AssignmentWriter extends CanvasBase {
+public interface AssignmentWriter extends CanvasWriter {
     /**
      * Creates an assignment in canvas
      * @param courseId id of the course the quiz is going to be in

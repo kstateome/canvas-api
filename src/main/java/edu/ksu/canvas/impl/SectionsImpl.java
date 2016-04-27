@@ -2,12 +2,11 @@ package edu.ksu.canvas.impl;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import edu.ksu.canvas.interfaces.CanvasReader;
 import edu.ksu.canvas.net.RestClient;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -24,7 +23,7 @@ import edu.ksu.canvas.model.Section;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.util.CanvasURLBuilder;
 
-public class SectionsImpl extends BaseImpl implements SectionReader {
+public class SectionsImpl extends BaseImpl<Section, SectionReader> implements SectionReader {
 
     private static final Logger LOG = Logger.getLogger(SectionReader.class);
 
@@ -55,6 +54,16 @@ public class SectionsImpl extends BaseImpl implements SectionReader {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
         Type listType = new TypeToken<List<Section>>(){}.getType();
         return gson.fromJson(response.getContent(), listType);
+    }
+
+    @Override
+    protected Type listType() {
+        return new TypeToken<List<Section>>(){}.getType();
+    }
+
+    @Override
+    protected Class<Section> objectType() {
+        return Section.class;
     }
 
 }

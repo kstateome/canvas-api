@@ -17,10 +17,9 @@ import java.util.Optional;
 public class GsonResponseParser implements ResponseParser {
 
     @Override
-    public <T> List<T> parseToList(Class<T> clazz, Response response) {
+    public <T> List<T> parseToList(Type type, Response response) {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
-        Type listType = new TypeToken<List<T>>(){}.getType();
-        return gson.fromJson(response.getContent(), listType);
+        return gson.fromJson(response.getContent(), type);
     }
 
     @Override

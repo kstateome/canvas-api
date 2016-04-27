@@ -17,7 +17,7 @@ import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class UserImpl  extends BaseImpl implements UserReader,UserWriter{
+public class UserImpl extends BaseImpl<User, UserReader> implements UserReader,UserWriter{
     private static final Logger LOG = Logger.getLogger(UserImpl.class);
 
     private static final String API_RESULTS_PER_PAGE = "100";
@@ -90,5 +90,14 @@ public class UserImpl  extends BaseImpl implements UserReader,UserWriter{
         return getDefaultGsonParser().fromJson(response.getContent(), listType);
     }
 
+    @Override
+    protected Type listType() {
+        return new TypeToken<List<User>>(){}.getType();
+    }
+
+    @Override
+    protected Class<User> objectType() {
+        return User.class;
+    }
 
 }

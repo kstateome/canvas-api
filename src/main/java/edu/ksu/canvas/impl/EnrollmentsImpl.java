@@ -21,7 +21,7 @@ import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class EnrollmentsImpl extends BaseImpl implements EnrollmentsReader,EnrollmentsWriter {
+public class EnrollmentsImpl extends BaseImpl<Enrollment, EnrollmentsReader> implements EnrollmentsReader,EnrollmentsWriter {
     private static final Logger LOG = Logger.getLogger(CourseReader.class);
     /**
      * Construct a new CanvasApi class with an OAuth token
@@ -97,4 +97,15 @@ public class EnrollmentsImpl extends BaseImpl implements EnrollmentsReader,Enrol
         Type listType = new TypeToken<List<Enrollment>>(){}.getType();
         return gson.fromJson(response.getContent(), listType);
     }
+
+    @Override
+    protected Type listType() {
+        return new TypeToken<List<Enrollment>>(){}.getType();
+    }
+
+    @Override
+    protected Class<Enrollment> objectType() {
+        return Enrollment.class;
+    }
+
 }

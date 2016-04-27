@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class AssignmentsImpl extends BaseImpl implements AssignmentReader, AssignmentWriter{
+public class AssignmentsImpl extends BaseImpl<Assignment, AssignmentReader> implements AssignmentReader, AssignmentWriter{
     private static final Logger LOG = Logger.getLogger(AssignmentReader.class);
 
     public AssignmentsImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {
@@ -119,6 +119,16 @@ public class AssignmentsImpl extends BaseImpl implements AssignmentReader, Assig
     private List<Assignment> parseAssignmentList(final Response response) {
         Type listType = new TypeToken<List<Assignment>>(){}.getType();
         return getDefaultGsonParser().fromJson(response.getContent(), listType);
+    }
+
+    @Override
+    protected Type listType() {
+        return new TypeToken<List<Assignment>>(){}.getType();
+    }
+
+    @Override
+    protected Class<Assignment> objectType() {
+        return Assignment.class;
     }
 
 }

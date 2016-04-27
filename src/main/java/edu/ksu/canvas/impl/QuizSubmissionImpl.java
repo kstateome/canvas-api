@@ -1,5 +1,6 @@
 package edu.ksu.canvas.impl;
 
+import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.QuizSubmissionReader;
 import edu.ksu.canvas.interfaces.QuizSubmissionWriter;
 import edu.ksu.canvas.model.quizzes.QuizSubmission;
@@ -11,6 +12,7 @@ import edu.ksu.canvas.exception.OauthTokenRequiredException;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -19,7 +21,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class QuizSubmissionImpl extends  BaseImpl implements QuizSubmissionReader, QuizSubmissionWriter {
+public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionReader> implements QuizSubmissionReader, QuizSubmissionWriter {
     private static final Logger LOG = Logger.getLogger(QuizSubmissionImpl.class);
 
      public QuizSubmissionImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {
@@ -93,5 +95,17 @@ public class QuizSubmissionImpl extends  BaseImpl implements QuizSubmissionReade
         public void setQuiz_submissions(List<QuizSubmission> quiz_submissions) {
             this.quiz_submissions = quiz_submissions;
         }
+
     }
+
+    @Override
+    protected Type listType() {
+        return new TypeToken<List<QuizSubmission>>(){}.getType();
+    }
+
+    @Override
+    protected Class<QuizSubmission> objectType() {
+        return QuizSubmission.class;
+    }
+
 }

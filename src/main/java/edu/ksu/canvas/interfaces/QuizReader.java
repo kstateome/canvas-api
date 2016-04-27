@@ -1,15 +1,13 @@
 package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.quizzes.Quiz;
-import edu.ksu.canvas.model.quizzes.QuizQuestion;
-import edu.ksu.canvas.model.quizzes.QuizSubmission;
 import edu.ksu.canvas.exception.OauthTokenRequiredException;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-public interface QuizReader extends CanvasBase {
+public interface QuizReader extends CanvasReader<Quiz, QuizReader>{
     /**
      * Retrieve a specific quiz from Canvas by its course and quiz Canvas ID numbers
      * @param courseId   The Canvas ID of the course
