@@ -42,7 +42,7 @@ public class RestCanvasMessenger implements CanvasMessenger {
     public List<Response> getFromCanvas(@NotNull String oauthToken, @NotNull String url, Consumer<Response> callback) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending GET request to: " + url);
         final List<Response> responses = new ArrayList<>();
-        while (!StringUtils.isBlank(url)) {
+        while (StringUtils.isNotBlank(url)) {
             Response response = getSingleResponseFromCanvas(oauthToken, url);
             if (response.getResponseCode() == 401) {
                 throw new InvalidOauthTokenException();
