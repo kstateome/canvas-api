@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 
 public abstract class BaseImpl<T, READERTYPE extends CanvasReader> implements CanvasReader<T, READERTYPE>, CanvasWriter {
-    private static Logger LOG = Logger.getLogger(BaseImpl.class);
+    private static final Logger LOG = Logger.getLogger(BaseImpl.class);
 
     protected String canvasBaseUrl;
     protected Integer apiVersion;
