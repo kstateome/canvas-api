@@ -4,8 +4,10 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import edu.ksu.canvas.interfaces.*;
-import edu.ksu.canvas.model.BaseCanvasModel;
+import edu.ksu.canvas.interfaces.CanvasMessenger;
+import edu.ksu.canvas.interfaces.CanvasReader;
+import edu.ksu.canvas.interfaces.CanvasWriter;
+import edu.ksu.canvas.interfaces.ResponseParser;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import org.apache.log4j.Logger;
