@@ -8,11 +8,13 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 public class BaseImplUTest extends CanvasTestBase {
     public static final String URL_FOR_FIRST_RESPONSE = "testModels/1";
     public static final String URL_FOR_SECOND_RESPONSE = "testModels/2";
+    public static final String URL_FOR_SINGLE_OBJECT_RESPONSE = "testModels/model";
     private TestCanvasReader canvasReader;
     private boolean callbackWasCalled;
 
@@ -83,6 +85,15 @@ public class BaseImplUTest extends CanvasTestBase {
         callbackWasCalled = false;
         canvasReader.getTestModels();
         Assert.assertFalse("Callback should not be saved for future calls", callbackWasCalled);
+    }
+
+    @Test
+    public void getFromCanvasParsesObject() throws IOException {
+        fakeRestClient.addSuccessResponse(URL_FOR_SINGLE_OBJECT_RESPONSE, "TestModels/TestModel.json");
+        Optional<TestCanvasModel> modelOptional = canvasReader.getTestModel();
+        TestCanvasModel model = modelOptional.orElseThrow(() -> new AssertionError("Expected getfromCanvas to return non-empty object"));
+        Assert.assertEquals("field1", model.getField1());
+        Assert.assertEquals("field2", model.getField2());
     }
 
     // I'm getting around the fact that Java won't let you capture non final variables in anonymous functions

@@ -2,7 +2,6 @@ package edu.ksu.canvas;
 
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.impl.BaseImpl;
-import edu.ksu.canvas.interfaces.CanvasReader;
 import edu.ksu.canvas.model.TestCanvasModel;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
@@ -10,6 +9,7 @@ import edu.ksu.canvas.net.RestClient;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Optional;
 
 public class TestCanvasReaderImpl extends BaseImpl<TestCanvasModel, TestCanvasReader> implements TestCanvasReader {
 
@@ -19,6 +19,10 @@ public class TestCanvasReaderImpl extends BaseImpl<TestCanvasModel, TestCanvasRe
 
     public List<TestCanvasModel> getTestModels() throws IOException {
         return getListFromCanvas(BaseImplUTest.URL_FOR_FIRST_RESPONSE);
+    }
+
+    public Optional<TestCanvasModel> getTestModel() throws IOException {
+        return getFromCanvas(BaseImplUTest.URL_FOR_SINGLE_OBJECT_RESPONSE);
     }
 
     protected List<TestCanvasModel> parseListResponse(Response response) {
