@@ -27,7 +27,7 @@ public class QuizImpl extends  BaseImpl implements QuizReader, QuizWriter {
     }
 
     @Override
-    public Optional<Quiz> getSingleQuiz(String oauthToken, String courseId, String quizId) throws OauthTokenRequiredException, IOException {
+    public Optional<Quiz> getSingleQuiz(String courseId, String quizId) throws OauthTokenRequiredException, IOException {
         String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
                 "courses/" + courseId + "/quizzes/" + quizId, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
@@ -35,7 +35,7 @@ public class QuizImpl extends  BaseImpl implements QuizReader, QuizWriter {
     }
 
     @Override
-    public List<Quiz> getQuizzesInCourse(String oauthToken, String courseId) throws OauthTokenRequiredException, IOException {
+    public List<Quiz> getQuizzesInCourse(String courseId) throws OauthTokenRequiredException, IOException {
         String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
                 "courses/" + courseId + "/quizzes", Collections.emptyMap());
         List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url);
@@ -43,7 +43,7 @@ public class QuizImpl extends  BaseImpl implements QuizReader, QuizWriter {
     }
 
     @Override
-    public Optional<Quiz> updateQuiz(String oauthToken, Quiz quiz, String courseId) throws MessageUndeliverableException, IOException, OauthTokenRequiredException {
+    public Optional<Quiz> updateQuiz(Quiz quiz, String courseId) throws MessageUndeliverableException, IOException, OauthTokenRequiredException {
         String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
                 "courses/" + courseId + "/quizzes/" + quiz.getId(), Collections.emptyMap());
         Response response = canvasMessenger.sendToJsonCanvas(oauthToken, url,

@@ -24,7 +24,7 @@ public class UserRetrieverUTest extends CanvasTestBase {
 
     @Before
     public void setupData() {
-        userReader = new UserImpl(baseUrl, apiVersion, null, fakeRestClient);
+        userReader = new UserImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient);
     }
 
     @Test
@@ -37,7 +37,7 @@ public class UserRetrieverUTest extends CanvasTestBase {
                 "courses/" + someCourseId + "/users", Collections.emptyMap());
         fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserList.json");
 
-        List<User> users = userReader.getUsersInCourse(SOME_OAUTH_TOKEN, someCourseId);
+        List<User> users = userReader.getUsersInCourse(someCourseId);
         Assert.assertEquals(2, users.size());
         Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 1"::equals).findFirst().isPresent());
         Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 2"::equals).findFirst().isPresent());

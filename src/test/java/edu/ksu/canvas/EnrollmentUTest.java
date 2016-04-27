@@ -32,7 +32,7 @@ public class EnrollmentUTest extends CanvasTestBase {
     
     @Test
     public void getSectionEnrollmentParsesEnrollmentObject() throws Exception {
-        List<Enrollment> enrollments = enrollmentsReader.getSectionEnrollments(SOME_OAUTH_TOKEN, SECTION_ID, Collections.singletonList(EnrollmentType.STUDENT));
+        List<Enrollment> enrollments = enrollmentsReader.getSectionEnrollments(SECTION_ID, Collections.singletonList(EnrollmentType.STUDENT));
         
         Enrollment firstEnrollment = enrollments.get(0);
         Assert.assertEquals("Expected id in object to match id in json", 1, firstEnrollment.getId());
@@ -50,7 +50,7 @@ public class EnrollmentUTest extends CanvasTestBase {
 
     @Test
     public void getSectionEnrollmentParsesUserObject() throws Exception {
-        List<Enrollment> enrollments = enrollmentsReader.getSectionEnrollments(SOME_OAUTH_TOKEN, SECTION_ID, Collections.singletonList(EnrollmentType.STUDENT));
+        List<Enrollment> enrollments = enrollmentsReader.getSectionEnrollments(SECTION_ID, Collections.singletonList(EnrollmentType.STUDENT));
 
         Enrollment firstEnrollment = enrollments.get(0);
         User firstUser = firstEnrollment.getUser();
@@ -64,7 +64,7 @@ public class EnrollmentUTest extends CanvasTestBase {
 
     @Test
     public void getSectionEnrollmentsParsesGradeObject() throws Exception {
-        List<Enrollment> enrollments = enrollmentsReader.getSectionEnrollments(SOME_OAUTH_TOKEN, SECTION_ID, Collections.singletonList(EnrollmentType.STUDENT));
+        List<Enrollment> enrollments = enrollmentsReader.getSectionEnrollments(SECTION_ID, Collections.singletonList(EnrollmentType.STUDENT));
 
         Enrollment firstEnrollment = enrollments.get(0);
         Grade grade = firstEnrollment.getGrades();
@@ -77,7 +77,7 @@ public class EnrollmentUTest extends CanvasTestBase {
 
     @Test
     public void getSectionEnrollmentsHasCorrectSizeList() throws Exception {
-        List<Enrollment> enrollments = enrollmentsReader.getSectionEnrollments(SOME_OAUTH_TOKEN, SECTION_ID, Collections.singletonList(EnrollmentType.STUDENT));
+        List<Enrollment> enrollments = enrollmentsReader.getSectionEnrollments(SECTION_ID, Collections.singletonList(EnrollmentType.STUDENT));
         Assert.assertEquals("Expected enrollmentReader to return 3 enrollments from the JSON", 3, enrollments.size());
     }
     

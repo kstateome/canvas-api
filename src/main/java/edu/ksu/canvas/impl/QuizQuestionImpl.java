@@ -26,7 +26,7 @@ public class QuizQuestionImpl extends  BaseImpl implements QuizQuestionReader, Q
     }
 
     @Override
-    public List<QuizQuestion> getQuizQuestions(String oauthToken, String courseId, String quizId) throws OauthTokenRequiredException, IOException {
+    public List<QuizQuestion> getQuizQuestions(String courseId, String quizId) throws OauthTokenRequiredException, IOException {
         String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
                 "courses/" + courseId + "/quizzes/" + quizId + "/questions", Collections.emptyMap());
         List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url);

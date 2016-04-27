@@ -13,15 +13,14 @@ import java.util.List;
 public interface EnrollmentsReader extends CanvasReader {
     /**
      *
-     * @param oauthToken
      * @param user_Id
      * @return
      * @throws InvalidOauthTokenException
      * @throws IOException
      */
-     List<Enrollment> getUserEnrollments(String oauthToken, Integer user_Id) throws InvalidOauthTokenException, IOException;
+     List<Enrollment> getUserEnrollments(Integer user_Id) throws InvalidOauthTokenException, IOException;
 
 
-     List<Enrollment> getSectionEnrollments(String oauthToken, Integer sectionId, List<EnrollmentType> enrollmentTypes) throws InvalidOauthTokenException, IOException;
+     List<Enrollment> getSectionEnrollments(Integer sectionId, List<EnrollmentType> enrollmentTypes) throws InvalidOauthTokenException, IOException;
 
 }

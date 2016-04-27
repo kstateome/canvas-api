@@ -34,7 +34,7 @@ public class AssignmentsImpl extends BaseImpl implements AssignmentReader, Assig
     }
 
     @Override
-    public List<Assignment> listCourseAssignments(String oauthToken, String courseId) throws IOException {
+    public List<Assignment> listCourseAssignments(String courseId) throws IOException {
         String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
                 "courses/" + courseId + "/assignments" , Collections.emptyMap());
         List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url);
@@ -42,7 +42,7 @@ public class AssignmentsImpl extends BaseImpl implements AssignmentReader, Assig
     }
 
     @Override
-    public Optional<Assignment> getSingleAssignment(String oauthToken, String courseId, String assignmentId) throws IOException {
+    public Optional<Assignment> getSingleAssignment(String courseId, String assignmentId) throws IOException {
         String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
                 "courses/" + courseId + "/assignments/" + assignmentId, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
@@ -50,13 +50,13 @@ public class AssignmentsImpl extends BaseImpl implements AssignmentReader, Assig
     }
 
     @Override
-    public Optional<Assignment> createAssignment(String oauthToken, String courseId, String assignmentName, String pointsPossible) throws InvalidOauthTokenException, IOException {
-        return createAssignment(oauthToken, courseId, assignmentName, pointsPossible,
+    public Optional<Assignment> createAssignment(String courseId, String assignmentName, String pointsPossible) throws InvalidOauthTokenException, IOException {
+        return createAssignment(courseId, assignmentName, pointsPossible,
                 AssignmentType.ON_PAPER, true, true);
     }
 
     @Override
-    public Optional<Assignment> createAssignment(String oauthToken, String courseId, String assignmentName, String pointsPossible,
+    public Optional<Assignment> createAssignment(String courseId, String assignmentName, String pointsPossible,
                                                  AssignmentType assignmentType, boolean published, boolean muted) throws InvalidOauthTokenException, IOException {
         ImmutableMap<String, List<String>> parameters = ImmutableMap.<String,List<String>>builder()
                 .put("assignment[name]", Collections.singletonList(assignmentName))
@@ -75,7 +75,7 @@ public class AssignmentsImpl extends BaseImpl implements AssignmentReader, Assig
     }
 
     @Override
-    public Boolean deleteAssignment(String oauthToken, String courseId, String assignmentId) throws InvalidOauthTokenException, IOException {
+    public Boolean deleteAssignment(String courseId, String assignmentId) throws InvalidOauthTokenException, IOException {
         Map<String, String> postParams = new HashMap<>();
         postParams.put("event", "delete");
         String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
@@ -91,7 +91,7 @@ public class AssignmentsImpl extends BaseImpl implements AssignmentReader, Assig
     }
 
     @Override
-    public Optional<Assignment> setOnlyVisibleToOverrides(String oauthToken, String courseId, String assignmentId, boolean onlyVisibleToOverrides)
+    public Optional<Assignment> setOnlyVisibleToOverrides(String courseId, String assignmentId, boolean onlyVisibleToOverrides)
             throws MessageUndeliverableException, IOException, OauthTokenRequiredException{
         String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
                 "courses/" + courseId + "/assignments/" + assignmentId, Collections.emptyMap());

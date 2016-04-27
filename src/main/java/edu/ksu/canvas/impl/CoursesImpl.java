@@ -77,7 +77,7 @@ public class CoursesImpl extends BaseImpl<Course> implements CourseReader, Cours
     }
 
     @Override
-    public Optional<Course> createCourse(String oauthToken, Course course) throws InvalidOauthTokenException, IOException {
+    public Optional<Course> createCourse(Course course) throws InvalidOauthTokenException, IOException {
         //TODO to parse object to map<String,List<String>>
         Map<String,String> postParams = new HashMap<>();
         postParams.put("course[course_code]", course.getCourseCode());
@@ -94,7 +94,7 @@ public class CoursesImpl extends BaseImpl<Course> implements CourseReader, Cours
 
 
     @Override
-    public Boolean deleteCourse(String oauthToken, String courseId) throws InvalidOauthTokenException, IOException {
+    public Boolean deleteCourse(String courseId) throws InvalidOauthTokenException, IOException {
         Map<String,String> postParams = new HashMap<>();
         postParams.put("event", "delete");
         String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "courses/" + courseId, Collections.emptyMap());

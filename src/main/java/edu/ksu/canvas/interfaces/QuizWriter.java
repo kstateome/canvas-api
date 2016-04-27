@@ -11,7 +11,6 @@ import java.util.Optional;
 public interface QuizWriter extends CanvasWriter {
     /**
      *
-     * @param oauthToken
      * @param quiz
      * @param courseId
      * @return UpdatedQuiz
@@ -19,6 +18,6 @@ public interface QuizWriter extends CanvasWriter {
      * @throws UnsupportedEncodingException
      * @throws OauthTokenRequiredException
      */
-    Optional<Quiz> updateQuiz(String oauthToken, Quiz quiz, String courseId)
+    Optional<Quiz> updateQuiz(Quiz quiz, String courseId)
             throws MessageUndeliverableException, IOException, OauthTokenRequiredException;
 }
