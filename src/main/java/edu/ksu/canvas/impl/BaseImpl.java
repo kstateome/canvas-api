@@ -83,8 +83,16 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader> implements Ca
         return responseParser.parseToList(listType(), response);
     }
 
+    /*
+     * Subclasses should return the type of a list that will be parsed by gson when using call that returns lists.
+     * For example, CourseReaderImpl returns 'TypeToken<List<Course>>(){}.getType();'
+     */
     protected abstract Type listType();
 
+    /*
+     * Subclasses should return the type of model that will be parsed by gson when using a call that returns a single
+     * object. For example, CourseReaderImpl returns Course.class.
+     */
     protected abstract Class<T> objectType();
 
     protected List<T> parseListOfResponses(List<Response> responses) {
