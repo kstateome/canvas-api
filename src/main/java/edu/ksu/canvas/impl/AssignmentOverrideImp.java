@@ -1,6 +1,7 @@
 package edu.ksu.canvas.impl;
 
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.AssignmentOverrideReader;
 import edu.ksu.canvas.interfaces.AssignmentOverrideWriter;
 import edu.ksu.canvas.model.AssignmentOverride;
@@ -46,12 +47,12 @@ public class AssignmentOverrideImp extends BaseImpl<AssignmentOverride, Assignme
 
     @Override
     protected Type listType() {
-        return null;
+        return new TypeToken<List<AssignmentOverride>>(){}.getType();
     }
 
     @Override
-    protected Class objectType() {
-        return null;
+    protected Class<AssignmentOverride> objectType() {
+        return AssignmentOverride.class;
     }
 
 }

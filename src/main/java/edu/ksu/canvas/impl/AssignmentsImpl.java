@@ -123,12 +123,12 @@ public class AssignmentsImpl extends BaseImpl<Assignment, AssignmentReader> impl
 
     @Override
     protected Type listType() {
-        return null;
+        return new TypeToken<List<Assignment>>(){}.getType();
     }
 
     @Override
-    protected Class objectType() {
-        return null;
+    protected Class<Assignment> objectType() {
+        return Assignment.class;
     }
 
 }

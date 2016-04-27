@@ -1,5 +1,6 @@
 package edu.ksu.canvas.impl;
 
+import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.QuizSubmissionReader;
 import edu.ksu.canvas.interfaces.QuizSubmissionWriter;
 import edu.ksu.canvas.model.quizzes.QuizSubmission;
@@ -99,12 +100,12 @@ public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionR
 
     @Override
     protected Type listType() {
-        return null;
+        return new TypeToken<List<QuizSubmission>>(){}.getType();
     }
 
     @Override
-    protected Class objectType() {
-        return null;
+    protected Class<QuizSubmission> objectType() {
+        return QuizSubmission.class;
     }
 
 }

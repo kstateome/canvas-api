@@ -1,5 +1,6 @@
 package edu.ksu.canvas.impl;
 
+import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.AccountsReader;
@@ -43,12 +44,12 @@ public class AccountImpl extends BaseImpl implements AccountsReader,AccountsWrit
 
     @Override
     protected Type listType() {
-        return null;
+        return new TypeToken<List<AccountImpl>>(){}.getType();
     }
 
     @Override
-    protected Class objectType() {
-        return null;
+    protected Class<AccountImpl> objectType() {
+        return AccountImpl.class;
     }
 
 }

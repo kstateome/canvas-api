@@ -6,6 +6,7 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.CourseWriter;
@@ -102,12 +103,12 @@ public class CoursesImpl extends BaseImpl<Course, CourseReader> implements Cours
 
     @Override
     protected Type listType() {
-        return null;
+        return new TypeToken<List<Course>>(){}.getType();
     }
 
     @Override
     protected Class<Course> objectType() {
-        return null;
+        return Course.class;
     }
 
     @Override

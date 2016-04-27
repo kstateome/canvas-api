@@ -92,12 +92,12 @@ public class UserImpl extends BaseImpl<User, UserReader> implements UserReader,U
 
     @Override
     protected Type listType() {
-        return null;
+        return new TypeToken<List<User>>(){}.getType();
     }
 
     @Override
-    protected Class objectType() {
-        return null;
+    protected Class<User> objectType() {
+        return User.class;
     }
 
 }

@@ -112,12 +112,12 @@ public class QuizSubmissionQuestionImp extends BaseImpl<QuizSubmissionQuestion, 
 
     @Override
     protected Type listType() {
-        return null;
+        return new TypeToken<List<QuizSubmissionQuestion>>(){}.getType();
     }
 
     @Override
-    protected Class objectType() {
-        return null;
+    protected Class<QuizSubmissionQuestion> objectType() {
+        return QuizSubmissionQuestion.class;
     }
 
 }

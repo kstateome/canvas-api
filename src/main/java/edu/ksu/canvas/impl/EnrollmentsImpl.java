@@ -100,12 +100,12 @@ public class EnrollmentsImpl extends BaseImpl<Enrollment, EnrollmentsReader> imp
 
     @Override
     protected Type listType() {
-        return null;
+        return new TypeToken<List<Enrollment>>(){}.getType();
     }
 
     @Override
-    protected Class objectType() {
-        return null;
+    protected Class<Enrollment> objectType() {
+        return Enrollment.class;
     }
 
 }

@@ -58,12 +58,12 @@ public class SectionsImpl extends BaseImpl<Section, SectionReader> implements Se
 
     @Override
     protected Type listType() {
-        return null;
+        return new TypeToken<List<Section>>(){}.getType();
     }
 
     @Override
     protected Class<Section> objectType() {
-        return null;
+        return Section.class;
     }
 
 }
