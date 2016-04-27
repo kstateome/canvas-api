@@ -4,7 +4,6 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.*;
 import edu.ksu.canvas.model.BaseCanvasModel;
 import edu.ksu.canvas.net.Response;
@@ -52,11 +51,14 @@ public abstract class BaseImpl<T> implements CanvasReader<T>, CanvasWriter {
             LOG.warn("Error " + response.getResponseCode() + "on GET from url " + url);
             throw new IOException("Error accessing url " + url);
         }
-        return parseObjectResponse(response);
+        return responseParser.parseToObject(objectType(), response);
     }
 
     protected List<T> getListFromCanvas(String url) throws IOException {
-        Consumer<Response> consumer = response -> responseCallback.accept(parseListResponse(response));
+        Consumer<Response> consumer = null;
+        if (responseCallback != null) {
+            consumer = response -> responseCallback.accept(responseParser.parseToList(listType(), response));
+        }
         List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url, consumer);
         responseCallback = null;
         return parseListOfResponses(responses);
@@ -72,9 +74,14 @@ public abstract class BaseImpl<T> implements CanvasReader<T>, CanvasWriter {
         return this;
     }
 
-    protected abstract List<T> parseListResponse(Response response);
+    // Declaring this as a separate method fixes some of Java's type inference problems when using it in parseListOfResponses(..)
+    private List<T> parseListResponse(Response response) {
+        return responseParser.parseToList(listType(), response);
+    }
 
-    protected abstract Optional<T> parseObjectResponse(Response response);
+    protected abstract Type listType();
+
+    protected abstract Class<T> objectType();
 
     protected List<T> parseListOfResponses(List<Response> responses) {
         return responses

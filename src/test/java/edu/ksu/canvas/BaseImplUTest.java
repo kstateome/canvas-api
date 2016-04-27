@@ -3,6 +3,7 @@ package edu.ksu.canvas;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.impl.BaseImpl;
+import edu.ksu.canvas.model.BaseCanvasModel;
 import edu.ksu.canvas.model.TestCanvasModel;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
@@ -71,15 +72,24 @@ public class BaseImplUTest extends CanvasTestBase {
     public void jsonObjectInsteadOfJsonListFails() throws IOException {
         try {
             fakeRestClient.addSuccessResponse(URL_FOR_FIRST_RESPONSE, "TestModels/TestModel.json");
-            Consumer<List<TestCanvasModel>> callback = modelList -> {
-                setCallbackWasCalled();
-            };
+            Consumer<List<TestCanvasModel>> callback = modelList -> setCallbackWasCalled();
             canvasReader.withCallback(callback).getTestModels();
         } catch (JsonSyntaxException e) {
             Assert.assertFalse("Expected callback to not be called upon invalid json", callbackWasCalled);
             return;
         }
         Assert.fail("Should have been exception upon json with single object");
+    }
+
+    @Test
+    public void callbackIsNotSavedOnRepeatedCalls() throws IOException {
+        fakeRestClient.addSuccessResponse(URL_FOR_FIRST_RESPONSE, "TestModels/TestModels1.json");
+        Consumer<List<TestCanvasModel>> callback = modelList -> setCallbackWasCalled();
+        canvasReader.withCallback(callback).getTestModels();
+        Assert.assertTrue(callbackWasCalled);
+        callbackWasCalled = false;
+        canvasReader.getTestModels();
+        Assert.assertFalse("Callback should not be saved for future calls", callbackWasCalled);
     }
 
     // I'm getting around the fact that Java won't let you capture non final variables in anonymous functions
@@ -103,10 +113,19 @@ class TestCanvasReader extends BaseImpl<TestCanvasModel> {
         return getListFromCanvas(BaseImplUTest.URL_FOR_FIRST_RESPONSE);
     }
 
-    @Override
     protected List<TestCanvasModel> parseListResponse(Response response) {
         Type listType = new TypeToken<List<TestCanvasModel>>(){}.getType();
         return getDefaultGsonParser().fromJson(response.getContent(), listType);
+    }
+
+    @Override
+    protected Type listType() {
+        return new TypeToken<List<TestCanvasModel>>(){}.getType();
+    }
+
+    @Override
+    protected Class<TestCanvasModel> objectType() {
+        return TestCanvasModel.class;
     }
 
     @Override
