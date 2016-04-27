@@ -111,8 +111,4 @@ public class CoursesImpl extends BaseImpl<Course, CourseReader> implements Cours
         return Course.class;
     }
 
-    @Override
-    public CourseReader withCallback(Consumer<List<Course>> callback) {
-        return null;
-    }
 }
