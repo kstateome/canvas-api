@@ -28,7 +28,7 @@ public class BaseImplUTest extends CanvasTestBase {
     public void callbackIsCalledWhenUsingWithCallback() throws IOException{
         fakeRestClient.addSuccessResponse(URL_FOR_FIRST_RESPONSE, "TestModels/TestModels1.json");
         Consumer<List<TestCanvasModel>> callback = modelList -> setCallbackWasCalled();
-        canvasReader.withCallback(callback).getTestModels();
+        canvasReader.withCallback(callback).getTestModels(URL_FOR_FIRST_RESPONSE);
         Assert.assertTrue("Expected callback to be called when list was retrieved", callbackWasCalled);
     }
 
@@ -42,7 +42,7 @@ public class BaseImplUTest extends CanvasTestBase {
             Assert.assertEquals("object2Field1", modelList.get(1).getField1());
             Assert.assertEquals("object2Field2", modelList.get(1).getField2());
         };
-        canvasReader.withCallback(callback).getTestModels();
+        canvasReader.withCallback(callback).getTestModels(URL_FOR_FIRST_RESPONSE);
         Assert.assertTrue("Expected callback to be called when list was retrieved", callbackWasCalled);
     }
 
@@ -59,16 +59,16 @@ public class BaseImplUTest extends CanvasTestBase {
             }
             setCallbackWasCalled();
         };
-        canvasReader.withCallback(callback).getTestModels();
+        canvasReader.withCallback(callback).getTestModels(URL_FOR_FIRST_RESPONSE);
         Assert.assertTrue("Expected callback to be called when list was retrieved", callbackWasCalled);
     }
 
     @Test
     public void jsonObjectInsteadOfJsonListFails() throws IOException {
         try {
-            fakeRestClient.addSuccessResponse(URL_FOR_FIRST_RESPONSE, "TestModels/TestModel.json");
+            fakeRestClient.addSuccessResponse(URL_FOR_SINGLE_OBJECT_RESPONSE, "TestModels/TestModel.json");
             Consumer<List<TestCanvasModel>> callback = modelList -> setCallbackWasCalled();
-            canvasReader.withCallback(callback).getTestModels();
+            canvasReader.withCallback(callback).getTestModels(URL_FOR_SINGLE_OBJECT_RESPONSE);
         } catch (JsonSyntaxException e) {
             Assert.assertFalse("Expected callback to not be called upon invalid json", callbackWasCalled);
             return;
@@ -80,17 +80,17 @@ public class BaseImplUTest extends CanvasTestBase {
     public void callbackIsNotSavedOnRepeatedCalls() throws IOException {
         fakeRestClient.addSuccessResponse(URL_FOR_FIRST_RESPONSE, "TestModels/TestModels1.json");
         Consumer<List<TestCanvasModel>> callback = modelList -> setCallbackWasCalled();
-        canvasReader.withCallback(callback).getTestModels();
+        canvasReader.withCallback(callback).getTestModels(URL_FOR_FIRST_RESPONSE);
         Assert.assertTrue(callbackWasCalled);
         callbackWasCalled = false;
-        canvasReader.getTestModels();
+        canvasReader.getTestModels(URL_FOR_FIRST_RESPONSE);
         Assert.assertFalse("Callback should not be saved for future calls", callbackWasCalled);
     }
 
     @Test
     public void getFromCanvasParsesObject() throws IOException {
         fakeRestClient.addSuccessResponse(URL_FOR_SINGLE_OBJECT_RESPONSE, "TestModels/TestModel.json");
-        Optional<TestCanvasModel> modelOptional = canvasReader.getTestModel();
+        Optional<TestCanvasModel> modelOptional = canvasReader.getTestModel(URL_FOR_SINGLE_OBJECT_RESPONSE);
         TestCanvasModel model = modelOptional.orElseThrow(() -> new AssertionError("Expected getfromCanvas to return non-empty object"));
         Assert.assertEquals("field1", model.getField1());
         Assert.assertEquals("field2", model.getField2());

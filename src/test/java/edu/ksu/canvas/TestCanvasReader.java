@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TestCanvasReader extends CanvasReader<TestCanvasModel, TestCanvasReader> {
-   List<TestCanvasModel> getTestModels() throws IOException;
-   Optional<TestCanvasModel> getTestModel() throws IOException;
+   List<TestCanvasModel> getTestModels(String url) throws IOException;
+   Optional<TestCanvasModel> getTestModel(String url) throws IOException;
 }

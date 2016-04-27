@@ -17,17 +17,12 @@ public class TestCanvasReaderImpl extends BaseImpl<TestCanvasModel, TestCanvasRe
         super(canvasBaseUrl, apiVersion, oauthToken, restClient);
     }
 
-    public List<TestCanvasModel> getTestModels() throws IOException {
-        return getListFromCanvas(BaseImplUTest.URL_FOR_FIRST_RESPONSE);
+    public List<TestCanvasModel> getTestModels(String url) throws IOException {
+        return getListFromCanvas(url);
     }
 
-    public Optional<TestCanvasModel> getTestModel() throws IOException {
-        return getFromCanvas(BaseImplUTest.URL_FOR_SINGLE_OBJECT_RESPONSE);
-    }
-
-    protected List<TestCanvasModel> parseListResponse(Response response) {
-        Type listType = new TypeToken<List<TestCanvasModel>>(){}.getType();
-        return getDefaultGsonParser().fromJson(response.getContent(), listType);
+    public Optional<TestCanvasModel> getTestModel(String url) throws IOException {
+        return getFromCanvas(url);
     }
 
     @Override
