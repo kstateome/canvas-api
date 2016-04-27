@@ -3,8 +3,10 @@ package edu.ksu.canvas.impl;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import edu.ksu.canvas.interfaces.CanvasReader;
 import edu.ksu.canvas.net.RestClient;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -21,7 +23,7 @@ import edu.ksu.canvas.model.Section;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.util.CanvasURLBuilder;
 
-public class SectionsImpl extends BaseImpl implements SectionReader {
+public class SectionsImpl extends BaseImpl<Section, SectionReader> implements SectionReader {
 
     private static final Logger LOG = Logger.getLogger(SectionReader.class);
 
@@ -55,12 +57,12 @@ public class SectionsImpl extends BaseImpl implements SectionReader {
     }
 
     @Override
-    protected List parseListResponse(Response response) {
+    protected Type listType() {
         return null;
     }
 
     @Override
-    protected Optional parseObjectResponse(Response response) {
+    protected Class<Section> objectType() {
         return null;
     }
 

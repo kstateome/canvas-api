@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * Methods to read information from and about Assignments
  */
-public interface AssignmentReader extends CanvasReader {
+public interface AssignmentReader extends CanvasReader<Assignment, AssignmentReader> {
     /**
      * Retrieve a specific assignment from Canvas by its Canvas ID number
      * @param courseId The Canvas ID of the course

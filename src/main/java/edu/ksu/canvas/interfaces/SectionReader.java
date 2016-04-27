@@ -8,7 +8,7 @@ import edu.ksu.canvas.model.Section;
 /**
  * Methods to read information from and about sections
  */
-public interface SectionReader extends CanvasReader {
+public interface SectionReader extends CanvasReader<Section, SectionReader> {
 
     /**
      * Return a list of sections in a given course

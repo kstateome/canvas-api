@@ -21,7 +21,7 @@ import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class EnrollmentsImpl extends BaseImpl implements EnrollmentsReader,EnrollmentsWriter {
+public class EnrollmentsImpl extends BaseImpl<Enrollment, EnrollmentsReader> implements EnrollmentsReader,EnrollmentsWriter {
     private static final Logger LOG = Logger.getLogger(CourseReader.class);
     /**
      * Construct a new CanvasApi class with an OAuth token
@@ -99,12 +99,13 @@ public class EnrollmentsImpl extends BaseImpl implements EnrollmentsReader,Enrol
     }
 
     @Override
-    protected List parseListResponse(Response response) {
+    protected Type listType() {
         return null;
     }
 
     @Override
-    protected Optional parseObjectResponse(Response response) {
+    protected Class objectType() {
         return null;
     }
+
 }

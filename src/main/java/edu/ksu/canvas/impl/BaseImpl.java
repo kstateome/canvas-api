@@ -21,7 +21,9 @@ import java.util.stream.Collectors;
 /**
  * Base class for accessing the Canvas API
  */
-public abstract class BaseImpl<T> implements CanvasReader<T>, CanvasWriter {
+
+
+public abstract class BaseImpl<T, READERTYPE extends CanvasReader> implements CanvasReader<T, READERTYPE>, CanvasWriter {
     private static Logger LOG = Logger.getLogger(BaseImpl.class);
 
     protected String canvasBaseUrl;
@@ -69,9 +71,9 @@ public abstract class BaseImpl<T> implements CanvasReader<T>, CanvasWriter {
     }
 
     @Override
-    public CanvasReader withCallback(Consumer<List<T>> responseReceivedCallBack) {
+    public READERTYPE withCallback(Consumer<List<T>> responseReceivedCallBack) {
         responseCallback = responseReceivedCallBack;
-        return this;
+        return (READERTYPE) this;
     }
 
     // Declaring this as a separate method fixes some of Java's type inference problems when using it in parseListOfResponses(..)

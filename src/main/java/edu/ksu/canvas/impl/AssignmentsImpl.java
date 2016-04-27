@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class AssignmentsImpl extends BaseImpl implements AssignmentReader, AssignmentWriter{
+public class AssignmentsImpl extends BaseImpl<Assignment, AssignmentReader> implements AssignmentReader, AssignmentWriter{
     private static final Logger LOG = Logger.getLogger(AssignmentReader.class);
 
     public AssignmentsImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {
@@ -122,12 +122,12 @@ public class AssignmentsImpl extends BaseImpl implements AssignmentReader, Assig
     }
 
     @Override
-    protected List parseListResponse(Response response) {
+    protected Type listType() {
         return null;
     }
 
     @Override
-    protected Optional parseObjectResponse(Response response) {
+    protected Class objectType() {
         return null;
     }
 

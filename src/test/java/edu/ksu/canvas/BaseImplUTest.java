@@ -1,20 +1,13 @@
 package edu.ksu.canvas;
 
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
-import edu.ksu.canvas.impl.BaseImpl;
-import edu.ksu.canvas.model.BaseCanvasModel;
 import edu.ksu.canvas.model.TestCanvasModel;
-import edu.ksu.canvas.net.Response;
-import edu.ksu.canvas.net.RestClient;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 public class BaseImplUTest extends CanvasTestBase {
@@ -25,7 +18,7 @@ public class BaseImplUTest extends CanvasTestBase {
 
     @Before
     public void setup() {
-        canvasReader = new TestCanvasReader(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient);
+        canvasReader = new TestCanvasReaderImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient);
         callbackWasCalled = false;
     }
 
@@ -103,38 +96,3 @@ public class BaseImplUTest extends CanvasTestBase {
 }
 
 
-class TestCanvasReader extends BaseImpl<TestCanvasModel> {
-
-    public TestCanvasReader(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient);
-    }
-
-    public List<TestCanvasModel> getTestModels() throws IOException {
-        return getListFromCanvas(BaseImplUTest.URL_FOR_FIRST_RESPONSE);
-    }
-
-    protected List<TestCanvasModel> parseListResponse(Response response) {
-        Type listType = new TypeToken<List<TestCanvasModel>>(){}.getType();
-        return getDefaultGsonParser().fromJson(response.getContent(), listType);
-    }
-
-    @Override
-    protected Type listType() {
-        return new TypeToken<List<TestCanvasModel>>(){}.getType();
-    }
-
-    @Override
-    protected Class<TestCanvasModel> objectType() {
-        return TestCanvasModel.class;
-    }
-
-    @Override
-    protected Optional<TestCanvasModel> parseObjectResponse(Response response) {
-        return responseParser.parseToObject(TestCanvasModel.class, response);
-    }
-
-    @Override
-    public TestCanvasReader withCallback(Consumer<List<TestCanvasModel>> consumer) {
-        return (TestCanvasReader) super.withCallback(consumer);
-    }
-}

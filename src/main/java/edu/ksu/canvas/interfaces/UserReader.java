@@ -6,6 +6,6 @@ import edu.ksu.canvas.model.User;
 import java.io.IOException;
 import java.util.List;
 
-public interface UserReader extends CanvasReader {
+public interface UserReader extends CanvasReader<User, UserReader> {
     List<User> getUsersInCourse(String courseId) throws OauthTokenRequiredException, IOException;
 }

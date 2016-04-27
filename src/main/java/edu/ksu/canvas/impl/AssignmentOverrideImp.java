@@ -12,11 +12,12 @@ import edu.ksu.canvas.exception.OauthTokenRequiredException;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class AssignmentOverrideImp extends BaseImpl implements AssignmentOverrideReader, AssignmentOverrideWriter {
+public class AssignmentOverrideImp extends BaseImpl<AssignmentOverride, AssignmentOverrideReader> implements AssignmentOverrideReader, AssignmentOverrideWriter {
     private static final Logger LOG = Logger.getLogger(AssignmentOverrideImp.class);
 
 
@@ -44,12 +45,13 @@ public class AssignmentOverrideImp extends BaseImpl implements AssignmentOverrid
     }
 
     @Override
-    protected List parseListResponse(Response response) {
+    protected Type listType() {
         return null;
     }
 
     @Override
-    protected Optional parseObjectResponse(Response response) {
+    protected Class objectType() {
         return null;
     }
+
 }

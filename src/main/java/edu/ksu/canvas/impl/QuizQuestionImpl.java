@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class QuizQuestionImpl extends  BaseImpl implements QuizQuestionReader, QuizQuestionWriter {
+public class QuizQuestionImpl extends BaseImpl<QuizQuestion, QuizQuestionReader> implements QuizQuestionReader, QuizQuestionWriter {
     private static final Logger LOG = Logger.getLogger(QuizQuestionImpl.class);
 
     public QuizQuestionImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {
@@ -47,12 +47,12 @@ public class QuizQuestionImpl extends  BaseImpl implements QuizQuestionReader, Q
     }
 
     @Override
-    protected List parseListResponse(Response response) {
+    protected Type listType() {
         return null;
     }
 
     @Override
-    protected Optional parseObjectResponse(Response response) {
+    protected Class objectType() {
         return null;
     }
 }

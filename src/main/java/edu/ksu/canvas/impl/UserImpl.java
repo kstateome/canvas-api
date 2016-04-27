@@ -17,7 +17,7 @@ import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class UserImpl  extends BaseImpl implements UserReader,UserWriter{
+public class UserImpl extends BaseImpl<User, UserReader> implements UserReader,UserWriter{
     private static final Logger LOG = Logger.getLogger(UserImpl.class);
 
     private static final String API_RESULTS_PER_PAGE = "100";
@@ -91,12 +91,13 @@ public class UserImpl  extends BaseImpl implements UserReader,UserWriter{
     }
 
     @Override
-    protected List parseListResponse(Response response) {
+    protected Type listType() {
         return null;
     }
 
     @Override
-    protected Optional parseObjectResponse(Response response) {
+    protected Class objectType() {
         return null;
     }
+
 }

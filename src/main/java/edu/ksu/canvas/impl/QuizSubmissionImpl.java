@@ -11,6 +11,7 @@ import edu.ksu.canvas.exception.OauthTokenRequiredException;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -19,7 +20,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class QuizSubmissionImpl extends  BaseImpl implements QuizSubmissionReader, QuizSubmissionWriter {
+public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionReader> implements QuizSubmissionReader, QuizSubmissionWriter {
     private static final Logger LOG = Logger.getLogger(QuizSubmissionImpl.class);
 
      public QuizSubmissionImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {
@@ -97,12 +98,13 @@ public class QuizSubmissionImpl extends  BaseImpl implements QuizSubmissionReade
     }
 
     @Override
-    protected List parseListResponse(Response response) {
+    protected Type listType() {
         return null;
     }
 
     @Override
-    protected Optional parseObjectResponse(Response response) {
+    protected Class objectType() {
         return null;
     }
+
 }

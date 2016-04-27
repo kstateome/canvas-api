@@ -6,7 +6,7 @@ import edu.ksu.canvas.exception.OauthTokenRequiredException;
 import java.io.IOException;
 import java.util.List;
 
-public interface QuizSubmissionReader extends CanvasReader {
+public interface QuizSubmissionReader extends CanvasReader<QuizSubmission, QuizSubmissionReader> {
     /**
      * Retrieve a list of quiz submissions from Canvas by its course and quiz Canvas ID numbers
      * @param courseId   The Canvas ID of the course
