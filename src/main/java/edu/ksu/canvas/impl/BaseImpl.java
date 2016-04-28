@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  */
 
 
-public abstract class BaseImpl<T, READERTYPE extends CanvasReader> implements CanvasReader<T, READERTYPE>, CanvasWriter {
+public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE extends CanvasWriter> implements CanvasReader<T, READERTYPE>, CanvasWriter<T,WRITERTYPE>{
     private static final Logger LOG = Logger.getLogger(BaseImpl.class);
 
     protected String canvasBaseUrl;
@@ -84,10 +84,12 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader> implements Ca
         return (READERTYPE) this;
     }
 
+    @Override
     public READERTYPE readAsCanvasUser(String masqueradeAs) {
         return (READERTYPE) readAsUser(masqueradeAs, CanvasConstants.MASQUERADE_CANVAS_USER);
     }
 
+    @Override
     public READERTYPE readAsSisUser(String masqueradeAs) {
         return (READERTYPE) readAsUser(masqueradeAs, CanvasConstants.MASQUERADE_SIS_USER);
     }
@@ -98,10 +100,20 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader> implements Ca
         return (READERTYPE) this;
     }
 
-    public CanvasWriter writeAsUser(String masqueradeAs, String masqueradeType){
+    @Override
+    public WRITERTYPE writeAsCanvasUser(String masqueradeAs) {
+        return (WRITERTYPE) writeAsUser(masqueradeAs, CanvasConstants.MASQUERADE_CANVAS_USER);
+    }
+
+    @Override
+    public WRITERTYPE writeAsSisUser(String masqueradeAs) {
+        return (WRITERTYPE) writeAsUser(masqueradeAs, CanvasConstants.MASQUERADE_SIS_USER);
+    }
+
+    public WRITERTYPE writeAsUser(String masqueradeAs, String masqueradeType){
         this.masqueradeAs = masqueradeAs;
         this.masqueradeType = masqueradeType;
-        return this;
+        return (WRITERTYPE) this;
     }
 
     protected String buildCanvasUrl(String canvasMethod, Map<String, List<String>> parameters) {
