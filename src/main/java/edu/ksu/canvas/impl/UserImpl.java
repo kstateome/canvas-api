@@ -39,7 +39,7 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
         Map<String, String> postParameters = new HashMap<>();
         postParameters.put("name", user.getName());
         postParameters.put("pseudonym[unique_id]", user.getLoginId());
-        String createdUrl = buildCanvasUrl(CanvasConstants.ACCOUNT_ID + "/users", Collections.emptyMap());
+        String createdUrl = buildCanvasUrl( "accounts/" +CanvasConstants.ACCOUNT_ID + "/users", Collections.emptyMap());
         LOG.debug("create URl for user creation : "+ createdUrl);
         Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, postParameters);
         if (response.getErrorHappened() || ( response.getResponseCode() != 200)) {
