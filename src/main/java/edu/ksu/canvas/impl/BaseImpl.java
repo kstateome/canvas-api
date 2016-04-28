@@ -94,7 +94,7 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
         return (READERTYPE) readAsUser(masqueradeAs, CanvasConstants.MASQUERADE_SIS_USER);
     }
 
-    public READERTYPE readAsUser(String masqueradeAs, String masqueradeType){
+    private READERTYPE readAsUser(String masqueradeAs, String masqueradeType){
         this.masqueradeAs = masqueradeAs;
         this.masqueradeType = masqueradeType;
         return (READERTYPE) this;
@@ -110,7 +110,7 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
         return (WRITERTYPE) writeAsUser(masqueradeAs, CanvasConstants.MASQUERADE_SIS_USER);
     }
 
-    public WRITERTYPE writeAsUser(String masqueradeAs, String masqueradeType){
+    private WRITERTYPE writeAsUser(String masqueradeAs, String masqueradeType){
         this.masqueradeAs = masqueradeAs;
         this.masqueradeType = masqueradeType;
         return (WRITERTYPE) this;
