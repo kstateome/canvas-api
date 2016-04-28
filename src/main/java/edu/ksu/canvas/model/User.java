@@ -1,5 +1,8 @@
 package edu.ksu.canvas.model;
 
+import edu.ksu.canvas.annotation.CanvasField;
+import edu.ksu.canvas.annotation.CanvasObject;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -7,7 +10,8 @@ import java.util.List;
  * Class to represent Canvas users.
  * See the <a href="https://canvas.instructure.com/doc/api/users.html#User">Canvas User</a> documentation.
  */
-public class User implements Serializable {
+@CanvasObject(postKey = "user")
+public class User extends BaseCanvasModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -34,6 +38,7 @@ public class User implements Serializable {
         this.id = id;
     }
 
+    @CanvasField(postKey = "name")
     public String getName() {
         return name;
     }
@@ -42,6 +47,7 @@ public class User implements Serializable {
         this.name = name;
     }
 
+    @CanvasField(postKey = "sortable_name")
     public String getSortableName() {
         return sortableName;
     }
@@ -49,7 +55,7 @@ public class User implements Serializable {
     public void setSortableName(String sortableName) {
         this.sortableName = sortableName;
     }
-
+    @CanvasField(postKey = "short_name")
     public String getShortName() {
         return shortName;
     }
@@ -58,6 +64,7 @@ public class User implements Serializable {
         this.shortName = shortName;
     }
 
+    @CanvasField(overrideObjectKey = "pseudonym", postKey = "sis_user_id")
     public String getSisUserId() {
         return sisUserId;
     }
@@ -82,6 +89,7 @@ public class User implements Serializable {
         this.loginId = loginId;
     }
 
+    @CanvasField(postKey = "avatar][url")
     public String getAvatarUrl() {
         return avatarUrl;
     }
@@ -90,6 +98,7 @@ public class User implements Serializable {
         this.avatarUrl = avatarUrl;
     }
 
+    @CanvasField(postKey = "email")
     public String getEmail() {
         return email;
     }
@@ -122,6 +131,7 @@ public class User implements Serializable {
         this.last_login = last_login;
     }
 
+    @CanvasField(postKey = "time_zone")
     public String getTime_zone() {
         return time_zone;
     }

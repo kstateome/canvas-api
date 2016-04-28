@@ -36,6 +36,9 @@ public abstract class BaseCanvasModel {
     }
 
     private String makeArrayPostKey(CanvasField canvasFieldAnnotation) {
+        if (!canvasFieldAnnotation.overrideObjectKey().isEmpty()) {
+            return canvasFieldAnnotation.overrideObjectKey() + "[" + canvasFieldAnnotation.postKey() + "]";
+        }
         CanvasObject canvasObjectAnnotation = this.getClass().getAnnotation(CanvasObject.class);
         if (canvasObjectAnnotation == null || canvasObjectAnnotation.postKey() == null) {
             throw new IllegalArgumentException("CanvasObject does not contain postKey for " + this.getClass().getName());

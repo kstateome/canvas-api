@@ -18,4 +18,9 @@ public @interface CanvasField {
      * Setting array to false will result in the postMap key to be 'id'
      */
     boolean array() default true;
+
+    /*
+        Used to override the key on the main Canvas Object. Leave empty unless necessary
+     */
+    String overrideObjectKey() default "";
 }

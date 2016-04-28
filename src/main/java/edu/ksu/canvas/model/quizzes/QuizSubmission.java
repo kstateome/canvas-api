@@ -1,11 +1,16 @@
 package edu.ksu.canvas.model.quizzes;
 
+import edu.ksu.canvas.annotation.CanvasField;
+import edu.ksu.canvas.annotation.CanvasObject;
+import edu.ksu.canvas.model.BaseCanvasModel;
+
 /**
  * Class to represent Canvas quiz submission.
  * * See <a href="https://canvas.instructure.com/doc/api/quiz_submissions.html#QuizSubmission">Canvas Quiz Submission</a> documentation.
  */
 
-public class QuizSubmission {
+@CanvasObject(postKey = "quizSubmission")
+public class QuizSubmission extends BaseCanvasModel {
     private Integer id;
     private Integer quiz_id;
     private Integer user_id;
@@ -79,6 +84,7 @@ public class QuizSubmission {
         this.end_at = end_at;
     }
 
+    @CanvasField(postKey = "attempt", array = false)
     public Integer getAttempt() {
         return attempt;
     }
@@ -143,6 +149,7 @@ public class QuizSubmission {
         this.kept_score = kept_score;
     }
 
+    @CanvasField(postKey = "fudge_points", array = false)
     public Double getFudge_points() {
         return fudge_points;
     }

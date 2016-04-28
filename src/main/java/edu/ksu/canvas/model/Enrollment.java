@@ -1,5 +1,8 @@
 package edu.ksu.canvas.model;
 
+import edu.ksu.canvas.annotation.CanvasField;
+import edu.ksu.canvas.annotation.CanvasObject;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,7 +10,8 @@ import java.util.Date;
  * Class to represent Canvas enrollments.
  * See <a href="https://canvas.instructure.com/doc/api/enrollments.html#Enrollment">Canvas Enrollment</a> documentation.
  */
-public class Enrollment implements Serializable {
+@CanvasObject(postKey = "enrollment")
+public class Enrollment extends BaseCanvasModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private long id;
@@ -90,6 +94,7 @@ public class Enrollment implements Serializable {
         this.sisSectionId = sisSectionId;
     }
 
+    @CanvasField(postKey = "enrollment_state")
     public String getEnrollmentState() {
         return enrollmentState;
     }
@@ -98,6 +103,7 @@ public class Enrollment implements Serializable {
         this.enrollmentState = enrollmentState;
     }
 
+    @CanvasField(postKey = "limit_privileges_to_course_section")
     public Boolean getLimitPrivilegesToCourseSection() {
         return limitPrivilegesToCourseSection;
     }
@@ -122,6 +128,7 @@ public class Enrollment implements Serializable {
         this.rootAccountId = rootAccountId;
     }
 
+    @CanvasField(postKey = "type")
     public String getType() {
         return type;
     }
@@ -130,6 +137,7 @@ public class Enrollment implements Serializable {
         this.type = type;
     }
 
+    @CanvasField(postKey = "user_id")
     public Integer getUserId() {
         return userId;
     }
@@ -146,6 +154,8 @@ public class Enrollment implements Serializable {
         this.associatedUserId = associatedUserId;
     }
 
+    @Deprecated
+    @CanvasField(postKey = "role")
     public String getRole() {
         return role;
     }

@@ -1,5 +1,8 @@
 package edu.ksu.canvas.model;
 
+import edu.ksu.canvas.annotation.CanvasField;
+import edu.ksu.canvas.annotation.CanvasObject;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,7 +10,8 @@ import java.util.Date;
  * Class to represent Canvas course sections.
  * See <a href="https://canvas.instructure.com/doc/api/sections.html#Section">Canvas Section</a> documentation.
  */
-public class Section implements Serializable {
+@CanvasObject(postKey = "course_section")
+public class Section extends BaseCanvasModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private long id;
@@ -30,6 +34,7 @@ public class Section implements Serializable {
         this.id = id;
     }
 
+    @CanvasField(postKey = "name")
     public String getName() {
         return name;
     }
@@ -38,6 +43,7 @@ public class Section implements Serializable {
         this.name = name;
     }
 
+    @CanvasField(postKey = "sis_section_id")
     public String getSisSectionId() {
         return sisSectionId;
     }
@@ -78,6 +84,7 @@ public class Section implements Serializable {
         this.sisCourseId = sisCourseId;
     }
 
+    @CanvasField(postKey = "start_at")
     public Date getStartAt() {
         return startAt;
     }
@@ -86,6 +93,7 @@ public class Section implements Serializable {
         this.startAt = startAt;
     }
 
+    @CanvasField(postKey = "end_at")
     public Date getEndAt() {
         return endAt;
     }
