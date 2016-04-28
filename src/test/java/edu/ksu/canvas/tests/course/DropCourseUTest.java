@@ -1,6 +1,7 @@
 package edu.ksu.canvas.tests.course;
 
 import edu.ksu.canvas.CanvasTestBase;
+import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.impl.EnrollmentsImpl;
 import edu.ksu.canvas.interfaces.EnrollmentsWriter;
 import edu.ksu.canvas.model.Enrollment;
@@ -39,6 +40,48 @@ public class DropCourseUTest extends CanvasTestBase {
         String url = baseUrl + "/api/v1/courses/25/enrollments/355047";
         fakeRestClient.addSuccessResponse(url, "SampleJson/EnrollmentDeleteResponse.json");
         Optional<Enrollment> dropResponse = enrollmentsWriter.dropUser(25, 355047L);
+        Assert.assertTrue("deleted".equals(dropResponse.get().getEnrollmentState()));
+    }
+
+    @Test
+    public void testSisUserMasqueradeEnrollUser() throws IOException {
+        //should make sure user exists
+        String userId = "899123456";
+        String url = baseUrl + "/api/v1/courses/25/enrollments?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + userId;
+        fakeRestClient.addSuccessResponse(url, "SampleJson/EnrollmentResponse.json");
+        Optional<Enrollment> enrollmentResponse = enrollmentsWriter.writeAsSisUser(userId).enrollUser(25,78839);
+        Assert.assertTrue(25==enrollmentResponse.get().getCourseId());
+        Assert.assertTrue(78839 == enrollmentResponse.get().getUserId());
+        Assert.assertTrue(enrollmentResponse.get().getId()!=0);
+    }
+
+    @Test
+    public void  testSisUserMasqueradeDropEnrolledUser() throws IOException {
+        String userId = "899123456";
+        String url = baseUrl + "/api/v1/courses/25/enrollments/355047?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + userId;
+        fakeRestClient.addSuccessResponse(url, "SampleJson/EnrollmentDeleteResponse.json");
+        Optional<Enrollment> dropResponse = enrollmentsWriter.writeAsSisUser(userId).dropUser(25, 355047L);
+        Assert.assertTrue("deleted".equals(dropResponse.get().getEnrollmentState()));
+    }
+
+    @Test
+    public void testCanvasUserMasqueradeEnrollUser() throws IOException {
+        //should make sure user exists
+        String userId = "899123456";
+        String url = baseUrl + "/api/v1/courses/25/enrollments?as_user_id=" + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + userId;
+        fakeRestClient.addSuccessResponse(url, "SampleJson/EnrollmentResponse.json");
+        Optional<Enrollment> enrollmentResponse = enrollmentsWriter.writeAsCanvasUser(userId).enrollUser(25, 78839);
+        Assert.assertTrue(25==enrollmentResponse.get().getCourseId());
+        Assert.assertTrue(78839 == enrollmentResponse.get().getUserId());
+        Assert.assertTrue(enrollmentResponse.get().getId()!=0);
+    }
+
+    @Test
+    public void  testCanvasUserMasqueradeDropEnrolledUser() throws IOException {
+        String userId = "899123456";
+        String url = baseUrl + "/api/v1/courses/25/enrollments/355047?as_user_id=" + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + userId;
+        fakeRestClient.addSuccessResponse(url, "SampleJson/EnrollmentDeleteResponse.json");
+        Optional<Enrollment> dropResponse = enrollmentsWriter.writeAsCanvasUser(userId).dropUser(25, 355047L);
         Assert.assertTrue("deleted".equals(dropResponse.get().getEnrollmentState()));
     }
 }
