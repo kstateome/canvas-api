@@ -6,7 +6,7 @@ import edu.ksu.canvas.model.User;
 import java.io.IOException;
 import java.util.Optional;
 
-public interface UserWriter extends CanvasWriter<User, CanvasWriter> {
+public interface UserWriter extends CanvasWriter<User, UserWriter> {
     /**
      *
      * @param user  user data for creating user account
