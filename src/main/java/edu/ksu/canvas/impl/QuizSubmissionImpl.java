@@ -30,8 +30,7 @@ public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionR
 
     @Override
     public List<QuizSubmission> getQuizSubmissions(String courseId, String quizId) throws OauthTokenRequiredException, IOException {
-        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
-                "courses/" + courseId + "/quizzes/" + quizId + "/submissions", Collections.emptyMap());
+        String url = buildCanvasUrl("courses/" + courseId + "/quizzes/" + quizId + "/submissions", Collections.emptyMap());
         List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url);
         return parseQuizSubmissionList(responses);
     }
@@ -44,8 +43,7 @@ public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionR
         if(accessCode != null) {
             postParams.put("access_code", accessCode);
         }
-        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
-                "courses/" + courseId + "/quizzes/" + quizId + "/submissions", Collections.emptyMap());
+        String url = buildCanvasUrl("courses/" + courseId + "/quizzes/" + quizId + "/submissions", Collections.emptyMap());
         Response response = canvasMessenger.sendToCanvas(oauthToken, url,postParams);
         return Optional.of(parseQuizSubmissionList(response).get(0));
     }
@@ -58,10 +56,8 @@ public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionR
         if(accessCode != null) {
             postParams.put("access_code", accessCode);
         }
-        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
-                "courses/" + courseId + "/quizzes/" + submission.getQuiz_id() +
-                "/submissions/" + submission.getId() + "/complete",
-                Collections.emptyMap());
+        String url = buildCanvasUrl("courses/" + courseId + "/quizzes/" + submission.getQuiz_id() +
+                "/submissions/" + submission.getId() + "/complete", Collections.emptyMap());
         Response response = canvasMessenger.sendToCanvas(oauthToken, url,postParams);
         return Optional.of(parseQuizSubmissionList(response).get(0));
     }
