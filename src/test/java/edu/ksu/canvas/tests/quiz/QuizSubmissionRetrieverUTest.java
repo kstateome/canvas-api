@@ -26,7 +26,7 @@ public class QuizSubmissionRetrieverUTest extends CanvasTestBase {
 
     @Before
     public void setUpData() {
-        quizSubmissionReader = new QuizSubmissionImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient);
+        quizSubmissionReader = new QuizSubmissionImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT);
     }
 
     @Test

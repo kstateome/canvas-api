@@ -24,7 +24,7 @@ public class UserRetrieverUTest extends CanvasTestBase {
 
     @Before
     public void setupData() {
-        userReader = new UserImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient);
+        userReader = new UserImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT);
     }
 
     @Test

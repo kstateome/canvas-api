@@ -20,7 +20,7 @@ public class BaseImplUTest extends CanvasTestBase {
 
     @Before
     public void setup() {
-        canvasReader = new TestCanvasReaderImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient);
+        canvasReader = new TestCanvasReaderImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT);
         callbackWasCalled = false;
     }
 

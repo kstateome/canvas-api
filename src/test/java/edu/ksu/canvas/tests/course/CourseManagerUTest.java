@@ -21,7 +21,7 @@ public class CourseManagerUTest extends CanvasTestBase {
 
     @Before
     public void setupData() {
-        courseWriter = new CoursesImpl(baseUrl,apiVersion,SOME_OAUTH_TOKEN, fakeRestClient);
+        courseWriter = new CoursesImpl(baseUrl,apiVersion,SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT);
     }
 
     @Test

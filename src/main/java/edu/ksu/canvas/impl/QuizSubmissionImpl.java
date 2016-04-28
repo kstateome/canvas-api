@@ -24,9 +24,9 @@ import java.util.stream.Collectors;
 public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionReader> implements QuizSubmissionReader, QuizSubmissionWriter {
     private static final Logger LOG = Logger.getLogger(QuizSubmissionImpl.class);
 
-     public QuizSubmissionImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient);
-    }
+     public QuizSubmissionImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout) {
+         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout);
+     }
 
     @Override
     public List<QuizSubmission> getQuizSubmissions(String courseId, String quizId) throws OauthTokenRequiredException, IOException {
