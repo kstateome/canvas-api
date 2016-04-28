@@ -13,8 +13,8 @@ import java.util.Optional;
 
 public class TestCanvasReaderImpl extends BaseImpl<TestCanvasModel, TestCanvasReader, TestCanvasWriter> implements TestCanvasReader {
 
-    public TestCanvasReaderImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient);
+    public TestCanvasReaderImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout);
     }
 
     public List<TestCanvasModel> getTestModels(String url) throws IOException {

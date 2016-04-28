@@ -26,8 +26,8 @@ public class AccountImpl extends BaseImpl implements AccountsReader,AccountsWrit
      * @param apiVersion    The version of the Canvas API (currently 1)
      * @param oauthToken    OAuth token to use when executing API calls
      */
-    public AccountImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient);
+    public AccountImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout);
     }
 
     @Override

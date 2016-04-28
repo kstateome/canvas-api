@@ -47,12 +47,12 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
      * @param apiVersion The version of the Canvas API (currently 1)
      * @param oauthToken OAuth token to use when executing API calls
      */
-    public BaseImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {
+    public BaseImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout) {
         this.canvasBaseUrl = canvasBaseUrl;
         this.apiVersion = apiVersion;
         this.oauthToken = oauthToken;
         responseParser = new GsonResponseParser();
-        canvasMessenger = new RestCanvasMessenger(1000, 1000, restClient);
+        canvasMessenger = new RestCanvasMessenger(connectTimeout, readTimeout, restClient);
     }
 
     protected Optional<T> getFromCanvas(String url) throws IOException {

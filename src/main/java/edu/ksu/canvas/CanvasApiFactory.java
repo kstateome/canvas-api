@@ -17,7 +17,11 @@ public class CanvasApiFactory {
     private static final Logger LOG = Logger.getLogger(CanvasApiFactory.class);
 
     public static final Integer CANVAS_API_VERSION = 1;
+    private static final int DEFAULT_CONNECT_TIMEOUT_MS = 5000;
+    private static final int DEFAULT_READ_TIMEOUT_MS = 120000;
     private String canvasBaseUrl;
+    private int connectTimeout;
+    private int readTimeout;
 
     Map<Class<? extends CanvasReader>, Class<? extends BaseImpl>> readerMap;
     Map<Class<? extends CanvasWriter>, Class<? extends BaseImpl>> writerMap;
@@ -25,6 +29,59 @@ public class CanvasApiFactory {
     public CanvasApiFactory(String canvasBaseUrl) {
         LOG.debug("Creating Canvas API factory with base URL: " + canvasBaseUrl);
         this.canvasBaseUrl = canvasBaseUrl;
+        this.connectTimeout = DEFAULT_CONNECT_TIMEOUT_MS;
+        this.readTimeout = DEFAULT_READ_TIMEOUT_MS;
+        setupClassMap();
+    }
+
+    public CanvasApiFactory(String canvasBaseUrl, int connectTimeout, int readTimeout) {
+        this.canvasBaseUrl = canvasBaseUrl;
+        this.connectTimeout = connectTimeout;
+        this.readTimeout = readTimeout;
+        setupClassMap();
+    }
+
+    public <T extends CanvasReader> T getReader(Class<T> type, String oauthToken) {
+        LOG.debug("Factory call to instantiate class: " + type.getName());
+        RestClient restClient = new RestClientImpl();
+
+        @SuppressWarnings("unchecked")
+        Class<T> concreteClass = (Class<T>)readerMap.get(type);
+
+        if (concreteClass == null) {
+            throw new UnsupportedOperationException("No implementation for requested interface found: " + type.getName());
+        }
+
+        LOG.debug("got class: " + concreteClass);
+        try {
+            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, String.class, RestClient.class, Integer.TYPE, Integer.TYPE);
+            return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient, connectTimeout, readTimeout);
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
+            throw new UnsupportedOperationException("Unknown error instantiating the concrete API class: " + type.getName(), e);
+        }
+    }
+
+    public <T extends CanvasWriter> T getWriter(Class<T> type, String oauthToken) {
+        LOG.debug("Factory call to instantiate class: " + type.getName());
+        RestClient restClient = new RestClientImpl();
+
+        @SuppressWarnings("unchecked")
+        Class<T> concreteClass = (Class<T>) writerMap.get(type);
+
+        if (concreteClass == null) {
+            throw new UnsupportedOperationException("No implementation for requested interface found: " + type.getName());
+        }
+
+        LOG.debug("got class: " + concreteClass);
+        try {
+            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, String.class, RestClient.class, Integer.TYPE, Integer.TYPE);
+            return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient, connectTimeout, readTimeout);
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
+            throw new UnsupportedOperationException("Unknown error instantiating the concrete API class: " + type.getName(), e);
+        }
+    }
+
+    private void setupClassMap() {
         readerMap = new HashMap<>();
         writerMap = new HashMap<>();
         readerMap.put(AccountsReader.class, AccountImpl.class);
@@ -49,45 +106,5 @@ public class CanvasApiFactory {
         writerMap.put(QuizSubmissionQuestionWriter.class, QuizSubmissionImpl.class);
         writerMap.put(QuizSubmissionWriter.class, QuizSubmissionImpl.class);
         writerMap.put(UserWriter.class, UserImpl.class);
-    }
-
-    public <T extends CanvasReader> T getReader(Class<T> type, String oauthToken) {
-        LOG.debug("Factory call to instantiate class: " + type.getName());
-        RestClient restClient = new RestClientImpl();
-
-        @SuppressWarnings("unchecked")
-        Class<T> concreteClass = (Class<T>)readerMap.get(type);
-
-        if (concreteClass == null) {
-            throw new UnsupportedOperationException("No implementation for requested interface found: " + type.getName());
-        }
-
-        LOG.debug("got class: " + concreteClass);
-        try {
-            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, String.class, RestClient.class);
-            return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient);
-        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
-            throw new UnsupportedOperationException("Unknown error instantiating the concrete API class: " + type.getName(), e);
-        }
-    }
-
-    public <T extends CanvasWriter> T getWriter(Class<T> type, String oauthToken) {
-        LOG.debug("Factory call to instantiate class: " + type.getName());
-        RestClient restClient = new RestClientImpl();
-
-        @SuppressWarnings("unchecked")
-        Class<T> concreteClass = (Class<T>) writerMap.get(type);
-
-        if (concreteClass == null) {
-            throw new UnsupportedOperationException("No implementation for requested interface found: " + type.getName());
-        }
-
-        LOG.debug("got class: " + concreteClass);
-        try {
-            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, String.class, RestClient.class);
-            return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient);
-        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
-            throw new UnsupportedOperationException("Unknown error instantiating the concrete API class: " + type.getName(), e);
-        }
     }
 }

@@ -22,8 +22,8 @@ import java.util.stream.Collectors;
 public class QuizImpl extends BaseImpl<Quiz, QuizReader, QuizWriter> implements QuizReader, QuizWriter {
     private static final Logger LOG = Logger.getLogger(QuizReader.class);
 
-    public QuizImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient);
+    public QuizImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout);
     }
 
     @Override
