@@ -28,24 +28,21 @@ public class QuizImpl extends BaseImpl<Quiz, QuizReader> implements QuizReader, 
 
     @Override
     public Optional<Quiz> getSingleQuiz(String courseId, String quizId) throws OauthTokenRequiredException, IOException {
-        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
-                "courses/" + courseId + "/quizzes/" + quizId, Collections.emptyMap());
+        String url = buildCanvasUrl("courses/" + courseId + "/quizzes/" + quizId, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(Quiz.class, response);
     }
 
     @Override
     public List<Quiz> getQuizzesInCourse(String courseId) throws OauthTokenRequiredException, IOException {
-        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
-                "courses/" + courseId + "/quizzes", Collections.emptyMap());
+        String url = buildCanvasUrl("courses/" + courseId + "/quizzes", Collections.emptyMap());
         List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url);
         return parseQuizList(responses);
     }
 
     @Override
     public Optional<Quiz> updateQuiz(Quiz quiz, String courseId) throws MessageUndeliverableException, IOException, OauthTokenRequiredException {
-        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
-                "courses/" + courseId + "/quizzes/" + quiz.getId(), Collections.emptyMap());
+        String url = buildCanvasUrl("courses/" + courseId + "/quizzes/" + quiz.getId(), Collections.emptyMap());
         Response response = canvasMessenger.sendToJsonCanvas(oauthToken, url,
                 getDefaultGsonParser().toJsonTree(quiz).getAsJsonObject());
         return responseParser.parseToObject(Quiz.class, response);
