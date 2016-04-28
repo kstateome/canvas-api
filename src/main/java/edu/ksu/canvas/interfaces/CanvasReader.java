@@ -12,4 +12,8 @@ public interface CanvasReader<T, READERTYPE extends CanvasReader> {
      */
     READERTYPE withCallback(Consumer<List<T>> responseConsumer);
 
+    READERTYPE readAsCanvasUser(String masqueradeAs);
+
+    READERTYPE readAsSisUser(String masqueradeAs);
+
 }
