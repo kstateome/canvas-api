@@ -33,8 +33,8 @@ public class ApiFactoryUTest extends CanvasTestBase {
 
     @Test
     public void testGetWriterWithTimeout() {
-        apiFactoryWithDefaultTimeout = new CanvasApiFactory(baseUrl, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT);
-        CourseWriter courseWriter = apiFactoryWithDefaultTimeout.getWriter(CourseWriter.class, SOME_OAUTH_TOKEN);
+        apiFactory = new CanvasApiFactory(baseUrl, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT);
+        CourseWriter courseWriter = apiFactory.getWriter(CourseWriter.class, SOME_OAUTH_TOKEN);
         Assert.assertNotNull("API factory did not return a course writer object", courseWriter);
     }
 
