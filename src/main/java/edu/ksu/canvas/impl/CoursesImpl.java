@@ -3,7 +3,6 @@ package edu.ksu.canvas.impl;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import com.google.gson.reflect.TypeToken;

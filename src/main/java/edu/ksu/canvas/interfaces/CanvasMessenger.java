@@ -4,8 +4,6 @@ import com.google.gson.JsonObject;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.net.Response;
 
-
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;

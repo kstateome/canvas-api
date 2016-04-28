@@ -6,7 +6,6 @@ import edu.ksu.canvas.interfaces.QuizSubmissionWriter;
 import edu.ksu.canvas.model.quizzes.QuizSubmission;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
-import edu.ksu.canvas.util.CanvasURLBuilder;
 import edu.ksu.canvas.exception.MessageUndeliverableException;
 import edu.ksu.canvas.exception.OauthTokenRequiredException;
 import org.apache.log4j.Logger;

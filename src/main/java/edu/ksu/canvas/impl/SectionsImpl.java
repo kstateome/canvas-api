@@ -3,13 +3,10 @@ package edu.ksu.canvas.impl;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import edu.ksu.canvas.interfaces.CanvasReader;
 import edu.ksu.canvas.interfaces.SectionWriter;
 import edu.ksu.canvas.net.RestClient;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.google.common.collect.ImmutableMap;

@@ -3,7 +3,6 @@ package edu.ksu.canvas.impl;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.enums.AssignmentType;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.exception.OauthTokenRequiredException;
@@ -13,7 +12,6 @@ import edu.ksu.canvas.model.Assignment;
 import edu.ksu.canvas.model.Delete;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
-import edu.ksu.canvas.util.CanvasURLBuilder;
 import edu.ksu.canvas.exception.MessageUndeliverableException;
 import org.apache.log4j.Logger;
 

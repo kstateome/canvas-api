@@ -6,7 +6,6 @@ import edu.ksu.canvas.interfaces.QuizQuestionWriter;
 import edu.ksu.canvas.model.quizzes.QuizQuestion;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
-import edu.ksu.canvas.util.CanvasURLBuilder;
 import edu.ksu.canvas.exception.OauthTokenRequiredException;
 import org.apache.log4j.Logger;
 
@@ -15,7 +14,6 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class QuizQuestionImpl extends BaseImpl<QuizQuestion, QuizQuestionReader, QuizQuestionWriter> implements QuizQuestionReader, QuizQuestionWriter {
