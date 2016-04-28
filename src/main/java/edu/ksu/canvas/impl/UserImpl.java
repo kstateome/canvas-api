@@ -18,7 +18,7 @@ import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class UserImpl extends BaseImpl<User, UserReader, CanvasWriter> implements UserReader, UserWriter{
+public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements UserReader, UserWriter{
     private static final Logger LOG = Logger.getLogger(UserImpl.class);
 
     private static final String API_RESULTS_PER_PAGE = "100";
