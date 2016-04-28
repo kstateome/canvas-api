@@ -1,6 +1,7 @@
 package edu.ksu.canvas.tests.user;
 
 import edu.ksu.canvas.CanvasTestBase;
+import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.impl.UserImpl;
 import edu.ksu.canvas.interfaces.UserReader;
 import edu.ksu.canvas.model.User;
@@ -41,6 +42,39 @@ public class UserRetrieverUTest extends CanvasTestBase {
         Assert.assertEquals(2, users.size());
         Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 1"::equals).findFirst().isPresent());
         Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 2"::equals).findFirst().isPresent());
+    }
 
+    @Test
+     public void testSisUserMasqueradeListCourseQuizzes() throws Exception {
+        String someUserId = "8991123123";
+        String someCourseId = "123";
+        Response notErroredResponse = new Response();
+        notErroredResponse.setErrorHappened(false);
+        notErroredResponse.setResponseCode(200);
+        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/users?as_user_id="
+                + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
+        fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserList.json");
+
+        List<User> users = userReader.readAsSisUser(someUserId).getUsersInCourse(someCourseId);
+        Assert.assertEquals(2, users.size());
+        Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 1"::equals).findFirst().isPresent());
+        Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 2"::equals).findFirst().isPresent());
+    }
+
+    @Test
+    public void testCanvasUserMasqueradeListCourseQuizzes() throws Exception {
+        String someUserId = "8991123123";
+        String someCourseId = "123";
+        Response notErroredResponse = new Response();
+        notErroredResponse.setErrorHappened(false);
+        notErroredResponse.setResponseCode(200);
+        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/users?as_user_id="
+                + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + someUserId;
+        fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserList.json");
+
+        List<User> users = userReader.readAsCanvasUser(someUserId).getUsersInCourse(someCourseId);
+        Assert.assertEquals(2, users.size());
+        Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 1"::equals).findFirst().isPresent());
+        Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 2"::equals).findFirst().isPresent());
     }
 }

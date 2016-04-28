@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class AssignmentOverrideImp extends BaseImpl<AssignmentOverride, AssignmentOverrideReader> implements AssignmentOverrideReader, AssignmentOverrideWriter {
+public class AssignmentOverrideImp extends BaseImpl<AssignmentOverride, AssignmentOverrideReader, AssignmentOverrideWriter> implements AssignmentOverrideReader, AssignmentOverrideWriter {
     private static final Logger LOG = Logger.getLogger(AssignmentOverrideImp.class);
 
 

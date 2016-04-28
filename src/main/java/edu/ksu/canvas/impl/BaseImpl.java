@@ -4,18 +4,22 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.interfaces.CanvasMessenger;
 import edu.ksu.canvas.interfaces.CanvasReader;
 import edu.ksu.canvas.interfaces.CanvasWriter;
 import edu.ksu.canvas.interfaces.ResponseParser;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.util.CanvasURLBuilder;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -25,7 +29,7 @@ import java.util.stream.Collectors;
  */
 
 
-public abstract class BaseImpl<T, READERTYPE extends CanvasReader> implements CanvasReader<T, READERTYPE>, CanvasWriter {
+public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE extends CanvasWriter> implements CanvasReader<T, READERTYPE>, CanvasWriter<T,WRITERTYPE>{
     private static final Logger LOG = Logger.getLogger(BaseImpl.class);
 
     protected String canvasBaseUrl;
@@ -34,6 +38,8 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader> implements Ca
     protected ResponseParser responseParser;
     protected CanvasMessenger canvasMessenger;
     protected Consumer<List<T>> responseCallback;
+    protected String masqueradeAs;
+    protected String masqueradeType;
 
     /**
      * Construct a new CanvasApi class with an OAuth token
@@ -76,6 +82,50 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader> implements Ca
     public READERTYPE withCallback(Consumer<List<T>> responseReceivedCallBack) {
         responseCallback = responseReceivedCallBack;
         return (READERTYPE) this;
+    }
+
+    @Override
+    public READERTYPE readAsCanvasUser(String masqueradeAs) {
+        return (READERTYPE) readAsUser(masqueradeAs, CanvasConstants.MASQUERADE_CANVAS_USER);
+    }
+
+    @Override
+    public READERTYPE readAsSisUser(String masqueradeAs) {
+        return (READERTYPE) readAsUser(masqueradeAs, CanvasConstants.MASQUERADE_SIS_USER);
+    }
+
+    private READERTYPE readAsUser(String masqueradeAs, String masqueradeType){
+        this.masqueradeAs = masqueradeAs;
+        this.masqueradeType = masqueradeType;
+        return (READERTYPE) this;
+    }
+
+    @Override
+    public WRITERTYPE writeAsCanvasUser(String masqueradeAs) {
+        return (WRITERTYPE) writeAsUser(masqueradeAs, CanvasConstants.MASQUERADE_CANVAS_USER);
+    }
+
+    @Override
+    public WRITERTYPE writeAsSisUser(String masqueradeAs) {
+        return (WRITERTYPE) writeAsUser(masqueradeAs, CanvasConstants.MASQUERADE_SIS_USER);
+    }
+
+    private WRITERTYPE writeAsUser(String masqueradeAs, String masqueradeType){
+        this.masqueradeAs = masqueradeAs;
+        this.masqueradeType = masqueradeType;
+        return (WRITERTYPE) this;
+    }
+
+    protected String buildCanvasUrl(String canvasMethod, Map<String, List<String>> parameters) {
+        String finalUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
+                canvasMethod, parameters);
+        String separator = parameters.isEmpty()? "?" : "&";
+        if(!StringUtils.isEmpty(masqueradeAs) && !StringUtils.isEmpty(masqueradeType)){
+            finalUrl += separator + "as_user_id=" + masqueradeType + ":" + masqueradeAs;
+            masqueradeAs = null;
+            masqueradeType = null;
+        }
+        return finalUrl;
     }
 
     // Declaring this as a separate method fixes some of Java's type inference problems when using it in parseListOfResponses(..)

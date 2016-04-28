@@ -4,6 +4,7 @@ import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.exception.OauthTokenRequiredException;
+import edu.ksu.canvas.interfaces.CanvasWriter;
 import edu.ksu.canvas.interfaces.UserReader;
 import edu.ksu.canvas.interfaces.UserWriter;
 import edu.ksu.canvas.model.User;
@@ -17,7 +18,7 @@ import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class UserImpl extends BaseImpl<User, UserReader> implements UserReader,UserWriter{
+public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements UserReader, UserWriter{
     private static final Logger LOG = Logger.getLogger(UserImpl.class);
 
     private static final String API_RESULTS_PER_PAGE = "100";
@@ -38,7 +39,7 @@ public class UserImpl extends BaseImpl<User, UserReader> implements UserReader,U
         Map<String, String> postParameters = new HashMap<>();
         postParameters.put("name", user.getName());
         postParameters.put("pseudonym[unique_id]", user.getLoginId());
-        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "accounts/" +CanvasConstants.ACCOUNT_ID + "/users", Collections.emptyMap());
+        String createdUrl = buildCanvasUrl( "accounts/" +CanvasConstants.ACCOUNT_ID + "/users", Collections.emptyMap());
         LOG.debug("create URl for user creation : "+ createdUrl);
         Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, postParameters);
         if (response.getErrorHappened() || ( response.getResponseCode() != 200)) {
@@ -53,7 +54,7 @@ public class UserImpl extends BaseImpl<User, UserReader> implements UserReader,U
         Map<String, String> postParameters = new HashMap<>();
         postParameters.put("name", user.getName());
         postParameters.put("pseudonym[unique_id]", user.getLoginId());
-        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "accounts/" + String.valueOf(user.getId()) + "/users", Collections.emptyMap());
+        String createdUrl = buildCanvasUrl("accounts/" + String.valueOf(user.getId()) + "/users", Collections.emptyMap());
         LOG.debug("create URl for user creation : " + createdUrl);
         Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, postParameters);
         if (response.getErrorHappened() || ( response.getResponseCode() != 200)) {
@@ -69,8 +70,7 @@ public class UserImpl extends BaseImpl<User, UserReader> implements UserReader,U
         postParameters.put("enrollment_type", Arrays.asList("student"));
         postParameters.put("include[]", Arrays.asList("enrollments"));
         postParameters.put("per_page", Arrays.asList(API_RESULTS_PER_PAGE));
-        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
-                "courses/" + courseId + "/users", Collections.emptyMap());
+        String url = buildCanvasUrl("courses/" + courseId + "/users", Collections.emptyMap());
 
         List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url);
         return listUsersFromCanvas(responses);

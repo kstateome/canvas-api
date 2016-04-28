@@ -3,6 +3,7 @@ package edu.ksu.canvas.impl;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.enums.AssignmentType;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.exception.OauthTokenRequiredException;
@@ -26,7 +27,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class AssignmentsImpl extends BaseImpl<Assignment, AssignmentReader> implements AssignmentReader, AssignmentWriter{
+public class AssignmentsImpl extends BaseImpl<Assignment, AssignmentReader, AssignmentWriter> implements AssignmentReader, AssignmentWriter{
     private static final Logger LOG = Logger.getLogger(AssignmentReader.class);
 
     public AssignmentsImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {
@@ -35,16 +36,14 @@ public class AssignmentsImpl extends BaseImpl<Assignment, AssignmentReader> impl
 
     @Override
     public List<Assignment> listCourseAssignments(String courseId) throws IOException {
-        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
-                "courses/" + courseId + "/assignments" , Collections.emptyMap());
+        String url = buildCanvasUrl("courses/" + courseId + "/assignments" , Collections.emptyMap());
         List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url);
         return parseAssignmentList(responses);
     }
 
     @Override
     public Optional<Assignment> getSingleAssignment(String courseId, String assignmentId) throws IOException {
-        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
-                "courses/" + courseId + "/assignments/" + assignmentId, Collections.emptyMap());
+        String url = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentId, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(Assignment.class, response);
     }
@@ -64,8 +63,7 @@ public class AssignmentsImpl extends BaseImpl<Assignment, AssignmentReader> impl
                 .put("assignment[points_possible]", Collections.singletonList(pointsPossible))
                 .put("assignment[published]", Collections.singletonList(String.valueOf(published)))
                 .put("assignment[muted]", Collections.singletonList(String.valueOf(muted))).build();
-        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
-                "courses/" + courseId + "/assignments", parameters);
+        String url = buildCanvasUrl("courses/" + courseId + "/assignments", parameters);
         Response response = canvasMessenger.sendToCanvas(oauthToken, url, Collections.emptyMap());
         if (response.getErrorHappened() || response.getResponseCode() != 200) {
             LOG.error("Errors creating assignment for course " + courseId + " with assignmentName " + assignmentName);
@@ -78,8 +76,7 @@ public class AssignmentsImpl extends BaseImpl<Assignment, AssignmentReader> impl
     public Boolean deleteAssignment(String courseId, String assignmentId) throws InvalidOauthTokenException, IOException {
         Map<String, String> postParams = new HashMap<>();
         postParams.put("event", "delete");
-        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
-                "courses/" + courseId + "/assignments/" + assignmentId, Collections.emptyMap());
+        String createdUrl = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentId, Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, createdUrl, postParams);
         LOG.debug("response " + response.toString());
         if(response.getErrorHappened() || response.getResponseCode() != 200){
@@ -93,8 +90,7 @@ public class AssignmentsImpl extends BaseImpl<Assignment, AssignmentReader> impl
     @Override
     public Optional<Assignment> setOnlyVisibleToOverrides(String courseId, String assignmentId, boolean onlyVisibleToOverrides)
             throws MessageUndeliverableException, IOException, OauthTokenRequiredException{
-        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
-                "courses/" + courseId + "/assignments/" + assignmentId, Collections.emptyMap());
+        String url = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentId, Collections.emptyMap());
         JsonObject requestBody = new JsonObject();
         JsonObject assignment = new JsonObject();
         assignment.addProperty("only_visible_to_overrides", onlyVisibleToOverrides);

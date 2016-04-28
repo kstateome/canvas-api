@@ -1,6 +1,7 @@
 package edu.ksu.canvas.tests.course;
 
 import edu.ksu.canvas.CanvasTestBase;
+import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.impl.CoursesImpl;
 import edu.ksu.canvas.interfaces.CourseWriter;
 import edu.ksu.canvas.model.Course;
@@ -42,5 +43,49 @@ public class CourseManagerUTest extends CanvasTestBase {
         String url = baseUrl + "/api/v1/courses/" + arbitraryCourseId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/course/DeleteCourseSuccess.json");
         Assert.assertTrue(courseWriter.deleteCourse(arbitraryCourseId));
+    }
+
+    @Test
+    public void testSisUserMasqueradeCourseCreation() throws IOException {
+        String someUserId = "899123456";
+        Course newCourse = new Course();
+        newCourse.setCourseCode("SeleniumTestCourseCode");
+        newCourse.setName("SeleniumTestCourse");
+        String url = baseUrl + "/api/v1/accounts/1/courses?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
+        fakeRestClient.addSuccessResponse(url, "SampleJson/course/CreateCourseSuccess.json");
+        Optional<Course> response = courseWriter.writeAsSisUser(someUserId).createCourse(newCourse);
+        Assert.assertNotNull(response.get().getName());
+        Assert.assertEquals("SeleniumTestCourseCode",response.get().getCourseCode());
+    }
+
+    @Test
+    public void testSisUserMasqueradeCourseDeletion() throws IOException {
+        String someUserId = "899123456";
+        String arbitraryCourseId = "20732";
+        String url = baseUrl + "/api/v1/courses/" + arbitraryCourseId +"?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
+        fakeRestClient.addSuccessResponse(url, "SampleJson/course/DeleteCourseSuccess.json");
+        Assert.assertTrue(courseWriter.writeAsSisUser(someUserId).deleteCourse(arbitraryCourseId));
+    }
+
+    @Test
+    public void testCanvasUserMasqueradeCourseCreation() throws IOException {
+        String someUserId = "899123456";
+        Course newCourse = new Course();
+        newCourse.setCourseCode("SeleniumTestCourseCode");
+        newCourse.setName("SeleniumTestCourse");
+        String url = baseUrl + "/api/v1/accounts/1/courses?as_user_id=" + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + someUserId;
+        fakeRestClient.addSuccessResponse(url, "SampleJson/course/CreateCourseSuccess.json");
+        Optional<Course> response = courseWriter.writeAsCanvasUser(someUserId).createCourse(newCourse);
+        Assert.assertNotNull(response.get().getName());
+        Assert.assertEquals("SeleniumTestCourseCode",response.get().getCourseCode());
+    }
+
+    @Test
+    public void testCanvasUserMasqueradeCourseDeletion() throws IOException {
+        String someUserId = "899123456";
+        String arbitraryCourseId = "20732";
+        String url = baseUrl + "/api/v1/courses/" + arbitraryCourseId +"?as_user_id=" + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + someUserId;
+        fakeRestClient.addSuccessResponse(url, "SampleJson/course/DeleteCourseSuccess.json");
+        Assert.assertTrue(courseWriter.writeAsCanvasUser(someUserId).deleteCourse(arbitraryCourseId));
     }
 }
