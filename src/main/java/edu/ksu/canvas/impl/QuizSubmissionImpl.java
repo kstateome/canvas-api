@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionReader> implements QuizSubmissionReader, QuizSubmissionWriter {
+public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionReader, QuizSubmissionWriter> implements QuizSubmissionReader, QuizSubmissionWriter {
     private static final Logger LOG = Logger.getLogger(QuizSubmissionImpl.class);
 
      public QuizSubmissionImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {

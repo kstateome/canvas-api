@@ -11,7 +11,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
 
-public class TestCanvasReaderImpl extends BaseImpl<TestCanvasModel, TestCanvasReader> implements TestCanvasReader {
+public class TestCanvasReaderImpl extends BaseImpl<TestCanvasModel, TestCanvasReader, TestCanvasWriter> implements TestCanvasReader {
 
     public TestCanvasReaderImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {
         super(canvasBaseUrl, apiVersion, oauthToken, restClient);

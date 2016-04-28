@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class QuizQuestionImpl extends BaseImpl<QuizQuestion, QuizQuestionReader> implements QuizQuestionReader, QuizQuestionWriter {
+public class QuizQuestionImpl extends BaseImpl<QuizQuestion, QuizQuestionReader, QuizQuestionWriter> implements QuizQuestionReader, QuizQuestionWriter {
     private static final Logger LOG = Logger.getLogger(QuizQuestionImpl.class);
 
     public QuizQuestionImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {

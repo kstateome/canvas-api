@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class AssignmentsImpl extends BaseImpl<Assignment, AssignmentReader> implements AssignmentReader, AssignmentWriter{
+public class AssignmentsImpl extends BaseImpl<Assignment, AssignmentReader, AssignmentWriter> implements AssignmentReader, AssignmentWriter{
     private static final Logger LOG = Logger.getLogger(AssignmentReader.class);
 
     public AssignmentsImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {

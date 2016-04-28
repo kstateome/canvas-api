@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-public interface AssignmentOverrideWriter extends CanvasWriter {
+public interface AssignmentOverrideWriter extends CanvasWriter<AssignmentOverride, AssignmentOverrideWriter> {
     /**
      * Creates an assignment override in canvas for the specified assignment
      * @param courseId Course the assignment is in

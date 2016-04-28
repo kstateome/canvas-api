@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class QuizImpl extends BaseImpl<Quiz, QuizReader> implements QuizReader, QuizWriter {
+public class QuizImpl extends BaseImpl<Quiz, QuizReader, QuizWriter> implements QuizReader, QuizWriter {
     private static final Logger LOG = Logger.getLogger(QuizReader.class);
 
     public QuizImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {

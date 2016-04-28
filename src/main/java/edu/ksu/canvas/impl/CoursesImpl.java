@@ -26,7 +26,7 @@ import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.util.CanvasURLBuilder;
 
 
-public class CoursesImpl extends BaseImpl<Course, CourseReader> implements CourseReader, CourseWriter {
+public class CoursesImpl extends BaseImpl<Course, CourseReader, CourseWriter> implements CourseReader, CourseWriter {
     private static final Logger LOG = Logger.getLogger(CourseReader.class);
 
     public CoursesImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {
@@ -97,7 +97,7 @@ public class CoursesImpl extends BaseImpl<Course, CourseReader> implements Cours
             LOG.debug("Failed to delete course, error message: " + response.toString());
             return false;
         }
-        Optional<Delete> responseParsed = responseParser.parseToObject(Delete.class,response);
+        Optional<Delete> responseParsed = responseParser.parseToObject(Delete.class, response);
         return responseParsed.get().getDelete();
     }
 

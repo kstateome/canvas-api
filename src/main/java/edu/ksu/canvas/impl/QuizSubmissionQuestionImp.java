@@ -31,7 +31,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class QuizSubmissionQuestionImp extends BaseImpl<QuizSubmissionQuestion, QuizSubmissionQuestionReader> implements QuizSubmissionQuestionReader, QuizSubmissionQuestionWriter {
+public class QuizSubmissionQuestionImp extends BaseImpl<QuizSubmissionQuestion, QuizSubmissionQuestionReader, QuizSubmissionQuestionWriter> implements QuizSubmissionQuestionReader, QuizSubmissionQuestionWriter {
     private static final Logger LOG = Logger.getLogger(QuizSubmissionQuestionImp.class);
 
     public QuizSubmissionQuestionImp(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient) {

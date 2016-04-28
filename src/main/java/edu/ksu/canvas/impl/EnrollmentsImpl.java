@@ -21,7 +21,7 @@ import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class EnrollmentsImpl extends BaseImpl<Enrollment, EnrollmentsReader> implements EnrollmentsReader,EnrollmentsWriter {
+public class EnrollmentsImpl extends BaseImpl<Enrollment, EnrollmentsReader, EnrollmentsWriter> implements EnrollmentsReader,EnrollmentsWriter {
     private static final Logger LOG = Logger.getLogger(CourseReader.class);
     /**
      * Construct a new CanvasApi class with an OAuth token
@@ -37,7 +37,7 @@ public class EnrollmentsImpl extends BaseImpl<Enrollment, EnrollmentsReader> imp
 
     @Override
     public List<Enrollment> getUserEnrollments(Integer user_Id) throws InvalidOauthTokenException, IOException {
-        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "users/" + user_Id+ "/enrollments", Collections.emptyMap());
+        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "users/" + user_Id + "/enrollments", Collections.emptyMap());
         LOG.debug("create URl for get enrollments for user : "+ createdUrl);
         return retrieveEnrollments(oauthToken, createdUrl);
     }
@@ -68,7 +68,7 @@ public class EnrollmentsImpl extends BaseImpl<Enrollment, EnrollmentsReader> imp
     public Optional<Enrollment> dropUser(Integer course_id, Long enrollment_id) throws InvalidOauthTokenException, IOException {
         Map<String,String> postParams = new HashMap<>();
         postParams.put("task", "delete");
-        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "courses/" + course_id+ "/enrollments/"+enrollment_id, Collections.emptyMap());
+        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "courses/" + course_id + "/enrollments/" + enrollment_id, Collections.emptyMap());
         LOG.debug("create URl for course enrollments: "+ createdUrl);
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, createdUrl, postParams);
         if (response.getErrorHappened() ||  response.getResponseCode() != 200) {
