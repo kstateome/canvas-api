@@ -119,8 +119,6 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
     }
 
     protected String buildCanvasUrl(String canvasMethod, Map<String, List<String>> parameters) {
-        //sometimes we get parameter entries with an empty list. We want to strip them out
-        //and only use parameters with a value to send.
         Map<String, List<String>> nonEmptyParams = stripEmptyParams(parameters);
 
         String finalUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
