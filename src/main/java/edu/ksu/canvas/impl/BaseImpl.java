@@ -1,5 +1,7 @@
 package edu.ksu.canvas.impl;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMap.Builder;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -117,15 +119,33 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
     }
 
     protected String buildCanvasUrl(String canvasMethod, Map<String, List<String>> parameters) {
+        Map<String, List<String>> nonEmptyParams = stripEmptyParams(parameters);
+
         String finalUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
-                canvasMethod, parameters);
-        String separator = parameters.isEmpty()? "?" : "&";
+                canvasMethod, nonEmptyParams);
+        String separator = nonEmptyParams.isEmpty()? "?" : "&";
         if(!StringUtils.isEmpty(masqueradeAs) && !StringUtils.isEmpty(masqueradeType)){
             finalUrl += separator + "as_user_id=" + masqueradeType + ":" + masqueradeAs;
             masqueradeAs = null;
             masqueradeType = null;
         }
         return finalUrl;
+    }
+
+    /**
+     * Returns URL parameters after removing any that have an empty list in them.
+     * For optional list arguments, we pass an empty list to the API method. This generates
+     * an entry like includes[]= with no value. This function strips them out so we only
+     * pass parameters to Canvas that have a value to send along.
+     */
+    private Map<String, List<String>> stripEmptyParams(Map<String, List<String>> parameters) {
+        Builder<String, List<String>> paramsBuilder = ImmutableMap.<String, List<String>>builder();
+        for (Map.Entry<String, List<String>> entry : parameters.entrySet()) {
+            if(entry.getValue() != null && !entry.getValue().isEmpty()) {
+                paramsBuilder.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return paramsBuilder.build();
     }
 
     // Declaring this as a separate method fixes some of Java's type inference problems when using it in parseListOfResponses(..)

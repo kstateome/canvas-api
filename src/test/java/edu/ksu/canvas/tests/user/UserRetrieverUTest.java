@@ -16,12 +16,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class UserRetrieverUTest extends CanvasTestBase {
     private static final Logger LOG = Logger.getLogger(UserRetrieverUTest.class);
     @Autowired
     private FakeRestClient fakeRestClient;
     private UserReader userReader;
+
+    private static final String someCourseId = "123";
 
     @Before
     public void setupData() {
@@ -30,7 +33,6 @@ public class UserRetrieverUTest extends CanvasTestBase {
 
     @Test
     public void testListCourseQuizzes() throws Exception {
-        String someCourseId = "123";
         Response notErroredResponse = new Response();
         notErroredResponse.setErrorHappened(false);
         notErroredResponse.setResponseCode(200);
@@ -38,7 +40,7 @@ public class UserRetrieverUTest extends CanvasTestBase {
                 "courses/" + someCourseId + "/users", Collections.emptyMap());
         fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserList.json");
 
-        List<User> users = userReader.getUsersInCourse(someCourseId);
+        List<User> users = userReader.getUsersInCourse(someCourseId, Collections.emptyList(), Optional.empty(), Collections.emptyList());
         Assert.assertEquals(2, users.size());
         Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 1"::equals).findFirst().isPresent());
         Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 2"::equals).findFirst().isPresent());
@@ -47,7 +49,6 @@ public class UserRetrieverUTest extends CanvasTestBase {
     @Test
      public void testSisUserMasqueradeListCourseQuizzes() throws Exception {
         String someUserId = "8991123123";
-        String someCourseId = "123";
         Response notErroredResponse = new Response();
         notErroredResponse.setErrorHappened(false);
         notErroredResponse.setResponseCode(200);
@@ -55,7 +56,7 @@ public class UserRetrieverUTest extends CanvasTestBase {
                 + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserList.json");
 
-        List<User> users = userReader.readAsSisUser(someUserId).getUsersInCourse(someCourseId);
+        List<User> users = userReader.readAsSisUser(someUserId).getUsersInCourse(someCourseId, Collections.emptyList(), Optional.empty(), Collections.emptyList());
         Assert.assertEquals(2, users.size());
         Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 1"::equals).findFirst().isPresent());
         Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 2"::equals).findFirst().isPresent());
@@ -64,7 +65,6 @@ public class UserRetrieverUTest extends CanvasTestBase {
     @Test
     public void testCanvasUserMasqueradeListCourseQuizzes() throws Exception {
         String someUserId = "8991123123";
-        String someCourseId = "123";
         Response notErroredResponse = new Response();
         notErroredResponse.setErrorHappened(false);
         notErroredResponse.setResponseCode(200);
@@ -72,7 +72,7 @@ public class UserRetrieverUTest extends CanvasTestBase {
                 + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + someUserId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserList.json");
 
-        List<User> users = userReader.readAsCanvasUser(someUserId).getUsersInCourse(someCourseId);
+        List<User> users = userReader.readAsCanvasUser(someUserId).getUsersInCourse(someCourseId, Collections.emptyList(), Optional.empty(), Collections.emptyList());
         Assert.assertEquals(2, users.size());
         Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 1"::equals).findFirst().isPresent());
         Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 2"::equals).findFirst().isPresent());

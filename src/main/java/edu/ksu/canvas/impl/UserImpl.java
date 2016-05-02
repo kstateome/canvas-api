@@ -1,7 +1,11 @@
 package edu.ksu.canvas.impl;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMap.Builder;
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.constants.CanvasConstants;
+import edu.ksu.canvas.enums.CourseIncludes;
+import edu.ksu.canvas.enums.EnrollmentType;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.exception.OauthTokenRequiredException;
 import edu.ksu.canvas.interfaces.UserReader;
@@ -9,6 +13,7 @@ import edu.ksu.canvas.interfaces.UserWriter;
 import edu.ksu.canvas.model.User;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
+
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -63,29 +68,20 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
     }
 
     @Override
-    public List<User> getUsersInCourse(String courseId) throws OauthTokenRequiredException, IOException {
-        Map<String, List<String>> postParameters = new HashMap<>();
-        postParameters.put("enrollment_type", Arrays.asList("student"));
-        postParameters.put("include[]", Arrays.asList("enrollments"));
-        postParameters.put("per_page", Arrays.asList(API_RESULTS_PER_PAGE));
-        String url = buildCanvasUrl("courses/" + courseId + "/users", Collections.emptyMap());
+    public List<User> getUsersInCourse(String courseId,
+            List<EnrollmentType> enrollmentTypes, Optional<Integer> enrollmentRoleId,
+            List<CourseIncludes> includes)
+                    throws OauthTokenRequiredException, IOException {
 
-        List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url);
-        return listUsersFromCanvas(responses);
-    }
+        Builder<String, List<String>> paramsBuilder = ImmutableMap.<String, List<String>>builder();
+        paramsBuilder.put("enrollment_type[]", enrollmentTypes.stream().map(Enum::name).collect(Collectors.toList()));
+        enrollmentRoleId.ifPresent(e -> paramsBuilder.put("enrollment_role_id", Collections.singletonList(e.toString())));
+        paramsBuilder.put("include[]", includes.stream().map(Enum::name).collect(Collectors.toList()));
 
-    private List<User> listUsersFromCanvas(List<Response> responses) throws IOException {
-        return responses
-                .stream()
-                .map(this::parseUserList)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
-    }
+        ImmutableMap<String, List<String>> parameters = paramsBuilder.build();
+        String url = buildCanvasUrl("courses/" + courseId + "/users", parameters);
 
-    private List<User> parseUserList(final Response response) {
-        LOG.debug(response.getContent());
-        Type listType = new TypeToken<List<User>>(){}.getType();
-        return getDefaultGsonParser().fromJson(response.getContent(), listType);
+        return getListFromCanvas(url);
     }
 
     @Override
