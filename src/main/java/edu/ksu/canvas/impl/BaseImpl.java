@@ -42,6 +42,7 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
     protected Consumer<List<T>> responseCallback;
     protected String masqueradeAs;
     protected String masqueradeType;
+    protected int paginationPageSize;
 
     /**
      * Construct a new CanvasApi class with an OAuth token
@@ -49,10 +50,11 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
      * @param apiVersion The version of the Canvas API (currently 1)
      * @param oauthToken OAuth token to use when executing API calls
      */
-    public BaseImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout) {
+    public BaseImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, int paginationPageSize) {
         this.canvasBaseUrl = canvasBaseUrl;
         this.apiVersion = apiVersion;
         this.oauthToken = oauthToken;
+        this.paginationPageSize = paginationPageSize;
         responseParser = new GsonResponseParser();
         canvasMessenger = new RestCanvasMessenger(connectTimeout, readTimeout, restClient);
     }

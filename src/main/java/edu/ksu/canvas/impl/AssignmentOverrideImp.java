@@ -22,8 +22,8 @@ public class AssignmentOverrideImp extends BaseImpl<AssignmentOverride, Assignme
     private static final Logger LOG = Logger.getLogger(AssignmentOverrideImp.class);
 
 
-    public AssignmentOverrideImp(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout);
+    public AssignmentOverrideImp(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, int paginationPageSize) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }
 
     @Override

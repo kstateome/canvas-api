@@ -19,6 +19,7 @@ public class CanvasApiFactory {
     public static final Integer CANVAS_API_VERSION = 1;
     private static final int DEFAULT_CONNECT_TIMEOUT_MS = 5000;
     private static final int DEFAULT_READ_TIMEOUT_MS = 120000;
+    private static final int DEFAULT_PAGINATION_PAGE_SIZE = 10;
     private String canvasBaseUrl;
     private int connectTimeout;
     private int readTimeout;
@@ -41,7 +42,28 @@ public class CanvasApiFactory {
         setupClassMap();
     }
 
+    /**
+     * Get a reader implementation class to perform API calls with.
+     * @param type Interface type you wish to get an implementation for
+     * @param oauthToken An OAuth token to use for authentication when making API calls
+     * @return A reader implementation class
+     */
     public <T extends CanvasReader> T getReader(Class<T> type, String oauthToken) {
+        return getReader(type, oauthToken, DEFAULT_PAGINATION_PAGE_SIZE);
+    }
+
+    /**
+     * Get a reader implementation class to perform API calls with while specifying
+     * an explicit page size for paginated API calls. This gets translated to a per_page=
+     * parameter on API requests. Note that Canvas does not guarantee it will honor this page size request.
+     * There is an explicit maximum page size on the server side which could change. The default page size
+     * is 10 which can be limiting when, for example, trying to get all users in a 800 person course.
+     * @param type Interface type you wish to get an implementation for
+     * @param oauthToken An OAuth token to use for authentication when making API calls
+     * @param paginationPageSize Requested pagination page size
+     * @return
+     */
+    public <T extends CanvasReader> T getReader(Class<T> type, String oauthToken, int paginationPageSize) {
         LOG.debug("Factory call to instantiate class: " + type.getName());
         RestClient restClient = new RestClientImpl();
 
@@ -54,8 +76,8 @@ public class CanvasApiFactory {
 
         LOG.debug("got class: " + concreteClass);
         try {
-            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, String.class, RestClient.class, Integer.TYPE, Integer.TYPE);
-            return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient, connectTimeout, readTimeout);
+            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, String.class, RestClient.class, Integer.TYPE, Integer.TYPE, Integer.TYPE);
+            return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
             throw new UnsupportedOperationException("Unknown error instantiating the concrete API class: " + type.getName(), e);
         }
