@@ -1,7 +1,5 @@
 target/
 .settings
-.project
-.classpath
 rebel.xml
 rebel-remote.xml
 *.iml
