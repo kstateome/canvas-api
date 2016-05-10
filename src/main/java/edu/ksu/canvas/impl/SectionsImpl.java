@@ -19,7 +19,6 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter> implements SectionReader {
@@ -45,18 +44,9 @@ public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter
         LOG.debug("getting section " + sectionId);
         String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "sections/" + sectionId, new HashMap<>());
         LOG.debug("Final URL of API call: " + url);
-        return retrieveSectionFromCanvas(oauthToken, url).orElseThrow(() -> new IllegalArgumentException("Failed to find section " + sectionId));
+        return getFromCanvas(url).orElseThrow(() -> new IllegalArgumentException("Failed to find section " + sectionId));
     }
-
-    private Optional<Section> retrieveSectionFromCanvas(String oauthToken, String url) throws IOException {
-        Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
-        if (response.getErrorHappened() || response.getResponseCode() != 200) {
-            return Optional.empty();
-        }
-        return responseParser.parseToObject(Section.class, response);
-    }
-
-
+    
     public List<Section> parseSections(List<Response> responses) {
         return responses
                 .stream()
