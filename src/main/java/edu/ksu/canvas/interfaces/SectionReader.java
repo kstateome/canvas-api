@@ -1,10 +1,10 @@
 package edu.ksu.canvas.interfaces;
 
-import java.io.IOException;
-import java.util.List;
-
 import edu.ksu.canvas.enums.SectionIncludes;
 import edu.ksu.canvas.model.Section;
+
+import java.io.IOException;
+import java.util.List;
 /**
  * Methods to read information from and about sections
  */
@@ -18,5 +18,7 @@ public interface SectionReader extends CanvasReader<Section, SectionReader> {
      * @throws IOException
      */
      List<Section> listCourseSections(Integer courseId, List<SectionIncludes> includes) throws IOException;
+
+     Section getSingleSection(String sectionId) throws IOException;
 
 }

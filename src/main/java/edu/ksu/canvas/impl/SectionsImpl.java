@@ -1,25 +1,26 @@
 package edu.ksu.canvas.impl;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import edu.ksu.canvas.interfaces.SectionWriter;
-import edu.ksu.canvas.net.RestClient;
-import org.apache.log4j.Logger;
-
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-
 import edu.ksu.canvas.enums.SectionIncludes;
 import edu.ksu.canvas.interfaces.SectionReader;
+import edu.ksu.canvas.interfaces.SectionWriter;
 import edu.ksu.canvas.model.Section;
 import edu.ksu.canvas.net.Response;
+import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.util.CanvasURLBuilder;
+import org.apache.log4j.Logger;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter> implements SectionReader {
 
@@ -39,6 +40,22 @@ public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter
         List<Response> response = canvasMessenger.getFromCanvas(oauthToken, url);
         return parseSections(response);
     }
+
+    public Section getSingleSection(String sectionId) throws IOException {
+        LOG.debug("getting section " + sectionId);
+        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "sections/" + sectionId, new HashMap<>());
+        LOG.debug("Final URL of API call: " + url);
+        return retrieveSectionFromCanvas(oauthToken, url).orElseThrow(() -> new IllegalArgumentException("Failed to find section " + sectionId));
+    }
+
+    private Optional<Section> retrieveSectionFromCanvas(String oauthToken, String url) throws IOException {
+        Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
+        if (response.getErrorHappened() || response.getResponseCode() != 200) {
+            return Optional.empty();
+        }
+        return responseParser.parseToObject(Section.class, response);
+    }
+
 
     public List<Section> parseSections(List<Response> responses) {
         return responses
