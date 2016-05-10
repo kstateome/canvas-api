@@ -19,7 +19,9 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -42,7 +44,7 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
     protected Consumer<List<T>> responseCallback;
     protected String masqueradeAs;
     protected String masqueradeType;
-    protected int paginationPageSize;
+    protected Integer paginationPageSize;
 
     /**
      * Construct a new CanvasApi class with an OAuth token
@@ -50,7 +52,7 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
      * @param apiVersion The version of the Canvas API (currently 1)
      * @param oauthToken OAuth token to use when executing API calls
      */
-    public BaseImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, int paginationPageSize) {
+    public BaseImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
         this.canvasBaseUrl = canvasBaseUrl;
         this.apiVersion = apiVersion;
         this.oauthToken = oauthToken;
@@ -121,16 +123,27 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
     }
 
     protected String buildCanvasUrl(String canvasMethod, Map<String, List<String>> parameters) {
-        Map<String, List<String>> nonEmptyParams = stripEmptyParams(parameters);
+        Map<String, List<String>> allParameters = new HashMap<>();
+        allParameters.putAll(parameters);
 
-        String finalUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
-                canvasMethod, nonEmptyParams);
-        String separator = nonEmptyParams.isEmpty()? "?" : "&";
-        if(!StringUtils.isEmpty(masqueradeAs) && !StringUtils.isEmpty(masqueradeType)){
-            finalUrl += separator + "as_user_id=" + masqueradeType + ":" + masqueradeAs;
+        // Add in possible URL parameters for masquerading and pagination page size
+        if (StringUtils.isNotBlank(masqueradeAs)) {
+            if(CanvasConstants.MASQUERADE_CANVAS_USER.equals(masqueradeType)) {
+                allParameters.put("as_user_id", Arrays.asList(masqueradeAs));
+            } else if(CanvasConstants.MASQUERADE_SIS_USER.equals(masqueradeType)) {
+                allParameters.put("as_user_id", Arrays.asList("sis_user_id:" + masqueradeAs));
+            }
+            //Since masquerading options are added on a per-call basis, blank them out after using them for this call
             masqueradeAs = null;
             masqueradeType = null;
         }
+        if(paginationPageSize != null) {
+            allParameters.put("per_page", Arrays.asList(paginationPageSize.toString()));
+        }
+
+        Map<String, List<String>> nonEmptyParams = stripEmptyParams(allParameters);
+
+        String finalUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, canvasMethod, nonEmptyParams);
         return finalUrl;
     }
 
