@@ -15,7 +15,7 @@
     <connection>scm:git:ssh://git@github.com/kstateome/canvas-api.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/kstateome/canvas-api.git</developerConnection>
     <url>https://github.com/kstateome/canvas-api</url>
-    <tag>HEAD</tag>
+    <tag>release-1.0</tag>
   </scm>
 
   <distributionManagement>
