@@ -142,7 +142,14 @@ public class RestClientImpl implements RestClient {
             throw new InvalidOauthTokenException();
         }
 
-        response.setContent(httpResponse.getEntity().getContent().toString());
+        BufferedReader in = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
+        String inputLine;
+        StringBuffer content = new StringBuffer();
+        while ((inputLine = in.readLine()) != null) {
+            content.append(inputLine);
+        }
+
+        response.setContent(content.toString());
         response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
         Long endTime = System.currentTimeMillis();
         LOG.debug("Canvas API call took: " + (endTime - beginTime) + "ms");
