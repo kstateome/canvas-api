@@ -1,6 +1,13 @@
 package edu.ksu.canvas.net;
 
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.Logger;
 
 import javax.validation.constraints.NotNull;
@@ -10,6 +17,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -114,50 +122,37 @@ public class RestClientImpl implements RestClient {
                                        int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("sendApiPost");
         Response response = new Response();
-
+        CloseableHttpClient httpClient = HttpClients.createDefault();
         Long beginTime = System.currentTimeMillis();
-        URL apiUrl = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) apiUrl.openConnection();
-        con.setConnectTimeout(connectTimeout);
-        con.setReadTimeout(readTimeout);
-        con.setRequestMethod("POST");
-        con.setRequestProperty("Authorization", "Bearer" + " " + token);
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setHeader("Authorization", "Bearer" + " " + token);
+        List<NameValuePair> params = new ArrayList<>();
+
         if (postParameters != null) {
             for (Map.Entry<String, String> entry : postParameters.entrySet()) {
-                con.setRequestProperty(entry.getKey(), entry.getValue());
+                params.add(new BasicNameValuePair(entry.getKey(),entry.getValue()));
                 LOG.debug("key "+ entry.getKey() +"\t value : "+ entry.getValue());
             }
         }
 
+        httpPost.setEntity(new UrlEncodedFormEntity(params));
         LOG.debug("Sending API POST request to URL: " + url);
-        if (con.getResponseCode() == 401) {
+        CloseableHttpResponse httpResponse =  httpClient.execute(httpPost);
+        if (httpResponse.getStatusLine().getStatusCode() == 401) {
             throw new InvalidOauthTokenException();
         }
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(
-                con.getInputStream()));
+        BufferedReader in = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
         String inputLine;
         StringBuffer content = new StringBuffer();
         while ((inputLine = in.readLine()) != null) {
             content.append(inputLine);
         }
+
         response.setContent(content.toString());
-        response.setResponseCode(con.getResponseCode());
+        response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
         Long endTime = System.currentTimeMillis();
         LOG.debug("Canvas API call took: " + (endTime - beginTime) + "ms");
-        //deal with pagination
-        String linkHeader = con.getHeaderField("Link");
-        if (linkHeader == null) {
-            return response;
-        }
-        List<String> links = Arrays.asList(linkHeader.split(","));
-        for (String link : links) {
-            if (link.contains("rel=\"next\"")) {
-                LOG.debug("response has more pages");
-                String nextLink = link.substring(1, link.indexOf(';')); //format is <http://.....>; rel="next"
-                response.setNextLink(nextLink);
-            }
-        }
         return response;
     }
 
