@@ -156,6 +156,8 @@ public class RestClientImpl implements RestClient {
 
         Long beginTime = System.currentTimeMillis();
         CloseableHttpClient httpClient = HttpClients.createDefault();
+
+        //This class is defined here because we need to be able to add form body elements to a delete request for a few api calls.
         class HttpDeleteWithBody extends HttpPost {
             @Override
             public String getMethod() {
