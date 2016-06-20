@@ -1,6 +1,8 @@
 package edu.ksu.canvas.net;
 
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
+
+import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -53,11 +55,12 @@ public class RestClientImpl implements RestClient {
         LOG.debug("Canvas API call took: " + (endTime - beginTime) + "ms");
 
         //deal with pagination
-        String linkHeader = httpResponse.getFirstHeader("Link").getValue();
-        if(linkHeader == null) {
+        Header linkHeader = httpResponse.getFirstHeader("Link");
+        String linkHeaderValue = linkHeader == null ? null : httpResponse.getFirstHeader("Link").getValue();
+        if(linkHeaderValue == null) {
             return response;
         }
-        List<String> links = Arrays.asList(linkHeader.split(","));
+        List<String> links = Arrays.asList(linkHeaderValue.split(","));
         for (String link : links) {
             if(link.contains("rel=\"next\"")) {
                 LOG.debug("response has more pages");
