@@ -30,7 +30,7 @@ public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter
     }
 
     @Override
-    public List<Section> listCourseSections(Integer courseId, List<SectionIncludes> includes) throws IOException {
+    public List<Section> listCourseSections(String courseId, List<SectionIncludes> includes) throws IOException {
         LOG.debug("Looking up sections for course " + courseId);
         ImmutableMap<String, List<String>> parameters = ImmutableMap.<String,List<String>>builder()
                 .put("include[]", includes.stream().map(Enum::name).collect(Collectors.toList()))
@@ -40,6 +40,7 @@ public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter
         return parseSections(response);
     }
 
+    @Override
     public Section getSingleSection(String sectionId) throws IOException {
         LOG.debug("getting section " + sectionId);
         String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "sections/" + sectionId, new HashMap<>());

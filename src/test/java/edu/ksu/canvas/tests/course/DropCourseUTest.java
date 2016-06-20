@@ -29,7 +29,7 @@ public class DropCourseUTest extends CanvasTestBase {
         //should make sure user exists
         String url = baseUrl + "/api/v1/courses/25/enrollments";
         fakeRestClient.addSuccessResponse(url, "SampleJson/EnrollmentResponse.json");
-        Optional<Enrollment> enrollmentResponse = enrollmentsWriter.enrollUser(25,78839);
+        Optional<Enrollment> enrollmentResponse = enrollmentsWriter.enrollUser("25","78839");
         Assert.assertTrue(25==enrollmentResponse.get().getCourseId());
         Assert.assertTrue(78839 == enrollmentResponse.get().getUserId());
         Assert.assertTrue(enrollmentResponse.get().getId()!=0);
@@ -39,7 +39,7 @@ public class DropCourseUTest extends CanvasTestBase {
     public void  testDropEnrolledUser() throws IOException {
         String url = baseUrl + "/api/v1/courses/25/enrollments/355047";
         fakeRestClient.addSuccessResponse(url, "SampleJson/EnrollmentDeleteResponse.json");
-        Optional<Enrollment> dropResponse = enrollmentsWriter.dropUser(25, 355047L);
+        Optional<Enrollment> dropResponse = enrollmentsWriter.dropUser("25", "355047");
         Assert.assertTrue("deleted".equals(dropResponse.get().getEnrollmentState()));
     }
 
@@ -49,7 +49,7 @@ public class DropCourseUTest extends CanvasTestBase {
         String userId = "899123456";
         String url = baseUrl + "/api/v1/courses/25/enrollments?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + userId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/EnrollmentResponse.json");
-        Optional<Enrollment> enrollmentResponse = enrollmentsWriter.writeAsSisUser(userId).enrollUser(25,78839);
+        Optional<Enrollment> enrollmentResponse = enrollmentsWriter.writeAsSisUser(userId).enrollUser("25","78839");
         Assert.assertTrue(25==enrollmentResponse.get().getCourseId());
         Assert.assertTrue(78839 == enrollmentResponse.get().getUserId());
         Assert.assertTrue(enrollmentResponse.get().getId()!=0);
@@ -60,7 +60,7 @@ public class DropCourseUTest extends CanvasTestBase {
         String userId = "899123456";
         String url = baseUrl + "/api/v1/courses/25/enrollments/355047?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + userId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/EnrollmentDeleteResponse.json");
-        Optional<Enrollment> dropResponse = enrollmentsWriter.writeAsSisUser(userId).dropUser(25, 355047L);
+        Optional<Enrollment> dropResponse = enrollmentsWriter.writeAsSisUser(userId).dropUser("25", "355047");
         Assert.assertTrue("deleted".equals(dropResponse.get().getEnrollmentState()));
     }
 
@@ -70,7 +70,7 @@ public class DropCourseUTest extends CanvasTestBase {
         String userId = "899123456";
         String url = baseUrl + "/api/v1/courses/25/enrollments?as_user_id=" + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + userId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/EnrollmentResponse.json");
-        Optional<Enrollment> enrollmentResponse = enrollmentsWriter.writeAsCanvasUser(userId).enrollUser(25, 78839);
+        Optional<Enrollment> enrollmentResponse = enrollmentsWriter.writeAsCanvasUser(userId).enrollUser("25", "78839");
         Assert.assertTrue(25==enrollmentResponse.get().getCourseId());
         Assert.assertTrue(78839 == enrollmentResponse.get().getUserId());
         Assert.assertTrue(enrollmentResponse.get().getId()!=0);
@@ -81,7 +81,7 @@ public class DropCourseUTest extends CanvasTestBase {
         String userId = "899123456";
         String url = baseUrl + "/api/v1/courses/25/enrollments/355047?as_user_id=" + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + userId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/EnrollmentDeleteResponse.json");
-        Optional<Enrollment> dropResponse = enrollmentsWriter.writeAsCanvasUser(userId).dropUser(25, 355047L);
+        Optional<Enrollment> dropResponse = enrollmentsWriter.writeAsCanvasUser(userId).dropUser("25", "355047");
         Assert.assertTrue("deleted".equals(dropResponse.get().getEnrollmentState()));
     }
 }
