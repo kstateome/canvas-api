@@ -5,6 +5,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
@@ -138,6 +139,46 @@ public class RestClientImpl implements RestClient {
         httpPost.setEntity(new UrlEncodedFormEntity(params));
         LOG.debug("Sending API POST request to URL: " + url);
         CloseableHttpResponse httpResponse =  httpClient.execute(httpPost);
+        if (httpResponse.getStatusLine().getStatusCode() == 401) {
+            throw new InvalidOauthTokenException();
+        }
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
+        String inputLine;
+        StringBuffer content = new StringBuffer();
+        while ((inputLine = in.readLine()) != null) {
+            content.append(inputLine);
+        }
+
+        response.setContent(content.toString());
+        response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
+        Long endTime = System.currentTimeMillis();
+        LOG.debug("Canvas API call took: " + (endTime - beginTime) + "ms");
+        return response;
+    }
+
+
+
+    public Response sendApiPut(String token, String url, Map<String, String> putParameters,
+                                int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+        LOG.debug("sendApiPut");
+        Response response = new Response();
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        Long beginTime = System.currentTimeMillis();
+        HttpPut httpPut = new HttpPut(url);
+        httpPut.setHeader("Authorization", "Bearer" + " " + token);
+        List<NameValuePair> params = new ArrayList<>();
+
+        if (putParameters != null) {
+            for (Map.Entry<String, String> entry : putParameters.entrySet()) {
+                params.add(new BasicNameValuePair(entry.getKey(),entry.getValue()));
+                LOG.debug("key "+ entry.getKey() +"\t value : "+ entry.getValue());
+            }
+        }
+
+        httpPut.setEntity(new UrlEncodedFormEntity(params));
+        LOG.debug("Sending API PUT request to URL: " + url);
+        CloseableHttpResponse httpResponse =  httpClient.execute(httpPut);
         if (httpResponse.getStatusLine().getStatusCode() == 401) {
             throw new InvalidOauthTokenException();
         }
