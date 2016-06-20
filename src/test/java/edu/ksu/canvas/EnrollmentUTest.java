@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class EnrollmentUTest extends CanvasTestBase {
-    private static final int SECTION_ID = 1;
+    private static final String SECTION_ID = "1";
     @Autowired
     private FakeRestClient fakeRestClient;
     @Autowired

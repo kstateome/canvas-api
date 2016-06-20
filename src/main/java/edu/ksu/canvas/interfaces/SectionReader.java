@@ -17,7 +17,7 @@ public interface SectionReader extends CanvasReader<Section, SectionReader> {
      * @return List of sections
      * @throws IOException
      */
-     List<Section> listCourseSections(Integer courseId, List<SectionIncludes> includes) throws IOException;
+     List<Section> listCourseSections(String courseId, List<SectionIncludes> includes) throws IOException;
 
     /**
      * Return a single section with a given section ID
