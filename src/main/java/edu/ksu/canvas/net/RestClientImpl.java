@@ -1,13 +1,15 @@
 package edu.ksu.canvas.net;
 
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.Logger;
 
 import javax.validation.constraints.NotNull;
@@ -15,7 +17,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -145,15 +149,31 @@ public class RestClientImpl implements RestClient {
         return response;
     }
 
-    public Response sendApiDelete(String token, String url,
+    public Response sendApiDelete(String token, String url, Map<String,String> deleteParameters,
                                   int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("sendApiDelete");
         Response response = new Response();
 
         Long beginTime = System.currentTimeMillis();
         CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpDelete httpDelete = new HttpDelete(url);
+        class HttpDeleteWithBody extends HttpPost {
+            @Override
+            public String getMethod() {
+                return "DELETE";
+            }
+        }
+
+        HttpDeleteWithBody httpDelete = new HttpDeleteWithBody();
+
+        httpDelete.setURI(URI.create(url));
         httpDelete.setHeader("Authorization", "Bearer" + " " + token);
+        List<NameValuePair> params = new ArrayList<>();
+        if (deleteParameters != null) {
+            for (Map.Entry<String, String> entry : deleteParameters.entrySet()) {
+                params.add(new BasicNameValuePair(entry.getKey(),entry.getValue()));
+            }
+        }
+        httpDelete.setEntity(new UrlEncodedFormEntity(params));
         CloseableHttpResponse httpResponse = httpClient.execute(httpDelete);
         LOG.debug("Sending API DELETE request to URL: " + url);
         if (httpResponse.getStatusLine().getStatusCode() == 401) {

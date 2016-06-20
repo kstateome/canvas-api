@@ -75,8 +75,8 @@ public class RestCanvasMessenger implements CanvasMessenger {
     }
 
     @Override
-    public Response deleteFromCanvas(@NotNull String oauthToken, @NotNull String url) throws InvalidOauthTokenException, IOException {
-        final Response response = restClient.sendApiDelete(oauthToken, url, connectTimeout, readTimeout);
+    public Response deleteFromCanvas(@NotNull String oauthToken, @NotNull String url, @NotNull Map<String,String> parameters) throws InvalidOauthTokenException, IOException {
+        final Response response = restClient.sendApiDelete(oauthToken, url, parameters, connectTimeout, readTimeout);
         if (response.getResponseCode() == 401) {
             throw new InvalidOauthTokenException();
         }
