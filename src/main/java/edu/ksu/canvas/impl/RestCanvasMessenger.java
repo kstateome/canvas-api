@@ -2,23 +2,20 @@ package edu.ksu.canvas.impl;
 
 
 import com.google.gson.JsonObject;
+import edu.ksu.canvas.exception.InvalidOauthTokenException;
+import edu.ksu.canvas.interfaces.CanvasMessenger;
+import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import edu.ksu.canvas.exception.InvalidOauthTokenException;
-import edu.ksu.canvas.interfaces.CanvasMessenger;
-import edu.ksu.canvas.net.Response;
-
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-
-
-import javax.validation.constraints.NotNull;
 
 /*
  * This class uses the canvas rest api to communicate with canvas
@@ -78,8 +75,8 @@ public class RestCanvasMessenger implements CanvasMessenger {
     }
 
     @Override
-    public Response deleteFromCanvas(@NotNull String oauthToken, @NotNull String url, @NotNull Map<String,String> parameters) throws InvalidOauthTokenException, IOException {
-        final Response response = restClient.sendApiDelete(oauthToken, url, parameters, connectTimeout, readTimeout);
+    public Response deleteFromCanvas(@NotNull String oauthToken, @NotNull String url) throws InvalidOauthTokenException, IOException {
+        final Response response = restClient.sendApiDelete(oauthToken, url, connectTimeout, readTimeout);
         if (response.getResponseCode() == 401) {
             throw new InvalidOauthTokenException();
         }

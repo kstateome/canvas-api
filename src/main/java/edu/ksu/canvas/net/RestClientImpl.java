@@ -55,7 +55,7 @@ public class RestClientImpl implements RestClient {
         for (String link : links) {
             if(link.contains("rel=\"next\"")) {
                 LOG.debug("response has more pages");
-                String nextLink = link.substring(1, link.indexOf(';')); //format is <http://.....>; rel="next"
+                String nextLink = link.substring(1, link.indexOf(';')-1); //format is <http://.....>; rel="next"
                 response.setNextLink(nextLink);
             }
         }
@@ -145,7 +145,7 @@ public class RestClientImpl implements RestClient {
         return response;
     }
 
-    public Response sendApiDelete(String token, String url,Map<String, String> deleteParameters,
+    public Response sendApiDelete(String token, String url,
                                   int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("sendApiDelete");
         Response response = new Response();
@@ -154,12 +154,6 @@ public class RestClientImpl implements RestClient {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpDelete httpDelete = new HttpDelete(url);
         httpDelete.setHeader("Authorization", "Bearer" + " " + token);
-        if (deleteParameters != null) {
-            for (Map.Entry<String, String> entry : deleteParameters.entrySet()) {
-                httpDelete.addHeader(entry.getKey(), entry.getValue());
-            }
-        }
-
         CloseableHttpResponse httpResponse = httpClient.execute(httpDelete);
         LOG.debug("Sending API DELETE request to URL: " + url);
         if (httpResponse.getStatusLine().getStatusCode() == 401) {
