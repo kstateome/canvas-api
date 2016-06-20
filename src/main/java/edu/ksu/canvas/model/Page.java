@@ -2,6 +2,7 @@ package edu.ksu.canvas.model;
 
 import java.util.Date;
 
+import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
 
 @CanvasObject(postKey = "wiki_page")
@@ -28,6 +29,7 @@ public class Page extends BaseCanvasModel {
         this.url = url;
     }
 
+    @CanvasField(postKey = "title")
     public String getTitle() {
         return title;
     }
@@ -52,6 +54,7 @@ public class Page extends BaseCanvasModel {
         this.updatedAt = updatedAt;
     }
 
+    @CanvasField(postKey = "editing_roles")
     public String getEditingRoles() {
         return editingRoles;
     }
@@ -68,6 +71,7 @@ public class Page extends BaseCanvasModel {
         this.lastEditedBy = lastEditedBy;
     }
 
+    @CanvasField(postKey = "body")
     public String getBody() {
         return body;
     }
@@ -76,6 +80,7 @@ public class Page extends BaseCanvasModel {
         this.body = body;
     }
 
+    @CanvasField(postKey = "published")
     public Boolean getPublished() {
         return published;
     }
@@ -84,6 +89,7 @@ public class Page extends BaseCanvasModel {
         this.published = published;
     }
 
+    @CanvasField(postKey = "front_page")
     public Boolean getFrontPage() {
         return frontPage;
     }
