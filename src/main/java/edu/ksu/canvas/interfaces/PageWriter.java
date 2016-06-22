@@ -13,5 +13,5 @@ public interface PageWriter extends CanvasWriter<Page, PageWriter> {
      * @return The update page after saving
      * @throws Exception
      */
-    Optional<Page> updateCoursePage(Page page, Integer courseId) throws Exception;
+    Optional<Page> updateCoursePage(Page page, String courseId) throws Exception;
 }

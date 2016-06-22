@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
@@ -25,7 +24,7 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
     }
 
     @Override
-    public Optional<Page> getCoursePage(Integer courseId, String pageUrl) throws IOException {
+    public Optional<Page> getCoursePage(String courseId, String pageUrl) throws IOException {
         LOG.debug("retrieving page " + pageUrl + " for course " + courseId);
         String url = buildCanvasUrl("courses/" + courseId + "/pages/" + pageUrl, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
@@ -33,7 +32,7 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
     }
 
     @Override
-    public Optional<Page> getGroupPage(Integer groupId, String pageUrl) throws IOException {
+    public Optional<Page> getGroupPage(String groupId, String pageUrl) throws IOException {
         LOG.debug("retrieving page " + pageUrl + " for group " + groupId);
         String url = buildCanvasUrl("groups/" + groupId + "/pages/" + pageUrl, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
@@ -41,13 +40,12 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
     }
 
     @Override
-    public Optional<Page> updateCoursePage(Page page, Integer courseId) throws Exception {
+    public Optional<Page> updateCoursePage(Page page, String courseId) throws Exception {
         LOG.debug("Updating page in course" + courseId);
         String url = buildCanvasUrl("courses/" + courseId + "/pages/" + page.getUrl(), Collections.emptyMap());
         Response response = canvasMessenger.putToCanvas(oauthToken, url, page.toPostMap());
         return responseParser.parseToObject(Page.class, response);
     }
-
 
     @Override
     public List<Page> listPagesInCourse(String courseId) throws IOException {

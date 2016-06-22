@@ -15,7 +15,7 @@ public interface PageReader extends CanvasReader<Page, PageReader> {
      * @return The requested Page object
      * @throws IOException
      */
-    public Optional<Page> getCoursePage(Integer courseId, String pageUrl) throws IOException;
+    public Optional<Page> getCoursePage(String courseId, String pageUrl) throws IOException;
 
     /**
      * Retrieve a specified page associated with a group.
@@ -24,7 +24,7 @@ public interface PageReader extends CanvasReader<Page, PageReader> {
      * @return The requested Page object
      * @throws IOException
      */
-    public Optional<Page> getGroupPage(Integer groupId, String pageUrl) throws IOException;
+    public Optional<Page> getGroupPage(String groupId, String pageUrl) throws IOException;
 
     /**
      * Get a list of pages in a course.
