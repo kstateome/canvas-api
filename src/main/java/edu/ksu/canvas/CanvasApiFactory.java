@@ -60,7 +60,7 @@ public class CanvasApiFactory {
      * @param type Interface type you wish to get an implementation for
      * @param oauthToken An OAuth token to use for authentication when making API calls
      * @param paginationPageSize Requested pagination page size
-     * @return
+     * @return An instance of the requested reader class
      */
     public <T extends CanvasReader> T getReader(Class<T> type, String oauthToken, Integer paginationPageSize) {
         LOG.debug("Factory call to instantiate class: " + type.getName());
