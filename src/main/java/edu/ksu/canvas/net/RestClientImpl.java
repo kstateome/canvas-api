@@ -141,7 +141,7 @@ public class RestClientImpl implements RestClient {
         return response;
     }
 
-public Response sendApiPut(String token, String url, Map<String, String> putParameters,
+public Response sendApiPut(String token, String url, Map<String, Object> putParameters,
                                 int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("sendApiPut");
         Response response = new Response();
@@ -152,8 +152,8 @@ public Response sendApiPut(String token, String url, Map<String, String> putPara
         List<NameValuePair> params = new ArrayList<>();
 
         if (putParameters != null) {
-            for (Map.Entry<String, String> entry : putParameters.entrySet()) {
-                params.add(new BasicNameValuePair(entry.getKey(),entry.getValue()));
+            for (Map.Entry<String, Object> entry : putParameters.entrySet()) {
+                params.add(new BasicNameValuePair(entry.getKey(),entry.getValue().toString()));
                 LOG.debug("key "+ entry.getKey() +"\t value : "+ entry.getValue());
             }
         }

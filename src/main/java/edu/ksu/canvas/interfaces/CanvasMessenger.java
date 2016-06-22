@@ -17,5 +17,5 @@ public interface CanvasMessenger {
     Response sendToJsonCanvas(String oauthToken, String url, JsonObject requestBody) throws InvalidOauthTokenException, IOException;
     Response deleteFromCanvas(String oauthToken, String url, Map<String,String> parameters) throws InvalidOauthTokenException, IOException;
     Response getSingleResponseFromCanvas(String oauthToken, String url) throws InvalidOauthTokenException, IOException;
-    Response putToCanvas(String oauthToken, String url, Map<String, String> parameters) throws InvalidOauthTokenException, IOException;
+    Response putToCanvas(String oauthToken, String url, Map<String, Object> parameters) throws InvalidOauthTokenException, IOException;
 }
