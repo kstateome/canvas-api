@@ -25,7 +25,7 @@ public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter
 
     private static final Logger LOG = Logger.getLogger(SectionReader.class);
 
-    public SectionsImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, int paginationPageSize) {
+    public SectionsImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }
 

@@ -33,7 +33,7 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
      * @param oauthToken    OAuth token to use when executing API calls
      * @param restClient    The rest client implementation to use
      */
-    public UserImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, int paginationPageSize) {
+    public UserImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }
 

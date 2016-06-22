@@ -19,7 +19,6 @@ public class CanvasApiFactory {
     public static final Integer CANVAS_API_VERSION = 1;
     private static final int DEFAULT_CONNECT_TIMEOUT_MS = 5000;
     private static final int DEFAULT_READ_TIMEOUT_MS = 120000;
-    private static final int DEFAULT_PAGINATION_PAGE_SIZE = 10;
     private String canvasBaseUrl;
     private int connectTimeout;
     private int readTimeout;
@@ -49,7 +48,7 @@ public class CanvasApiFactory {
      * @return A reader implementation class
      */
     public <T extends CanvasReader> T getReader(Class<T> type, String oauthToken) {
-        return getReader(type, oauthToken, DEFAULT_PAGINATION_PAGE_SIZE);
+        return getReader(type, oauthToken, null);
     }
 
     /**
@@ -63,7 +62,7 @@ public class CanvasApiFactory {
      * @param paginationPageSize Requested pagination page size
      * @return
      */
-    public <T extends CanvasReader> T getReader(Class<T> type, String oauthToken, int paginationPageSize) {
+    public <T extends CanvasReader> T getReader(Class<T> type, String oauthToken, Integer paginationPageSize) {
         LOG.debug("Factory call to instantiate class: " + type.getName());
         RestClient restClient = new RestClientImpl();
 
@@ -76,7 +75,7 @@ public class CanvasApiFactory {
 
         LOG.debug("got class: " + concreteClass);
         try {
-            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, String.class, RestClient.class, Integer.TYPE, Integer.TYPE, Integer.TYPE);
+            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, String.class, RestClient.class, Integer.TYPE, Integer.TYPE, Integer.class);
             return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
             throw new UnsupportedOperationException("Unknown error instantiating the concrete API class: " + type.getName(), e);

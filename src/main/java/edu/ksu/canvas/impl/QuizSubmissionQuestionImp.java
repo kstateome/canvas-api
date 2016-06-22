@@ -34,7 +34,7 @@ import java.util.List;
 public class QuizSubmissionQuestionImp extends BaseImpl<QuizSubmissionQuestion, QuizSubmissionQuestionReader, QuizSubmissionQuestionWriter> implements QuizSubmissionQuestionReader, QuizSubmissionQuestionWriter {
     private static final Logger LOG = Logger.getLogger(QuizSubmissionQuestionImp.class);
 
-    public QuizSubmissionQuestionImp(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, int paginationPageSize) {
+    public QuizSubmissionQuestionImp(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }
 
