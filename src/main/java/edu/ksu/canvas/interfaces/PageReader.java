@@ -35,4 +35,14 @@ public interface PageReader extends CanvasReader<Page, PageReader> {
      * @throws IOException
      */
     public List<Page> listPagesInCourse(String courseId) throws IOException;
+
+    /**
+     * Get a list of pages in a group.
+     * NOTE: Page objects returned by this method will not have a body!
+     * The Canvas API does not return the body when calling this endpoint, allegedly for performance reasons
+     * @param groupId Canvas Group ID of the group
+     * @return List of Page objects (without a body)
+     * @throws IOException
+     */
+    public List<Page> listPagesInGroup(String groupId) throws IOException;
 }

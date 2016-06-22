@@ -57,6 +57,13 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
     }
 
     @Override
+    public List<Page> listPagesInGroup(String groupId) throws IOException {
+        LOG.debug("fetching all pages for course " + groupId);
+        String url = buildCanvasUrl("groups/" + groupId + "/pages", Collections.emptyMap());
+        return getListFromCanvas(url);
+    }
+
+    @Override
     protected Type listType() {
         return new TypeToken<List<Page>>(){}.getType();
     }
