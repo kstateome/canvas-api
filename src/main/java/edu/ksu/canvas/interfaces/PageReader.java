@@ -1,6 +1,7 @@
 package edu.ksu.canvas.interfaces;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import edu.ksu.canvas.model.Page;
@@ -24,4 +25,14 @@ public interface PageReader extends CanvasReader<Page, PageReader> {
      * @throws IOException
      */
     public Optional<Page> getGroupPage(Integer groupId, String pageUrl) throws IOException;
+
+    /**
+     * Get a list of pages in a course.
+     * NOTE: Page objects returned by this method will not have a body!
+     * The Canvas API does not return the body when calling this endpoint, allegedly for performance reasons
+     * @param courseId Canvas ID of the course
+     * @return List of Page objects (without a body)
+     * @throws IOException
+     */
+    public List<Page> listPagesInCourse(String courseId) throws IOException;
 }

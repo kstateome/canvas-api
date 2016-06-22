@@ -48,6 +48,14 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
         return responseParser.parseToObject(Page.class, response);
     }
 
+
+    @Override
+    public List<Page> listPagesInCourse(String courseId) throws IOException {
+        LOG.debug("fetching all pages for course " + courseId);
+        String url = buildCanvasUrl("courses/" + courseId + "/pages", Collections.emptyMap());
+        return getListFromCanvas(url);
+    }
+
     @Override
     protected Type listType() {
         return new TypeToken<List<Page>>(){}.getType();
