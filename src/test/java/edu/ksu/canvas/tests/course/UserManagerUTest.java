@@ -61,7 +61,7 @@ public class UserManagerUTest extends CanvasTestBase {
         String userId = "899123456";
         user.setName("somestring4");
         user.setLoginId("somestring4");
-        String url = baseUrl + "/api/v1/accounts/1/users?as_user_id=" + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + userId;
+        String url = baseUrl + "/api/v1/accounts/1/users?as_user_id=" + userId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/CreateUserResponse.json");
         Optional<User> response = userWriter.writeAsCanvasUser(userId).createUser(user);
         System.out.println(response.toString());

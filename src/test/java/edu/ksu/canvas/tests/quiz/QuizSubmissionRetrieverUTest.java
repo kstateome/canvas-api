@@ -125,8 +125,7 @@ public class QuizSubmissionRetrieverUTest extends CanvasTestBase {
         Response notErroredResponse = new Response();
         notErroredResponse.setErrorHappened(false);
         notErroredResponse.setResponseCode(200);
-        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQuizId + "/submissions?as_user_id="
-                + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + someUserId;
+        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQuizId + "/submissions?as_user_id=" + someUserId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/quiz/QuizSubmissions.json");
 
         List<QuizSubmission> submissions = quizSubmissionReader.readAsCanvasUser(someUserId).getQuizSubmissions(someCourseId, someQuizId);
@@ -142,8 +141,7 @@ public class QuizSubmissionRetrieverUTest extends CanvasTestBase {
         String someQuizId = "1234556";
         Response erroredResponse = new Response();
         erroredResponse.setErrorHappened(true);
-        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQuizId + "/submissions?as_user_id="
-                + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + someUserId;
+        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQuizId + "/submissions?as_user_id=" + someUserId;
         fakeRestClient.add401Response(url, "SampleJson/quiz/QuizSubmissions.json");
         quizSubmissionReader.readAsCanvasUser(someUserId).getQuizSubmissions(someCourseId, someQuizId);
     }
@@ -155,8 +153,7 @@ public class QuizSubmissionRetrieverUTest extends CanvasTestBase {
         String someQuizId = "1234556";
         Response erroredResponse = new Response();
         erroredResponse.setResponseCode(401);
-        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQuizId + "/submissions?as_user_id="
-                + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + someUserId;
+        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQuizId + "/submissions?as_user_id=" + someUserId;
         fakeRestClient.addSuccessResponse(url, "InvalidJson.json");
 
         Assert.assertTrue(quizSubmissionReader.readAsCanvasUser(someUserId).getQuizSubmissions(someCourseId, someQuizId).isEmpty());

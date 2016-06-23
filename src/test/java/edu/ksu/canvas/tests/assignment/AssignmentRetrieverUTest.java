@@ -146,7 +146,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         Response notErroredResponse = new Response();
         notErroredResponse.setErrorHappened(false);
         notErroredResponse.setResponseCode(200);
-        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments?as_user_id=" + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + someUserId;
+        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments?as_user_id=" + someUserId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/AssignmentList.json");
 
         List<Assignment> assignments = assignmentReader.readAsCanvasUser(someUserId).listCourseAssignments(someCourseId);
@@ -161,7 +161,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         String someCourseId = "123456";
         Response erroredResponse = new Response();
         erroredResponse.setErrorHappened(true);
-        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments?as_user_id=" + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + someUserId;
+        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments?as_user_id=" + someUserId;
         fakeRestClient.add401Response(url, "SampleJson/assignment/Assignment1.json");
         assignmentReader.readAsCanvasUser(someUserId).listCourseAssignments(someCourseId);
     }
@@ -172,7 +172,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         String someCourseId = "123456";
         Response erroredResponse = new Response();
         erroredResponse.setResponseCode(401);
-        String url =  baseUrl + "/api/v1/courses/" + someCourseId + "/assignments?as_user_id=" + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + someUserId;
+        String url =  baseUrl + "/api/v1/courses/" + someCourseId + "/assignments?as_user_id=" + someUserId;
         fakeRestClient.addSuccessResponse(url, "InvalidJson.json");
         Assert.assertTrue(assignmentReader.readAsCanvasUser(someUserId).listCourseAssignments(someCourseId).isEmpty());
     }
@@ -182,7 +182,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         String someUserId = "8991123123";
         String someCourseId = "1234";
         String someAssignmentId = "123";
-        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments/" + someAssignmentId + "?as_user_id=" + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + someUserId;
+        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments/" + someAssignmentId + "?as_user_id=" + someUserId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/Assignment1.json");
         Optional<Assignment> assignment = assignmentReader.readAsCanvasUser(someUserId).getSingleAssignment(someCourseId, someAssignmentId);
         Assert.assertTrue(assignment.isPresent());

@@ -68,8 +68,7 @@ public class UserRetrieverUTest extends CanvasTestBase {
         Response notErroredResponse = new Response();
         notErroredResponse.setErrorHappened(false);
         notErroredResponse.setResponseCode(200);
-        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/users?as_user_id="
-                + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + someUserId;
+        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/users?as_user_id=" + someUserId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserList.json");
 
         List<User> users = userReader.readAsCanvasUser(someUserId).getUsersInCourse(someCourseId, Collections.emptyList(), Optional.empty(), Collections.emptyList());
