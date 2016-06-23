@@ -41,7 +41,30 @@ public class CanvasApiFactory {
         setupClassMap();
     }
 
+    /**
+     * Get a reader implementation class to perform API calls with.
+     * @param type Interface type you wish to get an implementation for
+     * @param oauthToken An OAuth token to use for authentication when making API calls
+     * @param <T> The reader type to request an instance of
+     * @return A reader implementation class
+     */
     public <T extends CanvasReader> T getReader(Class<T> type, String oauthToken) {
+        return getReader(type, oauthToken, null);
+    }
+
+    /**
+     * Get a reader implementation class to perform API calls with while specifying
+     * an explicit page size for paginated API calls. This gets translated to a per_page=
+     * parameter on API requests. Note that Canvas does not guarantee it will honor this page size request.
+     * There is an explicit maximum page size on the server side which could change. The default page size
+     * is 10 which can be limiting when, for example, trying to get all users in a 800 person course.
+     * @param type Interface type you wish to get an implementation for
+     * @param oauthToken An OAuth token to use for authentication when making API calls
+     * @param paginationPageSize Requested pagination page size
+     * @param <T> The reader type to request an instance of
+     * @return An instance of the requested reader class
+     */
+    public <T extends CanvasReader> T getReader(Class<T> type, String oauthToken, Integer paginationPageSize) {
         LOG.debug("Factory call to instantiate class: " + type.getName());
         RestClient restClient = new RestClientImpl();
 
@@ -54,8 +77,8 @@ public class CanvasApiFactory {
 
         LOG.debug("got class: " + concreteClass);
         try {
-            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, String.class, RestClient.class, Integer.TYPE, Integer.TYPE);
-            return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient, connectTimeout, readTimeout);
+            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, String.class, RestClient.class, Integer.TYPE, Integer.TYPE, Integer.class);
+            return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
             throw new UnsupportedOperationException("Unknown error instantiating the concrete API class: " + type.getName(), e);
         }
@@ -74,8 +97,8 @@ public class CanvasApiFactory {
 
         LOG.debug("got class: " + concreteClass);
         try {
-            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, String.class, RestClient.class, Integer.TYPE, Integer.TYPE);
-            return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient, connectTimeout, readTimeout);
+            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, String.class, RestClient.class, Integer.TYPE, Integer.TYPE, Integer.class);
+            return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient, connectTimeout, readTimeout, null);
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
             throw new UnsupportedOperationException("Unknown error instantiating the concrete API class: " + type.getName(), e);
         }
@@ -84,7 +107,6 @@ public class CanvasApiFactory {
     private void setupClassMap() {
         readerMap = new HashMap<>();
         writerMap = new HashMap<>();
-        readerMap.put(AccountsReader.class, AccountImpl.class);
         readerMap.put(AssignmentOverrideReader.class, AssignmentOverrideImp.class);
         readerMap.put(AssignmentReader.class, AssignmentsImpl.class);
         readerMap.put(CourseReader.class, CoursesImpl.class);
@@ -95,8 +117,8 @@ public class CanvasApiFactory {
         readerMap.put(QuizSubmissionReader.class, QuizSubmissionImpl.class);
         readerMap.put(SectionReader.class, SectionsImpl.class);
         readerMap.put(UserReader.class, UserImpl.class);
+        readerMap.put(PageReader.class, PageImpl.class);
 
-        writerMap.put(AccountsWriter.class, AccountImpl.class);
         writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImp.class);
         writerMap.put(AssignmentWriter.class, AssignmentsImpl.class);
         writerMap.put(CourseWriter.class, CoursesImpl.class);
@@ -106,5 +128,6 @@ public class CanvasApiFactory {
         writerMap.put(QuizSubmissionQuestionWriter.class, QuizSubmissionImpl.class);
         writerMap.put(QuizSubmissionWriter.class, QuizSubmissionImpl.class);
         writerMap.put(UserWriter.class, UserImpl.class);
+        writerMap.put(PageWriter.class, PageImpl.class);
     }
 }

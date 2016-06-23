@@ -1,8 +1,6 @@
 package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.AssignmentOverride;
-import edu.ksu.canvas.exception.MessageUndeliverableException;
-import edu.ksu.canvas.exception.OauthTokenRequiredException;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,7 +14,8 @@ public interface AssignmentOverrideWriter extends CanvasWriter<AssignmentOverrid
      * @param studentIds List of Canvas User IDs to create the override for
      * @param title Title to give the override (description)
      * @return AssingmentOverride object created in Canvas
+     * @throws IOException When there is an error communicating with Canvas
      */
     Optional<AssignmentOverride> createAssignmentOverride(String courseId, String assignmentId, List<Integer> studentIds, String title)
-            throws MessageUndeliverableException, IOException, OauthTokenRequiredException;
+            throws IOException;
 }

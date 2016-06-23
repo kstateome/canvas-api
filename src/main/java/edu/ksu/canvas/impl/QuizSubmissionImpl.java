@@ -7,7 +7,6 @@ import edu.ksu.canvas.model.quizzes.QuizSubmission;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.exception.MessageUndeliverableException;
-import edu.ksu.canvas.exception.OauthTokenRequiredException;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -23,12 +22,12 @@ import java.util.stream.Collectors;
 public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionReader, QuizSubmissionWriter> implements QuizSubmissionReader, QuizSubmissionWriter {
     private static final Logger LOG = Logger.getLogger(QuizSubmissionImpl.class);
 
-     public QuizSubmissionImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout) {
-         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout);
+     public QuizSubmissionImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
+         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
      }
 
     @Override
-    public List<QuizSubmission> getQuizSubmissions(String courseId, String quizId) throws OauthTokenRequiredException, IOException {
+    public List<QuizSubmission> getQuizSubmissions(String courseId, String quizId) throws IOException {
         String url = buildCanvasUrl("courses/" + courseId + "/quizzes/" + quizId + "/submissions", Collections.emptyMap());
         List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url);
         return parseQuizSubmissionList(responses);
@@ -36,7 +35,7 @@ public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionR
 
     @Override
     public Optional<QuizSubmission> startQuizSubmission(String wid, String courseId, String quizId, String accessCode)
-            throws MessageUndeliverableException, IOException, OauthTokenRequiredException{
+            throws MessageUndeliverableException, IOException {
         Map<String,String> postParams = new HashMap<>();
         postParams.put("as_user_id", "sis_user_id:" + wid);
         if(accessCode != null) {
@@ -49,7 +48,7 @@ public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionR
 
     @Override
     public Optional<QuizSubmission> completeQuizSubmission(QuizSubmission submission, String wid, String courseId, String accessCode)
-            throws MessageUndeliverableException, IOException, OauthTokenRequiredException {
+            throws MessageUndeliverableException, IOException {
         Map<String,String> postParams = new HashMap<>();
         postParams.put("as_user_id", "sis_user_id:" + wid);
         if(accessCode != null) {

@@ -27,7 +27,7 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
 
     @Before
     public void setupData() {
-        quizQuestionReader = new QuizQuestionImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT);
+        quizQuestionReader = new QuizQuestionImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE);
     }
 
     @Test
@@ -115,7 +115,7 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
         String someUserId = "899123456";
         String someCourseId = "123456";
         String someQUizId = "123456";
-        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions?as_user_id=" + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + someUserId;
+        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions?as_user_id=" + someUserId;
         Response notErroredResponse = new Response();
         notErroredResponse.setErrorHappened(false);
         notErroredResponse.setResponseCode(200);
@@ -131,7 +131,7 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
         String someUserId = "899123456";
         String someCourseId = "123456";
         String someQUizId = "123456";
-        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions?as_user_id=" + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + someUserId;
+        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions?as_user_id=" + someUserId;
         Response erroredResponse = new Response();
         erroredResponse.setErrorHappened(true);
         fakeRestClient.add401Response(url, "SampleJson/quiz/QuizQuestionList.json");
@@ -143,7 +143,7 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
         String someUserId = "899123456";
         String someCourseId = "123456";
         String someQUizId = "123456";
-        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions?as_user_id=" + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + someUserId;
+        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions?as_user_id=" + someUserId;
         Response erroredResponse = new Response();
         erroredResponse.setResponseCode(401);
         fakeRestClient.addSuccessResponse(url, "InvalidJson.json");

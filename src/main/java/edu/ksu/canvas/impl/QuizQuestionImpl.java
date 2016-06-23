@@ -19,12 +19,12 @@ import java.util.stream.Collectors;
 public class QuizQuestionImpl extends BaseImpl<QuizQuestion, QuizQuestionReader, QuizQuestionWriter> implements QuizQuestionReader, QuizQuestionWriter {
     private static final Logger LOG = Logger.getLogger(QuizQuestionImpl.class);
 
-    public QuizQuestionImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimout) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimout);
+    public QuizQuestionImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimout, Integer paginationPageSize) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimout, paginationPageSize);
     }
 
     @Override
-    public List<QuizQuestion> getQuizQuestions(String courseId, String quizId) throws OauthTokenRequiredException, IOException {
+    public List<QuizQuestion> getQuizQuestions(String courseId, String quizId) throws IOException {
         String url = buildCanvasUrl("courses/" + courseId + "/quizzes/" + quizId + "/questions", Collections.emptyMap());
         List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url);
         return parseQuizQuestionList(responses);

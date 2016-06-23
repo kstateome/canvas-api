@@ -21,7 +21,7 @@ public interface CourseReader extends CanvasReader<Course, CourseReader> {
      * @param includes List of optional items to include in the returned courses
      * @param states If present, return only courses in the given state(s)
      * @return List of courses for the user matching any optional criteria
-     * @throws IOException
+     * @throws IOException When there is an error communicating with Canvas
      */
      List<Course> listCourses(Optional<EnrollmentType> enrollmentType, Optional<Integer> enrollmentRoleId, List<CourseIncludes> includes, List<CourseState> states) throws IOException;
 
@@ -30,10 +30,15 @@ public interface CourseReader extends CanvasReader<Course, CourseReader> {
      * @param courseId The Canvas ID of the course
      * @param includes List of optional items to include in the returned course
      * @return The course returned by Canvas or an empty Optional
-     * @throws IOException
+     * @throws IOException When there is an error communicating with Canvas
      */
      Optional<Course> getSingleCourse(String courseId, List<CourseIncludes> includes) throws IOException;
 
-    //public List<User> getUsersInCourse(Integer courseId, String searchTerm, EnrollmentType enrollmentType, Integer enrollmentRoleId, List<CourseIncludes> includes, ) throws IOException;
-
+     /**
+      * Retrieve a list of all courses on a given account
+      * @param accountId Canvas account ID of account (or sub-account) to query
+      * @return List of courses in the account
+      * @throws IOException When there is an error communicating with Canvas
+      */
+     List<Course> listActiveCoursesInAccount(Integer accountId) throws IOException;
 }

@@ -42,6 +42,13 @@ public class FakeRestClient implements RestClient {
         return response(url);
     }
 
+    @Override
+    public Response sendApiPut(@NotNull String token, @NotNull String url, Map<String, Object> putParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+        LOG.debug("Sending fake PUT to " + url);
+        checkForTimeout(connectTimeout, readTimeout);
+        return response(url);
+    }
+
     private void checkForTimeout(int connectTimeout, int readTimeout) throws IOException {
         if (connectTimeout > NO_TIMEOUT) {
             throw new IOException("Connect timeout exceeded");

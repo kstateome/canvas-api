@@ -7,7 +7,6 @@ import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.enums.CourseIncludes;
 import edu.ksu.canvas.enums.EnrollmentType;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
-import edu.ksu.canvas.exception.OauthTokenRequiredException;
 import edu.ksu.canvas.interfaces.UserReader;
 import edu.ksu.canvas.interfaces.UserWriter;
 import edu.ksu.canvas.model.User;
@@ -24,17 +23,8 @@ import java.util.stream.Collectors;
 public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements UserReader, UserWriter{
     private static final Logger LOG = Logger.getLogger(UserImpl.class);
 
-    private static final String API_RESULTS_PER_PAGE = "100";
-    /**
-     * Construct a new CanvasApi class with an OAuth token
-     *
-     * @param canvasBaseUrl The base URL of your canvas instance
-     * @param apiVersion    The version of the Canvas API (currently 1)
-     * @param oauthToken    OAuth token to use when executing API calls
-     * @param restClient    The rest client implementation to use
-     */
-    public UserImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout);
+    public UserImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }
 
     @Override
@@ -71,7 +61,7 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
     public List<User> getUsersInCourse(String courseId,
             List<EnrollmentType> enrollmentTypes, Optional<Integer> enrollmentRoleId,
             List<CourseIncludes> includes)
-                    throws OauthTokenRequiredException, IOException {
+                    throws IOException {
 
         Builder<String, List<String>> paramsBuilder = ImmutableMap.<String, List<String>>builder();
         paramsBuilder.put("enrollment_type[]", enrollmentTypes.stream().map(Enum::name).collect(Collectors.toList()));

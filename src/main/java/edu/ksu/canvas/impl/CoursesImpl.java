@@ -28,8 +28,8 @@ import edu.ksu.canvas.util.CanvasURLBuilder;
 public class CoursesImpl extends BaseImpl<Course, CourseReader, CourseWriter> implements CourseReader, CourseWriter {
     private static final Logger LOG = Logger.getLogger(CourseReader.class);
 
-    public CoursesImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout);
+    public CoursesImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }
 
     @Override
@@ -98,6 +98,12 @@ public class CoursesImpl extends BaseImpl<Course, CourseReader, CourseWriter> im
         }
         Optional<Delete> responseParsed = responseParser.parseToObject(Delete.class, response);
         return responseParsed.get().getDelete();
+    }
+
+    @Override
+    public List<Course> listActiveCoursesInAccount(Integer accountId) throws IOException {
+        String url = buildCanvasUrl("accounts/" + accountId + "/courses", Collections.emptyMap());
+        return getListFromCanvas(url);
     }
 
     @Override

@@ -28,8 +28,8 @@ import java.util.stream.Collectors;
 public class AssignmentsImpl extends BaseImpl<Assignment, AssignmentReader, AssignmentWriter> implements AssignmentReader, AssignmentWriter{
     private static final Logger LOG = Logger.getLogger(AssignmentReader.class);
 
-    public AssignmentsImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout);
+    public AssignmentsImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }
 
     @Override
@@ -47,14 +47,14 @@ public class AssignmentsImpl extends BaseImpl<Assignment, AssignmentReader, Assi
     }
 
     @Override
-    public Optional<Assignment> createAssignment(String courseId, String assignmentName, String pointsPossible) throws InvalidOauthTokenException, IOException {
+    public Optional<Assignment> createAssignment(String courseId, String assignmentName, String pointsPossible) throws IOException {
         return createAssignment(courseId, assignmentName, pointsPossible,
                 AssignmentType.ON_PAPER, true, true);
     }
 
     @Override
     public Optional<Assignment> createAssignment(String courseId, String assignmentName, String pointsPossible,
-                                                 AssignmentType assignmentType, boolean published, boolean muted) throws InvalidOauthTokenException, IOException {
+                                                 AssignmentType assignmentType, boolean published, boolean muted) throws IOException {
         ImmutableMap<String, List<String>> parameters = ImmutableMap.<String,List<String>>builder()
                 .put("assignment[name]", Collections.singletonList(assignmentName))
                 .put("assignment[submission_types]", Collections.singletonList(assignmentType.toString()))

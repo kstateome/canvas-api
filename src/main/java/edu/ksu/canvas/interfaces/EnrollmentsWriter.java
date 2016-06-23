@@ -11,7 +11,7 @@ import java.util.Optional;
  */
 public interface EnrollmentsWriter extends CanvasWriter<Enrollment, EnrollmentsWriter> {
 
-     Optional<Enrollment> enrollUser(Integer course_Id, Integer userId) throws InvalidOauthTokenException, IOException;
+     Optional<Enrollment> enrollUser(String courseId, String enrollmentId) throws InvalidOauthTokenException, IOException;
 
-     Optional<Enrollment> dropUser(Integer course_id, Long enrollment_id) throws InvalidOauthTokenException, IOException;
+     Optional<Enrollment> dropUser(String courseId, String enrollmentId) throws InvalidOauthTokenException, IOException;
 }

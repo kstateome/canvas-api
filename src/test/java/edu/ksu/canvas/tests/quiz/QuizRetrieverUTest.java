@@ -28,7 +28,7 @@ public class QuizRetrieverUTest extends CanvasTestBase {
 
     @Before
     public void setupData() {
-        quizReader = new QuizImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT);
+        quizReader = new QuizImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE);
     }
 
     @Test
@@ -159,8 +159,7 @@ public class QuizRetrieverUTest extends CanvasTestBase {
         Response notErroredResponse = new Response();
         notErroredResponse.setErrorHappened(false);
         notErroredResponse.setResponseCode(200);
-        String url =  baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes?as_user_id="
-                + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + someUserId;
+        String url =  baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes?as_user_id=" + someUserId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/quiz/QuizList.json");
 
         List<Quiz> quizzess = quizReader.readAsCanvasUser(someUserId).getQuizzesInCourse(someCourseId);
@@ -177,8 +176,7 @@ public class QuizRetrieverUTest extends CanvasTestBase {
         String someCourseId = "123456";
         Response erroredResponse = new Response();
         erroredResponse.setErrorHappened(true);
-        String url =  baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes?as_user_id="
-                + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + someUserId;
+        String url =  baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes?as_user_id=" + someUserId;
         fakeRestClient.add401Response(url, "SampleJson/assignment/Assignment1.json");
         quizReader.readAsCanvasUser(someUserId).getQuizzesInCourse(someCourseId);
     }
@@ -189,8 +187,7 @@ public class QuizRetrieverUTest extends CanvasTestBase {
         String someCourseId = "123456";
         Response erroredResponse = new Response();
         erroredResponse.setResponseCode(401);
-        String url =  baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes?as_user_id="
-                + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + someUserId;
+        String url =  baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes?as_user_id=" + someUserId;
         fakeRestClient.addSuccessResponse(url, "InvalidJson.json");
 
         Assert.assertTrue(quizReader.readAsCanvasUser(someUserId).getQuizzesInCourse(someCourseId).isEmpty());
@@ -201,8 +198,7 @@ public class QuizRetrieverUTest extends CanvasTestBase {
         String someUserId = "899123456";
         String someCourseId = "1234";
         String someQuizId = "123";
-        String url =  baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQuizId+ "?as_user_id="
-                + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + someUserId;
+        String url =  baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQuizId+ "?as_user_id=" + someUserId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/quiz/Quiz1.json");
         Optional<Quiz> quiz = quizReader.readAsCanvasUser(someUserId).getSingleQuiz(someCourseId, someQuizId);
         Assert.assertTrue(quiz.isPresent());
