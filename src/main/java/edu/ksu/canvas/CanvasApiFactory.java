@@ -95,8 +95,8 @@ public class CanvasApiFactory {
 
         LOG.debug("got class: " + concreteClass);
         try {
-            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, String.class, RestClient.class, Integer.TYPE, Integer.TYPE);
-            return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient, connectTimeout, readTimeout);
+            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, String.class, RestClient.class, Integer.TYPE, Integer.TYPE, Integer.class);
+            return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient, connectTimeout, readTimeout, null);
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
             throw new UnsupportedOperationException("Unknown error instantiating the concrete API class: " + type.getName(), e);
         }
