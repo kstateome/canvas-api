@@ -1,7 +1,6 @@
 package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.quizzes.QuizQuestion;
-import edu.ksu.canvas.exception.OauthTokenRequiredException;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,9 +11,8 @@ public interface QuizQuestionReader extends CanvasReader<QuizQuestion, QuizQuest
      * @param courseId   The Canvas ID of the course
      * @param quizId     The Canvas ID of the quiz
      * @return List of quizzes questions in the course with the course ID
-     * @throws OauthTokenRequiredException
-     * @throws IOException
+     * @throws IOException When there is an error communicating with Canvas
      */
-    List<QuizQuestion> getQuizQuestions(String courseId, String quizId) throws OauthTokenRequiredException, IOException;
+    List<QuizQuestion> getQuizQuestions(String courseId, String quizId) throws IOException;
 
 }

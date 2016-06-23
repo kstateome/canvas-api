@@ -22,14 +22,7 @@ import java.util.stream.Collectors;
 
 public class EnrollmentsImpl extends BaseImpl<Enrollment, EnrollmentsReader, EnrollmentsWriter> implements EnrollmentsReader,EnrollmentsWriter {
     private static final Logger LOG = Logger.getLogger(CourseReader.class);
-    /**
-     * Construct a new CanvasApi class with an OAuth token
-     *
-     * @param canvasBaseUrl The base URL of your canvas instance
-     * @param apiVersion    The version of the Canvas API (currently 1)
-     * @param oauthToken    OAuth token to use when executing API calls
-     * @param restClient    The rest client implementation to use
-     */
+
     public EnrollmentsImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }

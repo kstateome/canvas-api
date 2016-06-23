@@ -11,7 +11,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import edu.ksu.canvas.exception.OauthTokenRequiredException;
 import edu.ksu.canvas.interfaces.QuizSubmissionQuestionReader;
 import edu.ksu.canvas.interfaces.QuizSubmissionQuestionWriter;
 import edu.ksu.canvas.model.quizzes.QuizAnswer;
@@ -22,7 +21,6 @@ import edu.ksu.canvas.model.quizzes.QuizSubmissionWrapper;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.util.CanvasURLBuilder;
-import edu.ksu.canvas.exception.MessageUndeliverableException;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -39,7 +37,7 @@ public class QuizSubmissionQuestionImp extends BaseImpl<QuizSubmissionQuestion, 
     }
 
     @Override
-    public List<QuizSubmissionQuestion> answerQuestions(QuizSubmission submission, String wid, String answerArrayJson, String accessCode) throws MessageUndeliverableException, IOException, OauthTokenRequiredException {
+    public List<QuizSubmissionQuestion> answerQuestions(QuizSubmission submission, String wid, String answerArrayJson, String accessCode) throws IOException {
         String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
                 "quiz_submissions/" + submission.getId() + "/questions", Collections.emptyMap());
         JsonObject requestBody = new JsonObject();

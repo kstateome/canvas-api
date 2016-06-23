@@ -47,14 +47,14 @@ public class AssignmentsImpl extends BaseImpl<Assignment, AssignmentReader, Assi
     }
 
     @Override
-    public Optional<Assignment> createAssignment(String courseId, String assignmentName, String pointsPossible) throws InvalidOauthTokenException, IOException {
+    public Optional<Assignment> createAssignment(String courseId, String assignmentName, String pointsPossible) throws IOException {
         return createAssignment(courseId, assignmentName, pointsPossible,
                 AssignmentType.ON_PAPER, true, true);
     }
 
     @Override
     public Optional<Assignment> createAssignment(String courseId, String assignmentName, String pointsPossible,
-                                                 AssignmentType assignmentType, boolean published, boolean muted) throws InvalidOauthTokenException, IOException {
+                                                 AssignmentType assignmentType, boolean published, boolean muted) throws IOException {
         ImmutableMap<String, List<String>> parameters = ImmutableMap.<String,List<String>>builder()
                 .put("assignment[name]", Collections.singletonList(assignmentName))
                 .put("assignment[submission_types]", Collections.singletonList(assignmentType.toString()))

@@ -2,7 +2,6 @@ package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.enums.CourseIncludes;
 import edu.ksu.canvas.enums.EnrollmentType;
-import edu.ksu.canvas.exception.OauthTokenRequiredException;
 import edu.ksu.canvas.model.User;
 
 import java.io.IOException;
@@ -17,8 +16,7 @@ public interface UserReader extends CanvasReader<User, UserReader> {
      * @param enrollmentRoleId Optional role ID which will restrict the returned users to only the given role
      * @param includes Optional list of extra information to include in the returned user objects
      * @return List of users in a course
-     * @throws OauthTokenRequiredException
-     * @throws IOException
+     * @throws IOException When there is an error communicating with Canvas
      */
-    List<User> getUsersInCourse(String courseId, List<EnrollmentType> enrollmentTypes, Optional<Integer> enrollmentRoleId, List<CourseIncludes> includes) throws OauthTokenRequiredException, IOException;
+    List<User> getUsersInCourse(String courseId, List<EnrollmentType> enrollmentTypes, Optional<Integer> enrollmentRoleId, List<CourseIncludes> includes) throws IOException;
 }

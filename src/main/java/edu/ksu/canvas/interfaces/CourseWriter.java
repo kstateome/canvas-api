@@ -8,18 +8,18 @@ import java.util.Optional;
 
 public interface CourseWriter extends CanvasWriter<Course, CourseWriter> {
     /**
-     *
-     * @return CreatedCourse
-     * @throws InvalidOauthTokenException
-     * @throws IOException
+     * @param course A course object containing the information needed to create a course in Canvas
+     * @return The newly created course
+     * @throws InvalidOauthTokenException When the supplied OAuth token is invalid
+     * @throws IOException When there is an error communicating with Canvas
      */
      Optional<Course> createCourse(Course course) throws InvalidOauthTokenException, IOException;
 
     /**
-     *
-     * @return
-     * @throws InvalidOauthTokenException
-     * @throws IOException
+     * @param courseId The ID of the course you wish to delete
+     * @return True if the operation succeeded
+     * @throws InvalidOauthTokenException When the supplied OAuth token is invalid
+     * @throws IOException When there is an error communicating with Canvas
      */
-     Boolean deleteCourse(String course) throws InvalidOauthTokenException, IOException;
+     Boolean deleteCourse(String courseId) throws InvalidOauthTokenException, IOException;
 }

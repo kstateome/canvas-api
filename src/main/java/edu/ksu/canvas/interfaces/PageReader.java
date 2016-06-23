@@ -11,18 +11,18 @@ public interface PageReader extends CanvasReader<Page, PageReader> {
     /**
      * Retrieve a specified page associated with a course.
      * @param courseId The Canvas course ID
-     * @param pageName The unique URL identifier of a page within the course
+     * @param pageUrl The unique URL identifier of a page within the course
      * @return The requested Page object
-     * @throws IOException
+     * @throws IOException When there is an error communicating with Canvas
      */
     public Optional<Page> getCoursePage(String courseId, String pageUrl) throws IOException;
 
     /**
      * Retrieve a specified page associated with a group.
      * @param groupId The Canvas group ID
-     * @param pageName The unique URL identifier of a page within the group
+     * @param pageUrl The unique URL identifier of a page within the group
      * @return The requested Page object
-     * @throws IOException
+     * @throws IOException When there is an error communicating with Canvas
      */
     public Optional<Page> getGroupPage(String groupId, String pageUrl) throws IOException;
 
@@ -32,7 +32,7 @@ public interface PageReader extends CanvasReader<Page, PageReader> {
      * The Canvas API does not return the body when calling this endpoint, allegedly for performance reasons
      * @param courseId Canvas ID of the course
      * @return List of Page objects (without a body)
-     * @throws IOException
+     * @throws IOException When there is an error communicating with Canvas
      */
     public List<Page> listPagesInCourse(String courseId) throws IOException;
 
@@ -42,7 +42,7 @@ public interface PageReader extends CanvasReader<Page, PageReader> {
      * The Canvas API does not return the body when calling this endpoint, allegedly for performance reasons
      * @param groupId Canvas Group ID of the group
      * @return List of Page objects (without a body)
-     * @throws IOException
+     * @throws IOException When there is an error communicating with Canvas
      */
     public List<Page> listPagesInGroup(String groupId) throws IOException;
 }

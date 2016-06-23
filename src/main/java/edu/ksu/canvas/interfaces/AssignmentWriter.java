@@ -1,8 +1,6 @@
 package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.enums.AssignmentType;
-import edu.ksu.canvas.exception.InvalidOauthTokenException;
-import edu.ksu.canvas.exception.OauthTokenRequiredException;
 import edu.ksu.canvas.model.Assignment;
 import edu.ksu.canvas.exception.MessageUndeliverableException;
 
@@ -15,11 +13,10 @@ public interface AssignmentWriter extends CanvasWriter<Assignment, AssignmentWri
      * @param courseId id of the course the quiz is going to be in
      * @param assignmentName  name of assignment
      * @param pointsPossible  highest possible number of points of assignment
-     * @return CreatedAssignment
-     * @throws InvalidOauthTokenException
-     * @throws IOException
+     * @return The newly created assignment
+     * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<Assignment> createAssignment (String courseId, String assignmentName, String pointsPossible) throws InvalidOauthTokenException, IOException;
+    Optional<Assignment> createAssignment (String courseId, String assignmentName, String pointsPossible) throws IOException;
 
     /**
      * Creates an assignment in canvas
@@ -29,33 +26,29 @@ public interface AssignmentWriter extends CanvasWriter<Assignment, AssignmentWri
      * @param assignmentType type of the assignment to be created
      * @param published publish status of created assignment
      * @param muted muted status of created assignment
-     * @return CreatedAssignment
-     * @throws InvalidOauthTokenException
-     * @throws IOException
+     * @return The newly created assignment
+     * @throws IOException When there is an error communicating with Canvas
      */
     Optional<Assignment> createAssignment(String courseId, String assignmentName, String pointsPossible,
-                                                 AssignmentType assignmentType, boolean published, boolean muted) throws InvalidOauthTokenException, IOException;
+                                                 AssignmentType assignmentType, boolean published, boolean muted) throws IOException;
 
     /**
      * Deletes a specified assignment in canvas
-     * @param courseId
-     * @param assignmentId
-     * @return
-     * @throws InvalidOauthTokenException
-     * @throws IOException
+     * @param courseId Course ID of course to delete assignment from
+     * @param assignmentId Assignment ID of assignment to delete
+     * @return True if the operation succeeded
+     * @throws IOException When there is an error communicating with Canvas
      */
     Boolean deleteAssignment(String courseId, String assignmentId)
-            throws InvalidOauthTokenException, IOException;
+            throws IOException;
 
     /**
      * Sets a specified assignment to be visible to overrides in canvas
      * @param courseId Course the assignment is in
      * @param assignmentId ID of the assignment to create override for
+     * @param onlyVisibleToOverrides Whether this assignment is only visible to people who are assigned to it
      * @return Assignment object update in Canvas
-     * @throws MessageUndeliverableException
-     * @throws IOException
-     * @throws OauthTokenRequiredException
+     * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<Assignment> setOnlyVisibleToOverrides(String courseId, String assignmentId, boolean onlyVisibleToOverrides)
-            throws MessageUndeliverableException, IOException, OauthTokenRequiredException;
+    Optional<Assignment> setOnlyVisibleToOverrides(String courseId, String assignmentId, boolean onlyVisibleToOverrides) throws IOException;
 }

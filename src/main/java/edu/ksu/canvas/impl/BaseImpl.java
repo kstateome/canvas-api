@@ -51,6 +51,10 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
      * @param canvasBaseUrl The base URL of your canvas instance
      * @param apiVersion The version of the Canvas API (currently 1)
      * @param oauthToken OAuth token to use when executing API calls
+     * @param restClient a RestClient implementation to use when talking to Canvas
+     * @param connectTimeout Timeout in seconds to use when connecting
+     * @param readTimeout Timeout in seconds to use when waiting for data to come back from an open connection
+     * @param paginationPageSize How many objects to request per page on paginated requests
      */
     public BaseImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
         this.canvasBaseUrl = canvasBaseUrl;

@@ -45,6 +45,7 @@ public class CanvasApiFactory {
      * Get a reader implementation class to perform API calls with.
      * @param type Interface type you wish to get an implementation for
      * @param oauthToken An OAuth token to use for authentication when making API calls
+     * @param <T> The reader type to request an instance of
      * @return A reader implementation class
      */
     public <T extends CanvasReader> T getReader(Class<T> type, String oauthToken) {
@@ -60,6 +61,7 @@ public class CanvasApiFactory {
      * @param type Interface type you wish to get an implementation for
      * @param oauthToken An OAuth token to use for authentication when making API calls
      * @param paginationPageSize Requested pagination page size
+     * @param <T> The reader type to request an instance of
      * @return An instance of the requested reader class
      */
     public <T extends CanvasReader> T getReader(Class<T> type, String oauthToken, Integer paginationPageSize) {
