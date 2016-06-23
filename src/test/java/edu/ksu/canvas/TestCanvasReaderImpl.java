@@ -14,7 +14,7 @@ import java.util.Optional;
 public class TestCanvasReaderImpl extends BaseImpl<TestCanvasModel, TestCanvasReader, TestCanvasWriter> implements TestCanvasReader {
 
     public TestCanvasReaderImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout);
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, CanvasTestBase.DEFAULT_PAGINATION_PAGE_SIZE);
     }
 
     public List<TestCanvasModel> getTestModels(String url) throws IOException {

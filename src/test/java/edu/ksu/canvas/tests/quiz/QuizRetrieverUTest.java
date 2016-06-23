@@ -28,7 +28,7 @@ public class QuizRetrieverUTest extends CanvasTestBase {
 
     @Before
     public void setupData() {
-        quizReader = new QuizImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT);
+        quizReader = new QuizImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE);
     }
 
     @Test
