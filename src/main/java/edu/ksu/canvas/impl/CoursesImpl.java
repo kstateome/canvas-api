@@ -101,6 +101,12 @@ public class CoursesImpl extends BaseImpl<Course, CourseReader, CourseWriter> im
     }
 
     @Override
+    public List<Course> listActiveCoursesInAccount(Integer accountId) throws IOException {
+        String url = buildCanvasUrl("accounts/" + accountId + "/courses", Collections.emptyMap());
+        return getListFromCanvas(url);
+    }
+
+    @Override
     protected Type listType() {
         return new TypeToken<List<Course>>(){}.getType();
     }

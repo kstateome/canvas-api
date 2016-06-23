@@ -34,6 +34,11 @@ public interface CourseReader extends CanvasReader<Course, CourseReader> {
      */
      Optional<Course> getSingleCourse(String courseId, List<CourseIncludes> includes) throws IOException;
 
-    //public List<User> getUsersInCourse(Integer courseId, String searchTerm, EnrollmentType enrollmentType, Integer enrollmentRoleId, List<CourseIncludes> includes, ) throws IOException;
-
+     /**
+      * Retrieve a list of all courses on a given account
+      * @param accountId Canvas account ID of account (or sub-account) to query
+      * @return List of courses in the account
+      * @throws IOException
+      */
+     List<Course> listActiveCoursesInAccount(Integer accountId) throws IOException;
 }

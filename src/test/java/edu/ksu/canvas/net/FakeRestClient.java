@@ -43,7 +43,7 @@ public class FakeRestClient implements RestClient {
     }
 
     @Override
-    public Response sendApiPut(@NotNull String token, @NotNull String url, Map<String, String> putParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+    public Response sendApiPut(@NotNull String token, @NotNull String url, Map<String, Object> putParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending fake PUT to " + url);
         checkForTimeout(connectTimeout, readTimeout);
         return response(url);
