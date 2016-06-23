@@ -19,8 +19,8 @@ import edu.ksu.canvas.net.RestClient;
 public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements PageReader, PageWriter {
     private static final Logger LOG = Logger.getLogger(PageImpl.class);
 
-    public PageImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout);
+    public PageImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }
 
     @Override
