@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>edu.ksu.canvas</groupId>
   <artifactId>canvas-api</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.1</version>
   <name>Canvas API Library</name>
   <description>A native Java library to talk to the Canvas REST API</description>
 
@@ -15,7 +15,7 @@
     <connection>scm:git:ssh://git@github.com/kstateome/canvas-api.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/kstateome/canvas-api.git</developerConnection>
     <url>https://github.com/kstateome/canvas-api</url>
-    <tag>release-1.0</tag>
+    <tag>1.0.1</tag>
   </scm>
 
   <distributionManagement>
