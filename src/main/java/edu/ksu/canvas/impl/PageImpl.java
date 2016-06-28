@@ -8,6 +8,8 @@ import java.util.Optional;
 
 import org.apache.log4j.Logger;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import edu.ksu.canvas.interfaces.PageReader;
@@ -43,7 +45,10 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
     public Optional<Page> updateCoursePage(Page page, String courseId) throws Exception {
         LOG.debug("Updating page in course" + courseId);
         String url = buildCanvasUrl("courses/" + courseId + "/pages/" + page.getUrl(), Collections.emptyMap());
-        Response response = canvasMessenger.putToCanvas(oauthToken, url, page.toPostMap());
+        JsonElement pageElement = getDefaultGsonParser().toJsonTree(page);
+        JsonObject pageObject = new JsonObject();
+        pageObject.add("wiki_page", pageElement);
+        Response response = canvasMessenger.sendToJsonCanvas(oauthToken, url, pageObject);
         return responseParser.parseToObject(Page.class, response);
     }
 
