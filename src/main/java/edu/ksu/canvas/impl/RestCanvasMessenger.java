@@ -67,7 +67,7 @@ public class RestCanvasMessenger implements CanvasMessenger {
 
     @Override
     public Response sendToJsonCanvas(String oauthToken, String url, JsonObject requestBody) throws InvalidOauthTokenException, IOException {
-        final Response response = restClient.sendJsonPost(oauthToken, url, requestBody.getAsString(), connectTimeout, readTimeout);
+        final Response response = restClient.sendJsonPost(oauthToken, url, requestBody.toString(), connectTimeout, readTimeout);
         if (response.getResponseCode() == 401) {
             throw new InvalidOauthTokenException();
         }
