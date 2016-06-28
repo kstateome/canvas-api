@@ -11,6 +11,7 @@ import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.CourseWriter;
 import edu.ksu.canvas.model.Delete;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.requestmodel.AccountCourseListOptions;
 import edu.ksu.canvas.model.Course;
 import org.apache.log4j.Logger;
 
@@ -101,8 +102,8 @@ public class CoursesImpl extends BaseImpl<Course, CourseReader, CourseWriter> im
     }
 
     @Override
-    public List<Course> listActiveCoursesInAccount(Integer accountId) throws IOException {
-        String url = buildCanvasUrl("accounts/" + accountId + "/courses", Collections.emptyMap());
+    public List<Course> listActiveCoursesInAccount(AccountCourseListOptions options) throws IOException {
+        String url = buildCanvasUrl("accounts/" + options.getAccountId() + "/courses", options.getOptionsMap());
         return getListFromCanvas(url);
     }
 

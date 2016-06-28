@@ -8,6 +8,7 @@ import edu.ksu.canvas.enums.CourseIncludes;
 import edu.ksu.canvas.enums.EnrollmentType;
 import edu.ksu.canvas.enums.CourseState;
 import edu.ksu.canvas.model.Course;
+import edu.ksu.canvas.requestmodel.AccountCourseListOptions;
 
 /**
  * Methods to read information from and about courses
@@ -36,9 +37,9 @@ public interface CourseReader extends CanvasReader<Course, CourseReader> {
 
      /**
       * Retrieve a list of all courses on a given account
-      * @param accountId Canvas account ID of account (or sub-account) to query
+      * @param options AccountCourseListOptions object representing params to this API call
       * @return List of courses in the account
       * @throws IOException When there is an error communicating with Canvas
       */
-     List<Course> listActiveCoursesInAccount(Integer accountId) throws IOException;
+     List<Course> listActiveCoursesInAccount(AccountCourseListOptions options) throws IOException;
 }
