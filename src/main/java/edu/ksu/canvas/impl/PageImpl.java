@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import edu.ksu.canvas.constants.CanvasConstants;
 import org.apache.log4j.Logger;
 
 import com.google.gson.reflect.TypeToken;
@@ -27,7 +28,7 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
     @Override
     public Optional<Page> getCoursePage(String courseId, String pageUrl) throws IOException {
         LOG.debug("retrieving page " + pageUrl + " for course " + courseId);
-        String encodedUrl = URLEncoder.encode(pageUrl, "UTF-8");
+        String encodedUrl = URLEncoder.encode(pageUrl, CanvasConstants.URLENCODING_TYPE);
         String url = buildCanvasUrl("courses/" + courseId + "/pages/" + encodedUrl, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(Page.class, response);
@@ -36,7 +37,7 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
     @Override
     public Optional<Page> getGroupPage(String groupId, String pageUrl) throws IOException {
         LOG.debug("retrieving page " + pageUrl + " for group " + groupId);
-        String encodedUrl = URLEncoder.encode(pageUrl, "UTF-8");
+        String encodedUrl = URLEncoder.encode(pageUrl, CanvasConstants.URLENCODING_TYPE);
         String url = buildCanvasUrl("groups/" + groupId + "/pages/" + encodedUrl, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(Page.class, response);
@@ -45,7 +46,7 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
     @Override
     public Optional<Page> updateCoursePage(Page page, String courseId) throws Exception {
         LOG.debug("Updating page in course" + courseId);
-        String encodedUrl = URLEncoder.encode(page.getUrl(), "UTF-8");
+        String encodedUrl = URLEncoder.encode(page.getUrl(), CanvasConstants.URLENCODING_TYPE);
         String url = buildCanvasUrl("courses/" + courseId + "/pages/" + encodedUrl, Collections.emptyMap());
         Response response = canvasMessenger.putToCanvas(oauthToken, url, page.toPostMap());
         return responseParser.parseToObject(Page.class, response);
