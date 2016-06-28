@@ -6,6 +6,7 @@ import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
@@ -71,23 +72,41 @@ public class RestClientImpl implements RestClient {
         return response;
     }
 
+    @Override
+    public Response sendJsonPut(String token, String url, String json, int connectTimeout, int readTimeout) throws IOException {
+        return sendJsonPostOrPut(token, url, json, connectTimeout, readTimeout, "PUT");
+    }
+
+    @Override
+    public Response sendJsonPost(String token, String url, String json, int connectTimeout, int readTimeout) throws IOException {
+        return sendJsonPostOrPut(token, url, json, connectTimeout, readTimeout, "POST");
+    }
+
     //TODO: remove awful duplication
-    public Response sendJsonPost(String token, String url, String json,
-                                        int connectTimeout, int readTimeout) throws IOException {
+    private Response sendJsonPostOrPut(String token, String url, String json,
+                                        int connectTimeout, int readTimeout, String method) throws IOException {
         LOG.debug("sendApiPost");
         Response response = new Response();
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpEntityEnclosingRequestBase action;
+        if("POST".equals(method)) {
+            action = new HttpPost(url);
+        } else if("PUT".equals(method)) {
+            action = new HttpPut(url);
+        } else {
+            throw new IllegalArgumentException("Method must be either POST or PUT");
+        }
         HttpPost httpPost = new HttpPost(url);
         Long beginTime = System.currentTimeMillis();
-        httpPost.setHeader("Authorization", "Bearer" + " " + token);
-        httpPost.setHeader("Content-Type", "application/json");
+        action.setHeader("Authorization", "Bearer" + " " + token);
+        action.setHeader("Content-Type", "application/json");
 
         StringEntity params = new StringEntity(json);
-        httpPost.setEntity(params);
-        CloseableHttpResponse httpResponse = httpClient.execute(httpPost);
+        action.setEntity(params);
+        CloseableHttpResponse httpResponse = httpClient.execute(action);
 
-        LOG.debug("Sending API POST request to URL: " + url);
+        LOG.debug("Sending API" + method + " request to URL: " + url);
         if (httpResponse.getStatusLine().getStatusCode() == 401) {
             throw new InvalidOauthTokenException();
         }

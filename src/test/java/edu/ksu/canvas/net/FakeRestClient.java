@@ -29,6 +29,13 @@ public class FakeRestClient implements RestClient {
     }
 
     @Override
+    public Response sendJsonPut(String token, String url, String json, int connectTimeout, int readTimeout) throws IOException {
+        LOG.debug("Sending fake JSON PUT to " + url);
+        checkForTimeout(connectTimeout, readTimeout);
+        return response(url);
+    }
+
+    @Override
     public Response sendApiPost(String token, String url, Map<String, String> postParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending fake POST to " + url);
         checkForTimeout(connectTimeout, readTimeout);
