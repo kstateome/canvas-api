@@ -12,6 +12,7 @@ import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -101,23 +102,15 @@ public class RestClientImpl implements RestClient {
         }
         Long beginTime = System.currentTimeMillis();
         action.setHeader("Authorization", "Bearer" + " " + token);
-        action.setHeader("Content-Type", "application/json");
 
-        StringEntity params = new StringEntity(json);
+        StringEntity params = new StringEntity(json, ContentType.APPLICATION_JSON);
         action.setEntity(params);
         HttpResponse httpResponse = httpClient.execute(action);
 
-        LOG.debug("Sending API" + method + " request to URL: " + url);
-        checkResponse(httpResponse);
+        LOG.debug("Sending API " + method + " request to URL: " + url);
+        String content = handleResponse(httpResponse);
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(
-                httpResponse.getEntity().getContent()));
-        String inputLine;
-        StringBuffer content = new StringBuffer();
-        while ((inputLine = in.readLine()) != null) {
-            content.append(inputLine);
-        }
-        response.setContent(content.toString());
+        response.setContent(content);
         Long endTime = System.currentTimeMillis();
         LOG.debug("Canvas API call took: " + (endTime - beginTime) + "ms");
 
@@ -145,15 +138,9 @@ public class RestClientImpl implements RestClient {
         httpPost.setEntity(new UrlEncodedFormEntity(params));
         LOG.debug("Sending API POST request to URL: " + url);
         HttpResponse httpResponse =  httpClient.execute(httpPost);
-        checkResponse(httpResponse);
+        String content = handleResponse(httpResponse);
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
-        String inputLine;
-        StringBuffer content = new StringBuffer();
-        while ((inputLine = in.readLine()) != null) {
-            content.append(inputLine);
-        }
-        response.setContent(content.toString());
+        response.setContent(content);
         response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
         Long endTime = System.currentTimeMillis();
         LOG.debug("Canvas API call took: " + (endTime - beginTime) + "ms");
@@ -180,16 +167,9 @@ public Response sendApiPut(String token, String url, Map<String, Object> putPara
         httpPut.setEntity(new UrlEncodedFormEntity(params));
         LOG.debug("Sending API PUT request to URL: " + url);
         HttpResponse httpResponse =  httpClient.execute(httpPut);
-        checkResponse(httpResponse);
+        String content = handleResponse(httpResponse);
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
-        String inputLine;
-        StringBuffer content = new StringBuffer();
-        while ((inputLine = in.readLine()) != null) {
-            content.append(inputLine);
-        }
-
-        response.setContent(content.toString());
+        response.setContent(content);
         response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
         Long endTime = System.currentTimeMillis();
         LOG.debug("Canvas API call took: " + (endTime - beginTime) + "ms");
@@ -226,16 +206,9 @@ public Response sendApiPut(String token, String url, Map<String, Object> putPara
         httpDelete.setEntity(new UrlEncodedFormEntity(params));
         HttpResponse httpResponse = httpClient.execute(httpDelete);
         LOG.debug("Sending API DELETE request to URL: " + url);
-        checkResponse(httpResponse);
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(
-                httpResponse.getEntity().getContent()));
-        String inputLine;
-        StringBuffer content = new StringBuffer();
-        while ((inputLine = in.readLine()) != null) {
-            content.append(inputLine);
-        }
-        response.setContent(content.toString());
+        String content = handleResponse(httpResponse);
+        response.setContent(content);
         response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
         Long endTime = System.currentTimeMillis();
         LOG.debug("Canvas API call took: " + (endTime - beginTime) + "ms");
@@ -243,11 +216,10 @@ public Response sendApiPut(String token, String url, Map<String, Object> putPara
         return response;
     }
 
-    private void checkResponse(HttpResponse httpResponse) throws IOException {
+    private String handleResponse(HttpResponse httpResponse) throws IOException {
         if (httpResponse.getStatusLine().getStatusCode() == 401) {
             throw new InvalidOauthTokenException();
         }
-        ResponseHandler responseHandler = new BasicResponseHandler();
-        responseHandler.handleResponse(httpResponse);
+        return new BasicResponseHandler().handleResponse(httpResponse);
     }
 }
