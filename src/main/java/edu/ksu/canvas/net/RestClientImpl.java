@@ -6,11 +6,13 @@ import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.Logger;
@@ -86,10 +88,7 @@ public class RestClientImpl implements RestClient {
         HttpResponse httpResponse = httpClient.execute(httpPost);
 
         LOG.debug("Sending API POST request to URL: " + url);
-        if (httpResponse.getStatusLine().getStatusCode() == 401) {
-            throw new InvalidOauthTokenException();
-        }
-
+        checkResponse(httpResponse);
         BufferedReader in = new BufferedReader(new InputStreamReader(
                 httpPost.getEntity().getContent()));
         String inputLine;
@@ -125,9 +124,7 @@ public class RestClientImpl implements RestClient {
         httpPost.setEntity(new UrlEncodedFormEntity(params));
         LOG.debug("Sending API POST request to URL: " + url);
         HttpResponse httpResponse =  httpClient.execute(httpPost);
-        if (httpResponse.getStatusLine().getStatusCode() == 401) {
-            throw new InvalidOauthTokenException();
-        }
+        checkResponse(httpResponse);
 
         BufferedReader in = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
         String inputLine;
@@ -162,9 +159,7 @@ public Response sendApiPut(String token, String url, Map<String, Object> putPara
         httpPut.setEntity(new UrlEncodedFormEntity(params));
         LOG.debug("Sending API PUT request to URL: " + url);
         HttpResponse httpResponse =  httpClient.execute(httpPut);
-        if (httpResponse.getStatusLine().getStatusCode() == 401) {
-            throw new InvalidOauthTokenException();
-        }
+        checkResponse(httpResponse);
 
         BufferedReader in = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
         String inputLine;
@@ -210,9 +205,7 @@ public Response sendApiPut(String token, String url, Map<String, Object> putPara
         httpDelete.setEntity(new UrlEncodedFormEntity(params));
         HttpResponse httpResponse = httpClient.execute(httpDelete);
         LOG.debug("Sending API DELETE request to URL: " + url);
-        if (httpResponse.getStatusLine().getStatusCode() == 401) {
-            throw new InvalidOauthTokenException();
-        }
+        checkResponse(httpResponse);
 
         BufferedReader in = new BufferedReader(new InputStreamReader(
                 httpResponse.getEntity().getContent()));
@@ -227,5 +220,13 @@ public Response sendApiPut(String token, String url, Map<String, Object> putPara
         LOG.debug("Canvas API call took: " + (endTime - beginTime) + "ms");
 
         return response;
+    }
+
+    private void checkResponse(HttpResponse httpResponse) throws IOException {
+        if (httpResponse.getStatusLine().getStatusCode() == 401) {
+            throw new InvalidOauthTokenException();
+        }
+        ResponseHandler responseHandler = new BasicResponseHandler();
+        responseHandler.handleResponse(httpResponse);
     }
 }
