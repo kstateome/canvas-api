@@ -2,6 +2,7 @@ package edu.ksu.canvas.impl;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +13,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
+import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.interfaces.PageReader;
 import edu.ksu.canvas.interfaces.PageWriter;
 import edu.ksu.canvas.model.Page;
@@ -28,7 +30,8 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
     @Override
     public Optional<Page> getCoursePage(String courseId, String pageUrl) throws IOException {
         LOG.debug("retrieving page " + pageUrl + " for course " + courseId);
-        String url = buildCanvasUrl("courses/" + courseId + "/pages/" + pageUrl, Collections.emptyMap());
+        String encodedUrl = URLEncoder.encode(pageUrl, CanvasConstants.URLENCODING_TYPE);
+        String url = buildCanvasUrl("courses/" + courseId + "/pages/" + encodedUrl, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(Page.class, response);
     }
@@ -36,7 +39,8 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
     @Override
     public Optional<Page> getGroupPage(String groupId, String pageUrl) throws IOException {
         LOG.debug("retrieving page " + pageUrl + " for group " + groupId);
-        String url = buildCanvasUrl("groups/" + groupId + "/pages/" + pageUrl, Collections.emptyMap());
+        String encodedUrl = URLEncoder.encode(pageUrl, CanvasConstants.URLENCODING_TYPE);
+        String url = buildCanvasUrl("groups/" + groupId + "/pages/" + encodedUrl, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(Page.class, response);
     }
@@ -44,7 +48,8 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
     @Override
     public Optional<Page> updateCoursePage(Page page, String courseId) throws Exception {
         LOG.debug("Updating page in course" + courseId);
-        String url = buildCanvasUrl("courses/" + courseId + "/pages/" + page.getUrl(), Collections.emptyMap());
+        String encodedUrl = URLEncoder.encode(page.getUrl(), CanvasConstants.URLENCODING_TYPE);
+        String url = buildCanvasUrl("courses/" + courseId + "/pages/" + encodedUrl, Collections.emptyMap());
         JsonElement pageElement = getDefaultGsonParser().toJsonTree(page);
         JsonObject pageObject = new JsonObject();
         pageObject.add("wiki_page", pageElement);

@@ -1,11 +1,13 @@
 package edu.ksu.canvas.net;
 
+import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.util.JsonTestUtil;
 import org.apache.log4j.Logger;
 
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,7 +67,7 @@ public class FakeRestClient implements RestClient {
     }
 
     private Response response(String url) throws IOException {
-        Response response = responseMap.get(url);
+        Response response = responseMap.get(URLDecoder.decode(url, CanvasConstants.URLENCODING_TYPE));
         if (response == null) {
             throw new IOException("Url does not exist in responseMap: " + url);
         }
