@@ -48,7 +48,7 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
         JsonElement pageElement = getDefaultGsonParser().toJsonTree(page);
         JsonObject pageObject = new JsonObject();
         pageObject.add("wiki_page", pageElement);
-        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, pageObject);
+        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, pageObject);
         return responseParser.parseToObject(Page.class, response);
     }
 
