@@ -97,7 +97,6 @@ public class RestClientImpl implements RestClient {
         } else {
             throw new IllegalArgumentException("Method must be either POST or PUT");
         }
-        HttpPost httpPost = new HttpPost(url);
         Long beginTime = System.currentTimeMillis();
         action.setHeader("Authorization", "Bearer" + " " + token);
         action.setHeader("Content-Type", "application/json");
@@ -112,7 +111,7 @@ public class RestClientImpl implements RestClient {
         }
 
         BufferedReader in = new BufferedReader(new InputStreamReader(
-                httpPost.getEntity().getContent()));
+                httpResponse.getEntity().getContent()));
         String inputLine;
         StringBuffer content = new StringBuffer();
         while ((inputLine = in.readLine()) != null) {
