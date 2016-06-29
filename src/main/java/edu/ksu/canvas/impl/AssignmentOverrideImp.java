@@ -36,7 +36,7 @@ public class AssignmentOverrideImp extends BaseImpl<AssignmentOverride, Assignme
         override.add("student_ids", getDefaultGsonParser().toJsonTree(studentIds));
         requestBody.add("assignment_override", override);
 
-        Response response = canvasMessenger.sendToJsonCanvas(oauthToken, url, requestBody);
+        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, requestBody);
         if(response.getErrorHappened() || response.getResponseCode() != 201){
             LOG.error("Error creating assignment override for course: " + courseId + " and assignment: " + assignmentId);
             LOG.debug(response.getContent());

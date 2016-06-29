@@ -94,7 +94,7 @@ public class AssignmentsImpl extends BaseImpl<Assignment, AssignmentReader, Assi
         assignment.addProperty("only_visible_to_overrides", onlyVisibleToOverrides);
         requestBody.add("assignment", assignment);
 
-        Response response = canvasMessenger.sendToJsonCanvas(oauthToken, url, requestBody);
+        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, requestBody);
         if(response.getErrorHappened() || response.getResponseCode() != 201){
             LOG.error("Error updating assignment override for course: " + courseId + " and assignment: " + assignmentId);
             LOG.debug(response.getContent());
