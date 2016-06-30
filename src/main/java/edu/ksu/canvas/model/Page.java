@@ -127,16 +127,16 @@ public class Page extends BaseCanvasModel {
      * seem to be any kind of existing Canvas User or DisplayUser object type.
      */
     public class PageUser {
-        private Integer id;
+        private Long id;
         private String displayName;
         private String avatarImageUrl;
         private String htmlUrl;
 
-        public Integer getId() {
+        public Long getId() {
             return id;
         }
 
-        public void setId(Integer id) {
+        public void setId(Long id) {
             this.id = id;
         }
 
