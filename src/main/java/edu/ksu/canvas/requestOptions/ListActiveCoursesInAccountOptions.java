@@ -1,4 +1,4 @@
-package edu.ksu.canvas.requestmodel;
+package edu.ksu.canvas.requestOptions;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
  * See <a href="https://canvas.instructure.com/doc/api/accounts.html#method.accounts.courses_api">
  *              https://canvas.instructure.com/doc/api/accounts.html#method.accounts.courses_api</a>
  */
-public class AccountCourseListOptions extends BaseOptions {
+public class ListActiveCoursesInAccountOptions extends BaseOptions {
 
     private String accountId;
 
@@ -21,11 +21,11 @@ public class AccountCourseListOptions extends BaseOptions {
         created, claimed, available, completed, deleted, all;
     }
 
-    public enum Includes {
+    public enum Include {
         syllabus_body, term, course_progress, storage_quota_used_mb, total_students, teachers;
     }
 
-    public AccountCourseListOptions(String accountId) {
+    public ListActiveCoursesInAccountOptions(String accountId) {
         this.accountId = accountId;
     }
 
@@ -40,7 +40,7 @@ public class AccountCourseListOptions extends BaseOptions {
      * @param enrollments Whether to filter course list on enrollment status
      * @return This object to allow adding more options
      */
-    public AccountCourseListOptions withEnrollments(Boolean enrollments) {
+    public ListActiveCoursesInAccountOptions withEnrollments(Boolean enrollments) {
         optionsMap.put("with_enrollments", Arrays.asList(enrollments.toString()));
         return this;
     }
@@ -51,7 +51,7 @@ public class AccountCourseListOptions extends BaseOptions {
      * @param enrollmentTypes List of enrollment types to filter on
      * @return This object to allow adding more options
      */
-    public AccountCourseListOptions withEnrollmentTypes(List<EnrollmentType> enrollmentTypes) {
+    public ListActiveCoursesInAccountOptions withEnrollmentTypes(List<EnrollmentType> enrollmentTypes) {
         List<String> enrollmentStrings = enrollmentTypes.stream().map(e -> e.name()).collect(Collectors.toList());
         optionsMap.put("enrollment_type[]", enrollmentStrings);
         return this;
@@ -64,7 +64,7 @@ public class AccountCourseListOptions extends BaseOptions {
      * @param published Published status to filter on
      * @return This object to allow adding more options
      */
-    public AccountCourseListOptions onlyPublished(Boolean published) {
+    public ListActiveCoursesInAccountOptions onlyPublished(Boolean published) {
         optionsMap.put("published", Arrays.asList(published.toString()));
         return this;
     }
@@ -76,7 +76,7 @@ public class AccountCourseListOptions extends BaseOptions {
      * @param completed Completed status to filter on
      * @return This object to allow adding more options
      */
-    public AccountCourseListOptions onlyCompleted(Boolean completed) {
+    public ListActiveCoursesInAccountOptions onlyCompleted(Boolean completed) {
         optionsMap.put("published", Arrays.asList(completed.toString()));
         return this;
     }
@@ -86,7 +86,7 @@ public class AccountCourseListOptions extends BaseOptions {
      * @param teacherList List of teacher user IDs to filter on (can "be sis_user_id:xxxx")
      * @return This object to allow adding more options
      */
-    public AccountCourseListOptions taughtByTeachers(List<String> teacherList) {
+    public ListActiveCoursesInAccountOptions taughtByTeachers(List<String> teacherList) {
         optionsMap.put("by_teachers[]", teacherList);
         return this;
     }
@@ -96,7 +96,7 @@ public class AccountCourseListOptions extends BaseOptions {
      * @param accountList List of sub-account IDs (can be "sis_account_id:xxxx")
      * @return This object to allow adding more options
      */
-    public AccountCourseListOptions inSubaccount(List<String> accountList) {
+    public ListActiveCoursesInAccountOptions inSubaccount(List<String> accountList) {
         optionsMap.put("by_subaccounts[]", accountList);
         return this;
     }
@@ -107,7 +107,7 @@ public class AccountCourseListOptions extends BaseOptions {
      * @param stateList List of states to filter by
      * @return This object to allow adding more options
      */
-    public AccountCourseListOptions inState(List<State> stateList) {
+    public ListActiveCoursesInAccountOptions inState(List<State> stateList) {
         List<String> stateStrings = stateList.stream().map(s -> s.name()).collect(Collectors.toList());
         optionsMap.put("state[]", stateStrings);
         return this;
@@ -118,7 +118,7 @@ public class AccountCourseListOptions extends BaseOptions {
      * @param enrollmentTermId Term ID to filter by (can be "sis_term_id:xxxxx")
      * @return This object to allow adding more options
      */
-    public AccountCourseListOptions addEnrollmentTermId(String enrollmentTermId) {
+    public ListActiveCoursesInAccountOptions addEnrollmentTermId(String enrollmentTermId) {
         optionsMap.put("enrollment_term_id", Arrays.asList(enrollmentTermId));
         return this;
     }
@@ -128,7 +128,7 @@ public class AccountCourseListOptions extends BaseOptions {
      * @param searchTerm Search term to filter by
      * @return This object to allow adding more options
      */
-    public AccountCourseListOptions searchTerm(String searchTerm) {
+    public ListActiveCoursesInAccountOptions searchTerm(String searchTerm) {
         if(searchTerm == null || searchTerm.length() < 3) {
             throw new IllegalArgumentException("Search term must be at least 3 characters");
         }
@@ -142,7 +142,7 @@ public class AccountCourseListOptions extends BaseOptions {
      * @param includes List of optional elements
      * @return This object to allow adding more options
      */
-    public AccountCourseListOptions includes(List<Includes> includes) {
+    public ListActiveCoursesInAccountOptions includes(List<Include> includes) {
         List<String> includeStrings = includes.stream().map(i -> i.name()).collect(Collectors.toList());
         optionsMap.put("include[]", includeStrings);
         return this;

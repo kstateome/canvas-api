@@ -1,4 +1,4 @@
-package edu.ksu.canvas.requestmodel;
+package edu.ksu.canvas.requestOptions;
 
 import java.util.HashMap;
 import java.util.List;
