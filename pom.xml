@@ -51,9 +51,6 @@
   <profiles>
     <profile>
       <id>sonar</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
       <properties>
         <jacoco-maven-plugin.version>0.7.4.201502262128</jacoco-maven-plugin.version>
       </properties>
