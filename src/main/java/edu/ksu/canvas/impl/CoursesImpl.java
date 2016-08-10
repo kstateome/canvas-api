@@ -3,7 +3,6 @@ package edu.ksu.canvas.impl;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.constants.CanvasConstants;
@@ -11,15 +10,12 @@ import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.CourseWriter;
 import edu.ksu.canvas.model.Delete;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.requestOptions.GetSingleCourseOptions;
+import edu.ksu.canvas.requestOptions.ListActiveCoursesInAccountOptions;
+import edu.ksu.canvas.requestOptions.ListCurrentUserCoursesOptions;
 import edu.ksu.canvas.model.Course;
 import org.apache.log4j.Logger;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableMap.Builder;
-
-import edu.ksu.canvas.enums.CourseIncludes;
-import edu.ksu.canvas.enums.EnrollmentType;
-import edu.ksu.canvas.enums.CourseState;
 import edu.ksu.canvas.interfaces.CourseReader;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.util.CanvasURLBuilder;
@@ -33,28 +29,16 @@ public class CoursesImpl extends BaseImpl<Course, CourseReader, CourseWriter> im
     }
 
     @Override
-    public List<Course> listCourses(Optional<EnrollmentType> enrollmentType,
-            Optional<Integer> enrollmentRoleId, List<CourseIncludes> includes,
-            List<CourseState> states) throws IOException {
+    public List<Course> listCurrentUserCourses(ListCurrentUserCoursesOptions options) throws IOException {
         LOG.info("listing courses for user");
-        Builder<String, List<String>> paramsBuilder = ImmutableMap.<String, List<String>>builder();
-        enrollmentType.ifPresent(e -> paramsBuilder.put("enrollment_type", Collections.singletonList(e.name())));
-        enrollmentRoleId.ifPresent(e -> paramsBuilder.put("enrollment_role_id", Collections.singletonList(e.toString())));
-        paramsBuilder.put("include[]", includes.stream().map(Enum::name).collect(Collectors.toList()));
-        paramsBuilder.put("state[]", states.stream().map(Enum::name).collect(Collectors.toList()));
-
-        ImmutableMap<String, List<String>> parameters = paramsBuilder.build();
-        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "courses/", parameters);
+        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "courses/", options.getOptionsMap());
         return getListFromCanvas(url);
     }
 
     @Override
-    public Optional<Course> getSingleCourse(String courseId, List<CourseIncludes> includes) throws IOException {
-        LOG.debug("geting course " + courseId);
-        ImmutableMap<String, List<String>> parameters = ImmutableMap.<String,List<String>>builder()
-                .put("include[]", includes.stream().map(Enum::name).collect(Collectors.toList()))
-                .build();
-        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "courses/" + courseId, parameters);
+    public Optional<Course> getSingleCourse(GetSingleCourseOptions options) throws IOException {
+        LOG.debug("geting course " + options.getCourseId());
+        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "courses/" + options.getCourseId(), options.getOptionsMap());
         LOG.debug("Final URL of API call: " + url);
 
         return retrieveCourseFromCanvas(oauthToken, url);
@@ -101,8 +85,8 @@ public class CoursesImpl extends BaseImpl<Course, CourseReader, CourseWriter> im
     }
 
     @Override
-    public List<Course> listActiveCoursesInAccount(Integer accountId) throws IOException {
-        String url = buildCanvasUrl("accounts/" + accountId + "/courses", Collections.emptyMap());
+    public List<Course> listActiveCoursesInAccount(ListActiveCoursesInAccountOptions options) throws IOException {
+        String url = buildCanvasUrl("accounts/" + options.getAccountId() + "/courses", options.getOptionsMap());
         return getListFromCanvas(url);
     }
 

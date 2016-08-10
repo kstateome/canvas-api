@@ -41,7 +41,7 @@ public class QuizImpl extends BaseImpl<Quiz, QuizReader, QuizWriter> implements 
     @Override
     public Optional<Quiz> updateQuiz(Quiz quiz, String courseId) throws MessageUndeliverableException, IOException {
         String url = buildCanvasUrl("courses/" + courseId + "/quizzes/" + quiz.getId(), Collections.emptyMap());
-        Response response = canvasMessenger.sendToJsonCanvas(oauthToken, url,
+        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url,
                 getDefaultGsonParser().toJsonTree(quiz).getAsJsonObject());
         return responseParser.parseToObject(Quiz.class, response);
     }

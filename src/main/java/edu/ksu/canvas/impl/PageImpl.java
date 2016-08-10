@@ -7,11 +7,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import edu.ksu.canvas.constants.CanvasConstants;
 import org.apache.log4j.Logger;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
+import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.interfaces.PageReader;
 import edu.ksu.canvas.interfaces.PageWriter;
 import edu.ksu.canvas.model.Page;
@@ -48,7 +50,10 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
         LOG.debug("Updating page in course" + courseId);
         String encodedUrl = URLEncoder.encode(page.getUrl(), CanvasConstants.URLENCODING_TYPE);
         String url = buildCanvasUrl("courses/" + courseId + "/pages/" + encodedUrl, Collections.emptyMap());
-        Response response = canvasMessenger.putToCanvas(oauthToken, url, page.toPostMap());
+        JsonElement pageElement = getDefaultGsonParser().toJsonTree(page);
+        JsonObject pageObject = new JsonObject();
+        pageObject.add("wiki_page", pageElement);
+        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, pageObject);
         return responseParser.parseToObject(Page.class, response);
     }
 
