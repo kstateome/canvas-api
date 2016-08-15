@@ -1,16 +1,15 @@
 package edu.ksu.canvas;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.log4j.Logger;
-
 import edu.ksu.canvas.impl.*;
 import edu.ksu.canvas.interfaces.*;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.net.RestClientImpl;
+import org.apache.log4j.Logger;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CanvasApiFactory {
 
@@ -107,6 +106,7 @@ public class CanvasApiFactory {
     private void setupClassMap() {
         readerMap = new HashMap<>();
         writerMap = new HashMap<>();
+        readerMap.put(AccountReader.class, AccountImpl.class);
         readerMap.put(AssignmentOverrideReader.class, AssignmentOverrideImp.class);
         readerMap.put(AssignmentReader.class, AssignmentsImpl.class);
         readerMap.put(CourseReader.class, CoursesImpl.class);
