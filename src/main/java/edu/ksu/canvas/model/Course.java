@@ -22,7 +22,7 @@ public class Course extends BaseCanvasModel implements Serializable {
     private Date startAt;
     private Date endAt;
     private Boolean publicSyllabus;
-    private Integer sotrageQuotaMb;
+    private Integer storageQuotaMb;
     private Boolean hideFinalGrades;
     private Boolean applyAssignmentGroupWeights;
     private String sisCourseId;
@@ -100,12 +100,12 @@ public class Course extends BaseCanvasModel implements Serializable {
         this.publicSyllabus = publicSyllabus;
     }
 
-    public Integer getSotrageQuotaMb() {
-        return sotrageQuotaMb;
+    public Integer getStorageQuotaMb() {
+        return storageQuotaMb;
     }
 
-    public void setSotrageQuotaMb(Integer sotrageQuotaMb) {
-        this.sotrageQuotaMb = sotrageQuotaMb;
+    public void setStorageQuotaMb(Integer storageQuotaMb) {
+        this.storageQuotaMb = storageQuotaMb;
     }
 
     @CanvasField(postKey = "hide_final_grades")

@@ -1,24 +1,23 @@
 package edu.ksu.canvas.impl;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.*;
-
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
+import edu.ksu.canvas.interfaces.CourseReader;
 import edu.ksu.canvas.interfaces.CourseWriter;
+import edu.ksu.canvas.model.Course;
 import edu.ksu.canvas.model.Delete;
+import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.requestOptions.GetSingleCourseOptions;
 import edu.ksu.canvas.requestOptions.ListActiveCoursesInAccountOptions;
 import edu.ksu.canvas.requestOptions.ListCurrentUserCoursesOptions;
-import edu.ksu.canvas.model.Course;
+import edu.ksu.canvas.util.CanvasURLBuilder;
 import org.apache.log4j.Logger;
 
-import edu.ksu.canvas.interfaces.CourseReader;
-import edu.ksu.canvas.net.Response;
-import edu.ksu.canvas.util.CanvasURLBuilder;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.*;
 
 
 public class CoursesImpl extends BaseImpl<Course, CourseReader, CourseWriter> implements CourseReader, CourseWriter {
@@ -37,7 +36,7 @@ public class CoursesImpl extends BaseImpl<Course, CourseReader, CourseWriter> im
 
     @Override
     public Optional<Course> getSingleCourse(GetSingleCourseOptions options) throws IOException {
-        LOG.debug("geting course " + options.getCourseId());
+        LOG.debug("getting course " + options.getCourseId());
         String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "courses/" + options.getCourseId(), options.getOptionsMap());
         LOG.debug("Final URL of API call: " + url);
 
