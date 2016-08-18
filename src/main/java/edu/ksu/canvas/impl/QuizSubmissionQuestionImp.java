@@ -51,7 +51,7 @@ public class QuizSubmissionQuestionImp extends BaseImpl<QuizSubmissionQuestion, 
         JsonParser parser = new JsonParser();
         JsonArray answerJson = (JsonArray) parser.parse(answerArrayJson); //handling escaped serialization
         requestBody.add("quiz_questions", answerJson);
-        Response response = canvasMessenger.sendToJsonCanvas(oauthToken, url, requestBody);
+        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, requestBody);
         if(response.getErrorHappened() || response.getResponseCode() != 200) {
             LOG.error("Error answering questions. Returning null");
             LOG.debug(response.getContent());

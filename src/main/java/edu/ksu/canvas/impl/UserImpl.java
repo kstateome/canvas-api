@@ -64,7 +64,11 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
                     throws IOException {
 
         Builder<String, List<String>> paramsBuilder = ImmutableMap.<String, List<String>>builder();
-        paramsBuilder.put("enrollment_type[]", enrollmentTypes.stream().map(Enum::name).collect(Collectors.toList()));
+        String enrollmentTypeKey = "enrollment_type";
+        if (enrollmentTypes.size() > 1) {
+            enrollmentTypeKey += "[]";
+        }
+        paramsBuilder.put(enrollmentTypeKey, enrollmentTypes.stream().map(type -> type.name().toLowerCase()).collect(Collectors.toList()));
         enrollmentRoleId.ifPresent(e -> paramsBuilder.put("enrollment_role_id", Collections.singletonList(e.toString())));
         paramsBuilder.put("include[]", includes.stream().map(Enum::name).collect(Collectors.toList()));
 
