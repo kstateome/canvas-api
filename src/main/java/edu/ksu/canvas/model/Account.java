@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class Account extends BaseCanvasModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Integer accountId;
+    private Integer id;
     private String name;
     private Integer parentAccountId; // The account's parent ID, or null if this is the root account
     private Integer rootAccountId; // The ID of the root account, or null if this is the root account
@@ -29,12 +29,12 @@ public class Account extends BaseCanvasModel implements Serializable {
     private String workflowState; //todo: Should be an enum
 
 
-    public Integer getAccountId() {
-        return accountId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setAccountId(Integer accountId) {
-        this.accountId = accountId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @CanvasField(postKey = "name")
