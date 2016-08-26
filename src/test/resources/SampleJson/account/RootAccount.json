@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "name": "Kansas State University",
+  "workflow_state": "active",
+  "parent_account_id": null,
+  "root_account_id": null,
+  "default_storage_quota_mb": 5000,
+  "default_user_storage_quota_mb": 5000,
+  "default_group_storage_quota_mb": 1000,
+  "default_time_zone": "America/Chicago"
+}
