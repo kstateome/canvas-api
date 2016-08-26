@@ -9,6 +9,8 @@ import edu.ksu.canvas.interfaces.AssignmentReader;
 import edu.ksu.canvas.model.Assignment;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.net.Response;
+import edu.ksu.canvas.requestOptions.GetSingleAssignmentOptions;
+
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
@@ -76,7 +78,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         String someAssignmentId = "123";
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments/" + someAssignmentId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/Assignment1.json");
-        Optional<Assignment> assignment = assignmentReader.getSingleAssignment(someCourseId, someAssignmentId);
+        Optional<Assignment> assignment = assignmentReader.getSingleAssignment(new GetSingleAssignmentOptions(someCourseId, someAssignmentId));
         Assert.assertTrue(assignment.isPresent());
         Assert.assertEquals("Assignment1", assignment.map(Assignment::getName).orElse(""));
     }
@@ -130,7 +132,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         String someAssignmentId = "123";
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments/" + someAssignmentId + "?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/Assignment1.json");
-        Optional<Assignment> assignment = assignmentReader.readAsSisUser(someUserId).getSingleAssignment(someCourseId, someAssignmentId);
+        Optional<Assignment> assignment = assignmentReader.readAsSisUser(someUserId).getSingleAssignment(new GetSingleAssignmentOptions(someCourseId, someAssignmentId));
         Assert.assertTrue(assignment.isPresent());
         Assert.assertEquals("Assignment1", assignment.map(Assignment::getName).orElse(""));
     }
@@ -184,7 +186,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         String someAssignmentId = "123";
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments/" + someAssignmentId + "?as_user_id=" + someUserId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/Assignment1.json");
-        Optional<Assignment> assignment = assignmentReader.readAsCanvasUser(someUserId).getSingleAssignment(someCourseId, someAssignmentId);
+        Optional<Assignment> assignment = assignmentReader.readAsCanvasUser(someUserId).getSingleAssignment(new GetSingleAssignmentOptions(someCourseId, someAssignmentId));
         Assert.assertTrue(assignment.isPresent());
         Assert.assertEquals("Assignment1", assignment.map(Assignment::getName).orElse(""));
     }

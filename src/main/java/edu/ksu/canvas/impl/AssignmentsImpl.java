@@ -12,6 +12,7 @@ import edu.ksu.canvas.model.Assignment;
 import edu.ksu.canvas.model.Delete;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.requestOptions.GetSingleAssignmentOptions;
 import edu.ksu.canvas.exception.MessageUndeliverableException;
 import org.apache.log4j.Logger;
 
@@ -40,8 +41,8 @@ public class AssignmentsImpl extends BaseImpl<Assignment, AssignmentReader, Assi
     }
 
     @Override
-    public Optional<Assignment> getSingleAssignment(String courseId, String assignmentId) throws IOException {
-        String url = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentId, Collections.emptyMap());
+    public Optional<Assignment> getSingleAssignment(GetSingleAssignmentOptions options) throws IOException {
+        String url = buildCanvasUrl("courses/" + options.getCourseId() + "/assignments/" + options.getAssignmentId(), options.getOptionsMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(Assignment.class, response);
     }
