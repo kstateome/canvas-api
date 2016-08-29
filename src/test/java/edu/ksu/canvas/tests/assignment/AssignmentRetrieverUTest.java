@@ -4,7 +4,7 @@ import com.google.gson.JsonSyntaxException;
 import edu.ksu.canvas.CanvasTestBase;
 import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
-import edu.ksu.canvas.impl.AssignmentsImpl;
+import edu.ksu.canvas.impl.AssignmentImpl;
 import edu.ksu.canvas.interfaces.AssignmentReader;
 import edu.ksu.canvas.model.Assignment;
 import edu.ksu.canvas.net.FakeRestClient;
@@ -28,7 +28,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
 
     @Before
     public void setupData() {
-        assignmentReader = new AssignmentsImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE);
+        assignmentReader = new AssignmentImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE);
     }
 
 

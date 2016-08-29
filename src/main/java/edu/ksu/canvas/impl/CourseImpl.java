@@ -20,10 +20,10 @@ import java.lang.reflect.Type;
 import java.util.*;
 
 
-public class CoursesImpl extends BaseImpl<Course, CourseReader, CourseWriter> implements CourseReader, CourseWriter {
+public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> implements CourseReader, CourseWriter {
     private static final Logger LOG = Logger.getLogger(CourseReader.class);
 
-    public CoursesImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
+    public CourseImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }
 

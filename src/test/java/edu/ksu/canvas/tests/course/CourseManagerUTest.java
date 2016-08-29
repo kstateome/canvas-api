@@ -2,7 +2,7 @@ package edu.ksu.canvas.tests.course;
 
 import edu.ksu.canvas.CanvasTestBase;
 import edu.ksu.canvas.constants.CanvasConstants;
-import edu.ksu.canvas.impl.CoursesImpl;
+import edu.ksu.canvas.impl.CourseImpl;
 import edu.ksu.canvas.interfaces.CourseWriter;
 import edu.ksu.canvas.model.Course;
 import edu.ksu.canvas.net.FakeRestClient;
@@ -22,7 +22,7 @@ public class CourseManagerUTest extends CanvasTestBase {
 
     @Before
     public void setupData() {
-        courseWriter = new CoursesImpl(baseUrl,apiVersion,SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE);
+        courseWriter = new CourseImpl(baseUrl,apiVersion,SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE);
     }
 
     @Test
