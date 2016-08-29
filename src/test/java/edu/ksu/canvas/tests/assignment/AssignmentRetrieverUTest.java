@@ -10,6 +10,7 @@ import edu.ksu.canvas.model.Assignment;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.requestOptions.GetSingleAssignmentOptions;
+import edu.ksu.canvas.requestOptions.ListCourseAssignmentsOptions;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -45,7 +46,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments";
         fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/AssignmentList.json");
 
-        List<Assignment> assignments = assignmentReader.listCourseAssignments(someCourseId);
+        List<Assignment> assignments = assignmentReader.listCourseAssignments(new ListCourseAssignmentsOptions(someCourseId));
         Assert.assertEquals(2, assignments.size());
         Assert.assertTrue(assignments.stream().map(Assignment::getName).filter("Assignment1"::equals).findFirst().isPresent());
         Assert.assertTrue(assignments.stream().map(Assignment::getName).filter("Assignment2"::equals).findFirst().isPresent());
@@ -58,7 +59,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         erroredResponse.setErrorHappened(true);
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments";
         fakeRestClient.add401Response(url, "SampleJson/assignment/Assignment1.json");
-        assignmentReader.listCourseAssignments(someCourseId);
+        assignmentReader.listCourseAssignments(new ListCourseAssignmentsOptions(someCourseId));
     }
 
     @Test(expected = JsonSyntaxException.class)
@@ -69,7 +70,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         String url =  baseUrl + "/api/v1/courses/" + someCourseId + "/assignments";
         fakeRestClient.addSuccessResponse(url, "InvalidJson.json");
 
-        Assert.assertTrue(assignmentReader.listCourseAssignments(someCourseId).isEmpty());
+        Assert.assertTrue(assignmentReader.listCourseAssignments(new ListCourseAssignmentsOptions(someCourseId)).isEmpty());
     }
 
     @Test
@@ -97,7 +98,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/AssignmentList.json");
 
-        List<Assignment> assignments = assignmentReader.readAsSisUser(someUserId).listCourseAssignments(someCourseId);
+        List<Assignment> assignments = assignmentReader.readAsSisUser(someUserId).listCourseAssignments(new ListCourseAssignmentsOptions(someCourseId));
         Assert.assertEquals(2, assignments.size());
         Assert.assertTrue(assignments.stream().map(Assignment::getName).filter("Assignment1"::equals).findFirst().isPresent());
         Assert.assertTrue(assignments.stream().map(Assignment::getName).filter("Assignment2"::equals).findFirst().isPresent());
@@ -111,7 +112,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         erroredResponse.setErrorHappened(true);
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
         fakeRestClient.add401Response(url, "SampleJson/assignment/Assignment1.json");
-        assignmentReader.readAsSisUser(someUserId).listCourseAssignments(someCourseId);
+        assignmentReader.readAsSisUser(someUserId).listCourseAssignments(new ListCourseAssignmentsOptions(someCourseId));
     }
 
     @Test(expected = JsonSyntaxException.class)
@@ -122,7 +123,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         erroredResponse.setResponseCode(401);
         String url =  baseUrl + "/api/v1/courses/" + someCourseId + "/assignments?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
         fakeRestClient.addSuccessResponse(url, "InvalidJson.json");
-        Assert.assertTrue(assignmentReader.readAsSisUser(someUserId).listCourseAssignments(someCourseId).isEmpty());
+        Assert.assertTrue(assignmentReader.readAsSisUser(someUserId).listCourseAssignments(new ListCourseAssignmentsOptions(someCourseId)).isEmpty());
     }
 
     @Test
@@ -151,7 +152,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments?as_user_id=" + someUserId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/AssignmentList.json");
 
-        List<Assignment> assignments = assignmentReader.readAsCanvasUser(someUserId).listCourseAssignments(someCourseId);
+        List<Assignment> assignments = assignmentReader.readAsCanvasUser(someUserId).listCourseAssignments(new ListCourseAssignmentsOptions(someCourseId));
         Assert.assertEquals(2, assignments.size());
         Assert.assertTrue(assignments.stream().map(Assignment::getName).filter("Assignment1"::equals).findFirst().isPresent());
         Assert.assertTrue(assignments.stream().map(Assignment::getName).filter("Assignment2"::equals).findFirst().isPresent());
@@ -165,7 +166,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         erroredResponse.setErrorHappened(true);
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments?as_user_id=" + someUserId;
         fakeRestClient.add401Response(url, "SampleJson/assignment/Assignment1.json");
-        assignmentReader.readAsCanvasUser(someUserId).listCourseAssignments(someCourseId);
+        assignmentReader.readAsCanvasUser(someUserId).listCourseAssignments(new ListCourseAssignmentsOptions(someCourseId));
     }
 
     @Test(expected = JsonSyntaxException.class)
@@ -176,7 +177,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         erroredResponse.setResponseCode(401);
         String url =  baseUrl + "/api/v1/courses/" + someCourseId + "/assignments?as_user_id=" + someUserId;
         fakeRestClient.addSuccessResponse(url, "InvalidJson.json");
-        Assert.assertTrue(assignmentReader.readAsCanvasUser(someUserId).listCourseAssignments(someCourseId).isEmpty());
+        Assert.assertTrue(assignmentReader.readAsCanvasUser(someUserId).listCourseAssignments(new ListCourseAssignmentsOptions(someCourseId)).isEmpty());
     }
 
     @Test

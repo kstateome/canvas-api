@@ -13,18 +13,18 @@ import edu.ksu.canvas.model.Delete;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.requestOptions.GetSingleAssignmentOptions;
+import edu.ksu.canvas.requestOptions.ListCourseAssignmentsOptions;
+import edu.ksu.canvas.requestOptions.ListUserAssignmentOptions;
 import edu.ksu.canvas.exception.MessageUndeliverableException;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, AssignmentWriter> implements AssignmentReader, AssignmentWriter{
     private static final Logger LOG = Logger.getLogger(AssignmentReader.class);
@@ -34,10 +34,14 @@ public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, Assig
     }
 
     @Override
-    public List<Assignment> listCourseAssignments(String courseId) throws IOException {
-        String url = buildCanvasUrl("courses/" + courseId + "/assignments" , Collections.emptyMap());
-        List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url);
-        return parseAssignmentList(responses);
+    public List<Assignment> listCourseAssignments(ListCourseAssignmentsOptions options) throws IOException {
+        String url = buildCanvasUrl("courses/" + options.getCourseId() + "/assignments" , options.getOptionsMap());
+        return getListFromCanvas(url);
+    }
+
+    public List<Assignment> listUserAssignments(ListUserAssignmentOptions options) throws IOException {
+        String url = buildCanvasUrl("users/" + options.getUserId() + "/courses/" + options.getCourseId() + "/assignments", options.getOptionsMap());
+        return getListFromCanvas(url);
     }
 
     @Override
@@ -102,18 +106,6 @@ public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, Assig
             return null;
         }
         return responseParser.parseToObject(Assignment.class, response);
-    }
-
-    private List<Assignment> parseAssignmentList(final List<Response> responses) {
-        return responses.stream().
-                map(this::parseAssignmentList).
-                flatMap(Collection::stream).
-                collect(Collectors.toList());
-    }
-
-    private List<Assignment> parseAssignmentList(final Response response) {
-        Type listType = new TypeToken<List<Assignment>>(){}.getType();
-        return getDefaultGsonParser().fromJson(response.getContent(), listType);
     }
 
     @Override
