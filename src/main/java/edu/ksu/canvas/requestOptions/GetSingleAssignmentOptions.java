@@ -33,8 +33,7 @@ public class GetSingleAssignmentOptions extends BaseOptions {
      * @return this to continue building options
      */
     public GetSingleAssignmentOptions includes(List<Include> includes) {
-        List<String> includeStrings = includes.stream().map(i -> i.name()).collect(Collectors.toList());
-        optionsMap.put("include[]", includeStrings);
+        addEnumList("include[]", includes);
         return this;
     }
 
