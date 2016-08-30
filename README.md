@@ -58,4 +58,4 @@ To spcify the pagination page size to be used on calls, an additional parameter 
 All requests made using this `UserReader` object will request 100 objects per page.
 
 ## License
-This software is licensed under the LGPL v3 license. Please see the [LICENSE.txt](LICENSE.txt file) in this repository for license details.
+This software is licensed under the LGPL v3 license. Please see the [License.txt file](License.txt) in this repository for license details.
