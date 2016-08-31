@@ -14,7 +14,7 @@ public class GetSubAccountsOptions extends BaseOptions {
         return accountId;
     }
 
-    public GetSubAccountsOptions recurive(Boolean recursive) {
+    public GetSubAccountsOptions recursive(Boolean recursive) {
         optionsMap.put("recursive", Arrays.asList(recursive.toString()));
         return this;
     }
