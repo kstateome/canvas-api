@@ -1,0 +1,72 @@
+[
+  {
+    "id": 5,
+    "name": "College of Agriculture",
+    "workflow_state": "active",
+    "parent_account_id": 1,
+    "root_account_id": 1,
+    "default_storage_quota_mb": 5000,
+    "default_user_storage_quota_mb": 50,
+    "default_group_storage_quota_mb": 1000,
+    "default_time_zone": "America/Chicago",
+    "sis_account_id": "10010",
+    "sis_import_id": 2317,
+    "integration_id": null
+  },
+  {
+    "id": 6,
+    "name": "College of Architecture, Planning and Design",
+    "workflow_state": "active",
+    "parent_account_id": 1,
+    "root_account_id": 1,
+    "default_storage_quota_mb": 5000,
+    "default_user_storage_quota_mb": 50,
+    "default_group_storage_quota_mb": 1000,
+    "default_time_zone": "America/Chicago",
+    "sis_account_id": "15010",
+    "sis_import_id": 2317,
+    "integration_id": null
+  },
+  {
+    "id": 7,
+    "name": "College of Arts and Sciences",
+    "workflow_state": "active",
+    "parent_account_id": 1,
+    "root_account_id": 1,
+    "default_storage_quota_mb": 5000,
+    "default_user_storage_quota_mb": 50,
+    "default_group_storage_quota_mb": 1000,
+    "default_time_zone": "America/Chicago",
+    "sis_account_id": "20010",
+    "sis_import_id": 2317,
+    "integration_id": null
+  },
+  {
+    "id": 8,
+    "name": "College of Business Administration",
+    "workflow_state": "active",
+    "parent_account_id": 1,
+    "root_account_id": 1,
+    "default_storage_quota_mb": 5000,
+    "default_user_storage_quota_mb": 50,
+    "default_group_storage_quota_mb": 1000,
+    "default_time_zone": "America/Chicago",
+    "sis_account_id": "25010",
+    "sis_import_id": 2317,
+    "integration_id": null
+  },
+  {
+    "id": 9,
+    "name": "College of Education",
+    "workflow_state": "active",
+    "parent_account_id": 1,
+    "root_account_id": 1,
+    "default_storage_quota_mb": 5000,
+    "default_user_storage_quota_mb": 50,
+    "default_group_storage_quota_mb": 1000,
+    "default_time_zone": "America/Chicago",
+    "sis_account_id": "40010",
+    "sis_import_id": 2317,
+    "integration_id": null
+  }
+]
