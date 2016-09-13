@@ -26,31 +26,31 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     private String html_url;
     private String assingment_group_id;
     private String[] allowed_extensions;
-    private boolean turnitin_enabled;
+    private Boolean turnitin_enabled;
     private String turnitin_settings;
-    private boolean grade_group_students_individually;
+    private Boolean grade_group_students_individually;
     private String external_tool_tag_attributes;
-    private boolean peer_reviews;
-    private boolean automatic_peer_reviews;
+    private Boolean peer_reviews;
+    private Boolean automatic_peer_reviews;
     private String peer_review_count;
     private String peer_reviews_assign_at;
     private String group_category_id;
     private String needs_grading_count;
     private String needs_grading_count_by_section;
     private String position;
-    private boolean post_to_sis;
+    private Boolean post_to_sis;
     private String integration_id;
-    private String integration_data;
+    private Object integration_data;
     private String muted;
     private String points_possible;
     private List<String> submission_types;
     private String grading_type;
     private String grading_standard_id;
-    private boolean published;
-    private boolean unpublishable;
-    private boolean only_visible_to_overrides;
-    private boolean locked_for_user;
-    private boolean notify_of_update;
+    private Boolean published;
+    private Boolean unpublishable;
+    private Boolean only_visible_to_overrides;
+    private Boolean locked_for_user;
+    private Boolean notify_of_update;
 
 
     public String getId() {
@@ -282,11 +282,11 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     }
 
     @CanvasField(postKey = "integration_data")
-    public String getIntegration_data() {
+    public Object getIntegration_data() {
         return integration_data;
     }
 
-    public void setIntegration_data(String integration_data) {
+    public void setIntegration_data(Object integration_data) {
         this.integration_data = integration_data;
     }
 
