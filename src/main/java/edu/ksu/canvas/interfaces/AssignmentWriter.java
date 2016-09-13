@@ -2,12 +2,21 @@ package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.enums.AssignmentType;
 import edu.ksu.canvas.model.Assignment;
-import edu.ksu.canvas.exception.MessageUndeliverableException;
 
 import java.io.IOException;
 import java.util.Optional;
 
 public interface AssignmentWriter extends CanvasWriter<Assignment, AssignmentWriter> {
+
+    /**
+     * Create an assignment in Canvas. The only required field is name.
+     * @param courseId ID of the course to create the assignment in
+     * @param assignment Assignment object to create. Must have at least a name set
+     * @return The created assignment object
+     * @throws IOException When there is an error communicating with Canvas
+     */
+    Optional<Assignment> createASsignment(String courseId, Assignment assignment) throws IOException;
+
     /**
      * Creates an assignment in canvas
      * @param courseId id of the course the quiz is going to be in
@@ -15,7 +24,9 @@ public interface AssignmentWriter extends CanvasWriter<Assignment, AssignmentWri
      * @param pointsPossible  highest possible number of points of assignment
      * @return The newly created assignment
      * @throws IOException When there is an error communicating with Canvas
+     * @deprecated Use createAssignment(courseId, assignment) instead
      */
+    @Deprecated
     Optional<Assignment> createAssignment (String courseId, String assignmentName, String pointsPossible) throws IOException;
 
     /**
@@ -28,7 +39,9 @@ public interface AssignmentWriter extends CanvasWriter<Assignment, AssignmentWri
      * @param muted muted status of created assignment
      * @return The newly created assignment
      * @throws IOException When there is an error communicating with Canvas
+     * @deprecated Use createAssignment(courseId, assignment) instead
      */
+    @Deprecated
     Optional<Assignment> createAssignment(String courseId, String assignmentName, String pointsPossible,
                                                  AssignmentType assignmentType, boolean published, boolean muted) throws IOException;
 
