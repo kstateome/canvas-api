@@ -1,6 +1,5 @@
 package edu.ksu.canvas.interfaces;
 
-import edu.ksu.canvas.enums.AssignmentType;
 import edu.ksu.canvas.model.Assignment;
 
 import java.io.IOException;
@@ -16,34 +15,6 @@ public interface AssignmentWriter extends CanvasWriter<Assignment, AssignmentWri
      * @throws IOException When there is an error communicating with Canvas
      */
     Optional<Assignment> createASsignment(String courseId, Assignment assignment) throws IOException;
-
-    /**
-     * Creates an assignment in canvas
-     * @param courseId id of the course the quiz is going to be in
-     * @param assignmentName  name of assignment
-     * @param pointsPossible  highest possible number of points of assignment
-     * @return The newly created assignment
-     * @throws IOException When there is an error communicating with Canvas
-     * @deprecated Use createAssignment(courseId, assignment) instead
-     */
-    @Deprecated
-    Optional<Assignment> createAssignment (String courseId, String assignmentName, String pointsPossible) throws IOException;
-
-    /**
-     * Creates an assignment in canvas
-     * @param courseId id of the course the quiz is going to be in
-     * @param assignmentName  name of assignment
-     * @param pointsPossible  highest possible number of points of assignment
-     * @param assignmentType type of the assignment to be created
-     * @param published publish status of created assignment
-     * @param muted muted status of created assignment
-     * @return The newly created assignment
-     * @throws IOException When there is an error communicating with Canvas
-     * @deprecated Use createAssignment(courseId, assignment) instead
-     */
-    @Deprecated
-    Optional<Assignment> createAssignment(String courseId, String assignmentName, String pointsPossible,
-                                                 AssignmentType assignmentType, boolean published, boolean muted) throws IOException;
 
     /**
      * Deletes a specified assignment in canvas

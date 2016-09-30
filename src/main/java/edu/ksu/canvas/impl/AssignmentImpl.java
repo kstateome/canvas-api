@@ -1,10 +1,8 @@
 package edu.ksu.canvas.impl;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import edu.ksu.canvas.enums.AssignmentType;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.exception.OauthTokenRequiredException;
 import edu.ksu.canvas.interfaces.AssignmentReader;
@@ -55,12 +53,6 @@ public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, Assig
     }
 
     @Override
-    public Optional<Assignment> createAssignment(String courseId, String assignmentName, String pointsPossible) throws IOException {
-        return createAssignment(courseId, assignmentName, pointsPossible,
-                AssignmentType.ON_PAPER, true, true);
-    }
-
-    @Override
     public Optional<Assignment> createASsignment(String courseId, Assignment assignment) throws IOException {
         if(StringUtils.isBlank(assignment.getName())) {
             throw new IllegalArgumentException("Assignment must have a name");
@@ -70,24 +62,6 @@ public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, Assig
         JsonObject assignmentObject = new JsonObject();
         assignmentObject.add("assignment", assignmentElement);
         Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, assignmentObject);
-        return responseParser.parseToObject(Assignment.class, response);
-    }
-
-    @Override
-    public Optional<Assignment> createAssignment(String courseId, String assignmentName, String pointsPossible,
-                                                 AssignmentType assignmentType, boolean published, boolean muted) throws IOException {
-        ImmutableMap<String, List<String>> parameters = ImmutableMap.<String,List<String>>builder()
-                .put("assignment[name]", Collections.singletonList(assignmentName))
-                .put("assignment[submission_types]", Collections.singletonList(assignmentType.toString()))
-                .put("assignment[points_possible]", Collections.singletonList(pointsPossible))
-                .put("assignment[published]", Collections.singletonList(String.valueOf(published)))
-                .put("assignment[muted]", Collections.singletonList(String.valueOf(muted))).build();
-        String url = buildCanvasUrl("courses/" + courseId + "/assignments", parameters);
-        Response response = canvasMessenger.sendToCanvas(oauthToken, url, Collections.emptyMap());
-        if (response.getErrorHappened() || response.getResponseCode() != 200) {
-            LOG.error("Errors creating assignment for course " + courseId + " with assignmentName " + assignmentName);
-            return Optional.empty();
-        }
         return responseParser.parseToObject(Assignment.class, response);
     }
 
