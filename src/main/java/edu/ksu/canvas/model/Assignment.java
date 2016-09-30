@@ -42,7 +42,7 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     private String integration_id;
     private Object integration_data;
     private String muted;
-    private String points_possible;
+    private Integer points_possible;
     private List<String> submission_types;
     private String grading_type;
     private String grading_standard_id;
@@ -300,11 +300,11 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     }
 
     @CanvasField(postKey = "points_possible")
-    public String getPoints_possible() {
+    public Integer getPoints_possible() {
         return points_possible;
     }
 
-    public void setPoints_possible(String points_possible) {
+    public void setPoints_possible(Integer points_possible) {
         this.points_possible = points_possible;
     }
 
