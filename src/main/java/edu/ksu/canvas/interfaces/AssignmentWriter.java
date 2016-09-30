@@ -33,6 +33,17 @@ public interface AssignmentWriter extends CanvasWriter<Assignment, AssignmentWri
      * @param onlyVisibleToOverrides Whether this assignment is only visible to people who are assigned to it
      * @return Assignment object update in Canvas
      * @throws IOException When there is an error communicating with Canvas
+     * @deprecated Use the editAssignment method to set the override visibility setting instead
      */
+    @Deprecated
     Optional<Assignment> setOnlyVisibleToOverrides(String courseId, String assignmentId, boolean onlyVisibleToOverrides) throws IOException;
+
+    /**
+     * Writes an Assignment object to the Canvas API
+     * @param courseId Course ID that this assignment is associated with
+     * @param assignment The assignment settings to write to the API
+     * @return The modified Assignment returned by the API
+     * @throws IOException When there is an error communicating with Canvas
+     */
+    Optional<Assignment> editAssignment(String courseId, Assignment assignment) throws IOException;
 }

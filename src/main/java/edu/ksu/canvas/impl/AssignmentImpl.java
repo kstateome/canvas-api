@@ -99,6 +99,16 @@ public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, Assig
     }
 
     @Override
+    public Optional<Assignment> editAssignment(String courseId, Assignment assignment) throws IOException {
+        String url = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignment.getId(), Collections.emptyMap());
+        JsonElement assignmentElement = getDefaultGsonParser().toJsonTree(assignment);
+        JsonObject assignmentObject = new JsonObject();
+        assignmentObject.add("assignment", assignmentElement);
+        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, assignmentObject);
+        return responseParser.parseToObject(Assignment.class, response);
+    }
+
+    @Override
     protected Type listType() {
         return new TypeToken<List<Assignment>>(){}.getType();
     }
