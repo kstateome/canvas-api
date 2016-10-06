@@ -4,7 +4,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
-import edu.ksu.canvas.exception.OauthTokenRequiredException;
 import edu.ksu.canvas.interfaces.AssignmentReader;
 import edu.ksu.canvas.interfaces.AssignmentWriter;
 import edu.ksu.canvas.model.Assignment;
@@ -14,7 +13,6 @@ import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.requestOptions.GetSingleAssignmentOptions;
 import edu.ksu.canvas.requestOptions.ListCourseAssignmentsOptions;
 import edu.ksu.canvas.requestOptions.ListUserAssignmentOptions;
-import edu.ksu.canvas.exception.MessageUndeliverableException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -78,24 +76,6 @@ public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, Assig
         }
         Optional<Delete> responseParsed = responseParser.parseToObject(Delete.class, response);
         return responseParsed.get().getDelete();
-    }
-
-    @Override
-    public Optional<Assignment> setOnlyVisibleToOverrides(String courseId, String assignmentId, boolean onlyVisibleToOverrides)
-            throws MessageUndeliverableException, IOException, OauthTokenRequiredException{
-        String url = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentId, Collections.emptyMap());
-        JsonObject requestBody = new JsonObject();
-        JsonObject assignment = new JsonObject();
-        assignment.addProperty("only_visible_to_overrides", onlyVisibleToOverrides);
-        requestBody.add("assignment", assignment);
-
-        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, requestBody);
-        if(response.getErrorHappened() || response.getResponseCode() != 201){
-            LOG.error("Error updating assignment override for course: " + courseId + " and assignment: " + assignmentId);
-            LOG.debug(response.getContent());
-            return null;
-        }
-        return responseParser.parseToObject(Assignment.class, response);
     }
 
     @Override
