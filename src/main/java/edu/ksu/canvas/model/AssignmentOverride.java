@@ -3,7 +3,10 @@ package edu.ksu.canvas.model;
 import java.util.Date;
 import java.util.List;
 
-public class AssignmentOverride {
+import edu.ksu.canvas.annotation.CanvasObject;
+
+@CanvasObject(postKey="assignment_override")
+public class AssignmentOverride extends BaseCanvasModel {
     private Integer id;
     private Integer assignment_id;
     private List<Integer> student_ids;
