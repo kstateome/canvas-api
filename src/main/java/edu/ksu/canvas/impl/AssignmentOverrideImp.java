@@ -1,15 +1,11 @@
 package edu.ksu.canvas.impl;
 
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.AssignmentOverrideReader;
 import edu.ksu.canvas.interfaces.AssignmentOverrideWriter;
 import edu.ksu.canvas.model.AssignmentOverride;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
-import edu.ksu.canvas.util.CanvasURLBuilder;
-import edu.ksu.canvas.exception.MessageUndeliverableException;
-import edu.ksu.canvas.exception.OauthTokenRequiredException;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -27,21 +23,13 @@ public class AssignmentOverrideImp extends BaseImpl<AssignmentOverride, Assignme
     }
 
     @Override
-    public Optional<AssignmentOverride> createAssignmentOverride(String courseId, String assignmentId, List<Integer> studentIds, String title) throws MessageUndeliverableException, IOException, OauthTokenRequiredException {
-        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
-                "courses/" + courseId + "/assignments/" + assignmentId + "/overrides", Collections.emptyMap());
-        JsonObject requestBody = new JsonObject();
-        JsonObject override = new JsonObject();
-        override.addProperty("title", title);
-        override.add("student_ids", getDefaultGsonParser().toJsonTree(studentIds));
-        requestBody.add("assignment_override", override);
-
-        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, requestBody);
-        if(response.getErrorHappened() || response.getResponseCode() != 201){
-            LOG.error("Error creating assignment override for course: " + courseId + " and assignment: " + assignmentId);
-            LOG.debug(response.getContent());
-            return null;
+    public Optional<AssignmentOverride> createAssignmentOverride(String courseId, AssignmentOverride assignmentOverride) throws IOException {
+        if(assignmentOverride.getAssignment_id() == null) {
+            throw new IllegalArgumentException("Assignment override must have an assignment ID");
         }
+        LOG.debug("Creating an assignment override in course " + courseId + " for assignment " + assignmentOverride.getAssignment_id());
+        String url = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentOverride.getAssignment_id() + "/overrides", Collections.emptyMap());
+        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, wrapJsonObject(assignmentOverride));
         return responseParser.parseToObject(AssignmentOverride.class, response);
     }
 
