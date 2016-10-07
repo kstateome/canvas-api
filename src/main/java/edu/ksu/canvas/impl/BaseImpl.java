@@ -5,12 +5,16 @@ import com.google.common.collect.ImmutableMap.Builder;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
+import edu.ksu.canvas.annotation.CanvasObject;
 import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.interfaces.CanvasMessenger;
 import edu.ksu.canvas.interfaces.CanvasReader;
 import edu.ksu.canvas.interfaces.CanvasWriter;
 import edu.ksu.canvas.interfaces.ResponseParser;
+import edu.ksu.canvas.model.BaseCanvasModel;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.util.CanvasURLBuilder;
@@ -190,5 +194,26 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
                 .map(this::parseListResponse)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Method to wrap a Canvas model inside of a JSON object so that the resulting serialized object
+     * can be pushed to Canvas create/edit endpoints. For example, to create an assignment, the JSON
+     * must look like: <pre>{assignment: {name: "Assignment 1"}}</pre>.
+     * This method adds the outer "assignment" object
+     * @param canvasObject The Canvas model object to wrap
+     * @return A JsonObject suitable for serializing out to the Canvas API
+     */
+    protected JsonObject wrapJsonObject(BaseCanvasModel canvasObject) {
+        Class<? extends BaseCanvasModel> clazz = canvasObject.getClass();
+        CanvasObject canvasObjectAnnotation = clazz.getAnnotation(CanvasObject.class);
+        if(canvasObjectAnnotation == null || canvasObjectAnnotation.postKey() == null) {
+            throw new IllegalArgumentException("Object to wrap must have a CanvasObject annotation with a postKey");
+        }
+        String objectPostKey = canvasObjectAnnotation.postKey();
+        JsonElement element = getDefaultGsonParser().toJsonTree(canvasObject);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.add(objectPostKey, element);
+        return jsonObject;
     }
 }
