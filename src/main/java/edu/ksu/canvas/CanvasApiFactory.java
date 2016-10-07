@@ -107,7 +107,7 @@ public class CanvasApiFactory {
         readerMap = new HashMap<>();
         writerMap = new HashMap<>();
         readerMap.put(AccountReader.class, AccountImpl.class);
-        readerMap.put(AssignmentOverrideReader.class, AssignmentOverrideImp.class);
+        readerMap.put(AssignmentOverrideReader.class, AssignmentOverrideImpl.class);
         readerMap.put(AssignmentReader.class, AssignmentImpl.class);
         readerMap.put(CourseReader.class, CourseImpl.class);
         readerMap.put(EnrollmentsReader.class, EnrollmentImpl.class);
@@ -119,7 +119,7 @@ public class CanvasApiFactory {
         readerMap.put(UserReader.class, UserImpl.class);
         readerMap.put(PageReader.class, PageImpl.class);
 
-        writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImp.class);
+        writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImpl.class);
         writerMap.put(AssignmentWriter.class, AssignmentImpl.class);
         writerMap.put(CourseWriter.class, CourseImpl.class);
         writerMap.put(EnrollmentsWriter.class, EnrollmentImpl.class);

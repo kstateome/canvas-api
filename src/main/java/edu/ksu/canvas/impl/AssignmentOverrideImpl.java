@@ -14,11 +14,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class AssignmentOverrideImp extends BaseImpl<AssignmentOverride, AssignmentOverrideReader, AssignmentOverrideWriter> implements AssignmentOverrideReader, AssignmentOverrideWriter {
-    private static final Logger LOG = Logger.getLogger(AssignmentOverrideImp.class);
+public class AssignmentOverrideImpl extends BaseImpl<AssignmentOverride, AssignmentOverrideReader, AssignmentOverrideWriter> implements AssignmentOverrideReader, AssignmentOverrideWriter {
+    private static final Logger LOG = Logger.getLogger(AssignmentOverrideImpl.class);
 
 
-    public AssignmentOverrideImp(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
+    public AssignmentOverrideImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }
 

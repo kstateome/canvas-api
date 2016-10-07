@@ -29,10 +29,10 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class QuizSubmissionQuestionImp extends BaseImpl<QuizSubmissionQuestion, QuizSubmissionQuestionReader, QuizSubmissionQuestionWriter> implements QuizSubmissionQuestionReader, QuizSubmissionQuestionWriter {
-    private static final Logger LOG = Logger.getLogger(QuizSubmissionQuestionImp.class);
+public class QuizSubmissionQuestionImpl extends BaseImpl<QuizSubmissionQuestion, QuizSubmissionQuestionReader, QuizSubmissionQuestionWriter> implements QuizSubmissionQuestionReader, QuizSubmissionQuestionWriter {
+    private static final Logger LOG = Logger.getLogger(QuizSubmissionQuestionImpl.class);
 
-    public QuizSubmissionQuestionImp(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
+    public QuizSubmissionQuestionImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }
 
