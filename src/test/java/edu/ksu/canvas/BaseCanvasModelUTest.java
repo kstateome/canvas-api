@@ -4,6 +4,9 @@ import edu.ksu.canvas.model.TestCanvasModel;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import java.util.Map;
 
 public class BaseCanvasModelUTest {
@@ -40,4 +43,27 @@ public class BaseCanvasModelUTest {
         Assert.assertEquals("Field2Value from canvasModel.toPostMap() did not have expected value for field2", FIELD2_VALUE, postMap.get(expectedKey));
     }
 
+    @Test
+    public void jsonObjectWrapping() throws Exception {
+        TestCanvasModel canvasModel = new TestCanvasModel();
+        canvasModel.setField1(FIELD1_VALUE);
+
+        JsonObject jsonObject = canvasModel.toJsonObject();
+        JsonElement element = jsonObject.get(CLASS_POST_KEY);
+
+        Assert.assertNotNull("JSON object should have a top level element: " + CLASS_POST_KEY, element);
+    }
+
+    @Test
+    public void jsonField1Value() throws Exception {
+        TestCanvasModel canvasModel = new TestCanvasModel();
+        canvasModel.setField1(FIELD1_VALUE);
+
+        JsonObject jsonObject = canvasModel.toJsonObject();
+        JsonElement element = jsonObject.get(CLASS_POST_KEY);
+        JsonObject field1Obj = element.getAsJsonObject();
+        String field1Value = field1Obj.get("field1").getAsString();
+
+        Assert.assertEquals("JSON object should have a 'field1' value of " + FIELD1_VALUE, FIELD1_VALUE, field1Value);
+    }
 }
