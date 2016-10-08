@@ -88,10 +88,6 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
         return parseListOfResponses(responses);
     }
 
-    protected Gson getDefaultGsonParser() {
-        return new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
-    }
-
     @Override
     public READERTYPE withCallback(Consumer<List<T>> responseReceivedCallBack) {
         responseCallback = responseReceivedCallBack;
@@ -194,26 +190,5 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
                 .map(this::parseListResponse)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
-    }
-
-    /**
-     * Method to wrap a Canvas model inside of a JSON object so that the resulting serialized object
-     * can be pushed to Canvas create/edit endpoints. For example, to create an assignment, the JSON
-     * must look like: <pre>{assignment: {name: "Assignment 1"}}</pre>.
-     * This method adds the outer "assignment" object
-     * @param canvasObject The Canvas model object to wrap
-     * @return A JsonObject suitable for serializing out to the Canvas API
-     */
-    protected JsonObject wrapJsonObject(BaseCanvasModel canvasObject) {
-        Class<? extends BaseCanvasModel> clazz = canvasObject.getClass();
-        CanvasObject canvasObjectAnnotation = clazz.getAnnotation(CanvasObject.class);
-        if(canvasObjectAnnotation == null || canvasObjectAnnotation.postKey() == null) {
-            throw new IllegalArgumentException("Object to wrap must have a CanvasObject annotation with a postKey");
-        }
-        String objectPostKey = canvasObjectAnnotation.postKey();
-        JsonElement element = getDefaultGsonParser().toJsonTree(canvasObject);
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.add(objectPostKey, element);
-        return jsonObject;
     }
 }

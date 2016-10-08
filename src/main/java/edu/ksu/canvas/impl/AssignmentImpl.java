@@ -1,7 +1,5 @@
 package edu.ksu.canvas.impl;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.AssignmentReader;
@@ -56,10 +54,7 @@ public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, Assig
             throw new IllegalArgumentException("Assignment must have a name");
         }
         String url = buildCanvasUrl("courses/" + courseId + "/assignments", Collections.emptyMap());
-        JsonElement assignmentElement = getDefaultGsonParser().toJsonTree(assignment);
-        JsonObject assignmentObject = new JsonObject();
-        assignmentObject.add("assignment", assignmentElement);
-        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, assignmentObject);
+        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, assignment.toJsonObject());
         return responseParser.parseToObject(Assignment.class, response);
     }
 
@@ -81,10 +76,7 @@ public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, Assig
     @Override
     public Optional<Assignment> editAssignment(String courseId, Assignment assignment) throws IOException {
         String url = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignment.getId(), Collections.emptyMap());
-        JsonElement assignmentElement = getDefaultGsonParser().toJsonTree(assignment);
-        JsonObject assignmentObject = new JsonObject();
-        assignmentObject.add("assignment", assignmentElement);
-        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, assignmentObject);
+        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, assignment.toJsonObject());
         return responseParser.parseToObject(Assignment.class, response);
     }
 

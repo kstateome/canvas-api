@@ -68,7 +68,7 @@ public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionR
     }
 
     private List<QuizSubmission> parseQuizSubmissionList(final Response response) {
-        QuizSubmissionListWrapper wrapper = getDefaultGsonParser().fromJson(response.getContent(), QuizSubmissionListWrapper.class);
+        QuizSubmissionListWrapper wrapper = GsonResponseParser.getDefaultGsonParser().fromJson(response.getContent(), QuizSubmissionListWrapper.class);
         return wrapper.getQuiz_submissions();
     }
 

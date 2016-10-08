@@ -29,7 +29,7 @@ public class AssignmentOverrideImpl extends BaseImpl<AssignmentOverride, Assignm
         }
         LOG.debug("Creating an assignment override in course " + courseId + " for assignment " + assignmentOverride.getAssignment_id());
         String url = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentOverride.getAssignment_id() + "/overrides", Collections.emptyMap());
-        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, wrapJsonObject(assignmentOverride));
+        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, assignmentOverride.toJsonObject());
         return responseParser.parseToObject(AssignmentOverride.class, response);
     }
 

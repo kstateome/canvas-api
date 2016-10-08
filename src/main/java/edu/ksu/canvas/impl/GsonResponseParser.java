@@ -18,22 +18,25 @@ public class GsonResponseParser implements ResponseParser {
 
     @Override
     public <T> List<T> parseToList(Type type, Response response) {
-        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+        Gson gson = getDefaultGsonParser();
         return gson.fromJson(response.getContent(), type);
     }
 
     @Override
     public <T> Optional<T> parseToObject(Class<T> clazz, Response response) {
-        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+        Gson gson = getDefaultGsonParser();
         return Optional.of(gson.fromJson(response.getContent(), clazz));
     }
 
     @Override
     public <T> Map<String, T> parseToMap(Class<T> clazz, Response response) {
-        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+        Gson gson = getDefaultGsonParser();
         Type mapType = new TypeToken<Map<String,T>>(){}.getType();
         return gson.fromJson(response.getContent(), mapType);
     }
 
+    public static Gson getDefaultGsonParser() {
+        return new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+    }
 
 }

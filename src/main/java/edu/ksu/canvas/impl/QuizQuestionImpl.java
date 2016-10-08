@@ -40,7 +40,7 @@ public class QuizQuestionImpl extends BaseImpl<QuizQuestion, QuizQuestionReader,
 
     private List<QuizQuestion> parseQuizQuestionList(final Response response) {
         Type listType = new TypeToken<List<QuizQuestion>>(){}.getType();
-        return getDefaultGsonParser().fromJson(response.getContent(), listType);
+        return GsonResponseParser.getDefaultGsonParser().fromJson(response.getContent(), listType);
     }
 
     @Override
