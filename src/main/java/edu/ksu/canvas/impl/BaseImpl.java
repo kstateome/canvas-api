@@ -2,19 +2,12 @@ package edu.ksu.canvas.impl;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
-import edu.ksu.canvas.annotation.CanvasObject;
 import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.interfaces.CanvasMessenger;
 import edu.ksu.canvas.interfaces.CanvasReader;
 import edu.ksu.canvas.interfaces.CanvasWriter;
 import edu.ksu.canvas.interfaces.ResponseParser;
-import edu.ksu.canvas.model.BaseCanvasModel;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.util.CanvasURLBuilder;
