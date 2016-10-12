@@ -20,10 +20,10 @@ public interface AssignmentWriter extends CanvasWriter<Assignment, AssignmentWri
      * Deletes a specified assignment in canvas
      * @param courseId Course ID of course to delete assignment from
      * @param assignmentId Assignment ID of assignment to delete
-     * @return True if the operation succeeded
+     * @return The deleted Assignment object as returned by the Canvas API
      * @throws IOException When there is an error communicating with Canvas
      */
-    Boolean deleteAssignment(String courseId, String assignmentId) throws IOException;
+    Optional<Assignment> deleteAssignment(String courseId, String assignmentId) throws IOException;
 
     /**
      * Writes an Assignment object to the Canvas API

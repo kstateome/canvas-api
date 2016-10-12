@@ -1,11 +1,9 @@
 package edu.ksu.canvas.impl;
 
 import com.google.gson.reflect.TypeToken;
-import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.AssignmentReader;
 import edu.ksu.canvas.interfaces.AssignmentWriter;
 import edu.ksu.canvas.model.Assignment;
-import edu.ksu.canvas.model.Delete;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.requestOptions.GetSingleAssignmentOptions;
@@ -59,7 +57,7 @@ public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, Assig
     }
 
     @Override
-    public Boolean deleteAssignment(String courseId, String assignmentId) throws InvalidOauthTokenException, IOException {
+    public Optional<Assignment> deleteAssignment(String courseId, String assignmentId) throws IOException {
         Map<String, String> postParams = new HashMap<>();
         postParams.put("event", "delete");
         String createdUrl = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentId, Collections.emptyMap());
@@ -67,10 +65,9 @@ public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, Assig
         LOG.debug("response " + response.toString());
         if(response.getErrorHappened() || response.getResponseCode() != 200){
             LOG.debug("Failed to delete assignment, error message: " + response.toString());
-            return false;
+            return Optional.empty();
         }
-        Optional<Delete> responseParsed = responseParser.parseToObject(Delete.class, response);
-        return responseParsed.get().getDelete();
+        return responseParser.parseToObject(Assignment.class, response);
     }
 
     @Override

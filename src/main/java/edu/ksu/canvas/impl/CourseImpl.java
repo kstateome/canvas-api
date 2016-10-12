@@ -6,7 +6,6 @@ import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.CourseReader;
 import edu.ksu.canvas.interfaces.CourseWriter;
 import edu.ksu.canvas.model.Course;
-import edu.ksu.canvas.model.Delete;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.requestOptions.GetSingleCourseOptions;
@@ -69,18 +68,17 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
 
 
     @Override
-    public Boolean deleteCourse(String courseId) throws InvalidOauthTokenException, IOException {
+    public Optional<Course> deleteCourse(String courseId) throws InvalidOauthTokenException, IOException {
         Map<String,String> postParams = new HashMap<>();
         postParams.put("event", "delete");
-        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "courses/" + courseId, Collections.emptyMap());
+        String createdUrl = buildCanvasUrl("courses/" + courseId, Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, createdUrl, postParams);
         LOG.debug("response "+ response.toString());
         if (response.getErrorHappened() || response.getResponseCode() != 200) {
             LOG.debug("Failed to delete course, error message: " + response.toString());
-            return false;
+            Optional.empty();
         }
-        Optional<Delete> responseParsed = responseParser.parseToObject(Delete.class, response);
-        return responseParsed.get().getDelete();
+        return responseParser.parseToObject(Course.class, response);
     }
 
     @Override
