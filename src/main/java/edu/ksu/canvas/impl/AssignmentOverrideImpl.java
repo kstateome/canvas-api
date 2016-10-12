@@ -24,11 +24,11 @@ public class AssignmentOverrideImpl extends BaseImpl<AssignmentOverride, Assignm
 
     @Override
     public Optional<AssignmentOverride> createAssignmentOverride(String courseId, AssignmentOverride assignmentOverride) throws IOException {
-        if(assignmentOverride.getAssignment_id() == null) {
+        if(assignmentOverride.getAssignmentId() == null) {
             throw new IllegalArgumentException("Assignment override must have an assignment ID");
         }
-        LOG.debug("Creating an assignment override in course " + courseId + " for assignment " + assignmentOverride.getAssignment_id());
-        String url = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentOverride.getAssignment_id() + "/overrides", Collections.emptyMap());
+        LOG.debug("Creating an assignment override in course " + courseId + " for assignment " + assignmentOverride.getAssignmentId());
+        String url = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentOverride.getAssignmentId() + "/overrides", Collections.emptyMap());
         Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, assignmentOverride.toJsonObject());
         return responseParser.parseToObject(AssignmentOverride.class, response);
     }

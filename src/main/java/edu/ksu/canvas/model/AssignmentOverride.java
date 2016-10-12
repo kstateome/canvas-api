@@ -8,16 +8,16 @@ import edu.ksu.canvas.annotation.CanvasObject;
 @CanvasObject(postKey="assignment_override")
 public class AssignmentOverride extends BaseCanvasModel {
     private Integer id;
-    private Integer assignment_id;
-    private List<Integer> student_ids;
-    private Integer group_id;
-    private Integer course_section_id;
+    private Integer assignmentId;
+    private List<Integer> studentIds;
+    private Integer groupId;
+    private Integer courseSectionId;
     private String title;
-    private Date due_at;
-    private Boolean all_day;
-    private Date all_day_date;
-    private Date unlock_at;
-    private Date lock_at;
+    private Date dueAt;
+    private Boolean allDay;
+    private Date allDayDate;
+    private Date unlockAt;
+    private Date lockAt;
 
     public Integer getId() {
         return id;
@@ -27,36 +27,36 @@ public class AssignmentOverride extends BaseCanvasModel {
         this.id = id;
     }
 
-    public Integer getAssignment_id() {
-        return assignment_id;
+    public Integer getAssignmentId() {
+        return assignmentId;
     }
 
-    public void setAssignment_id(Integer assignment_id) {
-        this.assignment_id = assignment_id;
+    public void setAssignmentId(Integer assignmentId) {
+        this.assignmentId = assignmentId;
     }
 
-    public List<Integer> getStudent_ids() {
-        return student_ids;
+    public List<Integer> getStudentIds() {
+        return studentIds;
     }
 
-    public void setStudent_ids(List<Integer> student_ids) {
-        this.student_ids = student_ids;
+    public void setStudentIds(List<Integer> studentIds) {
+        this.studentIds = studentIds;
     }
 
-    public Integer getGroup_id() {
-        return group_id;
+    public Integer getGroupId() {
+        return groupId;
     }
 
-    public void setGroup_id(Integer group_id) {
-        this.group_id = group_id;
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
     }
 
-    public Integer getCourse_section_id() {
-        return course_section_id;
+    public Integer getCourseSectionId() {
+        return courseSectionId;
     }
 
-    public void setCourse_section_id(Integer course_section_id) {
-        this.course_section_id = course_section_id;
+    public void setCourseSectionId(Integer courseSectionId) {
+        this.courseSectionId = courseSectionId;
     }
 
     public String getTitle() {
@@ -67,43 +67,43 @@ public class AssignmentOverride extends BaseCanvasModel {
         this.title = title;
     }
 
-    public Date getDue_at() {
-        return due_at;
+    public Date getDueAt() {
+        return dueAt;
     }
 
-    public void setDue_at(Date due_at) {
-        this.due_at = due_at;
+    public void setDueAt(Date dueAt) {
+        this.dueAt = dueAt;
     }
 
-    public Boolean getAll_day() {
-        return all_day;
+    public Boolean getAllDay() {
+        return allDay;
     }
 
-    public void setAll_day(Boolean all_day) {
-        this.all_day = all_day;
+    public void setAllDay(Boolean allDay) {
+        this.allDay = allDay;
     }
 
-    public Date getAll_day_date() {
-        return all_day_date;
+    public Date getAllDayDate() {
+        return allDayDate;
     }
 
-    public void setAll_day_date(Date all_day_date) {
-        this.all_day_date = all_day_date;
+    public void setAllDayDate(Date allDayDate) {
+        this.allDayDate = allDayDate;
     }
 
-    public Date getUnlock_at() {
-        return unlock_at;
+    public Date getUnlockAt() {
+        return unlockAt;
     }
 
-    public void setUnlock_at(Date unlock_at) {
-        this.unlock_at = unlock_at;
+    public void setUnlock_at(Date unlockAt) {
+        this.unlockAt = unlockAt;
     }
 
-    public Date getLock_at() {
-        return lock_at;
+    public Date getLockAt() {
+        return lockAt;
     }
 
-    public void setLock_at(Date lock_at) {
-        this.lock_at = lock_at;
+    public void setLockAt(Date lockAt) {
+        this.lockAt = lockAt;
     }
 }
