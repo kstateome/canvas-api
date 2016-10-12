@@ -50,18 +50,10 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
     }
 
     @Override
-    public Optional<Course> createCourse(Course course) throws InvalidOauthTokenException, IOException {
-        //TODO to parse object to map<String,List<String>>
-        Map<String,String> postParams = new HashMap<>();
-        postParams.put("course[course_code]", course.getCourseCode());
-        postParams.put("course[name]", course.getName());
-        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "accounts/" + CanvasConstants.ACCOUNT_ID + "/courses", Collections.emptyMap());
-        LOG.debug("create URl for course creation : "+ createdUrl);
-        Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, postParams);
-        if (response.getErrorHappened() ||  response.getResponseCode() != 200) {
-            LOG.debug("Failed to create course, error message: " + response.toString());
-            return Optional.empty();
-        }
+    public Optional<Course> createCourse(String accountId, Course course) throws IOException {
+        LOG.debug("creating course");
+        String url = buildCanvasUrl("accounts/" + accountId + "/courses", Collections.emptyMap());
+        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, course.toJsonObject());
         return responseParser.parseToObject(Course.class, response);
     }
 

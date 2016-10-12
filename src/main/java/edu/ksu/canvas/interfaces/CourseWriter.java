@@ -7,11 +7,13 @@ import java.util.Optional;
 
 public interface CourseWriter extends CanvasWriter<Course, CourseWriter> {
     /**
+     * Create a new course in Canvas
+     * @param accountId the account ID of the account under which to place this course
      * @param course A course object containing the information needed to create a course in Canvas
      * @return The newly created course
      * @throws IOException When there is an error communicating with Canvas
      */
-     Optional<Course> createCourse(Course course) throws IOException;
+     Optional<Course> createCourse(String accountId, Course course) throws IOException;
 
     /**
      * @param courseId The ID of the course you wish to delete
