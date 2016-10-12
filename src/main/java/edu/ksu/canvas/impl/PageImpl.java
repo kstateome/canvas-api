@@ -46,7 +46,7 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
     }
 
     @Override
-    public Optional<Page> updateCoursePage(Page page, String courseId) throws Exception {
+    public Optional<Page> updateCoursePage(Page page, String courseId) throws IOException {
         LOG.debug("Updating page in course" + courseId);
         String encodedUrl = URLEncoder.encode(page.getUrl(), CanvasConstants.URLENCODING_TYPE);
         String url = buildCanvasUrl("courses/" + courseId + "/pages/" + encodedUrl, Collections.emptyMap());
