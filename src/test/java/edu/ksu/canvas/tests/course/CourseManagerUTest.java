@@ -1,7 +1,6 @@
 package edu.ksu.canvas.tests.course;
 
 import edu.ksu.canvas.CanvasTestBase;
-import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.impl.CourseImpl;
 import edu.ksu.canvas.interfaces.CourseWriter;
 import edu.ksu.canvas.model.Course;
@@ -20,6 +19,10 @@ public class CourseManagerUTest extends CanvasTestBase {
     private FakeRestClient fakeRestClient;
     private CourseWriter courseWriter;
 
+    private static final String ARBITRARY_USER_ID = "899123456";
+    private static final String ARBITRARY_COURSE_ID = "20732";
+    private static final String ARBITRARY_ACCOUNT_ID = "9";
+
     @Before
     public void setupData() {
         courseWriter = new CourseImpl(baseUrl,apiVersion,SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE);
@@ -30,62 +33,60 @@ public class CourseManagerUTest extends CanvasTestBase {
         Course newCourse = new Course();
         newCourse.setCourseCode("SeleniumTestCourseCode");
         newCourse.setName("SeleniumTestCourse");
-        String url = baseUrl + "/api/v1/accounts/1/courses";
+        String url = baseUrl + "/api/v1/accounts/" + ARBITRARY_ACCOUNT_ID + "/courses";
         fakeRestClient.addSuccessResponse(url, "SampleJson/course/CreateCourseSuccess.json");
-        Optional<Course> response = courseWriter.createCourse(newCourse);
+        Optional<Course> response = courseWriter.createCourse(ARBITRARY_ACCOUNT_ID, newCourse);
         Assert.assertNotNull(response.get().getName());
         Assert.assertEquals("SeleniumTestCourseCode",response.get().getCourseCode());
     }
 
     @Test
     public void testCourseDeletion() throws IOException {
-        String arbitraryCourseId = "20732";
-        String url = baseUrl + "/api/v1/courses/" + arbitraryCourseId;
+        String url = baseUrl + "/api/v1/courses/" + ARBITRARY_COURSE_ID;
         fakeRestClient.addSuccessResponse(url, "SampleJson/course/DeleteCourseSuccess.json");
-        Assert.assertTrue(courseWriter.deleteCourse(arbitraryCourseId));
+        Boolean deleted = courseWriter.deleteCourse(ARBITRARY_COURSE_ID);
+        Assert.assertTrue("course deletion did not return treu", deleted);
     }
 
     @Test
     public void testSisUserMasqueradeCourseCreation() throws IOException {
-        String someUserId = "899123456";
         Course newCourse = new Course();
         newCourse.setCourseCode("SeleniumTestCourseCode");
         newCourse.setName("SeleniumTestCourse");
-        String url = baseUrl + "/api/v1/accounts/1/courses?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
+        String url = baseUrl + "/api/v1/accounts/" + ARBITRARY_ACCOUNT_ID + "/courses?as_user_id=sis_user_id:" + ARBITRARY_USER_ID;
+        System.out.println("URL in test class: " + url);
         fakeRestClient.addSuccessResponse(url, "SampleJson/course/CreateCourseSuccess.json");
-        Optional<Course> response = courseWriter.writeAsSisUser(someUserId).createCourse(newCourse);
+        Optional<Course> response = courseWriter.writeAsSisUser(ARBITRARY_USER_ID).createCourse(ARBITRARY_ACCOUNT_ID, newCourse);
         Assert.assertNotNull(response.get().getName());
         Assert.assertEquals("SeleniumTestCourseCode",response.get().getCourseCode());
     }
 
     @Test
     public void testSisUserMasqueradeCourseDeletion() throws IOException {
-        String someUserId = "899123456";
-        String arbitraryCourseId = "20732";
-        String url = baseUrl + "/api/v1/courses/" + arbitraryCourseId +"?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
+        String url = baseUrl + "/api/v1/courses/" + ARBITRARY_COURSE_ID +"?as_user_id=sis_user_id:" + ARBITRARY_USER_ID;
         fakeRestClient.addSuccessResponse(url, "SampleJson/course/DeleteCourseSuccess.json");
-        Assert.assertTrue(courseWriter.writeAsSisUser(someUserId).deleteCourse(arbitraryCourseId));
+        Boolean deleted = courseWriter.writeAsSisUser(ARBITRARY_USER_ID).deleteCourse(ARBITRARY_COURSE_ID);
+        Assert.assertTrue("course deletion did not return true", deleted);
     }
 
     @Test
     public void testCanvasUserMasqueradeCourseCreation() throws IOException {
-        String someUserId = "899123456";
         Course newCourse = new Course();
         newCourse.setCourseCode("SeleniumTestCourseCode");
         newCourse.setName("SeleniumTestCourse");
-        String url = baseUrl + "/api/v1/accounts/1/courses?as_user_id=" + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + someUserId;
+        String url = baseUrl + "/api/v1/accounts/" + ARBITRARY_ACCOUNT_ID + "/courses?as_user_id=" + ARBITRARY_USER_ID;
         fakeRestClient.addSuccessResponse(url, "SampleJson/course/CreateCourseSuccess.json");
-        Optional<Course> response = courseWriter.writeAsCanvasUser(someUserId).createCourse(newCourse);
+        Optional<Course> response = courseWriter.writeAsCanvasUser(ARBITRARY_USER_ID).createCourse(ARBITRARY_ACCOUNT_ID, newCourse);
         Assert.assertNotNull(response.get().getName());
         Assert.assertEquals("SeleniumTestCourseCode",response.get().getCourseCode());
     }
 
     @Test
     public void testCanvasUserMasqueradeCourseDeletion() throws IOException {
-        String someUserId = "899123456";
-        String arbitraryCourseId = "20732";
-        String url = baseUrl + "/api/v1/courses/" + arbitraryCourseId +"?as_user_id=" + CanvasConstants.MASQUERADE_CANVAS_USER + ":" + someUserId;
+        String url = baseUrl + "/api/v1/courses/" + ARBITRARY_COURSE_ID + "?as_user_id=" + ARBITRARY_USER_ID;
+        System.out.println("putting URL in face client: " + url);
         fakeRestClient.addSuccessResponse(url, "SampleJson/course/DeleteCourseSuccess.json");
-        Assert.assertTrue(courseWriter.writeAsCanvasUser(someUserId).deleteCourse(arbitraryCourseId));
+        Boolean deleted = courseWriter.writeAsCanvasUser(ARBITRARY_USER_ID).deleteCourse(ARBITRARY_COURSE_ID);
+        Assert.assertTrue("course deletion did not return true", deleted);
     }
 }
