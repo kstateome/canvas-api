@@ -15,8 +15,8 @@ public interface CourseWriter extends CanvasWriter<Course, CourseWriter> {
 
     /**
      * @param courseId The ID of the course you wish to delete
-     * @return The deleted course object returned by Canvas
+     * @return true if the course was deleted
      * @throws IOException When there is an error communicating with Canvas
      */
-     Optional<Course> deleteCourse(String courseId) throws IOException;
+     Boolean deleteCourse(String courseId) throws IOException;
 }

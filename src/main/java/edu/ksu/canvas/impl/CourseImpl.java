@@ -1,11 +1,10 @@
 package edu.ksu.canvas.impl;
 
 import com.google.gson.reflect.TypeToken;
-import edu.ksu.canvas.constants.CanvasConstants;
-import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.CourseReader;
 import edu.ksu.canvas.interfaces.CourseWriter;
 import edu.ksu.canvas.model.Course;
+import edu.ksu.canvas.model.Delete;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.requestOptions.GetSingleCourseOptions;
@@ -68,7 +67,7 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
 
 
     @Override
-    public Optional<Course> deleteCourse(String courseId) throws InvalidOauthTokenException, IOException {
+    public Boolean deleteCourse(String courseId) throws IOException {
         Map<String,String> postParams = new HashMap<>();
         postParams.put("event", "delete");
         String createdUrl = buildCanvasUrl("courses/" + courseId, Collections.emptyMap());
@@ -76,9 +75,10 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
         LOG.debug("response "+ response.toString());
         if (response.getErrorHappened() || response.getResponseCode() != 200) {
             LOG.debug("Failed to delete course, error message: " + response.toString());
-            Optional.empty();
+            return false;
         }
-        return responseParser.parseToObject(Course.class, response);
+        Optional<Delete> responseParsed = responseParser.parseToObject(Delete.class, response);
+        return responseParsed.get().getDelete();
     }
 
     @Override
