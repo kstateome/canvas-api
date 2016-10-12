@@ -16,41 +16,41 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     private String id;
     private String name;
     private String description;
-    private String created_at;
-    private String updated_at;
-    private String due_at;
-    private String lock_at;
-    private String unlock_at;
-    private String all_dates;
-    private String course_id;
-    private String html_url;
-    private String assingment_group_id;
-    private String[] allowed_extensions;
-    private Boolean turnitin_enabled;
-    private String turnitin_settings;
-    private Boolean grade_group_students_individually;
-    private String external_tool_tag_attributes;
-    private Boolean peer_reviews;
-    private Boolean automatic_peer_reviews;
-    private String peer_review_count;
-    private String peer_reviews_assign_at;
-    private String group_category_id;
-    private String needs_grading_count;
-    private String needs_grading_count_by_section;
+    private String createdAt;
+    private String updatedAt;
+    private String dueAt;
+    private String lockAt;
+    private String unlockAt;
+    private String allDates;
+    private String courseId;
+    private String htmlUrl;
+    private String assingmentGroupId;
+    private String[] allowedExtensions;
+    private Boolean turnitinEnabled;
+    private String turnitinSettings;
+    private Boolean gradeGroupStudentsIndividually;
+    private String externalToolTagAttributes;
+    private Boolean peerReviews;
+    private Boolean automaticPeerReviews;
+    private String peerReviewCount;
+    private String peerReviewsAssignAt;
+    private String groupCategoryId;
+    private String needsGradingCount;
+    private String needsGradingCountBySection;
     private String position;
-    private Boolean post_to_sis;
-    private String integration_id;
-    private Object integration_data;
+    private Boolean postToSis;
+    private String integrationId;
+    private Object integrationData;
     private String muted;
-    private Integer points_possible;
-    private List<String> submission_types;
-    private String grading_type;
-    private String grading_standard_id;
+    private Integer pointsPossible;
+    private List<String> submissionTypes;
+    private String gradingType;
+    private String gradingStandardId;
     private Boolean published;
     private Boolean unpublishable;
-    private Boolean only_visible_to_overrides;
-    private Boolean locked_for_user;
-    private Boolean notify_of_update;
+    private Boolean onlyVisibleToOverrides;
+    private Boolean lockedForUser;
+    private Boolean notifyOfUpdate;
 
 
     public String getId() {
@@ -79,180 +79,180 @@ public class Assignment extends BaseCanvasModel implements Serializable{
         this.description = description;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public String getUpdated_at() {
-        return updated_at;
+    public String getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @CanvasField(postKey = "due_at")
-    public String getDue_at() {
-        return due_at;
+    public String getDueAt() {
+        return dueAt;
     }
 
-    public void setDue_at(String due_at) {
-        this.due_at = due_at;
+    public void setDueAt(String dueAt) {
+        this.dueAt = dueAt;
     }
 
     @CanvasField(postKey = "lock_at")
-    public String getLock_at() {
-        return lock_at;
+    public String getLockAt() {
+        return lockAt;
     }
 
-    public void setLock_at(String lock_at) {
-        this.lock_at = lock_at;
+    public void setLockAt(String lockAt) {
+        this.lockAt = lockAt;
     }
 
     @CanvasField(postKey = "unlock_at")
-    public String getUnlock_at() {
-        return unlock_at;
+    public String getUnlockAt() {
+        return unlockAt;
     }
 
-    public void setUnlock_at(String unlock_at) {
-        this.unlock_at = unlock_at;
+    public void setUnlockAt(String unlockAt) {
+        this.unlockAt = unlockAt;
     }
 
-    public String getAll_dates() {
-        return all_dates;
+    public String getAllDates() {
+        return allDates;
     }
 
-    public void setAll_dates(String all_dates) {
-        this.all_dates = all_dates;
+    public void setAllDates(String allDates) {
+        this.allDates = allDates;
     }
 
-    public String getCourse_id() {
-        return course_id;
+    public String getCourseId() {
+        return courseId;
     }
 
-    public void setCourse_id(String course_id) {
-        this.course_id = course_id;
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
     }
 
-    public String getHtml_url() {
-        return html_url;
+    public String getHtmlUrl() {
+        return htmlUrl;
     }
 
-    public void setHtml_url(String html_url) {
-        this.html_url = html_url;
+    public void setHtmlUrl(String htmlUrl) {
+        this.htmlUrl = htmlUrl;
     }
 
-    public String getAssingment_group_id() {
-        return assingment_group_id;
+    public String getAssingmentGroupId() {
+        return assingmentGroupId;
     }
 
-    public void setAssingment_group_id(String assingment_group_id) {
-        this.assingment_group_id = assingment_group_id;
+    public void setAssingmentGroupId(String assingmentGroupId) {
+        this.assingmentGroupId = assingmentGroupId;
     }
 
-    public String[] getAllowed_extensions() {
-        return allowed_extensions;
+    public String[] getAllowedExtensions() {
+        return allowedExtensions;
     }
 
-    public void setAllowed_extensions(String[] allowed_extensions) {
-        this.allowed_extensions = allowed_extensions;
+    public void setAllowedExtensions(String[] allowedExtensions) {
+        this.allowedExtensions = allowedExtensions;
     }
 
     @CanvasField(postKey = "turnitin_enabled")
-    public boolean isTurnitin_enabled() {
-        return turnitin_enabled;
+    public Boolean getTurnitinEnabled() {
+        return turnitinEnabled;
     }
 
-    public void setTurnitin_enabled(boolean turnitin_enabled) {
-        this.turnitin_enabled = turnitin_enabled;
+    public void setTurnitinEnabled(Boolean turnitinEnabled) {
+        this.turnitinEnabled = turnitinEnabled;
     }
 
-    public String getTurnitin_settings() {
-        return turnitin_settings;
+    public String getTurnitinSettings() {
+        return turnitinSettings;
     }
 
-    public void setTurnitin_settings(String turnitin_settings) {
-        this.turnitin_settings = turnitin_settings;
+    public void setTurnitinSettings(String turnitinSettings) {
+        this.turnitinSettings = turnitinSettings;
     }
 
     @CanvasField(postKey = "grade_group_students_individually")
-    public boolean isGrade_group_students_individually() {
-        return grade_group_students_individually;
+    public Boolean getGradeGroupStudentsIndividually() {
+        return gradeGroupStudentsIndividually;
     }
 
-    public void setGrade_group_students_individually(boolean grade_group_students_individually) {
-        this.grade_group_students_individually = grade_group_students_individually;
+    public void setGradeGroupStudentsIndividually(Boolean gradeGroupStudentsIndividually) {
+        this.gradeGroupStudentsIndividually = gradeGroupStudentsIndividually;
     }
 
-    public String getExternal_tool_tag_attributes() {
-        return external_tool_tag_attributes;
+    public String getExternalToolTagAttributes() {
+        return externalToolTagAttributes;
     }
 
-    public void setExternal_tool_tag_attributes(String external_tool_tag_attributes) {
-        this.external_tool_tag_attributes = external_tool_tag_attributes;
+    public void setExternalToolTagAttributes(String externalToolTagAttributes) {
+        this.externalToolTagAttributes = externalToolTagAttributes;
     }
 
     @CanvasField(postKey = "peer_reviews")
-    public boolean isPeer_reviews() {
-        return peer_reviews;
+    public Boolean getPeerReviews() {
+        return peerReviews;
     }
 
-    public void setPeer_reviews(boolean peer_reviews) {
-        this.peer_reviews = peer_reviews;
+    public void setPeerReviews(Boolean peerReviews) {
+        this.peerReviews = peerReviews;
     }
 
     @CanvasField(postKey = "automatic_peer_reviews")
-    public boolean isAutomatic_peer_reviews() {
-        return automatic_peer_reviews;
+    public Boolean getAutomaticPeerReviews() {
+        return automaticPeerReviews;
     }
 
-    public void setAutomatic_peer_reviews(boolean automatic_peer_reviews) {
-        this.automatic_peer_reviews = automatic_peer_reviews;
+    public void setAutomaticPeerReviews(Boolean automaticPeerReviews) {
+        this.automaticPeerReviews = automaticPeerReviews;
     }
 
-    public String getPeer_review_count() {
-        return peer_review_count;
+    public String getPeerReviewCount() {
+        return peerReviewCount;
     }
 
-    public void setPeer_review_count(String peer_review_count) {
-        this.peer_review_count = peer_review_count;
+    public void setPeerReviewCount(String peerReviewCount) {
+        this.peerReviewCount = peerReviewCount;
     }
 
-    public String getPeer_reviews_assign_at() {
-        return peer_reviews_assign_at;
+    public String getPeerReviewsAssignAt() {
+        return peerReviewsAssignAt;
     }
 
-    public void setPeer_reviews_assign_at(String peer_reviews_assign_at) {
-        this.peer_reviews_assign_at = peer_reviews_assign_at;
+    public void setPeerReviewsAssignAt(String peerReviewsAssignAt) {
+        this.peerReviewsAssignAt = peerReviewsAssignAt;
     }
 
     @CanvasField(postKey = "group_category_id")
-    public String getGroup_category_id() {
-        return group_category_id;
+    public String getGroupCategoryId() {
+        return groupCategoryId;
     }
 
-    public void setGroup_category_id(String group_category_id) {
-        this.group_category_id = group_category_id;
+    public void setGroupCategoryId(String groupCategoryId) {
+        this.groupCategoryId = groupCategoryId;
     }
 
-    public String getNeeds_grading_count() {
-        return needs_grading_count;
+    public String getNeedsGradingCount() {
+        return needsGradingCount;
     }
 
-    public void setNeeds_grading_count(String needs_grading_count) {
-        this.needs_grading_count = needs_grading_count;
+    public void setNeedsGradingCount(String needsGradingCount) {
+        this.needsGradingCount = needsGradingCount;
     }
 
-    public String getNeeds_grading_count_by_section() {
-        return needs_grading_count_by_section;
+    public String getNeedsGradingCountBySection() {
+        return needsGradingCountBySection;
     }
 
-    public void setNeeds_grading_count_by_section(String needs_grading_count_by_section) {
-        this.needs_grading_count_by_section = needs_grading_count_by_section;
+    public void setNeedsGradingCountBySection(String needsGradingCountBySection) {
+        this.needsGradingCountBySection = needsGradingCountBySection;
     }
 
     @CanvasField(postKey = "position")
@@ -264,30 +264,30 @@ public class Assignment extends BaseCanvasModel implements Serializable{
         this.position = position;
     }
 
-    public boolean isPost_to_sis() {
-        return post_to_sis;
+    public Boolean getPostToSis() {
+        return postToSis;
     }
 
-    public void setPost_to_sis(boolean post_to_sis) {
-        this.post_to_sis = post_to_sis;
+    public void setPostToSis(Boolean postToSis) {
+        this.postToSis = postToSis;
     }
 
     @CanvasField(postKey = "integration_id")
-    public String getIntegration_id() {
-        return integration_id;
+    public String getIntegrationId() {
+        return integrationId;
     }
 
-    public void setIntegration_id(String integration_id) {
-        this.integration_id = integration_id;
+    public void setIntegrationId(String integrationId) {
+        this.integrationId = integrationId;
     }
 
     @CanvasField(postKey = "integration_data")
-    public Object getIntegration_data() {
-        return integration_data;
+    public Object getIntegrationData() {
+        return integrationData;
     }
 
-    public void setIntegration_data(Object integration_data) {
-        this.integration_data = integration_data;
+    public void setIntegrationData(Object integrationData) {
+        this.integrationData = integrationData;
     }
 
     @CanvasField(postKey = "muted")
@@ -300,80 +300,80 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     }
 
     @CanvasField(postKey = "points_possible")
-    public Integer getPoints_possible() {
-        return points_possible;
+    public Integer getPointsPossible() {
+        return pointsPossible;
     }
 
-    public void setPoints_possible(Integer points_possible) {
-        this.points_possible = points_possible;
+    public void setPointsPossible(Integer pointsPossible) {
+        this.pointsPossible = pointsPossible;
     }
 
-    public List<String> getSubmission_types() {
-        return submission_types;
+    public List<String> getSubmissionTypes() {
+        return submissionTypes;
     }
 
-    public void setSubmission_types(List<String> submission_types) {
-        this.submission_types = submission_types;
+    public void setSubmissionTypes(List<String> submissionTypes) {
+        this.submissionTypes = submissionTypes;
     }
 
     @CanvasField(postKey = "grading_type")
-    public String getGrading_type() {
-        return grading_type;
+    public String getGradingType() {
+        return gradingType;
     }
 
-    public void setGrading_type(String grading_type) {
-        this.grading_type = grading_type;
+    public void setGradingType(String gradingType) {
+        this.gradingType = gradingType;
     }
 
     @CanvasField(postKey = "grading_standard_id")
-    public String getGrading_standard_id() {
-        return grading_standard_id;
+    public String getGradingStandardId() {
+        return gradingStandardId;
     }
 
-    public void setGrading_standard_id(String grading_standard_id) {
-        this.grading_standard_id = grading_standard_id;
+    public void setGradingStandardId(String gradingStandardId) {
+        this.gradingStandardId = gradingStandardId;
     }
 
     @CanvasField(postKey = "published")
-    public boolean isPublished() {
+    public Boolean isPublished() {
         return published;
     }
 
-    public void setPublished(boolean published) {
+    public void setPublished(Boolean published) {
         this.published = published;
     }
 
-    public boolean isUnpublishable() {
+    public Boolean isUnpublishable() {
         return unpublishable;
     }
 
-    public void setUnpublishable(boolean unpublishable) {
+    public void setUnpublishable(Boolean unpublishable) {
         this.unpublishable = unpublishable;
     }
 
     @CanvasField(postKey = "only_visible_to_overrides")
-    public boolean isOnly_visible_to_overrides() {
-        return only_visible_to_overrides;
+    public Boolean isOnlyVisibleToOverrides() {
+        return onlyVisibleToOverrides;
     }
 
-    public void setOnly_visible_to_overrides(boolean only_visible_to_overrides) {
-        this.only_visible_to_overrides = only_visible_to_overrides;
+    public void setOnlyVisibleToOverrides(Boolean onlyVisibleToOverrides) {
+        this.onlyVisibleToOverrides = onlyVisibleToOverrides;
     }
 
-    public boolean isLocked_for_user() {
-        return locked_for_user;
+    public Boolean isLockedForUser() {
+        return lockedForUser;
     }
 
-    public void setLocked_for_user(boolean locked_for_user) {
-        this.locked_for_user = locked_for_user;
+    public void setLockedForUser(Boolean lockedForUser) {
+        this.lockedForUser = lockedForUser;
     }
 
     @CanvasField(postKey = "notify_of_update")
-    public boolean isNotify_of_update() {
-        return notify_of_update;
+    public Boolean isNotifyOfUpdate() {
+        return notifyOfUpdate;
     }
 
-    public void setNotify_of_update(boolean notify_of_update) {
-        this.notify_of_update = notify_of_update;
+    public void setNotifyOfUpdate(Boolean notifyOfUpdate) {
+        this.notifyOfUpdate = notifyOfUpdate;
     }
 }
