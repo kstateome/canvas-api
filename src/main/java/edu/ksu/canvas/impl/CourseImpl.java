@@ -70,7 +70,10 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
             return false;
         }
         Optional<Delete> responseParsed = responseParser.parseToObject(Delete.class, response);
-        return responseParsed.get().getDelete();
+        if(responseParsed.isPresent()) {
+            return responseParsed.get().getDelete();
+        }
+        return false;
     }
 
     @Override
