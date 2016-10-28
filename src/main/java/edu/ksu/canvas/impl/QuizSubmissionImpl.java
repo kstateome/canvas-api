@@ -54,7 +54,7 @@ public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionR
         if(accessCode != null) {
             postParams.put("access_code", accessCode);
         }
-        String url = buildCanvasUrl("courses/" + courseId + "/quizzes/" + submission.getQuiz_id() +
+        String url = buildCanvasUrl("courses/" + courseId + "/quizzes/" + submission.getQuizId() +
                 "/submissions/" + submission.getId() + "/complete", Collections.emptyMap());
         Response response = canvasMessenger.sendToCanvas(oauthToken, url,postParams);
         return Optional.of(parseQuizSubmissionList(response).get(0));

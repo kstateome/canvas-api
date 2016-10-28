@@ -9,13 +9,13 @@ import java.util.List;
  */
 public class QuizSubmissionQuestionWrapper {
 
-    private List<QuizSubmissionQuestion> quiz_submission_questions;
+    private List<QuizSubmissionQuestion> quizSubmissionQuestions;
 
-    public List<QuizSubmissionQuestion> getQuiz_submission_questions() {
-        return quiz_submission_questions;
+    public List<QuizSubmissionQuestion> getQuizSubmissionQuestions() {
+        return quizSubmissionQuestions;
     }
 
-    public void setQuiz_submission_questions(List<QuizSubmissionQuestion> quiz_submission_questions) {
-        this.quiz_submission_questions = quiz_submission_questions;
+    public void setQuizsubmissionquestions(List<QuizSubmissionQuestion> quizSubmissionQuestions) {
+        this.quizSubmissionQuestions = quizSubmissionQuestions;
     }
 }

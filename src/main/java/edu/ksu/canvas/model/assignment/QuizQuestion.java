@@ -14,15 +14,15 @@ import java.util.List;
 @CanvasObject(postKey = "quizQuestion")
 public class QuizQuestion extends BaseCanvasModel {
     private Integer id;
-    private Integer quiz_id;
+    private Integer quizId;
     private Integer position;
-    private String question_name;
-    private String question_type;
-    private String question_text;
-    private Double points_possible;
-    private String correct_comments;
-    private String incorrect_comments;
-    private String neutral_comments;
+    private String questionName;
+    private String questionType;
+    private String questionText;
+    private Double pointsPossible;
+    private String correctComments;
+    private String incorrectComments;
+    private String neutralComments;
     private List<QuizAnswer> answers;
 
     @CanvasField(postKey = "id", array = false)
@@ -35,12 +35,12 @@ public class QuizQuestion extends BaseCanvasModel {
     }
 
     @CanvasField(postKey = "quiz_id", array = false)
-    public Integer getQuiz_id() {
-        return quiz_id;
+    public Integer getQuizId() {
+        return quizId;
     }
 
-    public void setQuiz_id(Integer quiz_id) {
-        this.quiz_id = quiz_id;
+    public void setQuiz_id(Integer quizId) {
+        this.quizId = quizId;
     }
 
     @CanvasField(postKey = "position")
@@ -53,66 +53,66 @@ public class QuizQuestion extends BaseCanvasModel {
     }
 
     @CanvasField(postKey = "question_name")
-    public String getQuestion_name() {
-        return question_name;
+    public String getQuestionName() {
+        return questionName;
     }
 
-    public void setQuestion_name(String question_name) {
-        this.question_name = question_name;
+    public void setQuestionName(String questionName) {
+        this.questionName = questionName;
     }
 
     @CanvasField(postKey = "question_type")
-    public String getQuestion_type() {
-        return question_type;
+    public String getQuestionType() {
+        return questionType;
     }
 
-    public void setQuestion_type(String question_type) {
-        this.question_type = question_type;
+    public void setQuestionType(String questionType) {
+        this.questionType = questionType;
     }
 
     @CanvasField(postKey = "question_text")
-    public String getQuestion_text() {
-        return question_text;
+    public String getQuestionText() {
+        return questionText;
     }
 
-    public void setQuestion_text(String question_text) {
-        this.question_text = question_text;
+    public void setQuestionText(String questionText) {
+        this.questionText = questionText;
     }
 
     @CanvasField(postKey = "points_possible")
-    public Double getPoints_possible() {
-        return points_possible;
+    public Double getPointsPossible() {
+        return pointsPossible;
     }
 
-    public void setPoints_possible(Double points_possible) {
-        this.points_possible = points_possible;
+    public void setPointsPossible(Double pointsPossible) {
+        this.pointsPossible = pointsPossible;
     }
 
     @CanvasField(postKey = "correct_comments")
-    public String getCorrect_comments() {
-        return correct_comments;
+    public String getCorrectComments() {
+        return correctComments;
     }
 
-    public void setCorrect_comments(String correct_comments) {
-        this.correct_comments = correct_comments;
+    public void setCorrectComments(String correctComments) {
+        this.correctComments = correctComments;
     }
 
     @CanvasField(postKey = "incorrect_comments")
-    public String getIncorrect_comments() {
-        return incorrect_comments;
+    public String getIncorrectComments() {
+        return incorrectComments;
     }
 
-    public void setIncorrect_comments(String incorrect_comments) {
-        this.incorrect_comments = incorrect_comments;
+    public void setIncorrectComments(String incorrectComments) {
+        this.incorrectComments = incorrectComments;
     }
 
     @CanvasField(postKey = "neutral_comments")
-    public String getNeutral_comments() {
-        return neutral_comments;
+    public String getNeutralComments() {
+        return neutralComments;
     }
 
-    public void setNeutral_comments(String neutral_comments) {
-        this.neutral_comments = neutral_comments;
+    public void setNeutralComments(String neutralComments) {
+        this.neutralComments = neutralComments;
     }
 
     @CanvasField(postKey = "answers")
@@ -132,21 +132,21 @@ public class QuizQuestion extends BaseCanvasModel {
         QuizQuestion that = (QuizQuestion) o;
 
         if (answers != null ? !answers.equals(that.answers) : that.answers != null) return false;
-        if (correct_comments != null ? !correct_comments.equals(that.correct_comments) : that.correct_comments != null)
+        if (correctComments != null ? !correctComments.equals(that.correctComments) : that.correctComments != null)
             return false;
         if (!id.equals(that.id)) return false;
-        if (incorrect_comments != null ? !incorrect_comments.equals(that.incorrect_comments) : that.incorrect_comments != null)
+        if (incorrectComments != null ? !incorrectComments.equals(that.incorrectComments) : that.incorrectComments != null)
             return false;
-        if (neutral_comments != null ? !neutral_comments.equals(that.neutral_comments) : that.neutral_comments != null)
+        if (neutralComments != null ? !neutralComments.equals(that.neutralComments) : that.neutralComments != null)
             return false;
-        if (points_possible != null ? !points_possible.equals(that.points_possible) : that.points_possible != null)
+        if (pointsPossible != null ? !pointsPossible.equals(that.pointsPossible) : that.pointsPossible != null)
             return false;
         if (position != null ? !position.equals(that.position) : that.position != null) return false;
-        if (question_name != null ? !question_name.equals(that.question_name) : that.question_name != null)
+        if (questionName != null ? !questionName.equals(that.questionName) : that.questionName != null)
             return false;
-        if (question_text != null ? !question_text.equals(that.question_text) : that.question_text != null)
+        if (questionText != null ? !questionText.equals(that.questionText) : that.questionText != null)
             return false;
-        if (!quiz_id.equals(that.quiz_id)) return false;
+        if (!quizId.equals(that.quizId)) return false;
 
         return true;
     }
@@ -154,14 +154,14 @@ public class QuizQuestion extends BaseCanvasModel {
     @Override
     public int hashCode() {
         int result = id.hashCode();
-        result = 31 * result + quiz_id.hashCode();
+        result = 31 * result + quizId.hashCode();
         result = 31 * result + (position != null ? position.hashCode() : 0);
-        result = 31 * result + (question_name != null ? question_name.hashCode() : 0);
-        result = 31 * result + (question_text != null ? question_text.hashCode() : 0);
-        result = 31 * result + (points_possible != null ? points_possible.hashCode() : 0);
-        result = 31 * result + (correct_comments != null ? correct_comments.hashCode() : 0);
-        result = 31 * result + (incorrect_comments != null ? incorrect_comments.hashCode() : 0);
-        result = 31 * result + (neutral_comments != null ? neutral_comments.hashCode() : 0);
+        result = 31 * result + (questionName != null ? questionName.hashCode() : 0);
+        result = 31 * result + (questionText != null ? questionText.hashCode() : 0);
+        result = 31 * result + (pointsPossible != null ? pointsPossible.hashCode() : 0);
+        result = 31 * result + (correctComments != null ? correctComments.hashCode() : 0);
+        result = 31 * result + (incorrectComments != null ? incorrectComments.hashCode() : 0);
+        result = 31 * result + (neutralComments != null ? neutralComments.hashCode() : 0);
         result = 31 * result + (answers != null ? answers.hashCode() : 0);
         return result;
     }

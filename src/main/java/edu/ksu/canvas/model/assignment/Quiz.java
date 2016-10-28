@@ -392,11 +392,11 @@ public class Quiz extends BaseCanvasModel {
     }
 
     public Boolean canUserReadStatistics(){
-        return permissions.canRead_statistics();
+        return permissions.canReadStatistics();
     }
 
     public Boolean canUserReviewGrades(){
-        return permissions.canReview_grades();
+        return permissions.canReviewGrades();
     }
 
     public Boolean canUserUpdate(){

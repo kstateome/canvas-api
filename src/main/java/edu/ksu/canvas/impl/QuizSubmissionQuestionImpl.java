@@ -42,7 +42,7 @@ public class QuizSubmissionQuestionImpl extends BaseImpl<QuizSubmissionQuestion,
                 "quiz_submissions/" + submission.getId() + "/questions", Collections.emptyMap());
         JsonObject requestBody = new JsonObject();
         requestBody.addProperty("attemtp", String.valueOf(submission.getAttempt()));
-        requestBody.addProperty("validation_token", submission.getValidation_token());
+        requestBody.addProperty("validation_token", submission.getValidationToken());
         if (accessCode != null) {
             requestBody.addProperty("access_code", accessCode);
         }
@@ -63,7 +63,7 @@ public class QuizSubmissionQuestionImpl extends BaseImpl<QuizSubmissionQuestion,
         Gson responseGson = new GsonBuilder().registerTypeAdapter(responseType, new QuizSubmissionQuestionTypeAdapter()).create();
         QuizSubmissionQuestionWrapper wrapper = responseGson.fromJson(response.getContent(), responseType);
 
-        return wrapper.getQuiz_submission_questions();
+        return wrapper.getQuizSubmissionQuestions();
     }
 
     /**
@@ -101,7 +101,7 @@ public class QuizSubmissionQuestionImpl extends BaseImpl<QuizSubmissionQuestion,
                     questionList.add(newQuestion);
 
                 }
-                wrapper.setQuiz_submission_questions(questionList);
+                wrapper.setQuizsubmissionquestions(questionList);
             }
             return wrapper;
         }
