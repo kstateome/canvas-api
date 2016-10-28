@@ -96,7 +96,7 @@ public class AssignmentOverride extends BaseCanvasModel {
         return unlockAt;
     }
 
-    public void setUnlock_at(Date unlockAt) {
+    public void setUnlockAt(Date unlockAt) {
         this.unlockAt = unlockAt;
     }
 

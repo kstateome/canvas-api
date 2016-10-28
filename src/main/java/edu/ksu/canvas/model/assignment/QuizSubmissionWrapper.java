@@ -8,13 +8,13 @@ import java.util.List;
  * Rather than either just a list, or just the object....
  */
 public class QuizSubmissionWrapper {
-    private List<QuizSubmission> quiz_submissions;
+    private List<QuizSubmission> quizSubmissions;
 
-    public List<QuizSubmission> getQuiz_submissions() {
-        return quiz_submissions;
+    public List<QuizSubmission> getQuizSubmissions() {
+        return quizSubmissions;
     }
 
-    public void setQuiz_submissions(List<QuizSubmission> quiz_submissions) {
-        this.quiz_submissions = quiz_submissions;
+    public void setQuizSubmissions(List<QuizSubmission> quizSubmissions) {
+        this.quizSubmissions = quizSubmissions;
     }
 }

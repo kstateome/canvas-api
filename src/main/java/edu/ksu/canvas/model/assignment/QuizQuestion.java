@@ -39,7 +39,7 @@ public class QuizQuestion extends BaseCanvasModel {
         return quizId;
     }
 
-    public void setQuiz_id(Integer quizId) {
+    public void setQuizId(Integer quizId) {
         this.quizId = quizId;
     }
 
