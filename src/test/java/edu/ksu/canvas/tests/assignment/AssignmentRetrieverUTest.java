@@ -58,7 +58,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         Response erroredResponse = new Response();
         erroredResponse.setErrorHappened(true);
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments";
-        fakeRestClient.add401Response(url, "SampleJson/assignment/Assignment1.json");
+        fakeRestClient.add401Response(url, "SampleJson/assignment/MinimalAssignment.json");
         assignmentReader.listCourseAssignments(new ListCourseAssignmentsOptions(someCourseId));
     }
 
@@ -78,7 +78,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         String someCourseId = "1234";
         String someAssignmentId = "123";
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments/" + someAssignmentId;
-        fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/Assignment1.json");
+        fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/MinimalAssignment.json");
         Optional<Assignment> assignment = assignmentReader.getSingleAssignment(new GetSingleAssignmentOptions(someCourseId, someAssignmentId));
         Assert.assertTrue(assignment.isPresent());
         Assert.assertEquals("Assignment1", assignment.map(Assignment::getName).orElse(""));
@@ -111,7 +111,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         Response erroredResponse = new Response();
         erroredResponse.setErrorHappened(true);
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
-        fakeRestClient.add401Response(url, "SampleJson/assignment/Assignment1.json");
+        fakeRestClient.add401Response(url, "SampleJson/assignment/MinimalAssignment.json");
         assignmentReader.readAsSisUser(someUserId).listCourseAssignments(new ListCourseAssignmentsOptions(someCourseId));
     }
 
@@ -132,7 +132,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         String someCourseId = "1234";
         String someAssignmentId = "123";
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments/" + someAssignmentId + "?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
-        fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/Assignment1.json");
+        fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/MinimalAssignment.json");
         Optional<Assignment> assignment = assignmentReader.readAsSisUser(someUserId).getSingleAssignment(new GetSingleAssignmentOptions(someCourseId, someAssignmentId));
         Assert.assertTrue(assignment.isPresent());
         Assert.assertEquals("Assignment1", assignment.map(Assignment::getName).orElse(""));
@@ -165,7 +165,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         Response erroredResponse = new Response();
         erroredResponse.setErrorHappened(true);
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments?as_user_id=" + someUserId;
-        fakeRestClient.add401Response(url, "SampleJson/assignment/Assignment1.json");
+        fakeRestClient.add401Response(url, "SampleJson/assignment/MinimalAssignment.json");
         assignmentReader.readAsCanvasUser(someUserId).listCourseAssignments(new ListCourseAssignmentsOptions(someCourseId));
     }
 
@@ -186,7 +186,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         String someCourseId = "1234";
         String someAssignmentId = "123";
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments/" + someAssignmentId + "?as_user_id=" + someUserId;
-        fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/Assignment1.json");
+        fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/MinimalAssignment.json");
         Optional<Assignment> assignment = assignmentReader.readAsCanvasUser(someUserId).getSingleAssignment(new GetSingleAssignmentOptions(someCourseId, someAssignmentId));
         Assert.assertTrue(assignment.isPresent());
         Assert.assertEquals("Assignment1", assignment.map(Assignment::getName).orElse(""));

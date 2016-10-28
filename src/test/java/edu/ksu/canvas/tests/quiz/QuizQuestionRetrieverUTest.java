@@ -42,8 +42,8 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
 
         List<QuizQuestion> quizQuestions = quizQuestionReader.getQuizQuestions(someCourseId, someQUizId);
         Assert.assertEquals(2, quizQuestions.size());
-        Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestion_name).filter("Quiz Question 1"::equals).findFirst().isPresent());
-        Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestion_name).filter("Quiz Question 2"::equals).findFirst().isPresent());
+        Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestionName).filter("Quiz Question 1"::equals).findFirst().isPresent());
+        Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestionName).filter("Quiz Question 2"::equals).findFirst().isPresent());
     }
     @Test(expected = InvalidOauthTokenException.class)
     public void testListAssignments_canvasError() throws Exception {
@@ -83,8 +83,8 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
 
         List<QuizQuestion> quizQuestions = quizQuestionReader.readAsSisUser(someUserId).getQuizQuestions(someCourseId, someQUizId);
         Assert.assertEquals(2, quizQuestions.size());
-        Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestion_name).filter("Quiz Question 1"::equals).findFirst().isPresent());
-        Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestion_name).filter("Quiz Question 2"::equals).findFirst().isPresent());
+        Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestionName).filter("Quiz Question 1"::equals).findFirst().isPresent());
+        Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestionName).filter("Quiz Question 2"::equals).findFirst().isPresent());
     }
     @Test(expected = InvalidOauthTokenException.class)
     public void testSisUserMasqueradeListAssignments_canvasError() throws Exception {
@@ -123,8 +123,8 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
 
         List<QuizQuestion> quizQuestions = quizQuestionReader.readAsCanvasUser(someUserId).getQuizQuestions(someCourseId, someQUizId);
         Assert.assertEquals(2, quizQuestions.size());
-        Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestion_name).filter("Quiz Question 1"::equals).findFirst().isPresent());
-        Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestion_name).filter("Quiz Question 2"::equals).findFirst().isPresent());
+        Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestionName).filter("Quiz Question 1"::equals).findFirst().isPresent());
+        Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestionName).filter("Quiz Question 2"::equals).findFirst().isPresent());
     }
     @Test(expected = InvalidOauthTokenException.class)
     public void testCanvasUserMasqueradeListAssignments_canvasError() throws Exception {
