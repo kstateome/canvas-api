@@ -1,6 +1,6 @@
 package edu.ksu.canvas.interfaces;
 
-import edu.ksu.canvas.model.Assignment;
+import edu.ksu.canvas.model.assignment.Assignment;
 import edu.ksu.canvas.requestOptions.GetSingleAssignmentOptions;
 import edu.ksu.canvas.requestOptions.ListCourseAssignmentsOptions;
 import edu.ksu.canvas.requestOptions.ListUserAssignmentOptions;

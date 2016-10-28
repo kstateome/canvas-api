@@ -1,9 +1,10 @@
-package edu.ksu.canvas.model;
+package edu.ksu.canvas.model.assignment;
 
 import java.util.Date;
 import java.util.List;
 
 import edu.ksu.canvas.annotation.CanvasObject;
+import edu.ksu.canvas.model.BaseCanvasModel;
 
 @CanvasObject(postKey="assignment_override")
 public class AssignmentOverride extends BaseCanvasModel {

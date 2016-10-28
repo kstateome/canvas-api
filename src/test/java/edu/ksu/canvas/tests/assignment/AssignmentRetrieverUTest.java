@@ -6,7 +6,7 @@ import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.impl.AssignmentImpl;
 import edu.ksu.canvas.interfaces.AssignmentReader;
-import edu.ksu.canvas.model.Assignment;
+import edu.ksu.canvas.model.assignment.Assignment;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.requestOptions.GetSingleAssignmentOptions;
