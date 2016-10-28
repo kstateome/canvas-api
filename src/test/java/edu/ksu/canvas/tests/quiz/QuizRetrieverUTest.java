@@ -6,7 +6,7 @@ import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.impl.QuizImpl;
 import edu.ksu.canvas.interfaces.QuizReader;
-import edu.ksu.canvas.model.quizzes.Quiz;
+import edu.ksu.canvas.model.assignment.Quiz;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.util.CanvasURLBuilder;

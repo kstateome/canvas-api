@@ -3,7 +3,7 @@ package edu.ksu.canvas.impl;
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.QuizSubmissionReader;
 import edu.ksu.canvas.interfaces.QuizSubmissionWriter;
-import edu.ksu.canvas.model.quizzes.QuizSubmission;
+import edu.ksu.canvas.model.assignment.QuizSubmission;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.exception.MessageUndeliverableException;

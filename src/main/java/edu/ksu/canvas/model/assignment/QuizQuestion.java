@@ -1,4 +1,4 @@
-package edu.ksu.canvas.model.quizzes;
+package edu.ksu.canvas.model.assignment;
 
 /**
  * Class to represent Canvas quiz question.

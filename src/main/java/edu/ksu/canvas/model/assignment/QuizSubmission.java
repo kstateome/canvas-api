@@ -1,4 +1,4 @@
-package edu.ksu.canvas.model.quizzes;
+package edu.ksu.canvas.model.assignment;
 
 import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;

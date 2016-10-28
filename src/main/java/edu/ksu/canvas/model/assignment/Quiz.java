@@ -1,7 +1,8 @@
-package edu.ksu.canvas.model.quizzes;
+package edu.ksu.canvas.model.assignment;
 
 import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
+import edu.ksu.canvas.model.Assignment.LockInfo;
 import edu.ksu.canvas.model.BaseCanvasModel;
 
 import java.util.List;
