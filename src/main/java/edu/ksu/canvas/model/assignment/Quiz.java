@@ -5,6 +5,7 @@ import edu.ksu.canvas.annotation.CanvasObject;
 import edu.ksu.canvas.model.BaseCanvasModel;
 import edu.ksu.canvas.model.assignment.LockInfo;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -39,13 +40,13 @@ public class Quiz extends BaseCanvasModel {
     private Boolean cantGoBack;
     private String accessCode;
     private String ipFilter;
-    private String dueAt;
-    private String lockAt;
-    private String unlockAt;
+    private Date dueAt;
+    private Date lockAt;
+    private Date unlockAt;
     private Boolean published;
     private Boolean unpublishable; //Whether it can be unpublished, not whether it cannot be published
     private Boolean lockedForUser;
-    private String lockInfo;
+    private LockInfo lockInfo;
     private String lockExplanation;
     private String speedgraderUrl;
     private String quizExtensionsUrl;
@@ -271,29 +272,29 @@ public class Quiz extends BaseCanvasModel {
     }
 
     @CanvasField(postKey = "due_at")
-    public String getDueAt() {
+    public Date getDueAt() {
         return dueAt;
     }
 
-    public void setDueAt(String dueAt) {
+    public void setDueAt(Date dueAt) {
         this.dueAt = dueAt;
     }
 
     @CanvasField(postKey = "lock_at")
-    public String getLockAt() {
+    public Date getLockAt() {
         return lockAt;
     }
 
-    public void setLockAt(String lockAt) {
+    public void setLockAt(Date lockAt) {
         this.lockAt = lockAt;
     }
 
     @CanvasField(postKey = "unlock_at")
-    public String getUnlockAt() {
+    public Date getUnlockAt() {
         return unlockAt;
     }
 
-    public void setUnlockAt(String unlockAt) {
+    public void setUnlockAt(Date unlockAt) {
         this.unlockAt = unlockAt;
     }
 
@@ -322,11 +323,11 @@ public class Quiz extends BaseCanvasModel {
         this.lockedForUser = lockedForUser;
     }
 
-    public String getLockInfo() {
+    public LockInfo getLockInfo() {
         return lockInfo;
     }
 
-    public void setLockInfo(String lockInfo) {
+    public void setLockInfo(LockInfo lockInfo) {
         this.lockInfo = lockInfo;
     }
 
