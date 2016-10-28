@@ -15,14 +15,13 @@ import edu.ksu.canvas.net.Response;
 
 import java.lang.reflect.Type;
 import java.util.Date;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.apache.log4j.Logger;
 
 public class GsonResponseParser implements ResponseParser {
@@ -53,7 +52,7 @@ public class GsonResponseParser implements ResponseParser {
         //Custom type adapter for Date because: GSON throws a parse exception for blank dates instead of returning null.
         //Also, it doesn't handle ISO 8601 dates with time zone info. Dates are hard.
         gsonBuilder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
+            FastDateFormat df = FastDateFormat.getInstance("yyyy-MM-dd'T'HH:mm:ssXXX");
             @Override
             public Date deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context)
                     throws JsonParseException {
@@ -62,8 +61,7 @@ public class GsonResponseParser implements ResponseParser {
                 }
                 try {
                     return df.parse(json.getAsString());
-                }
-                catch(ParseException e) {
+                } catch(ParseException e) {
                     LOG.error("error parsing date from Canvas: " + json.getAsString());
                     throw new JsonParseException(e);
                 }
