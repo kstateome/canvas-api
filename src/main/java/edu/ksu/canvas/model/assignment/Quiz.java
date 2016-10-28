@@ -3,7 +3,7 @@ package edu.ksu.canvas.model.assignment;
 import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
 import edu.ksu.canvas.model.BaseCanvasModel;
-import edu.ksu.canvas.model.assignment.Assignment.LockInfo;
+import edu.ksu.canvas.model.assignment.LockInfo;
 
 import java.util.List;
 import java.util.Map;
