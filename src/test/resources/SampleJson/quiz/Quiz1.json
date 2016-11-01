@@ -29,7 +29,6 @@
   "published": "true",
   "unpublishable": "true",
   "locked_for_user": "false",
-  "lock_info": null,
   "lock_explanation": "This quiz is locked until September 1 at 12:00am",
   "speedgrader_url": "http://canvas.instructure.com/courses/1/speed_grader?assignment_id=1",
   "quiz_extensions_url": "http://canvas.instructure.com/courses/1/quizzes/2/quiz_extensions",
