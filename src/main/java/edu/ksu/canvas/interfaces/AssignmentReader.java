@@ -31,7 +31,7 @@ public interface AssignmentReader extends CanvasReader<Assignment, AssignmentRea
 
     /**
      * Retrieve a list of assignments associated with the given user/course combination
-     * @param optionsOptions class containing required and optional parameters for this API call
+     * @param options Options class containing required and optional parameters for this API call
      * @return List of assignments for the user/course combination
      * @throws IOException When there is an error communicating with Canvas
      */

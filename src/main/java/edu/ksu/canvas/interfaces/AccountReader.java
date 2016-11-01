@@ -12,7 +12,8 @@ public interface AccountReader extends CanvasReader<Account, AccountReader> {
 
     /**
      * Retrieve information on an individual account
-     * @param accountId Required. account's id or sis_account_id
+     * @param accountId accountId Required. Account's id or sis_account_id
+     * @return The requested account from Canvas
      * @throws IOException When there is an error communicating with Canvas
      */
     Optional<Account> getSingleAccount(String accountId) throws IOException;
