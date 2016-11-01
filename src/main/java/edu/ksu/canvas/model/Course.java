@@ -29,6 +29,7 @@ public class Course extends BaseCanvasModel implements Serializable {
     private Integer integrationId;
     private String workflowState;
     private Integer totalStudents;
+    private EnrollmentTerm enrollmentTerm;
 
     @CanvasField(postKey = "account_id")
     public Integer getAccountId() {
@@ -159,4 +160,14 @@ public class Course extends BaseCanvasModel implements Serializable {
     public void setTotalStudents(Integer totalStudents) {
         this.totalStudents = totalStudents;
     }
+
+//    @CanvasField(postKey = "enrollment_term")
+    public EnrollmentTerm getEnrollmentTerm() {
+        return enrollmentTerm;
+    }
+
+    public void setEnrollmentTerm(EnrollmentTerm enrollmentTerm) {
+        this.enrollmentTerm = enrollmentTerm;
+    }
+
 }
