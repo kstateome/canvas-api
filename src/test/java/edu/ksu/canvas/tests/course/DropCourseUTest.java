@@ -2,7 +2,7 @@ package edu.ksu.canvas.tests.course;
 
 import edu.ksu.canvas.CanvasTestBase;
 import edu.ksu.canvas.constants.CanvasConstants;
-import edu.ksu.canvas.impl.EnrollmentsImpl;
+import edu.ksu.canvas.impl.EnrollmentImpl;
 import edu.ksu.canvas.interfaces.EnrollmentsWriter;
 import edu.ksu.canvas.model.Enrollment;
 import edu.ksu.canvas.net.FakeRestClient;
@@ -21,7 +21,7 @@ public class DropCourseUTest extends CanvasTestBase {
 
     @Before
     public void setupData() {
-        enrollmentsWriter = new EnrollmentsImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE);
+        enrollmentsWriter = new EnrollmentImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE);
     }
 
     @Test

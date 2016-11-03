@@ -1,9 +1,9 @@
 package edu.ksu.canvas.interfaces;
 
-import edu.ksu.canvas.model.quizzes.QuizQuestion;
-
 import java.io.IOException;
 import java.util.List;
+
+import edu.ksu.canvas.model.assignment.QuizQuestion;
 
 public interface QuizQuestionReader extends CanvasReader<QuizQuestion, QuizQuestionReader> {
     /**

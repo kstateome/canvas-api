@@ -20,10 +20,10 @@ import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class EnrollmentsImpl extends BaseImpl<Enrollment, EnrollmentsReader, EnrollmentsWriter> implements EnrollmentsReader,EnrollmentsWriter {
+public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentsReader, EnrollmentsWriter> implements EnrollmentsReader,EnrollmentsWriter {
     private static final Logger LOG = Logger.getLogger(CourseReader.class);
 
-    public EnrollmentsImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
+    public EnrollmentImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }
 

@@ -1,8 +1,6 @@
 package edu.ksu.canvas.impl;
 
 import com.google.gson.reflect.TypeToken;
-import edu.ksu.canvas.constants.CanvasConstants;
-import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.CourseReader;
 import edu.ksu.canvas.interfaces.CourseWriter;
 import edu.ksu.canvas.model.Course;
@@ -20,10 +18,10 @@ import java.lang.reflect.Type;
 import java.util.*;
 
 
-public class CoursesImpl extends BaseImpl<Course, CourseReader, CourseWriter> implements CourseReader, CourseWriter {
+public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> implements CourseReader, CourseWriter {
     private static final Logger LOG = Logger.getLogger(CourseReader.class);
 
-    public CoursesImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
+    public CourseImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }
 
@@ -52,27 +50,19 @@ public class CoursesImpl extends BaseImpl<Course, CourseReader, CourseWriter> im
     }
 
     @Override
-    public Optional<Course> createCourse(Course course) throws InvalidOauthTokenException, IOException {
-        //TODO to parse object to map<String,List<String>>
-        Map<String,String> postParams = new HashMap<>();
-        postParams.put("course[course_code]", course.getCourseCode());
-        postParams.put("course[name]", course.getName());
-        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "accounts/" + CanvasConstants.ACCOUNT_ID + "/courses", Collections.emptyMap());
-        LOG.debug("create URl for course creation : "+ createdUrl);
-        Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, postParams);
-        if (response.getErrorHappened() ||  response.getResponseCode() != 200) {
-            LOG.debug("Failed to create course, error message: " + response.toString());
-            return Optional.empty();
-        }
+    public Optional<Course> createCourse(String accountId, Course course) throws IOException {
+        LOG.debug("creating course");
+        String url = buildCanvasUrl("accounts/" + accountId + "/courses", Collections.emptyMap());
+        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, course.toJsonObject());
         return responseParser.parseToObject(Course.class, response);
     }
 
 
     @Override
-    public Boolean deleteCourse(String courseId) throws InvalidOauthTokenException, IOException {
+    public Boolean deleteCourse(String courseId) throws IOException {
         Map<String,String> postParams = new HashMap<>();
         postParams.put("event", "delete");
-        String createdUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "courses/" + courseId, Collections.emptyMap());
+        String createdUrl = buildCanvasUrl("courses/" + courseId, Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, createdUrl, postParams);
         LOG.debug("response "+ response.toString());
         if (response.getErrorHappened() || response.getResponseCode() != 200) {
@@ -80,7 +70,8 @@ public class CoursesImpl extends BaseImpl<Course, CourseReader, CourseWriter> im
             return false;
         }
         Optional<Delete> responseParsed = responseParser.parseToObject(Delete.class, response);
-        return responseParsed.get().getDelete();
+
+        return responseParsed.map(r -> r.getDelete()).orElse(false);
     }
 
     @Override

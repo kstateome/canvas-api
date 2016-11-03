@@ -3,7 +3,7 @@ package edu.ksu.canvas.impl;
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.QuizSubmissionReader;
 import edu.ksu.canvas.interfaces.QuizSubmissionWriter;
-import edu.ksu.canvas.model.quizzes.QuizSubmission;
+import edu.ksu.canvas.model.assignment.QuizSubmission;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.exception.MessageUndeliverableException;
@@ -54,7 +54,7 @@ public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionR
         if(accessCode != null) {
             postParams.put("access_code", accessCode);
         }
-        String url = buildCanvasUrl("courses/" + courseId + "/quizzes/" + submission.getQuiz_id() +
+        String url = buildCanvasUrl("courses/" + courseId + "/quizzes/" + submission.getQuizId() +
                 "/submissions/" + submission.getId() + "/complete", Collections.emptyMap());
         Response response = canvasMessenger.sendToCanvas(oauthToken, url,postParams);
         return Optional.of(parseQuizSubmissionList(response).get(0));
@@ -68,7 +68,7 @@ public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionR
     }
 
     private List<QuizSubmission> parseQuizSubmissionList(final Response response) {
-        QuizSubmissionListWrapper wrapper = getDefaultGsonParser().fromJson(response.getContent(), QuizSubmissionListWrapper.class);
+        QuizSubmissionListWrapper wrapper = GsonResponseParser.getDefaultGsonParser().fromJson(response.getContent(), QuizSubmissionListWrapper.class);
         return wrapper.getQuiz_submissions();
     }
 

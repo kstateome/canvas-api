@@ -3,7 +3,7 @@ package edu.ksu.canvas.impl;
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.QuizReader;
 import edu.ksu.canvas.interfaces.QuizWriter;
-import edu.ksu.canvas.model.quizzes.Quiz;
+import edu.ksu.canvas.model.assignment.Quiz;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.exception.MessageUndeliverableException;
@@ -42,7 +42,7 @@ public class QuizImpl extends BaseImpl<Quiz, QuizReader, QuizWriter> implements 
     public Optional<Quiz> updateQuiz(Quiz quiz, String courseId) throws MessageUndeliverableException, IOException {
         String url = buildCanvasUrl("courses/" + courseId + "/quizzes/" + quiz.getId(), Collections.emptyMap());
         Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url,
-                getDefaultGsonParser().toJsonTree(quiz).getAsJsonObject());
+                GsonResponseParser.getDefaultGsonParser().toJsonTree(quiz).getAsJsonObject());
         return responseParser.parseToObject(Quiz.class, response);
     }
 
@@ -55,7 +55,7 @@ public class QuizImpl extends BaseImpl<Quiz, QuizReader, QuizWriter> implements 
 
     private List<Quiz> parseQuizList(final Response response) {
         Type listType = new TypeToken<List<Quiz>>(){}.getType();
-        return getDefaultGsonParser().fromJson(response.getContent(), listType);
+        return GsonResponseParser.getDefaultGsonParser().fromJson(response.getContent(), listType);
     }
 
     @Override

@@ -107,10 +107,10 @@ public class CanvasApiFactory {
         readerMap = new HashMap<>();
         writerMap = new HashMap<>();
         readerMap.put(AccountReader.class, AccountImpl.class);
-        readerMap.put(AssignmentOverrideReader.class, AssignmentOverrideImp.class);
-        readerMap.put(AssignmentReader.class, AssignmentsImpl.class);
-        readerMap.put(CourseReader.class, CoursesImpl.class);
-        readerMap.put(EnrollmentsReader.class, EnrollmentsImpl.class);
+        readerMap.put(AssignmentOverrideReader.class, AssignmentOverrideImpl.class);
+        readerMap.put(AssignmentReader.class, AssignmentImpl.class);
+        readerMap.put(CourseReader.class, CourseImpl.class);
+        readerMap.put(EnrollmentsReader.class, EnrollmentImpl.class);
         readerMap.put(QuizQuestionReader.class, QuizQuestionImpl.class);
         readerMap.put(QuizReader.class, QuizImpl.class);
         readerMap.put(QuizSubmissionQuestionReader.class, QuizSubmissionImpl.class);
@@ -119,10 +119,10 @@ public class CanvasApiFactory {
         readerMap.put(UserReader.class, UserImpl.class);
         readerMap.put(PageReader.class, PageImpl.class);
 
-        writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImp.class);
-        writerMap.put(AssignmentWriter.class, AssignmentsImpl.class);
-        writerMap.put(CourseWriter.class, CoursesImpl.class);
-        writerMap.put(EnrollmentsWriter.class, EnrollmentsImpl.class);
+        writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImpl.class);
+        writerMap.put(AssignmentWriter.class, AssignmentImpl.class);
+        writerMap.put(CourseWriter.class, CourseImpl.class);
+        writerMap.put(EnrollmentsWriter.class, EnrollmentImpl.class);
         writerMap.put(QuizQuestionWriter.class, QuizQuestionImpl.class);
         writerMap.put(QuizWriter.class, QuizImpl.class);
         writerMap.put(QuizSubmissionQuestionWriter.class, QuizSubmissionImpl.class);

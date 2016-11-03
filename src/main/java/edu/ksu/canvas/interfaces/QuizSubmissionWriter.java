@@ -1,8 +1,8 @@
 package edu.ksu.canvas.interfaces;
 
-import edu.ksu.canvas.model.quizzes.QuizSubmission;
 import edu.ksu.canvas.exception.MessageUndeliverableException;
 import edu.ksu.canvas.exception.OauthTokenRequiredException;
+import edu.ksu.canvas.model.assignment.QuizSubmission;
 
 import java.io.IOException;
 import java.util.Optional;

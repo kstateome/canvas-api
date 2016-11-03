@@ -1,7 +1,7 @@
 package edu.ksu.canvas;
 
 import edu.ksu.canvas.enums.EnrollmentType;
-import edu.ksu.canvas.impl.EnrollmentsImpl;
+import edu.ksu.canvas.impl.EnrollmentImpl;
 import edu.ksu.canvas.interfaces.EnrollmentsReader;
 import edu.ksu.canvas.model.Enrollment;
 import edu.ksu.canvas.model.Grade;
@@ -27,7 +27,7 @@ public class EnrollmentUTest extends CanvasTestBase {
     public void setup() {
         String url =  baseUrl  + "/api/v1/sections/" + SECTION_ID + "/enrollments?type[]=StudentEnrollment";
         fakeRestClient.addSuccessResponse(url, "SampleJson/Enrollments.json");
-        enrollmentsReader = new EnrollmentsImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE);
+        enrollmentsReader = new EnrollmentImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE);
     }
     
     @Test
