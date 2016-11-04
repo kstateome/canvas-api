@@ -21,12 +21,149 @@ public class Conversation extends BaseCanvasModel {
     private List<Integer> audience;
     private Object audienceContexts; //TODO: Refine this object type
     private String avatarUrl;
-    private Object participants; //TODO: Refine this object type
+    private List<MessageParticipant> participants;
     private Boolean visible;
     private String contextName;
+    private List<Message> messages;
 
     public enum ConversationMessageState {
         unread, read, archived;
+    }
+
+    public class Message {
+        private Integer id;
+        private Integer authorId;
+        private Date createdAt;
+        private Boolean generated;
+        private String body;
+        private List<Object> forwardedMessages;
+        private List<String> attachments;
+        private Object mediaComment;
+        private List<Integer> participatingUserIds;
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public Integer getAuthorId() {
+            return authorId;
+        }
+
+        public void setAuthorId(Integer authorId) {
+            this.authorId = authorId;
+        }
+
+        public Date getCreatedAt() {
+            return createdAt;
+        }
+
+        public void setCreatedAt(Date createdAt) {
+            this.createdAt = createdAt;
+        }
+
+        public Boolean getGenerated() {
+            return generated;
+        }
+
+        public void setGenerated(Boolean generated) {
+            this.generated = generated;
+        }
+
+        public String getBody() {
+            return body;
+        }
+
+        public void setBody(String body) {
+            this.body = body;
+        }
+
+        public List<Object> getForwardedMessages() {
+            return forwardedMessages;
+        }
+
+        public void setForwardedMessages(List<Object> forwardedMessages) {
+            this.forwardedMessages = forwardedMessages;
+        }
+
+        public List<String> getAttachments() {
+            return attachments;
+        }
+
+        public void setAttachments(List<String> attachments) {
+            this.attachments = attachments;
+        }
+
+        public Object getMediaComment() {
+            return mediaComment;
+        }
+
+        public void setMediaComment(Object mediaComment) {
+            this.mediaComment = mediaComment;
+        }
+
+        public List<Integer> getParticipatingUserIds() {
+            return participatingUserIds;
+        }
+
+        public void setParticipatingUserIds(List<Integer> participatingUserIds) {
+            this.participatingUserIds = participatingUserIds;
+        }
+    }
+
+    public class MessageParticipant {
+        private Integer id;
+
+        private String name;
+
+        private Object commonCourses; //TODO: Refine this object type
+
+        private Object commonGroups; //TODO: Refine this object type
+
+        private String avatarUrl;
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Object getCommonCourses() {
+            return commonCourses;
+        }
+
+        public void setCommonCourses(Object commonCourses) {
+            this.commonCourses = commonCourses;
+        }
+
+        public Object getCommonGroups() {
+            return commonGroups;
+        }
+
+        public void setCommonGroups(List<Object> commonGroups) {
+            this.commonGroups = commonGroups;
+        }
+
+        public String getAvatarUrl() {
+            return avatarUrl;
+        }
+
+        public void setAvatarUrl(String avatarUrl) {
+            this.avatarUrl = avatarUrl;
+        }
     }
 
     public Integer getId() {
@@ -133,11 +270,11 @@ public class Conversation extends BaseCanvasModel {
         this.avatarUrl = avatarUrl;
     }
 
-    public Object getParticipants() {
+    public List<MessageParticipant> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(Object participants) {
+    public void setParticipants(List<MessageParticipant> participants) {
         this.participants = participants;
     }
 
@@ -155,5 +292,13 @@ public class Conversation extends BaseCanvasModel {
 
     public void setContextName(String contextName) {
         this.contextName = contextName;
+    }
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
     }
 }
