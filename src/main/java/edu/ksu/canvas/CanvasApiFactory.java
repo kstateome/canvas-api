@@ -2,6 +2,7 @@ package edu.ksu.canvas;
 
 import edu.ksu.canvas.impl.*;
 import edu.ksu.canvas.interfaces.*;
+import edu.ksu.canvas.model.Conversation;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.net.RestClientImpl;
 import org.apache.log4j.Logger;
@@ -109,6 +110,7 @@ public class CanvasApiFactory {
         readerMap.put(AccountReader.class, AccountImpl.class);
         readerMap.put(AssignmentOverrideReader.class, AssignmentOverrideImpl.class);
         readerMap.put(AssignmentReader.class, AssignmentImpl.class);
+        readerMap.put(ConversationReader.class, ConversationImpl.class);
         readerMap.put(CourseReader.class, CourseImpl.class);
         readerMap.put(EnrollmentsReader.class, EnrollmentImpl.class);
         readerMap.put(QuizQuestionReader.class, QuizQuestionImpl.class);
@@ -121,6 +123,7 @@ public class CanvasApiFactory {
 
         writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImpl.class);
         writerMap.put(AssignmentWriter.class, AssignmentImpl.class);
+        writerMap.put(ConversationWriter.class, ConversationImpl.class);
         writerMap.put(CourseWriter.class, CourseImpl.class);
         writerMap.put(EnrollmentsWriter.class, EnrollmentImpl.class);
         writerMap.put(QuizQuestionWriter.class, QuizQuestionImpl.class);
