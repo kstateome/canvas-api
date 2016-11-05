@@ -1,5 +1,6 @@
 package edu.ksu.canvas.requestOptions;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,5 +21,9 @@ public abstract class BaseOptions {
      */
     protected void addEnumList(String key, List<? extends Enum> list) {
         optionsMap.put(key, list.stream().map(i -> i.name()).collect(Collectors.toList()));
+    }
+
+    protected void addSingleItem(String key, String value) {
+        optionsMap.put(key, Arrays.asList(value));
     }
 }
