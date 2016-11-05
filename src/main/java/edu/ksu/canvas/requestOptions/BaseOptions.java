@@ -1,6 +1,6 @@
 package edu.ksu.canvas.requestOptions;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +24,6 @@ public abstract class BaseOptions {
     }
 
     protected void addSingleItem(String key, String value) {
-        optionsMap.put(key, Arrays.asList(value));
+        optionsMap.put(key, Collections.singletonList(value));
     }
 }
