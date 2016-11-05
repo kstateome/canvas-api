@@ -2,6 +2,7 @@ package edu.ksu.canvas.interfaces;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import edu.ksu.canvas.model.Conversation;
 import edu.ksu.canvas.requestOptions.CreateConversationOptions;
@@ -28,5 +29,15 @@ public interface ConversationWriter extends CanvasWriter<Conversation, Conversat
      * @throws IOException if there is an error communicating with Canvas
      */
     public void markAllConversationsRead() throws IOException;
+
+    /**
+     * Modify a conversation in Canvas. Only some fields are mutable:
+     * workflow state, subscribed and starred.
+     * According to the API docs you should be able to modify the subject but it doesn't seem to work.
+     * @param conversation Conversation with modifications to send to Canvas
+     * @return The modified conversation object
+     * @throws IOException if there is an error communicating with Canvas
+     */
+    public Optional<Conversation> editConversation(Conversation conversation) throws IOException;
 
 }

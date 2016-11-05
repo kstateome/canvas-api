@@ -60,4 +60,12 @@ public class ConversationImpl extends BaseImpl<Conversation, ConversationReader,
         canvasMessenger.sendToCanvas(oauthToken, url, Collections.emptyMap());
     }
 
+    @Override
+    public Optional<Conversation> editConversation(Conversation conversation) throws IOException {
+        LOG.debug("Editing conversation: " + conversation.getId());
+        String url = buildCanvasUrl("conversations/" + conversation.getId(), Collections.emptyMap());
+        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, conversation.toJsonObject());
+        return responseParser.parseToObject(Conversation.class, response);
+    }
+
 }
