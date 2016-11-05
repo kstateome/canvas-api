@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import edu.ksu.canvas.model.Conversation;
+import edu.ksu.canvas.requestOptions.AddMessageToConversationOptions;
 import edu.ksu.canvas.requestOptions.CreateConversationOptions;
 
 public interface ConversationWriter extends CanvasWriter<Conversation, ConversationWriter> {
@@ -40,4 +41,12 @@ public interface ConversationWriter extends CanvasWriter<Conversation, Conversat
      */
     public Optional<Conversation> editConversation(Conversation conversation) throws IOException;
 
+    /**
+     * Add a message to an existing conversation. The returned Conversation object will only
+     * have a single message in it (the one we just added)
+     * @param options Parameters for the message adding method
+     * @return Conversation object with only the added message in it
+     * @throws IOException if there is an error communicating with Canvas
+     */
+    public Optional<Conversation> addMessage(AddMessageToConversationOptions options) throws IOException;
 }

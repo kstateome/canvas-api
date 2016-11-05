@@ -16,6 +16,7 @@ import edu.ksu.canvas.interfaces.ConversationWriter;
 import edu.ksu.canvas.model.Conversation;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.requestOptions.AddMessageToConversationOptions;
 import edu.ksu.canvas.requestOptions.CreateConversationOptions;
 import edu.ksu.canvas.requestOptions.GetSingleConversationOptions;
 
@@ -56,6 +57,7 @@ public class ConversationImpl extends BaseImpl<Conversation, ConversationReader,
 
     @Override
     public void markAllConversationsRead() throws IOException {
+        LOG.debug("marking all conversations for user as read");
         String url = buildCanvasUrl("conversations/mark_all_as_read", Collections.emptyMap());
         canvasMessenger.sendToCanvas(oauthToken, url, Collections.emptyMap());
     }
@@ -65,6 +67,14 @@ public class ConversationImpl extends BaseImpl<Conversation, ConversationReader,
         LOG.debug("Editing conversation: " + conversation.getId());
         String url = buildCanvasUrl("conversations/" + conversation.getId(), Collections.emptyMap());
         Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, conversation.toJsonObject());
+        return responseParser.parseToObject(Conversation.class, response);
+    }
+
+    @Override
+    public Optional<Conversation> addMessage(AddMessageToConversationOptions options) throws IOException {
+        LOG.debug("Adding message to conversation: " + options.getConversationId());
+        String url = buildCanvasUrl("conversations/" + options.getConversationId() + "/add_message", options.getOptionsMap());
+        Response response = canvasMessenger.sendToCanvas(oauthToken, url, Collections.emptyMap());
         return responseParser.parseToObject(Conversation.class, response);
     }
 
