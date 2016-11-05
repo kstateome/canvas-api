@@ -54,4 +54,10 @@ public class ConversationImpl extends BaseImpl<Conversation, ConversationReader,
         return responseParser.parseToList(listType(), response);
     }
 
+    @Override
+    public void markAllConversationsRead() throws IOException {
+        String url = buildCanvasUrl("conversations/mark_all_as_read", Collections.emptyMap());
+        canvasMessenger.sendToCanvas(oauthToken, url, Collections.emptyMap());
+    }
+
 }

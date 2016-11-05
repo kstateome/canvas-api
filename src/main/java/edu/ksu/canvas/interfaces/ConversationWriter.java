@@ -22,4 +22,11 @@ public interface ConversationWriter extends CanvasWriter<Conversation, Conversat
      */
     public List<Conversation> createConversation(CreateConversationOptions options) throws IOException;
 
+    /**
+     * Marks all conversations for the current user as read.
+     * There is no return from Canvas. If there is no error, we must assume it succeeded.
+     * @throws IOException if there is an error communicating with Canvas
+     */
+    public void markAllConversationsRead() throws IOException;
+
 }
