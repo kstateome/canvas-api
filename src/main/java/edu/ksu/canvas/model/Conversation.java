@@ -17,7 +17,7 @@ public class Conversation extends BaseCanvasModel {
     @SerializedName("private") //can't name a variable "private" in java
     private Boolean isPrivate;
     private Boolean starred;
-    private Object properties;  //TODO: Refine this object type
+    private List<ConversationFlags> properties;
     private List<Integer> audience;
     private Object audienceContexts; //TODO: Refine this object type
     private String avatarUrl;
@@ -26,9 +26,9 @@ public class Conversation extends BaseCanvasModel {
     private String contextName;
     private List<Message> messages;
 
-    public enum ConversationMessageState {
-        unread, read, archived;
-    }
+    public enum ConversationMessageState { unread, read, archived; }
+
+    public enum ConversationFlags { last_author, attachments, media_objects }
 
     public class Message {
         private Integer id;
@@ -238,11 +238,11 @@ public class Conversation extends BaseCanvasModel {
         this.starred = starred;
     }
 
-    public Object getProperties() {
+    public List<ConversationFlags> getProperties() {
         return properties;
     }
 
-    public void setProperties(Object properties) {
+    public void setProperties(List<ConversationFlags> properties) {
         this.properties = properties;
     }
 
