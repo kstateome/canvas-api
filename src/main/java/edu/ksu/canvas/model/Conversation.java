@@ -11,7 +11,9 @@ public class Conversation extends BaseCanvasModel {
     private String subject;
     private ConversationMessageState workflowState;
     private String lastMessage;
-    private Date startAt;
+    private Date lastMessageAt;
+    private String lastAuthoredMessage;
+    private Date lastAuthoredMessageAt;
     private Integer messageCount;
     private Boolean subscribed;
     @SerializedName("private") //can't name a variable "private" in java
@@ -198,12 +200,28 @@ public class Conversation extends BaseCanvasModel {
         this.lastMessage = lastMessage;
     }
 
-    public Date getStartAt() {
-        return startAt;
+    public Date getLastMessageAt() {
+        return lastMessageAt;
     }
 
-    public void setStartAt(Date startAt) {
-        this.startAt = startAt;
+    public void getLastMessageAt(Date lastMessageAt) {
+        this.lastMessageAt = lastMessageAt;
+    }
+
+    public String getLastAuthoredMessage() {
+        return lastAuthoredMessage;
+    }
+
+    public void setLastAuthoredMessage(String lastAuthoredMessage) {
+        this.lastAuthoredMessage = lastAuthoredMessage;
+    }
+
+    public Date getLastAuthoredMessageAt() {
+        return lastAuthoredMessageAt;
+    }
+
+    public void setLastAuthoredMessageAt(Date lastAuthoredMessageAt) {
+        this.lastAuthoredMessageAt = lastAuthoredMessageAt;
     }
 
     public Integer getMessageCount() {
