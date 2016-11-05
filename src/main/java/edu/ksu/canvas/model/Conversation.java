@@ -5,6 +5,9 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
+import edu.ksu.canvas.annotation.CanvasObject;
+
+@CanvasObject(postKey="conversation")
 public class Conversation extends BaseCanvasModel {
 
     private Integer id;
