@@ -47,7 +47,7 @@ public class GetSingleConversationOptions extends BaseOptions {
      * @return this to continue building options
      */
     public GetSingleConversationOptions autoMarkAsRead(Boolean markAsRead) {
-        addSingleItem("auto_mar_as_read", markAsRead.toString());
+        addSingleItem("auto_mark_as_read", markAsRead.toString());
         return this;
     }
 }
