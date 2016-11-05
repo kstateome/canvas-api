@@ -1,6 +1,5 @@
 package edu.ksu.canvas.requestOptions;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class GetSingleConversationOptions extends BaseOptions {
@@ -24,7 +23,7 @@ public class GetSingleConversationOptions extends BaseOptions {
      */
     public GetSingleConversationOptions filters(List<String> filters) {
         if(filters.size() == 1) { //Canvas API doesn't want the [] if it is only one value
-            optionsMap.put("filter", Arrays.asList(filters.get(0)));
+            addSingleItem("filter", filters.get(0));
         } else {
             optionsMap.put("filter[]", filters);
         }
@@ -37,7 +36,7 @@ public class GetSingleConversationOptions extends BaseOptions {
      * @return this to continue building options
      */
     public GetSingleConversationOptions filterMode(FilterMode filterMode) {
-        optionsMap.put("filter_mode", Arrays.asList(filterMode.name()));
+        addSingleItem("filter_mode", filterMode.name());
         return this;
     }
 
@@ -48,7 +47,7 @@ public class GetSingleConversationOptions extends BaseOptions {
      * @return this to continue building options
      */
     public GetSingleConversationOptions autoMarkAsRead(Boolean markAsRead) {
-        optionsMap.put("auto_mar_as_read", Arrays.asList(markAsRead.toString()));
+        addSingleItem("auto_mar_as_read", markAsRead.toString());
         return this;
     }
 }

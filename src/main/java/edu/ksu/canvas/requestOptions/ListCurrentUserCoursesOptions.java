@@ -1,9 +1,6 @@
 package edu.ksu.canvas.requestOptions;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-
 
 public class ListCurrentUserCoursesOptions extends BaseOptions {
 
@@ -27,7 +24,7 @@ public class ListCurrentUserCoursesOptions extends BaseOptions {
      * @return This object to allow adding more options
      */
     public ListCurrentUserCoursesOptions withEnrollmentType(EnrollmentType enrollmentType) {
-        optionsMap.put("enrollment_type", Arrays.asList(enrollmentType.name()));
+        addSingleItem("enrollment_type", enrollmentType.name());
         return this;
     }
 
@@ -37,7 +34,7 @@ public class ListCurrentUserCoursesOptions extends BaseOptions {
      * @return This object to allow adding more options
      */
     public ListCurrentUserCoursesOptions withEnrollmentRoleId(Integer roleId) {
-        optionsMap.put("enrollment_role_id", Arrays.asList(roleId.toString()));
+        addSingleItem("enrollment_role_id", roleId.toString());
         return this;
     }
 
@@ -47,8 +44,7 @@ public class ListCurrentUserCoursesOptions extends BaseOptions {
      * @return This object to allow adding more options
      */
     public ListCurrentUserCoursesOptions includes(List<Include> includes) {
-        List<String> includeStrings = includes.stream().map(i -> i.name()).collect(Collectors.toList());
-        optionsMap.put("include[]", includeStrings);
+        addEnumList("include[]", includes);
         return this;
     }
 
@@ -58,8 +54,7 @@ public class ListCurrentUserCoursesOptions extends BaseOptions {
      * @return This object to allow adding more options
      */
     public ListCurrentUserCoursesOptions states(List<State> states) {
-        List<String> stateStrings = states.stream().map(i -> i.name()).collect(Collectors.toList());
-        optionsMap.put("state[]", stateStrings);
+        addEnumList("state[]", states);
         return this;
     }
 }

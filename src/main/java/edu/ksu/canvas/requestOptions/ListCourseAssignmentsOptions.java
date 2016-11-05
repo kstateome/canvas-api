@@ -1,6 +1,5 @@
 package edu.ksu.canvas.requestOptions;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class ListCourseAssignmentsOptions extends BaseOptions {
@@ -40,7 +39,7 @@ public class ListCourseAssignmentsOptions extends BaseOptions {
      * @return this to continue building options
      */
     public ListCourseAssignmentsOptions searchTerm(String searchTerm) {
-        optionsMap.put("search_term", Arrays.asList(searchTerm));
+        addSingleItem("search_term", searchTerm);
         return this;
     }
 
@@ -50,7 +49,7 @@ public class ListCourseAssignmentsOptions extends BaseOptions {
      * @return this to continue building options
      */
     public ListCourseAssignmentsOptions overrideAssignmentDates(Boolean overrideDates) {
-        optionsMap.put("override_assignment_dates", Arrays.asList(overrideDates.toString()));
+        addSingleItem("override_assignment_dates", overrideDates.toString());
         return this;
     }
 
@@ -61,7 +60,7 @@ public class ListCourseAssignmentsOptions extends BaseOptions {
      * @return this to continue building options
      */
     public ListCourseAssignmentsOptions needsGradingCountBySection(Boolean gradingCountBySection) {
-        optionsMap.put("needs_grading_count_by_section", Arrays.asList(gradingCountBySection.toString()));
+        addSingleItem("needs_grading_count_by_section", gradingCountBySection.toString());
         return this;
     }
 
@@ -71,7 +70,7 @@ public class ListCourseAssignmentsOptions extends BaseOptions {
      * @return this to continue building options
      */
     public ListCourseAssignmentsOptions bucketFilter(Bucket bucket) {
-        optionsMap.put("bucket", Arrays.asList(bucket.name()));
+        addSingleItem("bucket", bucket.name());
         return this;
     }
 }

@@ -1,7 +1,5 @@
 package edu.ksu.canvas.requestOptions;
 
-import java.util.Arrays;
-
 public class GetSubAccountsOptions extends BaseOptions {
 
     String accountId;
@@ -15,7 +13,7 @@ public class GetSubAccountsOptions extends BaseOptions {
     }
 
     public GetSubAccountsOptions recursive(Boolean recursive) {
-        optionsMap.put("recursive", Arrays.asList(recursive.toString()));
+        addSingleItem("recursive", recursive.toString());
         return this;
     }
 }
