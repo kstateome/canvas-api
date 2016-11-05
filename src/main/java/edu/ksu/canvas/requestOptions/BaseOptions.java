@@ -26,4 +26,8 @@ public abstract class BaseOptions {
     protected void addSingleItem(String key, String value) {
         optionsMap.put(key, Collections.singletonList(value));
     }
+
+    protected void addNumberList(String key, List<? extends Number> list) {
+        optionsMap.put(key, list.stream().map(i->i.toString()).collect(Collectors.toList()));
+    }
 }

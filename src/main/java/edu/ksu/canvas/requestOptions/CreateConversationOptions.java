@@ -58,8 +58,8 @@ public class CreateConversationOptions extends BaseOptions {
      * @param attachmentIds IDs of files to attach to conversation
      * @return This object to allow adding more options
      */
-    public CreateConversationOptions attachmentIds(List<String> attachmentIds) {
-        optionsMap.put("attachment_ids[]", attachmentIds);
+    public CreateConversationOptions attachmentIds(List<Integer> attachmentIds) {
+        addNumberList("attachment_ids[]", attachmentIds);
         return this;
     }
 
