@@ -9,6 +9,7 @@ import edu.ksu.canvas.interfaces.QuizQuestionReader;
 import edu.ksu.canvas.model.assignment.QuizQuestion;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.net.Response;
+import edu.ksu.canvas.requestOptions.GetQuizQuestionsOptions;
 import edu.ksu.canvas.util.CanvasURLBuilder;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -33,14 +34,14 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
     @Test
     public void testRetrieveQuizAnswer() throws Exception {
         String someCourseId = "123456";
-        String someQUizId = "123456";
+        Integer someQUizId = 123456;
         String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion,
                 "courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions", Collections.emptyMap());  Response notErroredResponse = new Response();
         notErroredResponse.setErrorHappened(false);
         notErroredResponse.setResponseCode(200);
         fakeRestClient.addSuccessResponse(url, "SampleJson/quiz/QuizQuestionList.json");
 
-        List<QuizQuestion> quizQuestions = quizQuestionReader.getQuizQuestions(someCourseId, someQUizId);
+        List<QuizQuestion> quizQuestions = quizQuestionReader.getQuizQuestions(new GetQuizQuestionsOptions(someCourseId, someQUizId));
         Assert.assertEquals(2, quizQuestions.size());
         Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestionName).filter("Quiz Question 1"::equals).findFirst().isPresent());
         Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestionName).filter("Quiz Question 2"::equals).findFirst().isPresent());
@@ -48,40 +49,40 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
     @Test(expected = InvalidOauthTokenException.class)
     public void testListAssignments_canvasError() throws Exception {
         String someCourseId = "123456";
-        String someQUizId = "123456";
+        Integer someQUizId = 123456;
         Response erroredResponse = new Response();
         erroredResponse.setErrorHappened(true);
         String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion,
                 "courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions", Collections.emptyMap());  Response notErroredResponse = new Response();
         fakeRestClient.add401Response(url, "SampleJson/quiz/QuizQuestionList.json");
-        quizQuestionReader.getQuizQuestions(someCourseId, someQUizId);
+        quizQuestionReader.getQuizQuestions(new GetQuizQuestionsOptions(someCourseId, someQUizId));
     }
 
     @Test(expected = JsonSyntaxException.class)
     public void testListAssignments_responseInvalid() throws Exception {
         String someCourseId = "123456";
-        String someQUizId = "123456";
+        Integer someQUizId = 123456;
         Response erroredResponse = new Response();
         erroredResponse.setResponseCode(401);
         String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion,
                 "courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions", Collections.emptyMap());  Response notErroredResponse = new Response();
         fakeRestClient.addSuccessResponse(url, "InvalidJson.json");
 
-        Assert.assertTrue(quizQuestionReader.getQuizQuestions(someCourseId, someQUizId).isEmpty());
+        Assert.assertTrue(quizQuestionReader.getQuizQuestions(new GetQuizQuestionsOptions(someCourseId, someQUizId)).isEmpty());
     }
     
     @Test
     public void testSisUserMasqueradeRetrieveQuizAnswer() throws Exception {
         String someUserId = "899123456";
         String someCourseId = "123456";
-        String someQUizId = "123456";
+        Integer someQUizId = 123456;
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
         Response notErroredResponse = new Response();
         notErroredResponse.setErrorHappened(false);
         notErroredResponse.setResponseCode(200);
         fakeRestClient.addSuccessResponse(url, "SampleJson/quiz/QuizQuestionList.json");
 
-        List<QuizQuestion> quizQuestions = quizQuestionReader.readAsSisUser(someUserId).getQuizQuestions(someCourseId, someQUizId);
+        List<QuizQuestion> quizQuestions = quizQuestionReader.readAsSisUser(someUserId).getQuizQuestions(new GetQuizQuestionsOptions(someCourseId, someQUizId));
         Assert.assertEquals(2, quizQuestions.size());
         Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestionName).filter("Quiz Question 1"::equals).findFirst().isPresent());
         Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestionName).filter("Quiz Question 2"::equals).findFirst().isPresent());
@@ -90,38 +91,38 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
     public void testSisUserMasqueradeListAssignments_canvasError() throws Exception {
         String someUserId = "899123456";
         String someCourseId = "123456";
-        String someQUizId = "123456";
+        Integer someQUizId = 123456;
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
         Response erroredResponse = new Response();
         erroredResponse.setErrorHappened(true);
         fakeRestClient.add401Response(url, "SampleJson/quiz/QuizQuestionList.json");
-        quizQuestionReader.readAsSisUser(someUserId).getQuizQuestions(someCourseId, someQUizId);
+        quizQuestionReader.readAsSisUser(someUserId).getQuizQuestions(new GetQuizQuestionsOptions(someCourseId, someQUizId));
     }
 
     @Test(expected = JsonSyntaxException.class)
     public void testSisUserMasqueradeListAssignments_responseInvalid() throws Exception {
         String someUserId = "899123456";
         String someCourseId = "123456";
-        String someQUizId = "123456";
+        Integer someQUizId = 123456;
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
         Response erroredResponse = new Response();
         erroredResponse.setResponseCode(401);
         fakeRestClient.addSuccessResponse(url, "InvalidJson.json");
-        Assert.assertTrue(quizQuestionReader.readAsSisUser(someUserId).getQuizQuestions(someCourseId, someQUizId).isEmpty());
+        Assert.assertTrue(quizQuestionReader.readAsSisUser(someUserId).getQuizQuestions(new GetQuizQuestionsOptions(someCourseId, someQUizId)).isEmpty());
     }
 
     @Test
     public void testCanvasUserMasqueradeRetrieveQuizAnswer() throws Exception {
         String someUserId = "899123456";
         String someCourseId = "123456";
-        String someQUizId = "123456";
+        Integer someQUizId = 123456;
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions?as_user_id=" + someUserId;
         Response notErroredResponse = new Response();
         notErroredResponse.setErrorHappened(false);
         notErroredResponse.setResponseCode(200);
         fakeRestClient.addSuccessResponse(url, "SampleJson/quiz/QuizQuestionList.json");
 
-        List<QuizQuestion> quizQuestions = quizQuestionReader.readAsCanvasUser(someUserId).getQuizQuestions(someCourseId, someQUizId);
+        List<QuizQuestion> quizQuestions = quizQuestionReader.readAsCanvasUser(someUserId).getQuizQuestions(new GetQuizQuestionsOptions(someCourseId, someQUizId));
         Assert.assertEquals(2, quizQuestions.size());
         Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestionName).filter("Quiz Question 1"::equals).findFirst().isPresent());
         Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestionName).filter("Quiz Question 2"::equals).findFirst().isPresent());
@@ -130,24 +131,24 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
     public void testCanvasUserMasqueradeListAssignments_canvasError() throws Exception {
         String someUserId = "899123456";
         String someCourseId = "123456";
-        String someQUizId = "123456";
+        Integer someQUizId = 123456;
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions?as_user_id=" + someUserId;
         Response erroredResponse = new Response();
         erroredResponse.setErrorHappened(true);
         fakeRestClient.add401Response(url, "SampleJson/quiz/QuizQuestionList.json");
-        quizQuestionReader.readAsCanvasUser(someUserId).getQuizQuestions(someCourseId, someQUizId);
+        quizQuestionReader.readAsCanvasUser(someUserId).getQuizQuestions(new GetQuizQuestionsOptions(someCourseId, someQUizId));
     }
 
     @Test(expected = JsonSyntaxException.class)
     public void testCanvasUserMasqueradeListAssignments_responseInvalid() throws Exception {
         String someUserId = "899123456";
         String someCourseId = "123456";
-        String someQUizId = "123456";
+        Integer someQUizId = 123456;
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions?as_user_id=" + someUserId;
         Response erroredResponse = new Response();
         erroredResponse.setResponseCode(401);
         fakeRestClient.addSuccessResponse(url, "InvalidJson.json");
-        Assert.assertTrue(quizQuestionReader.readAsCanvasUser(someUserId).getQuizQuestions(someCourseId, someQUizId).isEmpty());
+        Assert.assertTrue(quizQuestionReader.readAsCanvasUser(someUserId).getQuizQuestions(new GetQuizQuestionsOptions(someCourseId, someQUizId)).isEmpty());
     }
 
 }
