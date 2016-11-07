@@ -1,8 +1,6 @@
 package edu.ksu.canvas.requestOptions;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GetSingleAssignmentOptions extends BaseOptions {
     
@@ -43,7 +41,7 @@ public class GetSingleAssignmentOptions extends BaseOptions {
      * @return this to continue building options
      */
     public GetSingleAssignmentOptions overrideAssignmentDates(Boolean overrideDates) {
-        optionsMap.put("override_assignment_dates", Arrays.asList(overrideDates.toString()));
+        addSingleItem("override_assignment_dates", overrideDates.toString());
         return this;
     }
 
@@ -54,7 +52,7 @@ public class GetSingleAssignmentOptions extends BaseOptions {
      * @return this to continue building options
      */
     public GetSingleAssignmentOptions needsGradingCountBySection(Boolean gradingCountBySection) {
-        optionsMap.put("needs_grading_count_by_section", Arrays.asList(gradingCountBySection.toString()));
+        addSingleItem("needs_grading_count_by_section", gradingCountBySection.toString());
         return this;
     }
 
@@ -64,7 +62,7 @@ public class GetSingleAssignmentOptions extends BaseOptions {
      * @return this to continue building options
      */
     public GetSingleAssignmentOptions allDates(Boolean allDates) {
-        optionsMap.put("all_dates", Arrays.asList(allDates.toString()));
+        addSingleItem("all_dates", allDates.toString());
         return this;
     }
 }
