@@ -26,6 +26,7 @@ public class QuizImpl extends BaseImpl<Quiz, QuizReader, QuizWriter> implements 
 
     @Override
     public Optional<Quiz> getSingleQuiz(String courseId, String quizId) throws IOException {
+        LOG.debug("Retrieving single quiz " + quizId + " in course " + courseId);
         String url = buildCanvasUrl("courses/" + courseId + "/quizzes/" + quizId, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(Quiz.class, response);
@@ -33,6 +34,7 @@ public class QuizImpl extends BaseImpl<Quiz, QuizReader, QuizWriter> implements 
 
     @Override
     public List<Quiz> getQuizzesInCourse(String courseId) throws IOException {
+        LOG.debug("Getting quizzes for course " + courseId);
         String url = buildCanvasUrl("courses/" + courseId + "/quizzes", Collections.emptyMap());
         List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url);
         return parseQuizList(responses);
@@ -40,9 +42,9 @@ public class QuizImpl extends BaseImpl<Quiz, QuizReader, QuizWriter> implements 
 
     @Override
     public Optional<Quiz> updateQuiz(Quiz quiz, String courseId) throws MessageUndeliverableException, IOException {
+        LOG.debug("Updating quiz " + quiz.getId() + " in course " + courseId);
         String url = buildCanvasUrl("courses/" + courseId + "/quizzes/" + quiz.getId(), Collections.emptyMap());
-        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url,
-                GsonResponseParser.getDefaultGsonParser().toJsonTree(quiz).getAsJsonObject());
+        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url,quiz.toJsonObject());
         return responseParser.parseToObject(Quiz.class, response);
     }
 
@@ -64,7 +66,7 @@ public class QuizImpl extends BaseImpl<Quiz, QuizReader, QuizWriter> implements 
     }
 
     @Override
-    protected Class objectType() {
+    protected Class<Quiz> objectType() {
         return Quiz.class;
     }
 
