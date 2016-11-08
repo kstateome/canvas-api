@@ -20,6 +20,7 @@ import edu.ksu.canvas.model.assignment.QuizSubmissionQuestionWrapper;
 import edu.ksu.canvas.model.assignment.QuizSubmissionWrapper;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.requestOptions.AnswerQuizQuestionOptions;
 import edu.ksu.canvas.util.CanvasURLBuilder;
 import org.apache.log4j.Logger;
 
@@ -37,15 +38,9 @@ public class QuizSubmissionQuestionImpl extends BaseImpl<QuizSubmissionQuestion,
     }
 
     @Override
-    public List<QuizSubmissionQuestion> answerQuestions(QuizSubmission submission, String wid, String answerArrayJson, String accessCode) throws IOException {
-        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
-                "quiz_submissions/" + submission.getId() + "/questions", Collections.emptyMap());
+    public List<QuizSubmissionQuestion> answerQuestions(AnswerQuizQuestionOptions options, String answerArrayJson) throws IOException {
+        String url = buildCanvasUrl("quiz_submissions/" + options.getQuizSubmissionid() + "/questions", options.getOptionsMap());
         JsonObject requestBody = new JsonObject();
-        requestBody.addProperty("attemtp", String.valueOf(submission.getAttempt()));
-        requestBody.addProperty("validation_token", submission.getValidationToken());
-        if (accessCode != null) {
-            requestBody.addProperty("access_code", accessCode);
-        }
 
         //Setup the quiz question array that Canvas requires
         JsonParser parser = new JsonParser();
