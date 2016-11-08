@@ -3,7 +3,8 @@ package edu.ksu.canvas.interfaces;
 import java.io.IOException;
 import java.util.List;
 
-import edu.ksu.canvas.model.assignment.QuizSubmission;
+import javax.validation.constraints.NotNull;
+
 import edu.ksu.canvas.model.assignment.QuizSubmissionQuestion;
 import edu.ksu.canvas.requestOptions.AnswerQuizQuestionOptions;
 
@@ -15,6 +16,6 @@ public interface QuizSubmissionQuestionWriter extends CanvasWriter<QuizSubmissio
      * @return List of Quiz Submission Questions that Canvas returns from the request
      * @throws IOException When there is an error communicating with Canvas
      */
-    List<QuizSubmissionQuestion> answerQuestions(AnswerQuizQuestionOptions options, String answerArrayJson)
+    List<QuizSubmissionQuestion> answerQuestions(@NotNull AnswerQuizQuestionOptions options, @NotNull String answerArrayJson)
             throws IOException;
 }
