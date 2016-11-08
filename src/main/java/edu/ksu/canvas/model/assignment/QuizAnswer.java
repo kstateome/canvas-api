@@ -10,8 +10,10 @@ import java.util.List;
 public class QuizAnswer {
     private Integer id;
     private String text;
-    private Integer answerWeight;
-    private String answerComments;
+    private String html;
+    private Double weight;
+    private String comments;
+    private String commentsHtml;
     private String textAfterAnswers;
     private String answerMatchLeft;
     private String answerMatchRight;
@@ -21,7 +23,7 @@ public class QuizAnswer {
     private Double margin; //margin of error for above
     private String start; //used if numerical_answer_type is "range_answer"
     private String end; //used if numerical_answer_type is "range_answer"
-    private Integer blankId;
+    private String blankId;
 
 
     public Integer getId() {
@@ -40,20 +42,36 @@ public class QuizAnswer {
         this.text = text;
     }
 
-    public Integer getAnswerWeight() {
-        return answerWeight;
+    public String getHtml() {
+        return html;
     }
 
-    public void setAnswerWeight(Integer answerWeight) {
-        this.answerWeight = answerWeight;
+    public void setHtml(String html) {
+        this.html = html;
     }
 
-    public String getAnswerComments() {
-        return answerComments;
+    public Double getWeight() {
+        return weight;
     }
 
-    public void setAnswerComments(String answerComments) {
-        this.answerComments = answerComments;
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public String getCommentsHtml() {
+        return commentsHtml;
+    }
+
+    public void setCommentsHtml(String commentsHtml) {
+        this.commentsHtml = commentsHtml;
     }
 
     public String getTextAfterAnswers() {
@@ -128,11 +146,11 @@ public class QuizAnswer {
         this.end = end;
     }
 
-    public Integer getBlankId() {
+    public String getBlankId() {
         return blankId;
     }
 
-    public void setBlankId(Integer blankId) {
+    public void setBlankId(String blankId) {
         this.blankId = blankId;
     }
 
@@ -143,14 +161,14 @@ public class QuizAnswer {
 
         QuizAnswer that = (QuizAnswer) o;
 
-        if (answerComments != null ? !answerComments.equals(that.answerComments) : that.answerComments != null)
+        if (comments != null ? !comments.equals(that.comments) : that.comments != null)
             return false;
         if (answerMatchLeft != null ? !answerMatchLeft.equals(that.answerMatchLeft) : that.answerMatchLeft != null)
             return false;
         if (answerMatchRight != null ? !answerMatchRight.equals(that.answerMatchRight) : that.answerMatchRight != null)
             return false;
         if (text != null ? !text.equals(that.text) : that.text != null) return false;
-        if (answerWeight != null ? !answerWeight.equals(that.answerWeight) : that.answerWeight != null)
+        if (weight != null ? !weight.equals(that.weight) : that.weight != null)
             return false;
         if (blankId != null ? !blankId.equals(that.blankId) : that.blankId != null) return false;
         if (end != null ? !end.equals(that.end) : that.end != null) return false;
@@ -172,8 +190,8 @@ public class QuizAnswer {
     public int hashCode() {
         int result = id.hashCode();
         result = 31 * result + (text != null ? text.hashCode() : 0);
-        result = 31 * result + (answerWeight != null ? answerWeight.hashCode() : 0);
-        result = 31 * result + (answerComments != null ? answerComments.hashCode() : 0);
+        result = 31 * result + (weight != null ? weight.hashCode() : 0);
+        result = 31 * result + (comments != null ? comments.hashCode() : 0);
         result = 31 * result + (textAfterAnswers != null ? textAfterAnswers.hashCode() : 0);
         result = 31 * result + (answerMatchLeft != null ? answerMatchLeft.hashCode() : 0);
         result = 31 * result + (answerMatchRight != null ? answerMatchRight.hashCode() : 0);
