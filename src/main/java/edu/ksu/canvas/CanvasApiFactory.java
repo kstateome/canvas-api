@@ -115,7 +115,7 @@ public class CanvasApiFactory {
         readerMap.put(EnrollmentsReader.class, EnrollmentImpl.class);
         readerMap.put(QuizQuestionReader.class, QuizQuestionImpl.class);
         readerMap.put(QuizReader.class, QuizImpl.class);
-        readerMap.put(QuizSubmissionQuestionReader.class, QuizSubmissionImpl.class);
+        readerMap.put(QuizSubmissionQuestionReader.class, QuizSubmissionQuestionImpl.class);
         readerMap.put(QuizSubmissionReader.class, QuizSubmissionImpl.class);
         readerMap.put(SectionReader.class, SectionsImpl.class);
         readerMap.put(UserReader.class, UserImpl.class);
@@ -128,7 +128,7 @@ public class CanvasApiFactory {
         writerMap.put(EnrollmentsWriter.class, EnrollmentImpl.class);
         writerMap.put(QuizQuestionWriter.class, QuizQuestionImpl.class);
         writerMap.put(QuizWriter.class, QuizImpl.class);
-        writerMap.put(QuizSubmissionQuestionWriter.class, QuizSubmissionImpl.class);
+        writerMap.put(QuizSubmissionQuestionWriter.class, QuizSubmissionQuestionImpl.class);
         writerMap.put(QuizSubmissionWriter.class, QuizSubmissionImpl.class);
         writerMap.put(UserWriter.class, UserImpl.class);
         writerMap.put(PageWriter.class, PageImpl.class);

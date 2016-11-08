@@ -14,18 +14,16 @@ import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.QuizSubmissionQuestionReader;
 import edu.ksu.canvas.interfaces.QuizSubmissionQuestionWriter;
 import edu.ksu.canvas.model.assignment.QuizAnswer;
-import edu.ksu.canvas.model.assignment.QuizSubmission;
 import edu.ksu.canvas.model.assignment.QuizSubmissionQuestion;
 import edu.ksu.canvas.model.assignment.QuizSubmissionQuestionWrapper;
 import edu.ksu.canvas.model.assignment.QuizSubmissionWrapper;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
-import edu.ksu.canvas.util.CanvasURLBuilder;
+import edu.ksu.canvas.requestOptions.AnswerQuizQuestionOptions;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,15 +35,13 @@ public class QuizSubmissionQuestionImpl extends BaseImpl<QuizSubmissionQuestion,
     }
 
     @Override
-    public List<QuizSubmissionQuestion> answerQuestions(QuizSubmission submission, String wid, String answerArrayJson, String accessCode) throws IOException {
-        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion,
-                "quiz_submissions/" + submission.getId() + "/questions", Collections.emptyMap());
-        JsonObject requestBody = new JsonObject();
-        requestBody.addProperty("attemtp", String.valueOf(submission.getAttempt()));
-        requestBody.addProperty("validation_token", submission.getValidationToken());
-        if (accessCode != null) {
-            requestBody.addProperty("access_code", accessCode);
+    public List<QuizSubmissionQuestion> answerQuestions(AnswerQuizQuestionOptions options, String answerArrayJson) throws IOException {
+        if(options == null || answerArrayJson == null) {
+            throw new IllegalArgumentException("options and answers must not be null");
         }
+        LOG.debug("answering questions for quiz submission: " + options.getQuizSubmissionid());
+        String url = buildCanvasUrl("quiz_submissions/" + options.getQuizSubmissionid() + "/questions", options.getOptionsMap());
+        JsonObject requestBody = new JsonObject();
 
         //Setup the quiz question array that Canvas requires
         JsonParser parser = new JsonParser();
