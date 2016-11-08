@@ -14,19 +14,16 @@ import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.QuizSubmissionQuestionReader;
 import edu.ksu.canvas.interfaces.QuizSubmissionQuestionWriter;
 import edu.ksu.canvas.model.assignment.QuizAnswer;
-import edu.ksu.canvas.model.assignment.QuizSubmission;
 import edu.ksu.canvas.model.assignment.QuizSubmissionQuestion;
 import edu.ksu.canvas.model.assignment.QuizSubmissionQuestionWrapper;
 import edu.ksu.canvas.model.assignment.QuizSubmissionWrapper;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.requestOptions.AnswerQuizQuestionOptions;
-import edu.ksu.canvas.util.CanvasURLBuilder;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -39,6 +36,7 @@ public class QuizSubmissionQuestionImpl extends BaseImpl<QuizSubmissionQuestion,
 
     @Override
     public List<QuizSubmissionQuestion> answerQuestions(AnswerQuizQuestionOptions options, String answerArrayJson) throws IOException {
+        LOG.debug("answering questions for quiz submission: " + options.getQuizSubmissionid());
         String url = buildCanvasUrl("quiz_submissions/" + options.getQuizSubmissionid() + "/questions", options.getOptionsMap());
         JsonObject requestBody = new JsonObject();
 
