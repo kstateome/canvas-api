@@ -111,6 +111,7 @@ public class RestClientImpl implements RestClient {
         String content = handleResponse(httpResponse);
 
         response.setContent(content);
+        response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
         Long endTime = System.currentTimeMillis();
         LOG.debug("Canvas API call took: " + (endTime - beginTime) + "ms");
 
