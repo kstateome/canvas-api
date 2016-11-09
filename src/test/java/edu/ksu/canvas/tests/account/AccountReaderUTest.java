@@ -57,7 +57,7 @@ public class AccountReaderUTest extends CanvasTestBase {
         optionsMap.put("include[]", Arrays.asList("lti_guid"));
         String url = baseUrl + "/api/v1/accounts?include[]=lti_guid";
         fakeRestClient.addSuccessResponse(url, "SampleJson/account/AccountWithLtiGuid.json");
-        List<Account> accountList = accountReader.listAccounts(new ListAccountOptions().includes(Arrays.asList(Include.lti_guid)));
+        List<Account> accountList = accountReader.listAccounts(new ListAccountOptions().includes(Arrays.asList(Include.LTI_GUID)));
         Account account = accountList.get(0);
         Assert.assertEquals("7db438071375c02373713c12c73869ff2f470b68.k-state.instructure.com", account.getLtiGuid());
     }
