@@ -1,7 +1,6 @@
 package edu.ksu.canvas.requestOptions;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GetSingleCourseOptions extends BaseOptions {
 
@@ -9,11 +8,13 @@ public class GetSingleCourseOptions extends BaseOptions {
 
     public enum Include {
         //same include options as list courses call
-        needs_grading_count, syllabus_body, total_scores, term, course_progress, 
-        sections, storage_quota_used_mb, total_students, favorites, teachers, 
-        observed_users, current_grading_period_scores,
+        NEEDS_GRADING_COUNT, SYLLABUS_BODY, TOTAL_SCORES, TERM, COURSE_PROGRESS,
+        SECTIONS, STORAGE_QUOTA_USED_MB, TOTAL_STUDENTS, FAVORITES, TEACHERS,
+        OBSERVED_USERS, CURRENT_GRADING_PERIOD_SCORES,
         //options specific to get single course call
-        all_courses, permissions
+        ALL_COURSES, PERMISSIONS;
+
+        public String toString() { return name().toLowerCase(); }
     }
 
     /**
@@ -34,8 +35,7 @@ public class GetSingleCourseOptions extends BaseOptions {
      * @return This object to allow adding more options
      */
     public GetSingleCourseOptions includes(List<Include> includes) {
-        List<String> includeStrings = includes.stream().map(i -> i.name()).collect(Collectors.toList());
-        optionsMap.put("include[]", includeStrings);
+        addEnumList("include[]", includes);
         return this;
     }
 }

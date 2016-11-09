@@ -4,7 +4,10 @@ import java.util.List;
 
 public class GetSingleConversationOptions extends BaseOptions {
 
-    public enum FilterMode {and, or, default_or}
+    public enum FilterMode {AND, OR, DEFAULT_OR;
+
+        public String toString() { return name().toLowerCase(); }
+    }
 
     private Integer conversationId;
 
@@ -36,7 +39,7 @@ public class GetSingleConversationOptions extends BaseOptions {
      * @return this to continue building options
      */
     public GetSingleConversationOptions filterMode(FilterMode filterMode) {
-        addSingleItem("filter_mode", filterMode.name());
+        addSingleItem("filter_mode", filterMode.toString());
         return this;
     }
 

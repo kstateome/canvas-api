@@ -12,15 +12,21 @@ public class ListActiveCoursesInAccountOptions extends BaseOptions {
     private String accountId;
 
     public enum EnrollmentType {
-        student, teacher, ta, observer, designer;
+        STUDENT, TEACHER, TA, OBSERVER, DESIGNER;
+
+        public String toString() { return name().toLowerCase(); }
     }
 
     public enum State {
-        created, claimed, available, completed, deleted, all;
+        CREATED, CLAIMED, AVAILABLE, COMPLETED, DELETED, ALL;
+
+        public String toString() { return name().toLowerCase(); }
     }
 
     public enum Include {
-        syllabus_body, term, course_progress, storage_quota_used_mb, total_students, teachers;
+        SYLLABUS_BODY, TERM, COURSE_PROGRESS, STORAGE_QUOTA_USED_MB, TOTAL_STUDENTS, TEACHERS;
+
+        public String toString() { return name().toLowerCase(); }
     }
 
     public ListActiveCoursesInAccountOptions(String accountId) {

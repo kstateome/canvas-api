@@ -8,7 +8,11 @@ public class GetSingleAssignmentOptions extends BaseOptions {
     private String assignmentId;
 
     public enum Include {
-        submission, assignment_visibility, overrides, observed_users
+        SUBMISSION, ASSIGNMENT_VISIBILITY, OVERRIDES, OBSERVED_USERS;
+
+        public String toString() {
+            return name().toLowerCase();
+        }
     }
 
     public GetSingleAssignmentOptions(String courseId, String assignmentId) {
