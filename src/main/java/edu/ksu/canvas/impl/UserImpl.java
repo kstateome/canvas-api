@@ -12,6 +12,7 @@ import edu.ksu.canvas.interfaces.UserWriter;
 import edu.ksu.canvas.model.User;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.requestOptions.GetUsersInCourseOptions;
 
 import org.apache.log4j.Logger;
 
@@ -58,22 +59,9 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
     }
 
     @Override
-    public List<User> getUsersInCourse(String courseId,
-            List<EnrollmentType> enrollmentTypes, Optional<Integer> enrollmentRoleId,
-            List<CourseIncludes> includes)
-                    throws IOException {
-
-        Builder<String, List<String>> paramsBuilder = ImmutableMap.<String, List<String>>builder();
-        String enrollmentTypeKey = "enrollment_type";
-        if (enrollmentTypes.size() > 1) {
-            enrollmentTypeKey += "[]";
-        }
-        paramsBuilder.put(enrollmentTypeKey, enrollmentTypes.stream().map(type -> type.name().toLowerCase()).collect(Collectors.toList()));
-        enrollmentRoleId.ifPresent(e -> paramsBuilder.put("enrollment_role_id", Collections.singletonList(e.toString())));
-        paramsBuilder.put("include[]", includes.stream().map(Enum::name).collect(Collectors.toList()));
-
-        ImmutableMap<String, List<String>> parameters = paramsBuilder.build();
-        String url = buildCanvasUrl("courses/" + courseId + "/users", parameters);
+    public List<User> getUsersInCourse(GetUsersInCourseOptions options) throws IOException {
+        LOG.debug("Retrieving users in course " + options.getCourseId());
+        String url = buildCanvasUrl("courses/" + options.getCourseId() + "/users", options.getOptionsMap());
 
         return getListFromCanvas(url);
     }

@@ -7,6 +7,7 @@ import edu.ksu.canvas.interfaces.UserReader;
 import edu.ksu.canvas.model.User;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.net.Response;
+import edu.ksu.canvas.requestOptions.GetUsersInCourseOptions;
 import edu.ksu.canvas.util.CanvasURLBuilder;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -40,7 +41,7 @@ public class UserRetrieverUTest extends CanvasTestBase {
                 "courses/" + someCourseId + "/users", Collections.emptyMap());
         fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserList.json");
 
-        List<User> users = userReader.getUsersInCourse(someCourseId, Collections.emptyList(), Optional.empty(), Collections.emptyList());
+        List<User> users = userReader.getUsersInCourse(new GetUsersInCourseOptions(someCourseId));
         Assert.assertEquals(2, users.size());
         Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 1"::equals).findFirst().isPresent());
         Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 2"::equals).findFirst().isPresent());
@@ -56,7 +57,7 @@ public class UserRetrieverUTest extends CanvasTestBase {
                 + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserList.json");
 
-        List<User> users = userReader.readAsSisUser(someUserId).getUsersInCourse(someCourseId, Collections.emptyList(), Optional.empty(), Collections.emptyList());
+        List<User> users = userReader.readAsSisUser(someUserId).getUsersInCourse(new GetUsersInCourseOptions(someCourseId));
         Assert.assertEquals(2, users.size());
         Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 1"::equals).findFirst().isPresent());
         Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 2"::equals).findFirst().isPresent());
@@ -71,7 +72,7 @@ public class UserRetrieverUTest extends CanvasTestBase {
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/users?as_user_id=" + someUserId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserList.json");
 
-        List<User> users = userReader.readAsCanvasUser(someUserId).getUsersInCourse(someCourseId, Collections.emptyList(), Optional.empty(), Collections.emptyList());
+        List<User> users = userReader.readAsCanvasUser(someUserId).getUsersInCourse(new GetUsersInCourseOptions(someCourseId));
         Assert.assertEquals(2, users.size());
         Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 1"::equals).findFirst().isPresent());
         Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 2"::equals).findFirst().isPresent());
