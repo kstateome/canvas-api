@@ -2,7 +2,7 @@ package edu.ksu.canvas;
 
 import edu.ksu.canvas.enums.EnrollmentType;
 import edu.ksu.canvas.impl.EnrollmentImpl;
-import edu.ksu.canvas.interfaces.EnrollmentsReader;
+import edu.ksu.canvas.interfaces.EnrollmentReader;
 import edu.ksu.canvas.model.Enrollment;
 import edu.ksu.canvas.model.Grade;
 import edu.ksu.canvas.model.User;
@@ -21,7 +21,7 @@ public class EnrollmentUTest extends CanvasTestBase {
     private FakeRestClient fakeRestClient;
     @Autowired
     private String baseUrl;
-    private EnrollmentsReader enrollmentsReader;
+    private EnrollmentReader enrollmentsReader;
 
     @Before
     public void setup() {

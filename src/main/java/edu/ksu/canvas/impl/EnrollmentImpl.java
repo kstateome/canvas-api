@@ -8,8 +8,8 @@ import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.enums.EnrollmentType;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.CourseReader;
-import edu.ksu.canvas.interfaces.EnrollmentsReader;
-import edu.ksu.canvas.interfaces.EnrollmentsWriter;
+import edu.ksu.canvas.interfaces.EnrollmentReader;
+import edu.ksu.canvas.interfaces.EnrollmentWriter;
 import edu.ksu.canvas.model.Enrollment;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
@@ -20,7 +20,7 @@ import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentsReader, EnrollmentsWriter> implements EnrollmentsReader,EnrollmentsWriter {
+public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentReader, EnrollmentWriter> implements EnrollmentReader,EnrollmentWriter {
     private static final Logger LOG = Logger.getLogger(CourseReader.class);
 
     public EnrollmentImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {

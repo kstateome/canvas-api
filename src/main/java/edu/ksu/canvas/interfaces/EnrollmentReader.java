@@ -7,10 +7,7 @@ import edu.ksu.canvas.model.Enrollment;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Created by prv on 10/8/15.
- */
-public interface EnrollmentsReader extends CanvasReader<Enrollment, EnrollmentsReader> {
+public interface EnrollmentReader extends CanvasReader<Enrollment, EnrollmentReader> {
     /**
      * Retrieve a given user's enrollments
      * @param userId User ID to query for enrollments
