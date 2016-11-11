@@ -26,7 +26,7 @@ public class StartQuizSubmissionOptions extends BaseOptions {
     /**
      * Add an access code (if required)
      * @param accessCode The access code set by the instructor
-     * @return
+     * @return This object to allow adding more options
      */
     public StartQuizSubmissionOptions accessCode(String accessCode) {
         addSingleItem("access_code", accessCode);

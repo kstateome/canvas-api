@@ -11,7 +11,6 @@ public interface EnrollmentReader extends CanvasReader<Enrollment, EnrollmentRea
      * Retrieve a user's enrollments. Object ID in the options class must be a user ID.
      * @param options API options available to this call
      * @return List of the user's enrollments
-     * @throws InvalidOauthTokenException  When the supplied OAuth token is invalid
      * @throws IOException When there is an error communicating with Canvas
      */
      List<Enrollment> getUserEnrollments(GetEnrollmentOptions options) throws IOException;
