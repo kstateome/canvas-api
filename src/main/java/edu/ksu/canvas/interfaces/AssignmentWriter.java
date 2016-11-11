@@ -14,7 +14,7 @@ public interface AssignmentWriter extends CanvasWriter<Assignment, AssignmentWri
      * @return The created assignment object
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<Assignment> createASsignment(String courseId, Assignment assignment) throws IOException;
+    Optional<Assignment> createAssignment(String courseId, Assignment assignment) throws IOException;
 
     /**
      * Deletes a specified assignment in canvas

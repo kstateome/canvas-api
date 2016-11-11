@@ -20,7 +20,7 @@ public abstract class BaseOptions {
      * @param list A list of enums
      */
     protected void addEnumList(String key, List<? extends Enum> list) {
-        optionsMap.put(key, list.stream().map(i -> i.name()).collect(Collectors.toList()));
+        optionsMap.put(key, list.stream().map(i -> i.toString()).collect(Collectors.toList()));
     }
 
     protected void addSingleItem(String key, String value) {

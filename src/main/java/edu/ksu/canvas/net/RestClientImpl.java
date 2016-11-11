@@ -3,30 +3,29 @@ package edu.ksu.canvas.net;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 
 import org.apache.http.Header;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
 import javax.validation.constraints.NotNull;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
 import java.net.URI;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -108,7 +107,7 @@ public class RestClientImpl implements RestClient {
         HttpResponse httpResponse = httpClient.execute(action);
 
         LOG.debug("Sending API " + method + " request to URL: " + url);
-        String content = handleResponse(httpResponse);
+        String content = handleResponse(httpResponse, action);
 
         response.setContent(content);
         response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
@@ -139,7 +138,7 @@ public class RestClientImpl implements RestClient {
         httpPost.setEntity(new UrlEncodedFormEntity(params));
         LOG.debug("Sending API POST request to URL: " + url);
         HttpResponse httpResponse =  httpClient.execute(httpPost);
-        String content = handleResponse(httpResponse);
+        String content = handleResponse(httpResponse, httpPost);
 
         response.setContent(content);
         response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
@@ -168,7 +167,7 @@ public Response sendApiPut(String token, String url, Map<String, Object> putPara
         httpPut.setEntity(new UrlEncodedFormEntity(params));
         LOG.debug("Sending API PUT request to URL: " + url);
         HttpResponse httpResponse =  httpClient.execute(httpPut);
-        String content = handleResponse(httpResponse);
+        String content = handleResponse(httpResponse, httpPut);
 
         response.setContent(content);
         response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
@@ -208,7 +207,7 @@ public Response sendApiPut(String token, String url, Map<String, Object> putPara
         HttpResponse httpResponse = httpClient.execute(httpDelete);
         LOG.debug("Sending API DELETE request to URL: " + url);
 
-        String content = handleResponse(httpResponse);
+        String content = handleResponse(httpResponse, httpDelete);
         response.setContent(content);
         response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
         Long endTime = System.currentTimeMillis();
@@ -217,9 +216,17 @@ public Response sendApiPut(String token, String url, Map<String, Object> putPara
         return response;
     }
 
-    private String handleResponse(HttpResponse httpResponse) throws IOException {
-        if (httpResponse.getStatusLine().getStatusCode() == 401) {
+    private String handleResponse(HttpResponse httpResponse, HttpRequestBase request) throws IOException {
+        int statusCode = httpResponse.getStatusLine().getStatusCode();
+        if (statusCode == 401) {
             throw new InvalidOauthTokenException();
+        }
+        if(statusCode < 200 || statusCode > 299) {
+            LOG.error("HTTP status " + statusCode + " returned from " + request.getURI());
+            HttpEntity entity = httpResponse.getEntity();
+            if(entity != null) {
+                LOG.error("Response from Canvas: " + EntityUtils.toString(entity));
+            }
         }
         return new BasicResponseHandler().handleResponse(httpResponse);
     }

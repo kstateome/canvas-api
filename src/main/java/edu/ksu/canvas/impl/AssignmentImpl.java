@@ -47,7 +47,7 @@ public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, Assig
     }
 
     @Override
-    public Optional<Assignment> createASsignment(String courseId, Assignment assignment) throws IOException {
+    public Optional<Assignment> createAssignment(String courseId, Assignment assignment) throws IOException {
         if(StringUtils.isBlank(assignment.getName())) {
             throw new IllegalArgumentException("Assignment must have a name");
         }
