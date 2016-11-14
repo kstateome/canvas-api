@@ -1,4 +1,4 @@
-package edu.ksu.canvas.model.quizzes;
+package edu.ksu.canvas.model.assignment;
 
 /**
  * Class to hold the permissions returned when querying quizzes.
@@ -12,8 +12,8 @@ public class QuizPermission {
     private Boolean submit;
     private Boolean create;
     private Boolean manage;
-    private Boolean read_statistics;
-    private Boolean review_grades;
+    private Boolean readStatistics;
+    private Boolean reviewGrades;
     private Boolean update;
 
     public Boolean canRead() {
@@ -32,12 +32,12 @@ public class QuizPermission {
         return manage;
     }
 
-    public Boolean canRead_statistics() {
-        return read_statistics;
+    public Boolean canReadStatistics() {
+        return readStatistics;
     }
 
-    public Boolean canReview_grades() {
-        return review_grades;
+    public Boolean canReviewGrades() {
+        return reviewGrades;
     }
 
     public Boolean canUpdate() {

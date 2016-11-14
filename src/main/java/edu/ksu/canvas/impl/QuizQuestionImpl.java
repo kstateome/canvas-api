@@ -3,9 +3,10 @@ package edu.ksu.canvas.impl;
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.QuizQuestionReader;
 import edu.ksu.canvas.interfaces.QuizQuestionWriter;
-import edu.ksu.canvas.model.quizzes.QuizQuestion;
+import edu.ksu.canvas.model.assignment.QuizQuestion;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.requestOptions.GetQuizQuestionsOptions;
 import edu.ksu.canvas.exception.OauthTokenRequiredException;
 import org.apache.log4j.Logger;
 
@@ -24,8 +25,9 @@ public class QuizQuestionImpl extends BaseImpl<QuizQuestion, QuizQuestionReader,
     }
 
     @Override
-    public List<QuizQuestion> getQuizQuestions(String courseId, String quizId) throws IOException {
-        String url = buildCanvasUrl("courses/" + courseId + "/quizzes/" + quizId + "/questions", Collections.emptyMap());
+    public List<QuizQuestion> getQuizQuestions(GetQuizQuestionsOptions options) throws IOException {
+        String url = buildCanvasUrl("courses/" + options.getCourseId() + "/quizzes/" + options.getQuizId() + "/questions",
+                options.getOptionsMap());
         List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url);
         return parseQuizQuestionList(responses);
 
@@ -40,7 +42,7 @@ public class QuizQuestionImpl extends BaseImpl<QuizQuestion, QuizQuestionReader,
 
     private List<QuizQuestion> parseQuizQuestionList(final Response response) {
         Type listType = new TypeToken<List<QuizQuestion>>(){}.getType();
-        return getDefaultGsonParser().fromJson(response.getContent(), listType);
+        return GsonResponseParser.getDefaultGsonParser().fromJson(response.getContent(), listType);
     }
 
     @Override

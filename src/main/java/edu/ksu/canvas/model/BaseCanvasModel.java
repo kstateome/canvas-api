@@ -2,11 +2,15 @@ package edu.ksu.canvas.model;
 
 import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
+import edu.ksu.canvas.impl.GsonResponseParser;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 public abstract class BaseCanvasModel {
     /* Canvas has post parameter keys in non consistent formats. Occasionally they are 'class[field]' and other times
@@ -25,6 +29,26 @@ public abstract class BaseCanvasModel {
             }
         }
         return postMap;
+    }
+
+    /**
+     * Wraps a Canvas model inside of a JSON object so that the resulting serialized object
+     * can be pushed to Canvas create/edit endpoints. For example, to create an assignment, the JSON
+     * must look like: <pre>{assignment: {name: "Assignment 1"}}</pre>.
+     * This method adds the outer "assignment" container based on CanvasObject notations on the model classes
+     * @return A JsonObject suitable for serializing out to the Canvas API
+     */
+    public JsonObject toJsonObject() {
+        Class<? extends BaseCanvasModel> clazz = this.getClass();
+        CanvasObject canvasObjectAnnotation = clazz.getAnnotation(CanvasObject.class);
+        if(canvasObjectAnnotation == null || canvasObjectAnnotation.postKey() == null) {
+            throw new IllegalArgumentException("Object to wrap must have a CanvasObject annotation with a postKey");
+        }
+        String objectPostKey = canvasObjectAnnotation.postKey();
+        JsonElement element = GsonResponseParser.getDefaultGsonParser().toJsonTree(this);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.add(objectPostKey, element);
+        return jsonObject;
     }
 
     private String getPostKey(CanvasField canvasFieldAnnotation) {

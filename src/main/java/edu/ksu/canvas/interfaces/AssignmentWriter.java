@@ -1,54 +1,36 @@
 package edu.ksu.canvas.interfaces;
 
-import edu.ksu.canvas.enums.AssignmentType;
-import edu.ksu.canvas.model.Assignment;
-import edu.ksu.canvas.exception.MessageUndeliverableException;
-
 import java.io.IOException;
 import java.util.Optional;
 
+import edu.ksu.canvas.model.assignment.Assignment;
+
 public interface AssignmentWriter extends CanvasWriter<Assignment, AssignmentWriter> {
-    /**
-     * Creates an assignment in canvas
-     * @param courseId id of the course the quiz is going to be in
-     * @param assignmentName  name of assignment
-     * @param pointsPossible  highest possible number of points of assignment
-     * @return The newly created assignment
-     * @throws IOException When there is an error communicating with Canvas
-     */
-    Optional<Assignment> createAssignment (String courseId, String assignmentName, String pointsPossible) throws IOException;
 
     /**
-     * Creates an assignment in canvas
-     * @param courseId id of the course the quiz is going to be in
-     * @param assignmentName  name of assignment
-     * @param pointsPossible  highest possible number of points of assignment
-     * @param assignmentType type of the assignment to be created
-     * @param published publish status of created assignment
-     * @param muted muted status of created assignment
-     * @return The newly created assignment
+     * Create an assignment in Canvas. The only required field is name.
+     * @param courseId ID of the course to create the assignment in
+     * @param assignment Assignment object to create. Must have at least a name set
+     * @return The created assignment object
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<Assignment> createAssignment(String courseId, String assignmentName, String pointsPossible,
-                                                 AssignmentType assignmentType, boolean published, boolean muted) throws IOException;
+    Optional<Assignment> createAssignment(String courseId, Assignment assignment) throws IOException;
 
     /**
      * Deletes a specified assignment in canvas
      * @param courseId Course ID of course to delete assignment from
      * @param assignmentId Assignment ID of assignment to delete
-     * @return True if the operation succeeded
+     * @return The deleted Assignment object as returned by the Canvas API
      * @throws IOException When there is an error communicating with Canvas
      */
-    Boolean deleteAssignment(String courseId, String assignmentId)
-            throws IOException;
+    Optional<Assignment> deleteAssignment(String courseId, String assignmentId) throws IOException;
 
     /**
-     * Sets a specified assignment to be visible to overrides in canvas
-     * @param courseId Course the assignment is in
-     * @param assignmentId ID of the assignment to create override for
-     * @param onlyVisibleToOverrides Whether this assignment is only visible to people who are assigned to it
-     * @return Assignment object update in Canvas
+     * Writes an Assignment object to the Canvas API
+     * @param courseId Course ID that this assignment is associated with
+     * @param assignment The assignment settings to write to the API
+     * @return The modified Assignment returned by the API
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<Assignment> setOnlyVisibleToOverrides(String courseId, String assignmentId, boolean onlyVisibleToOverrides) throws IOException;
+    Optional<Assignment> editAssignment(String courseId, Assignment assignment) throws IOException;
 }

@@ -2,9 +2,6 @@ package edu.ksu.canvas.impl;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.interfaces.CanvasMessenger;
@@ -82,10 +79,6 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
         List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url, consumer);
         responseCallback = null;
         return parseListOfResponses(responses);
-    }
-
-    protected Gson getDefaultGsonParser() {
-        return new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
     }
 
     @Override

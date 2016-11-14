@@ -46,14 +46,11 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
     }
 
     @Override
-    public Optional<Page> updateCoursePage(Page page, String courseId) throws Exception {
+    public Optional<Page> updateCoursePage(Page page, String courseId) throws IOException {
         LOG.debug("Updating page in course" + courseId);
         String encodedUrl = URLEncoder.encode(page.getUrl(), CanvasConstants.URLENCODING_TYPE);
         String url = buildCanvasUrl("courses/" + courseId + "/pages/" + encodedUrl, Collections.emptyMap());
-        JsonElement pageElement = getDefaultGsonParser().toJsonTree(page);
-        JsonObject pageObject = new JsonObject();
-        pageObject.add("wiki_page", pageElement);
-        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, pageObject);
+        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, page.toJsonObject());
         return responseParser.parseToObject(Page.class, response);
     }
 
