@@ -3,7 +3,7 @@ package edu.ksu.canvas.tests.course;
 import edu.ksu.canvas.CanvasTestBase;
 import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.impl.EnrollmentImpl;
-import edu.ksu.canvas.interfaces.EnrollmentsWriter;
+import edu.ksu.canvas.interfaces.EnrollmentWriter;
 import edu.ksu.canvas.model.Enrollment;
 import edu.ksu.canvas.net.FakeRestClient;
 import org.junit.Assert;
@@ -17,7 +17,7 @@ import java.util.Optional;
 public class DropCourseUTest extends CanvasTestBase {
     @Autowired
     private FakeRestClient fakeRestClient;
-    private EnrollmentsWriter enrollmentsWriter;
+    private EnrollmentWriter enrollmentsWriter;
 
     @Before
     public void setupData() {
