@@ -74,4 +74,17 @@ public class RefreshableTokenUTest {
         assertEquals("Expected token to not be refreshed when not expired", refreshedToken.getAccessToken(), accessToken);
     }
 
+    @Test
+    public void tokenIsNotExpiredWhenNullTimeToLive() {
+        oldToken.setExpiresIn(null);
+        when(tokenRefresher.getNewToken(refreshToken))
+                .thenReturn(oldToken)
+                .thenReturn(refreshedToken);
+        token = new RefreshableOauthToken(tokenRefresher, refreshToken);
+
+        String accessToken = token.getAccessToken();
+
+        assertEquals("Expected token to not be refreshed when expire time is null", oldToken.getAccessToken(), accessToken);
+    }
+
 }

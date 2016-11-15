@@ -37,7 +37,9 @@ public class RefreshableOauthToken implements OauthToken {
 
         TokenExpiration(Long timeToLive) {
             this.lastRefreshed = new Date();
-            this.timeToLive = timeToLive - expireWindowMS;
+            if (timeToLive != null) {
+                this.timeToLive = timeToLive - expireWindowMS;
+            }
         }
 
         boolean isExpired() {
