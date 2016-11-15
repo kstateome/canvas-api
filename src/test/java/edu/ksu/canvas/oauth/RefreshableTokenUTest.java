@@ -29,7 +29,7 @@ public class RefreshableTokenUTest {
     }
 
     @Test
-    public void tokenIsRefreshedUponConstruction() {
+    public void tokenIsRefreshedUponConstruction() throws Exception {
         when(tokenRefresher.getNewToken(refreshToken)).thenReturn(secondToken);
 
         token = new RefreshableOauthToken(tokenRefresher, refreshToken);
@@ -38,7 +38,7 @@ public class RefreshableTokenUTest {
     }
 
     @Test
-    public void tokenIsChangedWhenTokenExists() {
+    public void tokenIsChangedWhenTokenExists() throws Exception {
         when(tokenRefresher.getNewToken(refreshToken))
                 .thenReturn(firstToken)
                 .thenReturn(secondToken);
@@ -50,7 +50,7 @@ public class RefreshableTokenUTest {
     }
 
     @Test
-    public void tokenIsRefreshedWhenExpireTimeReached() {
+    public void tokenIsRefreshedWhenExpireTimeReached() throws Exception {
         firstToken.setExpiresIn(0l);
         when(tokenRefresher.getNewToken(refreshToken))
                 .thenReturn(firstToken)
@@ -63,7 +63,7 @@ public class RefreshableTokenUTest {
     }
 
     @Test
-    public void tokenIsNotRefreshedWhenNotExpired() {
+    public void tokenIsNotRefreshedWhenNotExpired() throws Exception {
         when(tokenRefresher.getNewToken(refreshToken))
                 .thenReturn(firstToken)
                 .thenReturn(secondToken);
@@ -75,7 +75,7 @@ public class RefreshableTokenUTest {
     }
 
     @Test
-    public void tokenIsNotExpiredWhenNullTimeToLive() {
+    public void tokenIsNotExpiredWhenNullTimeToLive() throws Exception {
         firstToken.setExpiresIn(null);
         when(tokenRefresher.getNewToken(refreshToken))
                 .thenReturn(firstToken)

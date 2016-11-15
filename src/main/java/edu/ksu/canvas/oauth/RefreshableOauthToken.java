@@ -1,8 +1,14 @@
 package edu.ksu.canvas.oauth;
 
+import java.io.IOException;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
+import edu.ksu.canvas.exception.InvalidOauthTokenException;
+
 public class RefreshableOauthToken implements OauthToken {
+    private static final Logger LOG = Logger.getLogger(RefreshableOauthToken.class);
 
     private OauthTokenRefresher tokenRefresher;
     private String refreshToken;
@@ -17,9 +23,17 @@ public class RefreshableOauthToken implements OauthToken {
 
     @Override
     public void refresh() {
-        TokenRefreshResponse refreshResponse = tokenRefresher.getNewToken(refreshToken);
-        apiToken = refreshResponse.getAccessToken();
-        tokenExpiration = new TokenExpiration(refreshResponse.getExpiresIn());
+        try {
+            TokenRefreshResponse refreshResponse = tokenRefresher.getNewToken(refreshToken);
+            if(refreshResponse == null) {
+                throw new InvalidOauthTokenException();
+            }
+            apiToken = refreshResponse.getAccessToken();
+            tokenExpiration = new TokenExpiration(refreshResponse.getExpiresIn());
+        } catch (IOException e) {
+            LOG.error("Exception while attempting to refresh access token");
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -49,7 +63,6 @@ public class RefreshableOauthToken implements OauthToken {
             }
             return (new Date().getTime() - lastRefreshed.getTime()) >= timeToLive;
         }
-
     }
 
 }
