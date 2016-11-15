@@ -3,7 +3,6 @@ package edu.ksu.canvas.impl;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
 
-import edu.ksu.canvas.OauthToken;
 import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.interfaces.CanvasMessenger;
 import edu.ksu.canvas.interfaces.CanvasReader;
@@ -11,6 +10,7 @@ import edu.ksu.canvas.interfaces.CanvasWriter;
 import edu.ksu.canvas.interfaces.ResponseParser;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.util.CanvasURLBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;

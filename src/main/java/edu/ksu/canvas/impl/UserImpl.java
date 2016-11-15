@@ -2,7 +2,6 @@ package edu.ksu.canvas.impl;
 
 import com.google.gson.reflect.TypeToken;
 
-import edu.ksu.canvas.OauthToken;
 import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.UserReader;
@@ -10,6 +9,7 @@ import edu.ksu.canvas.interfaces.UserWriter;
 import edu.ksu.canvas.model.User;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.GetUsersInCourseOptions;
 
 import org.apache.log4j.Logger;

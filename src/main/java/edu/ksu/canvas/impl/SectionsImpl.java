@@ -6,13 +6,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import edu.ksu.canvas.OauthToken;
 import edu.ksu.canvas.enums.SectionIncludes;
 import edu.ksu.canvas.interfaces.SectionReader;
 import edu.ksu.canvas.interfaces.SectionWriter;
 import edu.ksu.canvas.model.Section;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.util.CanvasURLBuilder;
 import org.apache.log4j.Logger;
 

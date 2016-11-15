@@ -1,7 +1,7 @@
 package edu.ksu.canvas.net;
 
-import edu.ksu.canvas.OauthToken;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
+import edu.ksu.canvas.oauth.OauthToken;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -45,7 +45,7 @@ public class RestClientImpl implements RestClient {
         Response response = new Response();
         HttpClient httpClient = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(url);
-        httpGet.setHeader("Authorization", "Bearer" + " " + token.getToken());
+        httpGet.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
 
         HttpResponse httpResponse = httpClient.execute(httpGet);
         //deal with the actual content
@@ -103,7 +103,7 @@ public class RestClientImpl implements RestClient {
             throw new IllegalArgumentException("Method must be either POST or PUT");
         }
         Long beginTime = System.currentTimeMillis();
-        action.setHeader("Authorization", "Bearer" + " " + token.getToken());
+        action.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
 
         StringEntity params = new StringEntity(json, ContentType.APPLICATION_JSON);
         action.setEntity(params);
@@ -129,7 +129,7 @@ public class RestClientImpl implements RestClient {
         HttpClient httpClient = new DefaultHttpClient();
         Long beginTime = System.currentTimeMillis();
         HttpPost httpPost = new HttpPost(url);
-        httpPost.setHeader("Authorization", "Bearer" + " " + token.getToken());
+        httpPost.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
         List<NameValuePair> params = new ArrayList<>();
 
         if (postParameters != null) {
@@ -159,7 +159,7 @@ public class RestClientImpl implements RestClient {
         HttpClient httpClient = new DefaultHttpClient();
         Long beginTime = System.currentTimeMillis();
         HttpPut httpPut = new HttpPut(url);
-        httpPut.setHeader("Authorization", "Bearer" + " " + token.getToken());
+        httpPut.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
         List<NameValuePair> params = new ArrayList<>();
 
         if (putParameters != null) {
@@ -202,7 +202,7 @@ public class RestClientImpl implements RestClient {
         HttpDeleteWithBody httpDelete = new HttpDeleteWithBody();
 
         httpDelete.setURI(URI.create(url));
-        httpDelete.setHeader("Authorization", "Bearer" + " " + token.getToken());
+        httpDelete.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
         List<NameValuePair> params = new ArrayList<>();
         if (deleteParameters != null) {
             for (Map.Entry<String, String> entry : deleteParameters.entrySet()) {
@@ -242,4 +242,5 @@ public class RestClientImpl implements RestClient {
         }
         return new BasicResponseHandler().handleResponse(httpResponse);
     }
+
 }

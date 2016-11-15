@@ -1,12 +1,13 @@
-package edu.ksu.canvas;
+package edu.ksu.canvas.oauth;
 
-public class RefreshableOauthToken extends OauthToken {
+public class RefreshableOauthToken implements OauthToken {
 
+    private String refreshToken;
     private OauthTokenRefresher tokenRefresher;
     private String apiToken;
 
     public RefreshableOauthToken(OauthTokenRefresher tokenRefresher, String refreshToken) {
-        super(refreshToken);
+        this.refreshToken = refreshToken;
         this.tokenRefresher = tokenRefresher;
         refresh();
     }
@@ -17,7 +18,8 @@ public class RefreshableOauthToken extends OauthToken {
     }
 
     @Override
-    public String getToken() {
+    public String getAccessToken() {
         return apiToken;
     }
+
 }

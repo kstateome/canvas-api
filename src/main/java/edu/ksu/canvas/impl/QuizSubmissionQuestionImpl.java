@@ -12,7 +12,6 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
-import edu.ksu.canvas.OauthToken;
 import edu.ksu.canvas.interfaces.QuizSubmissionQuestionReader;
 import edu.ksu.canvas.interfaces.QuizSubmissionQuestionWriter;
 import edu.ksu.canvas.model.assignment.QuizAnswer;
@@ -21,6 +20,7 @@ import edu.ksu.canvas.model.assignment.QuizSubmissionQuestionWrapper;
 import edu.ksu.canvas.model.assignment.QuizSubmissionWrapper;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.AnswerQuizQuestionOptions;
 import org.apache.log4j.Logger;
 

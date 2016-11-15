@@ -1,7 +1,7 @@
 package edu.ksu.canvas.net;
 
-import edu.ksu.canvas.OauthToken;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
+import edu.ksu.canvas.oauth.OauthToken;
 
 import javax.validation.constraints.NotNull;
 import java.io.IOException;

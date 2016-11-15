@@ -1,8 +1,8 @@
 package edu.ksu.canvas.net;
 
-import edu.ksu.canvas.OauthToken;
 import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
+import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.util.JsonTestUtil;
 import org.apache.log4j.Logger;
 

@@ -4,6 +4,7 @@ import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.impl.BaseImpl;
 import edu.ksu.canvas.model.TestCanvasModel;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.oauth.OauthToken;
 
 import java.io.IOException;
 import java.lang.reflect.Type;

@@ -1,4 +1,4 @@
-package edu.ksu.canvas;
+package edu.ksu.canvas.oauth;
 
 public class OauthTokenRefresher {
     private final String clientId;

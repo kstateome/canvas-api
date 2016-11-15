@@ -2,12 +2,13 @@ package edu.ksu.canvas.impl;
 
 import com.google.gson.reflect.TypeToken;
 
-import edu.ksu.canvas.OauthToken;
 import edu.ksu.canvas.interfaces.AssignmentOverrideReader;
 import edu.ksu.canvas.interfaces.AssignmentOverrideWriter;
 import edu.ksu.canvas.model.assignment.AssignmentOverride;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.oauth.OauthToken;
+
 import org.apache.log4j.Logger;
 
 import java.io.IOException;

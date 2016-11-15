@@ -11,13 +11,13 @@ import org.apache.log4j.Logger;
 
 import com.google.gson.reflect.TypeToken;
 
-import edu.ksu.canvas.OauthToken;
 import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.interfaces.PageReader;
 import edu.ksu.canvas.interfaces.PageWriter;
 import edu.ksu.canvas.model.Page;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.oauth.OauthToken;
 
 public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements PageReader, PageWriter {
     private static final Logger LOG = Logger.getLogger(PageImpl.class);

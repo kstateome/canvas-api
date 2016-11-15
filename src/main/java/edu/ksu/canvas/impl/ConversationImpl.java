@@ -11,12 +11,12 @@ import org.apache.log4j.Logger;
 
 import com.google.gson.reflect.TypeToken;
 
-import edu.ksu.canvas.OauthToken;
 import edu.ksu.canvas.interfaces.ConversationReader;
 import edu.ksu.canvas.interfaces.ConversationWriter;
 import edu.ksu.canvas.model.Conversation;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.AddMessageToConversationOptions;
 import edu.ksu.canvas.requestOptions.CreateConversationOptions;
 import edu.ksu.canvas.requestOptions.GetSingleConversationOptions;

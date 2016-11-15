@@ -3,11 +3,12 @@ package edu.ksu.canvas.impl;
 
 import com.google.gson.JsonObject;
 
-import edu.ksu.canvas.OauthToken;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.CanvasMessenger;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.oauth.OauthToken;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 

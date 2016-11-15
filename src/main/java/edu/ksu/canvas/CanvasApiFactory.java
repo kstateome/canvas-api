@@ -5,6 +5,8 @@ import edu.ksu.canvas.interfaces.*;
 import edu.ksu.canvas.model.Conversation;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.net.RestClientImpl;
+import edu.ksu.canvas.oauth.OauthToken;
+
 import org.apache.log4j.Logger;
 
 import java.lang.reflect.Constructor;
