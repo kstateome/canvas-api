@@ -2,7 +2,7 @@ package edu.ksu.canvas.oauth;
 
 public interface OauthToken {
 
-    public String getAccessToken();
+    String getAccessToken();
    
-    public void refresh();
+    void refresh();
 }
