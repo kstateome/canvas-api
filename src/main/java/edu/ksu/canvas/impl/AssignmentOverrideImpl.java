@@ -1,6 +1,8 @@
 package edu.ksu.canvas.impl;
 
 import com.google.gson.reflect.TypeToken;
+
+import edu.ksu.canvas.OauthToken;
 import edu.ksu.canvas.interfaces.AssignmentOverrideReader;
 import edu.ksu.canvas.interfaces.AssignmentOverrideWriter;
 import edu.ksu.canvas.model.assignment.AssignmentOverride;
@@ -18,7 +20,7 @@ public class AssignmentOverrideImpl extends BaseImpl<AssignmentOverride, Assignm
     private static final Logger LOG = Logger.getLogger(AssignmentOverrideImpl.class);
 
 
-    public AssignmentOverrideImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
+    public AssignmentOverrideImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }
 

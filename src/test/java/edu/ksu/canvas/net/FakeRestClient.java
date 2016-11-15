@@ -1,5 +1,6 @@
 package edu.ksu.canvas.net;
 
+import edu.ksu.canvas.OauthToken;
 import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.util.JsonTestUtil;
@@ -17,42 +18,42 @@ public class FakeRestClient implements RestClient {
     private Map<String, Response> responseMap = new HashMap<>();
 
     @Override
-    public Response sendApiGet(@NotNull String token, @NotNull String url, int connectTimeout, int readTimeout) throws IOException {
+    public Response sendApiGet(@NotNull OauthToken token, @NotNull String url, int connectTimeout, int readTimeout) throws IOException {
         LOG.debug("Sending fake GET to " + url);
         checkForTimeout(connectTimeout, readTimeout);
         return response(url);
     }
 
     @Override
-    public Response sendJsonPost(String token, String url, String json, int connectTimeout, int readTimeout) throws IOException {
+    public Response sendJsonPost(OauthToken token, String url, String json, int connectTimeout, int readTimeout) throws IOException {
         LOG.debug("Sending fake JSON POST to " + url);
         checkForTimeout(connectTimeout, readTimeout);
         return response(url);
     }
 
     @Override
-    public Response sendJsonPut(String token, String url, String json, int connectTimeout, int readTimeout) throws IOException {
+    public Response sendJsonPut(OauthToken token, String url, String json, int connectTimeout, int readTimeout) throws IOException {
         LOG.debug("Sending fake JSON PUT to " + url);
         checkForTimeout(connectTimeout, readTimeout);
         return response(url);
     }
 
     @Override
-    public Response sendApiPost(String token, String url, Map<String, String> postParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+    public Response sendApiPost(OauthToken token, String url, Map<String, String> postParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending fake POST to " + url);
         checkForTimeout(connectTimeout, readTimeout);
         return response(url);
     }
 
     @Override
-    public Response sendApiDelete(@NotNull String token, @NotNull String url, Map<String, String> deleteParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+    public Response sendApiDelete(@NotNull OauthToken token, @NotNull String url, Map<String, String> deleteParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending fake DEL to " + url);
         checkForTimeout(connectTimeout, readTimeout);
         return response(url);
     }
 
     @Override
-    public Response sendApiPut(@NotNull String token, @NotNull String url, Map<String, Object> putParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+    public Response sendApiPut(@NotNull OauthToken token, @NotNull String url, Map<String, Object> putParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending fake PUT to " + url);
         checkForTimeout(connectTimeout, readTimeout);
         return response(url);

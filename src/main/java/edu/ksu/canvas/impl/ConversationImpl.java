@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import com.google.gson.reflect.TypeToken;
 
+import edu.ksu.canvas.OauthToken;
 import edu.ksu.canvas.interfaces.ConversationReader;
 import edu.ksu.canvas.interfaces.ConversationWriter;
 import edu.ksu.canvas.model.Conversation;
@@ -23,7 +24,7 @@ import edu.ksu.canvas.requestOptions.GetSingleConversationOptions;
 public class ConversationImpl extends BaseImpl<Conversation, ConversationReader, ConversationWriter> implements ConversationReader, ConversationWriter {
     private static final Logger LOG = Logger.getLogger(ConversationImpl.class);
 
-    public ConversationImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient,
+    public ConversationImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
             int connectTimeout, int readTimeout, Integer paginationPageSize) {
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout,readTimeout, paginationPageSize);
     }

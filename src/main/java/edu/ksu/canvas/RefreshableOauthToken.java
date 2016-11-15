@@ -16,7 +16,7 @@ public class RefreshableOauthToken extends OauthToken {
     }
 
     @Override
-    String getToken() {
+    public String getToken() {
         return apiToken;
     }
 }

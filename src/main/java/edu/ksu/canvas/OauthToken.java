@@ -7,7 +7,7 @@ public class OauthToken {
         this.refreshToken = refreshToken;
     }
 
-    String getToken() {
+    public String getToken() {
         return refreshToken;
     }
 

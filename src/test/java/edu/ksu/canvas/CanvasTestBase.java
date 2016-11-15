@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(classes = {CommonTestConfig.class})
 @ActiveProfiles("dev")
 public class CanvasTestBase {
-    public static final String SOME_OAUTH_TOKEN = "token";
+    public static final OauthToken SOME_OAUTH_TOKEN = new OauthToken("token");;
     public static final int SOME_CONNECT_TIMEOUT = 1000;
     public static final int SOME_READ_TIMEOUT = 1000;
     public static final Integer DEFAULT_PAGINATION_PAGE_SIZE = null;

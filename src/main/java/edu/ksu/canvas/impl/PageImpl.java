@@ -9,10 +9,9 @@ import java.util.Optional;
 
 import org.apache.log4j.Logger;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
+import edu.ksu.canvas.OauthToken;
 import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.interfaces.PageReader;
 import edu.ksu.canvas.interfaces.PageWriter;
@@ -23,7 +22,7 @@ import edu.ksu.canvas.net.RestClient;
 public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements PageReader, PageWriter {
     private static final Logger LOG = Logger.getLogger(PageImpl.class);
 
-    public PageImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
+    public PageImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }
 
