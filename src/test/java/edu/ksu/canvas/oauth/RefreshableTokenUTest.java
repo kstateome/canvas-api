@@ -13,8 +13,8 @@ import static org.mockito.Mockito.when;
 public class RefreshableTokenUTest {
     private static final long EXPIRE_TIME_SECONDS = 3600;
     private final String refreshToken = "arbitraryToken";
-    private final TokenRefreshResponse oldToken = new TokenRefreshResponse();
-    private final TokenRefreshResponse refreshedToken = new TokenRefreshResponse();
+    private final TokenRefreshResponse firstToken = new TokenRefreshResponse();
+    private final TokenRefreshResponse secondToken = new TokenRefreshResponse();
 
     @Mock
     private OauthTokenRefresher tokenRefresher;
@@ -22,69 +22,69 @@ public class RefreshableTokenUTest {
 
     @Before
     public void setup() {
-        oldToken.setAccessToken("oldToken");
-        oldToken.setExpiresIn(EXPIRE_TIME_SECONDS);
-        refreshedToken.setAccessToken("newToken");
-        refreshedToken.setExpiresIn(EXPIRE_TIME_SECONDS);
+        firstToken.setAccessToken("firstToken");
+        firstToken.setExpiresIn(EXPIRE_TIME_SECONDS);
+        secondToken.setAccessToken("secondToken");
+        secondToken.setExpiresIn(EXPIRE_TIME_SECONDS);
     }
 
     @Test
     public void tokenIsRefreshedUponConstruction() {
-        when(tokenRefresher.getNewToken(refreshToken)).thenReturn(refreshedToken);
+        when(tokenRefresher.getNewToken(refreshToken)).thenReturn(secondToken);
 
         token = new RefreshableOauthToken(tokenRefresher, refreshToken);
 
-        assertEquals("Expected token to be refreshed upon construction", refreshedToken.getAccessToken(), token.getAccessToken());
+        assertEquals("Expected token to be refreshed upon construction", secondToken.getAccessToken(), token.getAccessToken());
     }
 
     @Test
     public void tokenIsChangedWhenTokenExists() {
         when(tokenRefresher.getNewToken(refreshToken))
-                .thenReturn(oldToken)
-                .thenReturn(refreshedToken);
+                .thenReturn(firstToken)
+                .thenReturn(secondToken);
         token = new RefreshableOauthToken(tokenRefresher, refreshToken);
 
         token.refresh();
 
-        assertEquals("Expected new token to be token returned from refresh service", refreshedToken.getAccessToken(), token.getAccessToken());
+        assertEquals("Expected new token to be token returned from refresh service", secondToken.getAccessToken(), token.getAccessToken());
     }
 
     @Test
     public void tokenIsRefreshedWhenExpireTimeReached() {
-        oldToken.setExpiresIn(0l);
+        firstToken.setExpiresIn(0l);
         when(tokenRefresher.getNewToken(refreshToken))
-                .thenReturn(oldToken)
-                .thenReturn(refreshedToken);
+                .thenReturn(firstToken)
+                .thenReturn(secondToken);
         token = new RefreshableOauthToken(tokenRefresher, refreshToken);
 
         String accessToken = token.getAccessToken();
 
-        assertEquals("Expected token to be refreshed when expire time is reached", refreshedToken.getAccessToken(), accessToken);
+        assertEquals("Expected token to be refreshed when expire time is reached", secondToken.getAccessToken(), accessToken);
     }
 
     @Test
     public void tokenIsNotRefreshedWhenNotExpired() {
         when(tokenRefresher.getNewToken(refreshToken))
-                .thenReturn(oldToken)
-                .thenReturn(refreshedToken);
+                .thenReturn(firstToken)
+                .thenReturn(secondToken);
         token = new RefreshableOauthToken(tokenRefresher, refreshToken);
 
         String accessToken = token.getAccessToken();
 
-        assertEquals("Expected token to not be refreshed when not expired", refreshedToken.getAccessToken(), accessToken);
+        assertEquals("Expected token to not be refreshed when not expired", secondToken.getAccessToken(), accessToken);
     }
 
     @Test
     public void tokenIsNotExpiredWhenNullTimeToLive() {
-        oldToken.setExpiresIn(null);
+        firstToken.setExpiresIn(null);
         when(tokenRefresher.getNewToken(refreshToken))
-                .thenReturn(oldToken)
-                .thenReturn(refreshedToken);
+                .thenReturn(firstToken)
+                .thenReturn(secondToken);
         token = new RefreshableOauthToken(tokenRefresher, refreshToken);
 
         String accessToken = token.getAccessToken();
 
-        assertEquals("Expected token to not be refreshed when expire time is null", oldToken.getAccessToken(), accessToken);
+        assertEquals("Expected token to not be refreshed when expire time is null", firstToken.getAccessToken(), accessToken);
     }
 
 }
