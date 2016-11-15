@@ -11,7 +11,7 @@ public class OauthTokenRefresher {
         this.canvasUrl = canvasUrl;
     }
 
-    public String getNewToken(String refreshToken) {
-        return "";
+    public TokenRefreshResponse getNewToken(String refreshToken) {
+        return null;
     }
 }

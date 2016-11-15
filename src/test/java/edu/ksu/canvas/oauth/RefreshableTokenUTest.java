@@ -1,5 +1,6 @@
 package edu.ksu.canvas.oauth;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -11,21 +12,27 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class RefreshableTokenUTest {
     private final String refreshToken = "arbitraryToken";
-    private final String oldToken = "oldToken";
-    private final String refreshedToken = "newToken";
+    private final TokenRefreshResponse oldToken = new TokenRefreshResponse();
+    private final TokenRefreshResponse refreshedToken = new TokenRefreshResponse();
 
     @Mock
     private OauthTokenRefresher tokenRefresher;
     private RefreshableOauthToken token;
 
+    @Before
+    public void setupTokens() {
+        oldToken.setAccessToken("oldToken");
+        refreshedToken.setAccessToken("newToken");
+    }
+
     @Test
     public void newTokenIsAssignedWhenRefreshed() {
-        token = new RefreshableOauthToken(tokenRefresher, refreshToken);
         when(tokenRefresher.getNewToken(refreshToken)).thenReturn(refreshedToken);
+        token = new RefreshableOauthToken(tokenRefresher, refreshToken);
 
         token.refresh();
 
-        assertEquals("Expected new token to be token returned from refresh service", refreshedToken, token.getAccessToken());
+        assertEquals("Expected new token to be token returned from refresh service", refreshedToken.getAccessToken(), token.getAccessToken());
     }
 
     @Test
@@ -33,7 +40,7 @@ public class RefreshableTokenUTest {
         when(tokenRefresher.getNewToken(refreshToken)).thenReturn(refreshedToken);
         token = new RefreshableOauthToken(tokenRefresher, refreshToken);
 
-        assertEquals("Expected token to be refreshed upon construction", refreshedToken, token.getAccessToken());
+        assertEquals("Expected token to be refreshed upon construction", refreshedToken.getAccessToken(), token.getAccessToken());
     }
 
     @Test
@@ -45,7 +52,7 @@ public class RefreshableTokenUTest {
 
         token.refresh();
 
-        assertEquals("Expected new token to be token returned from refresh service", refreshedToken, token.getAccessToken());
+        assertEquals("Expected new token to be token returned from refresh service", refreshedToken.getAccessToken(), token.getAccessToken());
     }
 
 }

@@ -14,7 +14,7 @@ public class RefreshableOauthToken implements OauthToken {
 
     @Override
     public void refresh() {
-        apiToken = tokenRefresher.getNewToken(refreshToken);
+        apiToken = tokenRefresher.getNewToken(refreshToken).getAccessToken();
     }
 
     @Override
