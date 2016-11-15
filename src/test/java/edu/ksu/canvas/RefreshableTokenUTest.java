@@ -1,5 +1,7 @@
 package edu.ksu.canvas;
 
+import edu.ksu.canvas.exception.InvalidOauthTokenException;
+import edu.ksu.canvas.exception.UnauthorizedException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -18,17 +20,48 @@ public class RefreshableTokenUTest {
     private OauthTokenRefresher tokenRefresher;
     private RefreshableOauthToken token;
 
-    private void setupRefreshTest() {
-        token = new RefreshableOauthToken(tokenRefresher, refreshToken);
-        when(tokenRefresher.getNewToken(refreshToken)).thenReturn(refreshedToken);
-    }
-
     @Test
     public void newTokenIsAssignedWhenRefreshed() {
-        setupRefreshTest();
+        token = new RefreshableOauthToken(tokenRefresher, refreshToken);
+        when(tokenRefresher.getNewToken(refreshToken)).thenReturn(refreshedToken);
+
         token.refresh();
 
         assertEquals("Expected new token to be token returned from refresh service", refreshedToken, token.getToken());
+    }
+
+    @Test
+    public void tokenIsRefreshedUponConstruction() {
+        when(tokenRefresher.getNewToken(refreshToken)).thenReturn(refreshedToken);
+        token = new RefreshableOauthToken(tokenRefresher, refreshToken);
+
+        assertEquals("Expected token to be refreshed upon construction", refreshedToken, token.getToken());
+    }
+
+    @Test
+    public void tokenIsChangedWhenTokenExists() {
+        when(tokenRefresher.getNewToken(refreshToken))
+                .thenReturn(oldToken)
+                .thenReturn(refreshedToken);
+        token = new RefreshableOauthToken(tokenRefresher, refreshToken);
+
+        token.refresh();
+
+        assertEquals("Expected new token to be token returned from refresh service", refreshedToken, token.getToken());
+    }
+
+    @Test(expected = UnauthorizedException.class)
+    public void unauthorizedExceptionThrownWhenUnauthorized() {
+        token = new RefreshableOauthToken(tokenRefresher, refreshToken);
+        when(tokenRefresher.getNewToken(refreshToken)).thenThrow(UnauthorizedException.class);
+        token.refresh();
+    }
+
+    @Test(expected = InvalidOauthTokenException.class)
+    public void invalidOauthTokenExceptionThrownWhenInvalid() {
+        token = new RefreshableOauthToken(tokenRefresher, refreshToken);
+        when(tokenRefresher.getNewToken(refreshToken)).thenThrow(InvalidOauthTokenException.class);
+        token.refresh();
     }
 
 }

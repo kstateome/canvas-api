@@ -8,6 +8,7 @@ public class RefreshableOauthToken extends OauthToken {
     public RefreshableOauthToken(OauthTokenRefresher tokenRefresher, String refreshToken) {
         super(refreshToken);
         this.tokenRefresher = tokenRefresher;
+        refresh();
     }
 
     @Override
