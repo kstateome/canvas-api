@@ -1,39 +1,31 @@
 package edu.ksu.canvas.oauth;
 
-import java.io.IOException;
-
-import org.apache.http.HttpException;
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpResponse;
+import edu.ksu.canvas.util.JsonTestUtil;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.localserver.LocalTestServer;
-import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.HttpRequestHandler;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
-import edu.ksu.canvas.util.JsonTestUtil;
-
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
-public class OauthTokenRefresherUTest {
+@RunWith(JUnit4.class)
+public class OauthTokenRefresherITest {
 
     private LocalTestServer server = new LocalTestServer(null, null);
     private String baseUrl;
 
     // Take a JSON file and an HTTP status code and construct a mock response
     private HttpRequestHandler makeRequestHandlerFromJson(String jsonFileName, int statusCode) {
-        String jsonContent = JsonTestUtil.loadJson(jsonFileName, OauthTokenRefresherUTest.class);
-        HttpRequestHandler myHttpRequestHandler = new HttpRequestHandler() {
-            @Override
-            public void handle(HttpRequest request, HttpResponse response, HttpContext context) throws HttpException, IOException {
-                response.setStatusCode(statusCode);
-                response.setEntity(new StringEntity(jsonContent));
-            }
+        String jsonContent = JsonTestUtil.loadJson(jsonFileName, OauthTokenRefresherITest.class);
+        return (request, response, context) -> {
+            response.setStatusCode(statusCode);
+            response.setEntity(new StringEntity(jsonContent));
         };
-        return myHttpRequestHandler;
     }
 
     private void registerOauthHandler(HttpRequestHandler handler) {
