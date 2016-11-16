@@ -21,6 +21,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.CoreConnectionPNames;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
@@ -43,7 +45,7 @@ public class SimpleRestClient implements RestClient {
         LOG.debug("url - " + url);
         Long beginTime = System.currentTimeMillis();
         Response response = new Response();
-        HttpClient httpClient = new DefaultHttpClient();
+        HttpClient httpClient = createHttpClient(connectTimeout, readTimeout);
         HttpGet httpGet = new HttpGet(url);
         httpGet.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
 
@@ -93,7 +95,7 @@ public class SimpleRestClient implements RestClient {
         LOG.debug("sendApiPost");
         Response response = new Response();
 
-        HttpClient httpClient = new DefaultHttpClient();
+        HttpClient httpClient = createHttpClient(connectTimeout, readTimeout);
         HttpEntityEnclosingRequestBase action;
         if("POST".equals(method)) {
             action = new HttpPost(url);
@@ -126,7 +128,7 @@ public class SimpleRestClient implements RestClient {
                                        int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("sendApiPost");
         Response response = new Response();
-        HttpClient httpClient = new DefaultHttpClient();
+        HttpClient httpClient = createHttpClient(connectTimeout, readTimeout);
         Long beginTime = System.currentTimeMillis();
         HttpPost httpPost = new HttpPost(url);
         httpPost.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
@@ -156,7 +158,7 @@ public class SimpleRestClient implements RestClient {
                                 int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("sendApiPut");
         Response response = new Response();
-        HttpClient httpClient = new DefaultHttpClient();
+        HttpClient httpClient = createHttpClient(connectTimeout, readTimeout);
         Long beginTime = System.currentTimeMillis();
         HttpPut httpPut = new HttpPut(url);
         httpPut.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
@@ -189,7 +191,7 @@ public class SimpleRestClient implements RestClient {
         Response response = new Response();
 
         Long beginTime = System.currentTimeMillis();
-        HttpClient httpClient = new DefaultHttpClient();
+        HttpClient httpClient = createHttpClient(connectTimeout, readTimeout);
 
         //This class is defined here because we need to be able to add form body elements to a delete request for a few api calls.
         class HttpDeleteWithBody extends HttpPost {
@@ -243,6 +245,14 @@ public class SimpleRestClient implements RestClient {
             }
         }
         return new BasicResponseHandler().handleResponse(httpResponse);
+    }
+
+    private HttpClient createHttpClient(int connectTimeout, int readTimeout) {
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpParams params = httpClient.getParams();
+        params.setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, connectTimeout);
+        params.setParameter(CoreConnectionPNames.SO_TIMEOUT, readTimeout);
+        return httpClient;
     }
 
 }
