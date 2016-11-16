@@ -2,11 +2,9 @@ package edu.ksu.canvas;
 
 import edu.ksu.canvas.impl.*;
 import edu.ksu.canvas.interfaces.*;
-import edu.ksu.canvas.model.Conversation;
 import edu.ksu.canvas.net.RestClient;
-import edu.ksu.canvas.net.RestClientImpl;
+import edu.ksu.canvas.net.RestClientRefreshDecorator;
 import edu.ksu.canvas.oauth.OauthToken;
-
 import org.apache.log4j.Logger;
 
 import java.lang.reflect.Constructor;
@@ -68,7 +66,7 @@ public class CanvasApiFactory {
      */
     public <T extends CanvasReader> T getReader(Class<T> type, OauthToken oauthToken, Integer paginationPageSize) {
         LOG.debug("Factory call to instantiate class: " + type.getName());
-        RestClient restClient = new RestClientImpl();
+        RestClient restClient = new RestClientRefreshDecorator();
 
         @SuppressWarnings("unchecked")
         Class<T> concreteClass = (Class<T>)readerMap.get(type);
@@ -88,7 +86,7 @@ public class CanvasApiFactory {
 
     public <T extends CanvasWriter> T getWriter(Class<T> type, OauthToken oauthToken) {
         LOG.debug("Factory call to instantiate class: " + type.getName());
-        RestClient restClient = new RestClientImpl();
+        RestClient restClient = new RestClientRefreshDecorator();
 
         @SuppressWarnings("unchecked")
         Class<T> concreteClass = (Class<T>) writerMap.get(type);
