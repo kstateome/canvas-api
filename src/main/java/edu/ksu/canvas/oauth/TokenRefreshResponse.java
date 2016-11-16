@@ -27,6 +27,9 @@ public class TokenRefreshResponse {
     }
 
     public Long getExpiresIn() {
+        if (expiresIn == null || expiresIn == 0) {
+            return null;
+        }
         return expiresIn;
     }
 

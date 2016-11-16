@@ -1,11 +1,10 @@
 package edu.ksu.canvas.oauth;
 
-import java.io.IOException;
-import java.util.Date;
-
+import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import org.apache.log4j.Logger;
 
-import edu.ksu.canvas.exception.InvalidOauthTokenException;
+import java.io.IOException;
+import java.util.Date;
 
 public class RefreshableOauthToken implements OauthToken {
     private static final Logger LOG = Logger.getLogger(RefreshableOauthToken.class);
@@ -44,24 +43,27 @@ public class RefreshableOauthToken implements OauthToken {
         return apiToken;
     }
 
-    private class TokenExpiration {
-        private final int expireWindowMS = 60000;
-        Date lastRefreshed;
-        Long timeToLive;
+    protected Date now() {
+        return new Date();
+    }
 
-        TokenExpiration(Long timeToLive) {
-            this.lastRefreshed = new Date();
-            if (timeToLive != null) {
-                this.timeToLive = timeToLive - expireWindowMS;
+    private class TokenExpiration {
+        Date lastRefreshed;
+        Long timeToLiveMS;
+
+        TokenExpiration(Long timeToLiveSeconds) {
+            this.lastRefreshed = now();
+            if (timeToLiveSeconds != null) {
+                this.timeToLiveMS = timeToLiveSeconds * 1000;
             }
         }
 
         boolean isExpired() {
             // Not trusting time to live to be returned so default to not being expired.
-            if (timeToLive == null) {
+            if (timeToLiveMS == null) {
                 return false;
             }
-            return (new Date().getTime() - lastRefreshed.getTime()) >= timeToLive;
+            return (now().getTime() - lastRefreshed.getTime()) >= timeToLiveMS;
         }
     }
 
