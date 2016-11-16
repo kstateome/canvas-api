@@ -48,6 +48,7 @@ public class RestClientImpl implements RestClient {
         httpGet.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
 
         HttpResponse httpResponse = httpClient.execute(httpGet);
+        checkAuthenticationHeaders(httpResponse);
         //deal with the actual content
         BufferedReader in = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
         String inputLine;
@@ -222,7 +223,7 @@ public class RestClientImpl implements RestClient {
         return response;
     }
 
-    private String handleResponse(HttpResponse httpResponse, HttpRequestBase request) throws IOException {
+    private void checkAuthenticationHeaders(HttpResponse httpResponse) {
         int statusCode = httpResponse.getStatusLine().getStatusCode();
         if (statusCode == 401) {
             //If the WWW-Authenticate header is set, it is a token problem.
@@ -233,6 +234,11 @@ public class RestClientImpl implements RestClient {
             }
             LOG.error("User is not authorized to perform this action");
         }
+    }
+
+    private String handleResponse(HttpResponse httpResponse, HttpRequestBase request) throws IOException {
+        checkAuthenticationHeaders(httpResponse);
+        int statusCode = httpResponse.getStatusLine().getStatusCode();
         if(statusCode < 200 || statusCode > 299) {
             LOG.error("HTTP status " + statusCode + " returned from " + request.getURI());
             HttpEntity entity = httpResponse.getEntity();
