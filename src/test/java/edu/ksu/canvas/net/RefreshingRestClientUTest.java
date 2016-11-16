@@ -22,11 +22,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RestClientRefreshDecoratorUTest {
+public class RefreshingRestClientUTest {
     @Mock
     private RestClient mockRestClient;
     @InjectMocks
-    private RestClientRefreshDecorator refreshRestClientUTest;
+    private RefreshingRestClient refreshRestClientUTest;
     @Mock
     private OauthToken mockToken;
 

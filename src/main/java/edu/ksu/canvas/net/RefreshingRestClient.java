@@ -8,9 +8,9 @@ import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.Map;
 
-public class RestClientRefreshDecorator implements RestClient {
-    private static final Logger LOG = Logger.getLogger(RestClientRefreshDecorator.class);
-    private RestClient restClient = new RestClientImpl();
+public class RefreshingRestClient implements RestClient {
+    private static final Logger LOG = Logger.getLogger(RefreshingRestClient.class);
+    private RestClient restClient = new SimpleRestClient();
 
     @Override
     public Response sendApiGet(@NotNull OauthToken token, @NotNull String url, int connectTimeout, int readTimeout) throws IOException {

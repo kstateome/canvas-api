@@ -1,6 +1,7 @@
 package edu.ksu.canvas.net;
 
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
+import edu.ksu.canvas.exception.UnauthorizedException;
 import edu.ksu.canvas.oauth.OauthToken;
 
 import org.apache.http.Header;
@@ -33,9 +34,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-/* Class extracted from methods in CanvasUtil */
-public class RestClientImpl implements RestClient {
-    private static final Logger LOG = Logger.getLogger(RestClientImpl.class);
+public class SimpleRestClient implements RestClient {
+    private static final Logger LOG = Logger.getLogger(SimpleRestClient.class);
 
     @Override
     public Response sendApiGet(@NotNull OauthToken token, @NotNull String url,
@@ -48,7 +48,6 @@ public class RestClientImpl implements RestClient {
         httpGet.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
 
         HttpResponse httpResponse = httpClient.execute(httpGet);
-        checkAuthenticationHeaders(httpResponse);
         //deal with the actual content
         BufferedReader in = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
         String inputLine;
@@ -223,22 +222,19 @@ public class RestClientImpl implements RestClient {
         return response;
     }
 
-    private void checkAuthenticationHeaders(HttpResponse httpResponse) {
+    private String handleResponse(HttpResponse httpResponse, HttpRequestBase request) throws IOException {
         int statusCode = httpResponse.getStatusLine().getStatusCode();
         if (statusCode == 401) {
             //If the WWW-Authenticate header is set, it is a token problem.
             //If the header is not present, it is a user permission error.
             //See https://canvas.instructure.com/doc/api/file.oauth.html#storing-access-tokens
-            if(httpResponse.containsHeader(HttpHeaders.WWW_AUTHENTICATE)) {
+            LOG.error("HTTP status 401 returned from " + request.getURI());
+            if (httpResponse.containsHeader(HttpHeaders.WWW_AUTHENTICATE)) {
                 throw new InvalidOauthTokenException();
             }
-            LOG.error("User is not authorized to perform this action");
+            LOG.debug("User is not authorized to perform this action");
+            throw new UnauthorizedException();
         }
-    }
-
-    private String handleResponse(HttpResponse httpResponse, HttpRequestBase request) throws IOException {
-        checkAuthenticationHeaders(httpResponse);
-        int statusCode = httpResponse.getStatusLine().getStatusCode();
         if(statusCode < 200 || statusCode > 299) {
             LOG.error("HTTP status " + statusCode + " returned from " + request.getURI());
             HttpEntity entity = httpResponse.getEntity();
