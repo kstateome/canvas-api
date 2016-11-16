@@ -1,0 +1,9 @@
+{
+  "access_token": "1726~ACCESS_TOKEN_STRING",
+  "token_type": "Bearer",
+  "user": {
+    "id": 1,
+    "name": "John Smith"
+  },
+  "expires_in": 3600
+}
