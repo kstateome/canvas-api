@@ -16,6 +16,7 @@ import edu.ksu.canvas.interfaces.ConversationWriter;
 import edu.ksu.canvas.model.Conversation;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.AddMessageToConversationOptions;
 import edu.ksu.canvas.requestOptions.CreateConversationOptions;
 import edu.ksu.canvas.requestOptions.GetSingleConversationOptions;
@@ -23,7 +24,7 @@ import edu.ksu.canvas.requestOptions.GetSingleConversationOptions;
 public class ConversationImpl extends BaseImpl<Conversation, ConversationReader, ConversationWriter> implements ConversationReader, ConversationWriter {
     private static final Logger LOG = Logger.getLogger(ConversationImpl.class);
 
-    public ConversationImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient,
+    public ConversationImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
             int connectTimeout, int readTimeout, Integer paginationPageSize) {
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout,readTimeout, paginationPageSize);
     }

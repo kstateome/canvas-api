@@ -2,9 +2,9 @@ package edu.ksu.canvas;
 
 import edu.ksu.canvas.impl.*;
 import edu.ksu.canvas.interfaces.*;
-import edu.ksu.canvas.model.Conversation;
 import edu.ksu.canvas.net.RestClient;
-import edu.ksu.canvas.net.RestClientImpl;
+import edu.ksu.canvas.net.RefreshingRestClient;
+import edu.ksu.canvas.oauth.OauthToken;
 import org.apache.log4j.Logger;
 
 import java.lang.reflect.Constructor;
@@ -48,7 +48,7 @@ public class CanvasApiFactory {
      * @param <T> The reader type to request an instance of
      * @return A reader implementation class
      */
-    public <T extends CanvasReader> T getReader(Class<T> type, String oauthToken) {
+    public <T extends CanvasReader> T getReader(Class<T> type, OauthToken oauthToken) {
         return getReader(type, oauthToken, null);
     }
 
@@ -64,9 +64,9 @@ public class CanvasApiFactory {
      * @param <T> The reader type to request an instance of
      * @return An instance of the requested reader class
      */
-    public <T extends CanvasReader> T getReader(Class<T> type, String oauthToken, Integer paginationPageSize) {
+    public <T extends CanvasReader> T getReader(Class<T> type, OauthToken oauthToken, Integer paginationPageSize) {
         LOG.debug("Factory call to instantiate class: " + type.getName());
-        RestClient restClient = new RestClientImpl();
+        RestClient restClient = new RefreshingRestClient();
 
         @SuppressWarnings("unchecked")
         Class<T> concreteClass = (Class<T>)readerMap.get(type);
@@ -77,16 +77,16 @@ public class CanvasApiFactory {
 
         LOG.debug("got class: " + concreteClass);
         try {
-            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, String.class, RestClient.class, Integer.TYPE, Integer.TYPE, Integer.class);
+            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, OauthToken.class, RestClient.class, Integer.TYPE, Integer.TYPE, Integer.class);
             return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
             throw new UnsupportedOperationException("Unknown error instantiating the concrete API class: " + type.getName(), e);
         }
     }
 
-    public <T extends CanvasWriter> T getWriter(Class<T> type, String oauthToken) {
+    public <T extends CanvasWriter> T getWriter(Class<T> type, OauthToken oauthToken) {
         LOG.debug("Factory call to instantiate class: " + type.getName());
-        RestClient restClient = new RestClientImpl();
+        RestClient restClient = new RefreshingRestClient();
 
         @SuppressWarnings("unchecked")
         Class<T> concreteClass = (Class<T>) writerMap.get(type);
@@ -97,7 +97,7 @@ public class CanvasApiFactory {
 
         LOG.debug("got class: " + concreteClass);
         try {
-            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, String.class, RestClient.class, Integer.TYPE, Integer.TYPE, Integer.class);
+            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, OauthToken.class, RestClient.class, Integer.TYPE, Integer.TYPE, Integer.class);
             return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient, connectTimeout, readTimeout, null);
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
             throw new UnsupportedOperationException("Unknown error instantiating the concrete API class: " + type.getName(), e);

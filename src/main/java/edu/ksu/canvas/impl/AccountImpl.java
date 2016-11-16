@@ -2,11 +2,13 @@ package edu.ksu.canvas.impl;
 
 
 import com.google.gson.reflect.TypeToken;
+
 import edu.ksu.canvas.interfaces.AccountReader;
 import edu.ksu.canvas.interfaces.CanvasWriter;
 import edu.ksu.canvas.model.Account;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.GetSubAccountsOptions;
 import edu.ksu.canvas.requestOptions.ListAccountOptions;
 import edu.ksu.canvas.util.CanvasURLBuilder;
@@ -21,7 +23,7 @@ import java.util.Optional;
 public class AccountImpl extends BaseImpl<Account, AccountReader, CanvasWriter> implements AccountReader {
     private static final Logger LOG = Logger.getLogger(AccountImpl.class);
 
-    public AccountImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
+    public AccountImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }
 

@@ -1,9 +1,12 @@
 package edu.ksu.canvas.net;
 
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
+import edu.ksu.canvas.exception.UnauthorizedException;
+import edu.ksu.canvas.oauth.OauthToken;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -31,18 +34,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-/* Class extracted from methods in CanvasUtil */
-public class RestClientImpl implements RestClient {
-    private static final Logger LOG = Logger.getLogger(RestClientImpl.class);
+public class SimpleRestClient implements RestClient {
+    private static final Logger LOG = Logger.getLogger(SimpleRestClient.class);
 
-    public Response sendApiGet(@NotNull String token, @NotNull String url,
+    @Override
+    public Response sendApiGet(@NotNull OauthToken token, @NotNull String url,
                                       int connectTimeout, int readTimeout) throws IOException {
         LOG.debug("url - " + url);
         Long beginTime = System.currentTimeMillis();
         Response response = new Response();
         HttpClient httpClient = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(url);
-        httpGet.setHeader("Authorization", "Bearer" + " " + token);
+        httpGet.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
 
         HttpResponse httpResponse = httpClient.execute(httpGet);
         //deal with the actual content
@@ -75,17 +78,17 @@ public class RestClientImpl implements RestClient {
     }
 
     @Override
-    public Response sendJsonPut(String token, String url, String json, int connectTimeout, int readTimeout) throws IOException {
+    public Response sendJsonPut(OauthToken token, String url, String json, int connectTimeout, int readTimeout) throws IOException {
         return sendJsonPostOrPut(token, url, json, connectTimeout, readTimeout, "PUT");
     }
 
     @Override
-    public Response sendJsonPost(String token, String url, String json, int connectTimeout, int readTimeout) throws IOException {
+    public Response sendJsonPost(OauthToken token, String url, String json, int connectTimeout, int readTimeout) throws IOException {
         return sendJsonPostOrPut(token, url, json, connectTimeout, readTimeout, "POST");
     }
 
     //TODO: remove awful duplication
-    private Response sendJsonPostOrPut(String token, String url, String json,
+    private Response sendJsonPostOrPut(OauthToken token, String url, String json,
                                         int connectTimeout, int readTimeout, String method) throws IOException {
         LOG.debug("sendApiPost");
         Response response = new Response();
@@ -100,7 +103,7 @@ public class RestClientImpl implements RestClient {
             throw new IllegalArgumentException("Method must be either POST or PUT");
         }
         Long beginTime = System.currentTimeMillis();
-        action.setHeader("Authorization", "Bearer" + " " + token);
+        action.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
 
         StringEntity params = new StringEntity(json, ContentType.APPLICATION_JSON);
         action.setEntity(params);
@@ -118,14 +121,15 @@ public class RestClientImpl implements RestClient {
         return response;
     }
 
-    public Response sendApiPost(String token, String url, Map<String, String> postParameters,
+    @Override
+    public Response sendApiPost(OauthToken token, String url, Map<String, String> postParameters,
                                        int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("sendApiPost");
         Response response = new Response();
         HttpClient httpClient = new DefaultHttpClient();
         Long beginTime = System.currentTimeMillis();
         HttpPost httpPost = new HttpPost(url);
-        httpPost.setHeader("Authorization", "Bearer" + " " + token);
+        httpPost.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
         List<NameValuePair> params = new ArrayList<>();
 
         if (postParameters != null) {
@@ -147,14 +151,15 @@ public class RestClientImpl implements RestClient {
         return response;
     }
 
-public Response sendApiPut(String token, String url, Map<String, Object> putParameters,
+    @Override
+    public Response sendApiPut(OauthToken token, String url, Map<String, Object> putParameters,
                                 int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("sendApiPut");
         Response response = new Response();
         HttpClient httpClient = new DefaultHttpClient();
         Long beginTime = System.currentTimeMillis();
         HttpPut httpPut = new HttpPut(url);
-        httpPut.setHeader("Authorization", "Bearer" + " " + token);
+        httpPut.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
         List<NameValuePair> params = new ArrayList<>();
 
         if (putParameters != null) {
@@ -177,7 +182,8 @@ public Response sendApiPut(String token, String url, Map<String, Object> putPara
     }
 
 
-    public Response sendApiDelete(String token, String url,Map<String, String> deleteParameters,
+    @Override
+    public Response sendApiDelete(OauthToken token, String url,Map<String, String> deleteParameters,
                                        int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("sendApiDelete");
         Response response = new Response();
@@ -196,7 +202,7 @@ public Response sendApiPut(String token, String url, Map<String, Object> putPara
         HttpDeleteWithBody httpDelete = new HttpDeleteWithBody();
 
         httpDelete.setURI(URI.create(url));
-        httpDelete.setHeader("Authorization", "Bearer" + " " + token);
+        httpDelete.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
         List<NameValuePair> params = new ArrayList<>();
         if (deleteParameters != null) {
             for (Map.Entry<String, String> entry : deleteParameters.entrySet()) {
@@ -219,7 +225,15 @@ public Response sendApiPut(String token, String url, Map<String, Object> putPara
     private String handleResponse(HttpResponse httpResponse, HttpRequestBase request) throws IOException {
         int statusCode = httpResponse.getStatusLine().getStatusCode();
         if (statusCode == 401) {
-            throw new InvalidOauthTokenException();
+            //If the WWW-Authenticate header is set, it is a token problem.
+            //If the header is not present, it is a user permission error.
+            //See https://canvas.instructure.com/doc/api/file.oauth.html#storing-access-tokens
+            LOG.error("HTTP status 401 returned from " + request.getURI());
+            if (httpResponse.containsHeader(HttpHeaders.WWW_AUTHENTICATE)) {
+                throw new InvalidOauthTokenException();
+            }
+            LOG.debug("User is not authorized to perform this action");
+            throw new UnauthorizedException();
         }
         if(statusCode < 200 || statusCode > 299) {
             LOG.error("HTTP status " + statusCode + " returned from " + request.getURI());
@@ -230,4 +244,5 @@ public Response sendApiPut(String token, String url, Map<String, Object> putPara
         }
         return new BasicResponseHandler().handleResponse(httpResponse);
     }
+
 }
