@@ -26,6 +26,8 @@ public class RefreshableOauthToken implements OauthToken {
     public RefreshableOauthToken(OauthTokenRefresher tokenRefresher, String refreshToken, String accessToken) {
         this.refreshToken = refreshToken;
         this.apiToken = accessToken;
+        this.tokenRefresher = tokenRefresher;
+        tokenExpiration = new TokenExpiration(null);
     }
 
     /**

@@ -104,6 +104,16 @@ public class RefreshableTokenUTest {
         assertEquals("Expected token to not be refreshed when expire time is 0", firstToken.getAccessToken(), accessToken);
     }
 
+    @Test
+    public void createTokenWithAccessTokenThenRefresh() throws Exception {
+        when(tokenRefresher.getNewToken(refreshToken))
+                .thenReturn(firstToken);
+        token = new RefreshableOauthTokenForTests(tokenRefresher, refreshToken, "arbitraryAccessToken", DEFAULT_TIME_DELTA_MS);
+        token.refresh();
+
+        assertEquals("", firstToken.getAccessToken(), token.getAccessToken());
+    }
+
     /*
      * This class allows us to not depend on Thread.sleep() for the unit tests.
      * The now() method alternates between calls in the 'present' and calls in the 'future'.
@@ -112,6 +122,11 @@ public class RefreshableTokenUTest {
     private class RefreshableOauthTokenForTests extends RefreshableOauthToken {
         private long timeDelta;
         private boolean inFuture;
+
+        RefreshableOauthTokenForTests (OauthTokenRefresher tokenRefresher, String refreshToken, String accessToken, long timeDelta) {
+            super(tokenRefresher, refreshToken, accessToken);
+            this.timeDelta = timeDelta;
+        }
 
         RefreshableOauthTokenForTests(OauthTokenRefresher tokenRefresher, String refreshToken, long timeDelta) {
             super(tokenRefresher, refreshToken);
