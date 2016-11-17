@@ -5,6 +5,7 @@ import edu.ksu.canvas.model.Section;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 /**
  * Methods to read information from and about sections
  */
@@ -25,6 +26,6 @@ public interface SectionReader extends CanvasReader<Section, SectionReader> {
      * @return The section
      * @throws IOException When there is an error communicating with Canvas
      */
-     Section getSingleSection(String sectionId) throws IOException;
+     Optional<Section> getSingleSection(String sectionId) throws IOException;
 
 }
