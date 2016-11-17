@@ -37,7 +37,7 @@ public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter
         ImmutableMap<String, List<String>> parameters = ImmutableMap.<String,List<String>>builder()
                 .put("include[]", includes.stream().map(Enum::name).collect(Collectors.toList()))
                 .build();
-        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "/courses/" + courseId + "/sections", parameters);
+        String url = buildCanvasUrl("/courses/" + courseId + "/sections", parameters);
         List<Response> response = canvasMessenger.getFromCanvas(oauthToken, url);
         return parseSections(response);
     }
@@ -45,7 +45,7 @@ public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter
     @Override
     public Section getSingleSection(String sectionId) throws IOException {
         LOG.debug("getting section " + sectionId);
-        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "sections/" + sectionId, new HashMap<>());
+        String url = buildCanvasUrl("sections/" + sectionId, new HashMap<>());
         LOG.debug("Final URL of API call: " + url);
         return getFromCanvas(url).orElseThrow(() -> new IllegalArgumentException("Failed to find section " + sectionId));
     }

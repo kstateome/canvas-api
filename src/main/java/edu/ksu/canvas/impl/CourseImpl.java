@@ -30,14 +30,14 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
     @Override
     public List<Course> listCurrentUserCourses(ListCurrentUserCoursesOptions options) throws IOException {
         LOG.info("listing courses for user");
-        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "courses/", options.getOptionsMap());
+        String url = buildCanvasUrl("courses/", options.getOptionsMap());
         return getListFromCanvas(url);
     }
 
     @Override
     public Optional<Course> getSingleCourse(GetSingleCourseOptions options) throws IOException {
         LOG.debug("getting course " + options.getCourseId());
-        String url = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, "courses/" + options.getCourseId(), options.getOptionsMap());
+        String url = buildCanvasUrl("courses/" + options.getCourseId(), options.getOptionsMap());
         LOG.debug("Final URL of API call: " + url);
 
         return retrieveCourseFromCanvas(oauthToken, url);
