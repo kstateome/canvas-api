@@ -1,7 +1,5 @@
 package edu.ksu.canvas.requestOptions;
 
-import java.util.Arrays;
-
 public class GetQuizQuestionsOptions extends BaseOptions {
 
     private String courseId;
@@ -28,7 +26,7 @@ public class GetQuizQuestionsOptions extends BaseOptions {
      * @return This object to allow adding more options
      */
     public GetQuizQuestionsOptions quizSubmissionId(Integer submissionId) {
-        optionsMap.put("quiz_submission_id", Arrays.asList(submissionId.toString()));
+        addSingleItem("quiz_submission_id", submissionId.toString());
         return this;
     }
 
@@ -38,7 +36,7 @@ public class GetQuizQuestionsOptions extends BaseOptions {
      * @return This object to allow adding more options
      */
     public GetQuizQuestionsOptions quizSubmissionAttempt(Integer submissionAttempt) {
-        optionsMap.put("quiz_submission_attempt", Arrays.asList(submissionAttempt.toString()));
+        addSingleItem("quiz_submission_attempt", submissionAttempt.toString());
         return this;
     }
 

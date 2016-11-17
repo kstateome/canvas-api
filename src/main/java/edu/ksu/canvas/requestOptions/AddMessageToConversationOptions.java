@@ -49,7 +49,7 @@ public class AddMessageToConversationOptions extends BaseOptions {
      * @return This object to allow adding more options
      */
     public AddMessageToConversationOptions mediaCommentType(MediaCommentType type) {
-        addSingleItem("media_comment_type", type.name());
+        addSingleItem("media_comment_type", type.toString());
         return this;
     }
 

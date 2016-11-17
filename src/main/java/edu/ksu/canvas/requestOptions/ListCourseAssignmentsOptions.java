@@ -5,11 +5,15 @@ import java.util.List;
 public class ListCourseAssignmentsOptions extends BaseOptions {
 
     public enum Include {
-        submission, assignment_visibility, all_dates, overrides, observed_users;
+        SUBMISSION, ASSIGNMENT_VISIBILITY, ALL_DATES, OVERRIDES, OBSERVED_USERS;
+
+        public String toString() { return name().toLowerCase(); }
     }
 
     public enum Bucket {
-        past, overdue, undated, ungraded, unsubmitted, upcoming, future;
+        PAST, OVERDUE, UNDATED, UNGRADED, UNSUBMITTED, UPCOMING, FUTURE;
+
+        public String toString() { return name().toLowerCase(); }
     }
 
     private String courseId;
@@ -70,7 +74,7 @@ public class ListCourseAssignmentsOptions extends BaseOptions {
      * @return this to continue building options
      */
     public ListCourseAssignmentsOptions bucketFilter(Bucket bucket) {
-        addSingleItem("bucket", bucket.name());
+        addSingleItem("bucket", bucket.toString());
         return this;
     }
 }

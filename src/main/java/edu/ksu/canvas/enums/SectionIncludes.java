@@ -1,9 +1,13 @@
 package edu.ksu.canvas.enums;
 
 public enum SectionIncludes {
-    students,
-    avatar_url,
-    enrollments,
-    total_students,
-    passback_status
+    STUDENTS,
+    AVATAR_URL,
+    ENROLLMENTS,
+    TOTAL_STUDENTS,
+    PASSBACK_STATUS;
+
+    public String toString() {
+        return name().toLowerCase();
+    }
 }

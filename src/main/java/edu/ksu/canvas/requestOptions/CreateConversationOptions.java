@@ -4,8 +4,12 @@ import java.util.List;
 
 public class CreateConversationOptions extends BaseOptions {
 
-    public enum MediaCommentType {audio, video}
-    public enum Mode {sync, async}
+    public enum MediaCommentType {AUDIO, VIDEO;
+        public String toString() { return name().toLowerCase(); }
+    }
+    public enum Mode {SYNC, ASYNC;
+        public String toString() { return name().toLowerCase(); }
+    }
 
     /**
      * Recipient list and body text are required to create a conversation.
@@ -79,7 +83,7 @@ public class CreateConversationOptions extends BaseOptions {
      * @return This object to allow adding more options
      */
     public CreateConversationOptions mediaCommentType(MediaCommentType type) {
-        addSingleItem("media_comment_type", type.name());
+        addSingleItem("media_comment_type", type.toString());
         return this;
     }
 
@@ -103,7 +107,7 @@ public class CreateConversationOptions extends BaseOptions {
      * @return This object to allow adding more options
      */
     public CreateConversationOptions mode(Mode mode) {
-        addSingleItem("mode", mode.name());
+        addSingleItem("mode", mode.toString());
         return this;
     }
 }
