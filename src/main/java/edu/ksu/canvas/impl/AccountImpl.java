@@ -31,7 +31,6 @@ public class AccountImpl extends BaseImpl<Account, AccountReader, CanvasWriter> 
     public Optional<Account> getSingleAccount(String accountId) throws IOException {
         LOG.debug("getting account " + accountId);
         String url = buildCanvasUrl("accounts/" + accountId, Collections.emptyMap());
-        LOG.debug("Final URL of API call: " + url);
 
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         if (response.getErrorHappened() || response.getResponseCode() != 200) {
