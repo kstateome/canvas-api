@@ -12,6 +12,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Entry point for using the Canvas API library. It constructs concrete
+ * implementations of reader/writer classes to perform API calls with.
+ * It must be constructed with a Canvas instance URL which will be used
+ * for all API calls. It has options to specify network timeouts and a way
+ * to control API pagination.
+ */
 public class CanvasApiFactory {
 
     private static final Logger LOG = Logger.getLogger(CanvasApiFactory.class);
@@ -26,6 +33,10 @@ public class CanvasApiFactory {
     Map<Class<? extends CanvasReader>, Class<? extends BaseImpl>> readerMap;
     Map<Class<? extends CanvasWriter>, Class<? extends BaseImpl>> writerMap;
 
+    /**
+     * Construct an API factory for a given instance of Canvas.
+     * @param canvasBaseUrl The base URL used to access your Canvas instance
+     */
     public CanvasApiFactory(String canvasBaseUrl) {
         LOG.debug("Creating Canvas API factory with base URL: " + canvasBaseUrl);
         this.canvasBaseUrl = canvasBaseUrl;
@@ -34,6 +45,12 @@ public class CanvasApiFactory {
         setupClassMap();
     }
 
+    /**
+     * Construct an API factory with specified timeout values
+     * @param canvasBaseUrl The base URL used to access your Canvas instance
+     * @param connectTimeout Connection timeout in milliseconds
+     * @param readTimeout Read timeout in milliseconds. If this is too low, longer API queries could time out prematurely
+     */
     public CanvasApiFactory(String canvasBaseUrl, int connectTimeout, int readTimeout) {
         this.canvasBaseUrl = canvasBaseUrl;
         this.connectTimeout = connectTimeout;
@@ -84,6 +101,12 @@ public class CanvasApiFactory {
         }
     }
 
+    /**
+     * Get a writer implementation to push data into Canvas.
+     * @param type Interface type you wish to get an implementation for
+     * @param oauthToken An OAuth token to use for authentication when making API calls
+     * @return A writer implementation class
+     */
     public <T extends CanvasWriter> T getWriter(Class<T> type, OauthToken oauthToken) {
         LOG.debug("Factory call to instantiate class: " + type.getName());
         RestClient restClient = new RefreshingRestClient();

@@ -21,6 +21,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.CoreConnectionPNames;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
@@ -40,10 +42,10 @@ public class SimpleRestClient implements RestClient {
     @Override
     public Response sendApiGet(@NotNull OauthToken token, @NotNull String url,
                                       int connectTimeout, int readTimeout) throws IOException {
-        LOG.debug("url - " + url);
+        LOG.debug("Sending GET request to URL: " + url);
         Long beginTime = System.currentTimeMillis();
         Response response = new Response();
-        HttpClient httpClient = new DefaultHttpClient();
+        HttpClient httpClient = createHttpClient(connectTimeout, readTimeout);
         HttpGet httpGet = new HttpGet(url);
         httpGet.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
 
@@ -58,7 +60,7 @@ public class SimpleRestClient implements RestClient {
         response.setContent(content.toString());
         response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
         Long endTime = System.currentTimeMillis();
-        LOG.debug("Canvas API call took: " + (endTime - beginTime) + "ms");
+        LOG.debug("GET call took: " + (endTime - beginTime) + "ms");
 
         //deal with pagination
         Header linkHeader = httpResponse.getFirstHeader("Link");
@@ -87,13 +89,13 @@ public class SimpleRestClient implements RestClient {
         return sendJsonPostOrPut(token, url, json, connectTimeout, readTimeout, "POST");
     }
 
-    //TODO: remove awful duplication
+    // PUT and POST are identical calls except for the header specifying the method
     private Response sendJsonPostOrPut(OauthToken token, String url, String json,
                                         int connectTimeout, int readTimeout, String method) throws IOException {
-        LOG.debug("sendApiPost");
+        LOG.debug("Sending JSON " + method + " to URL: " + url);
         Response response = new Response();
 
-        HttpClient httpClient = new DefaultHttpClient();
+        HttpClient httpClient = createHttpClient(connectTimeout, readTimeout);
         HttpEntityEnclosingRequestBase action;
         if("POST".equals(method)) {
             action = new HttpPost(url);
@@ -105,18 +107,16 @@ public class SimpleRestClient implements RestClient {
         Long beginTime = System.currentTimeMillis();
         action.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
 
-        StringEntity params = new StringEntity(json, ContentType.APPLICATION_JSON);
-        action.setEntity(params);
+        StringEntity requestBody = new StringEntity(json, ContentType.APPLICATION_JSON);
+        action.setEntity(requestBody);
         HttpResponse httpResponse = httpClient.execute(action);
 
-        LOG.debug("Sending API " + method + " request to URL: " + url);
         String content = handleResponse(httpResponse, action);
 
         response.setContent(content);
         response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
         Long endTime = System.currentTimeMillis();
-        LOG.debug("Canvas API call took: " + (endTime - beginTime) + "ms");
-
+        LOG.debug("POST call took: " + (endTime - beginTime) + "ms");
 
         return response;
     }
@@ -124,9 +124,9 @@ public class SimpleRestClient implements RestClient {
     @Override
     public Response sendApiPost(OauthToken token, String url, Map<String, String> postParameters,
                                        int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
-        LOG.debug("sendApiPost");
+        LOG.debug("Sending API POST request to URL: " + url);
         Response response = new Response();
-        HttpClient httpClient = new DefaultHttpClient();
+        HttpClient httpClient = createHttpClient(connectTimeout, readTimeout);
         Long beginTime = System.currentTimeMillis();
         HttpPost httpPost = new HttpPost(url);
         httpPost.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
@@ -140,23 +140,22 @@ public class SimpleRestClient implements RestClient {
         }
 
         httpPost.setEntity(new UrlEncodedFormEntity(params));
-        LOG.debug("Sending API POST request to URL: " + url);
         HttpResponse httpResponse =  httpClient.execute(httpPost);
         String content = handleResponse(httpResponse, httpPost);
 
         response.setContent(content);
         response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
         Long endTime = System.currentTimeMillis();
-        LOG.debug("Canvas API call took: " + (endTime - beginTime) + "ms");
+        LOG.debug("POST call took: " + (endTime - beginTime) + "ms");
         return response;
     }
 
     @Override
     public Response sendApiPut(OauthToken token, String url, Map<String, Object> putParameters,
                                 int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
-        LOG.debug("sendApiPut");
+        LOG.debug("Sending API PUT request to URL: " + url);
         Response response = new Response();
-        HttpClient httpClient = new DefaultHttpClient();
+        HttpClient httpClient = createHttpClient(connectTimeout, readTimeout);
         Long beginTime = System.currentTimeMillis();
         HttpPut httpPut = new HttpPut(url);
         httpPut.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
@@ -170,14 +169,13 @@ public class SimpleRestClient implements RestClient {
         }
 
         httpPut.setEntity(new UrlEncodedFormEntity(params));
-        LOG.debug("Sending API PUT request to URL: " + url);
         HttpResponse httpResponse =  httpClient.execute(httpPut);
         String content = handleResponse(httpResponse, httpPut);
 
         response.setContent(content);
         response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
         Long endTime = System.currentTimeMillis();
-        LOG.debug("Canvas API call took: " + (endTime - beginTime) + "ms");
+        LOG.debug("PUT call took: " + (endTime - beginTime) + "ms");
         return response;
     }
 
@@ -185,11 +183,11 @@ public class SimpleRestClient implements RestClient {
     @Override
     public Response sendApiDelete(OauthToken token, String url,Map<String, String> deleteParameters,
                                        int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
-        LOG.debug("sendApiDelete");
+        LOG.debug("Sending API DELETE request to URL: " + url);
         Response response = new Response();
 
         Long beginTime = System.currentTimeMillis();
-        HttpClient httpClient = new DefaultHttpClient();
+        HttpClient httpClient = createHttpClient(connectTimeout, readTimeout);
 
         //This class is defined here because we need to be able to add form body elements to a delete request for a few api calls.
         class HttpDeleteWithBody extends HttpPost {
@@ -211,13 +209,12 @@ public class SimpleRestClient implements RestClient {
         }
         httpDelete.setEntity(new UrlEncodedFormEntity(params));
         HttpResponse httpResponse = httpClient.execute(httpDelete);
-        LOG.debug("Sending API DELETE request to URL: " + url);
 
         String content = handleResponse(httpResponse, httpDelete);
         response.setContent(content);
         response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
         Long endTime = System.currentTimeMillis();
-        LOG.debug("Canvas API call took: " + (endTime - beginTime) + "ms");
+        LOG.debug("DELETE call took: " + (endTime - beginTime) + "ms");
 
         return response;
     }
@@ -243,6 +240,14 @@ public class SimpleRestClient implements RestClient {
             }
         }
         return new BasicResponseHandler().handleResponse(httpResponse);
+    }
+
+    private HttpClient createHttpClient(int connectTimeout, int readTimeout) {
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpParams params = httpClient.getParams();
+        params.setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, connectTimeout);
+        params.setParameter(CoreConnectionPNames.SO_TIMEOUT, readTimeout);
+        return httpClient;
     }
 
 }
