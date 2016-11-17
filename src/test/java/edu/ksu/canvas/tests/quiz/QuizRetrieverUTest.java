@@ -16,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -59,7 +60,8 @@ public class QuizRetrieverUTest extends CanvasTestBase {
         Response erroredResponse = new Response();
         erroredResponse.setErrorHappened(true);
         String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion,
-                "courses/" + someCourseId + "/quizzes", Collections.emptyMap());fakeRestClient.add401Response(url, "SampleJson/assignment/Assignment1.json");
+                "courses/" + someCourseId + "/quizzes", Collections.emptyMap());
+        fakeRestClient.add401Response(url, "SampleJson/assignment/MinimalAssignment.json");
         quizReader.getQuizzesInCourse(someCourseId);
     }
 
@@ -119,7 +121,7 @@ public class QuizRetrieverUTest extends CanvasTestBase {
         erroredResponse.setErrorHappened(true);
         String url =  baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes?as_user_id="
                 + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
-        fakeRestClient.add401Response(url, "SampleJson/assignment/Assignment1.json");
+        fakeRestClient.add401Response(url, "SampleJson/assignment/MinimalAssignment.json");
         quizReader.readAsSisUser(someUserId).getQuizzesInCourse(someCourseId);
     }
 
@@ -177,7 +179,7 @@ public class QuizRetrieverUTest extends CanvasTestBase {
         Response erroredResponse = new Response();
         erroredResponse.setErrorHappened(true);
         String url =  baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes?as_user_id=" + someUserId;
-        fakeRestClient.add401Response(url, "SampleJson/assignment/Assignment1.json");
+        fakeRestClient.add401Response(url, "SampleJson/assignment/MinimalAssignment.json");
         quizReader.readAsCanvasUser(someUserId).getQuizzesInCourse(someCourseId);
     }
 

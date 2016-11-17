@@ -2,8 +2,6 @@ package edu.ksu.canvas.requestOptions;
 
 import java.util.List;
 
-import edu.ksu.canvas.enums.EnrollmentState;
-
 public class GetEnrollmentOptions extends BaseOptions {
 
     //I was hoping to reuse this enum between different classes that take an 
@@ -27,6 +25,14 @@ public class GetEnrollmentOptions extends BaseOptions {
     
         public String toString() {
             return canvasValue;
+        }
+    }
+
+    public enum EnrollmentState {
+        ACTIVE, INVITED, CREATION_PENDING, DELETED, REJECTED, COMPLETED, INACTIVE;
+
+        public String toString() {
+            return name().toLowerCase();
         }
     }
 

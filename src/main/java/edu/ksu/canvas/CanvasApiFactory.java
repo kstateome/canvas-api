@@ -2,9 +2,9 @@ package edu.ksu.canvas;
 
 import edu.ksu.canvas.impl.*;
 import edu.ksu.canvas.interfaces.*;
-import edu.ksu.canvas.model.Conversation;
 import edu.ksu.canvas.net.RestClient;
-import edu.ksu.canvas.net.RestClientImpl;
+import edu.ksu.canvas.net.RefreshingRestClient;
+import edu.ksu.canvas.oauth.OauthToken;
 import org.apache.log4j.Logger;
 
 import java.lang.reflect.Constructor;
@@ -12,6 +12,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Entry point for using the Canvas API library. It constructs concrete
+ * implementations of reader/writer classes to perform API calls with.
+ * It must be constructed with a Canvas instance URL which will be used
+ * for all API calls. It has options to specify network timeouts and a way
+ * to control API pagination.
+ */
 public class CanvasApiFactory {
 
     private static final Logger LOG = Logger.getLogger(CanvasApiFactory.class);
@@ -26,6 +33,10 @@ public class CanvasApiFactory {
     Map<Class<? extends CanvasReader>, Class<? extends BaseImpl>> readerMap;
     Map<Class<? extends CanvasWriter>, Class<? extends BaseImpl>> writerMap;
 
+    /**
+     * Construct an API factory for a given instance of Canvas.
+     * @param canvasBaseUrl The base URL used to access your Canvas instance
+     */
     public CanvasApiFactory(String canvasBaseUrl) {
         LOG.debug("Creating Canvas API factory with base URL: " + canvasBaseUrl);
         this.canvasBaseUrl = canvasBaseUrl;
@@ -34,6 +45,12 @@ public class CanvasApiFactory {
         setupClassMap();
     }
 
+    /**
+     * Construct an API factory with specified timeout values
+     * @param canvasBaseUrl The base URL used to access your Canvas instance
+     * @param connectTimeout Connection timeout in milliseconds
+     * @param readTimeout Read timeout in milliseconds. If this is too low, longer API queries could time out prematurely
+     */
     public CanvasApiFactory(String canvasBaseUrl, int connectTimeout, int readTimeout) {
         this.canvasBaseUrl = canvasBaseUrl;
         this.connectTimeout = connectTimeout;
@@ -48,7 +65,7 @@ public class CanvasApiFactory {
      * @param <T> The reader type to request an instance of
      * @return A reader implementation class
      */
-    public <T extends CanvasReader> T getReader(Class<T> type, String oauthToken) {
+    public <T extends CanvasReader> T getReader(Class<T> type, OauthToken oauthToken) {
         return getReader(type, oauthToken, null);
     }
 
@@ -64,9 +81,9 @@ public class CanvasApiFactory {
      * @param <T> The reader type to request an instance of
      * @return An instance of the requested reader class
      */
-    public <T extends CanvasReader> T getReader(Class<T> type, String oauthToken, Integer paginationPageSize) {
+    public <T extends CanvasReader> T getReader(Class<T> type, OauthToken oauthToken, Integer paginationPageSize) {
         LOG.debug("Factory call to instantiate class: " + type.getName());
-        RestClient restClient = new RestClientImpl();
+        RestClient restClient = new RefreshingRestClient();
 
         @SuppressWarnings("unchecked")
         Class<T> concreteClass = (Class<T>)readerMap.get(type);
@@ -77,16 +94,22 @@ public class CanvasApiFactory {
 
         LOG.debug("got class: " + concreteClass);
         try {
-            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, String.class, RestClient.class, Integer.TYPE, Integer.TYPE, Integer.class);
+            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, OauthToken.class, RestClient.class, Integer.TYPE, Integer.TYPE, Integer.class);
             return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
             throw new UnsupportedOperationException("Unknown error instantiating the concrete API class: " + type.getName(), e);
         }
     }
 
-    public <T extends CanvasWriter> T getWriter(Class<T> type, String oauthToken) {
+    /**
+     * Get a writer implementation to push data into Canvas.
+     * @param type Interface type you wish to get an implementation for
+     * @param oauthToken An OAuth token to use for authentication when making API calls
+     * @return A writer implementation class
+     */
+    public <T extends CanvasWriter> T getWriter(Class<T> type, OauthToken oauthToken) {
         LOG.debug("Factory call to instantiate class: " + type.getName());
-        RestClient restClient = new RestClientImpl();
+        RestClient restClient = new RefreshingRestClient();
 
         @SuppressWarnings("unchecked")
         Class<T> concreteClass = (Class<T>) writerMap.get(type);
@@ -97,7 +120,7 @@ public class CanvasApiFactory {
 
         LOG.debug("got class: " + concreteClass);
         try {
-            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, String.class, RestClient.class, Integer.TYPE, Integer.TYPE, Integer.class);
+            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, OauthToken.class, RestClient.class, Integer.TYPE, Integer.TYPE, Integer.class);
             return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient, connectTimeout, readTimeout, null);
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
             throw new UnsupportedOperationException("Unknown error instantiating the concrete API class: " + type.getName(), e);

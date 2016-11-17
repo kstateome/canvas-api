@@ -12,7 +12,7 @@ import java.util.Date;
  */
 @CanvasObject(postKey = "course_section")
 public class Section extends BaseCanvasModel implements Serializable {
-    private static final long serialVersionUID = 1L;
+    public static final long serialVersionUID = 1L;
 
     private long id;
     private String name;

@@ -5,17 +5,23 @@ import java.util.List;
 public class ListCurrentUserCoursesOptions extends BaseOptions {
 
     public enum EnrollmentType {
-        student, teacher, ta, observer, designer;
+        STUDENT, TEACHER, TA, OBSERVER, DESIGNER;
+
+        public String toString() { return name().toLowerCase(); }
     }
 
     public enum Include {
-        needs_grading_count, syllabus_body, total_scores, term, course_progress,
-        sections, storage_quota_used_mb, total_students, favorites, teachers,
-        observed_users, current_grading_period_scores
+        NEEDS_GRADING_COUNT, SYLLABUS_BODY, TOTAL_SCORES, TERM, COURSE_PROGRESS,
+        SECTIONS, STORAGE_QUOTA_USED_MB, TOTAL_STUDENTS, FAVORITES, TEACHERS,
+        OBSERVED_USERS, CURRENT_GRADING_PERIOD_SCORES;
+
+        public String toString() { return name().toLowerCase(); }
     }
 
     public enum State {
-        unpublished, available, completed, deleted
+        UNPUBLISHED, AVAILABLE, COMPLETED, DELETED;
+
+        public String toString() { return name().toLowerCase(); }
     }
 
     /**
@@ -24,7 +30,7 @@ public class ListCurrentUserCoursesOptions extends BaseOptions {
      * @return This object to allow adding more options
      */
     public ListCurrentUserCoursesOptions withEnrollmentType(EnrollmentType enrollmentType) {
-        addSingleItem("enrollment_type", enrollmentType.name());
+        addSingleItem("enrollment_type", enrollmentType.toString());
         return this;
     }
 
