@@ -12,8 +12,8 @@ import java.util.List;
  */
 @CanvasObject(postKey = "user")
 public class User extends BaseCanvasModel implements Serializable {
+    public static final long serialVersionUID = 1L;
 
-    private static final long serialVersionUID = 1L;
     private int id;
     private String name;
     private String sortableName;
