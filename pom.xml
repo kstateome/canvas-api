@@ -1,11 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <groupId>edu.ksu.canvas</groupId>
   <artifactId>canvas-api</artifactId>
   <version>1.1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
   <name>Canvas API Library</name>
   <description>A native Java library to talk to the Canvas REST API</description>
+  <url>https://github.com/kstateome/canvas-api</url>
+
+   <licenses>
+    <license>
+      <name>GNU Lesser General Public License (LGPL), Version 3</name>
+      <url>http://www.fsf.org/licensing/licenses/lgpl.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <organization>
+    <name>Kansas State University, Office of Mediated Education</name>
+    <url>http://ome.ksu.edu/</url>
+  </organization>
+
+  <developers>
+    <developer>
+      <name>Toby Murray</name>
+      <email>toby@ksu.edu</email>
+      <organization>Kansas State University, Office of Mediated Education</organization>
+    </developer>
+    <developer>
+      <name>Killian Stone</name>
+      <email>killsto@ksu.edu</email>
+      <organization>Kansas State University, Office of Mediated Education</organization>
+    </developer>
+  </developers>
 
   <scm>
     <connection>scm:git:ssh://git@github.com/kstateome/canvas-api.git</connection>
