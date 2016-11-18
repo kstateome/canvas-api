@@ -7,10 +7,6 @@
   <name>Canvas API Library</name>
   <description>A native Java library to talk to the Canvas REST API</description>
 
-  <issueManagement>
-    <url>https://tools.ome.ksu.edu/bugzilla/</url>
-  </issueManagement>
-
   <scm>
     <connection>scm:git:ssh://git@github.com/kstateome/canvas-api.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/kstateome/canvas-api.git</developerConnection>
