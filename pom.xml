@@ -50,6 +50,19 @@
 
   <profiles>
     <profile>
+      <id>ossrh-deploy</id>
+      <distributionManagement>
+        <snapshotRepository>
+          <id>ossrh</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+          <id>ossrh</id>
+          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+      </distributionManagement>
+    </profile>
+    <profile>
       <id>sonar</id>
       <properties>
         <jacoco-maven-plugin.version>0.7.4.201502262128</jacoco-maven-plugin.version>
