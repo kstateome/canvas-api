@@ -4,12 +4,37 @@
   <groupId>edu.ksu.canvas</groupId>
   <artifactId>canvas-api</artifactId>
   <version>1.0.7-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
   <name>Canvas API Library</name>
   <description>A native Java library to talk to the Canvas REST API</description>
+  <url>https://github.com/kstateome/canvas-api</url>
 
-  <issueManagement>
-    <url>https://tools.ome.ksu.edu/bugzilla/</url>
-  </issueManagement>
+   <licenses>
+    <license>
+      <name>GNU Lesser General Public License (LGPL), Version 3</name>
+      <url>http://www.fsf.org/licensing/licenses/lgpl.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <organization>
+    <name>Kansas State University, Office of Mediated Education</name>
+    <url>http://ome.ksu.edu/</url>
+  </organization>
+
+  <developers>
+    <developer>
+      <name>Toby Murray</name>
+      <email>toby@ksu.edu</email>
+      <organization>Kansas State University, Office of Mediated Education</organization>
+    </developer>
+    <developer>
+      <name>Killian Stone</name>
+      <email>killsto@ksu.edu</email>
+      <organization>Kansas State University, Office of Mediated Education</organization>
+    </developer>
+  </developers>
 
   <scm>
     <connection>scm:git:ssh://git@github.com/kstateome/canvas-api.git</connection>
@@ -49,6 +74,63 @@
   </build>
 
   <profiles>
+    <profile>
+      <id>ossrh-deploy</id>
+      <distributionManagement>
+        <snapshotRepository>
+          <id>ossrh</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+          <id>ossrh</id>
+          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+      </distributionManagement>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>3.0.1</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>2.10.4</version>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
     <profile>
       <id>sonar</id>
       <properties>
