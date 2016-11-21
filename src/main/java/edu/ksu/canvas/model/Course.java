@@ -1,5 +1,6 @@
 package edu.ksu.canvas.model;
 
+import com.google.gson.annotations.SerializedName;
 import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
 
@@ -29,6 +30,7 @@ public class Course extends BaseCanvasModel implements Serializable {
     private Integer integrationId;
     private String workflowState;
     private Integer totalStudents;
+    @SerializedName("term")
     private EnrollmentTerm enrollmentTerm;
 
     @CanvasField(postKey = "account_id")
@@ -161,7 +163,6 @@ public class Course extends BaseCanvasModel implements Serializable {
         this.totalStudents = totalStudents;
     }
 
-//    @CanvasField(postKey = "enrollment_term")
     public EnrollmentTerm getEnrollmentTerm() {
         return enrollmentTerm;
     }
