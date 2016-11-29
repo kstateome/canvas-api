@@ -135,7 +135,7 @@
     <profile>
       <id>sonar</id>
       <properties>
-        <jacoco-maven-plugin.version>0.7.4.201502262128</jacoco-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.7.7.201606060606</jacoco-maven-plugin.version>
       </properties>
       <build>
         <plugins>
