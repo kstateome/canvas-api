@@ -1,6 +1,8 @@
 package edu.ksu.canvas.oauth;
 
-public interface OauthToken {
+import java.io.Serializable;
+
+public interface OauthToken extends Serializable {
 
     String getAccessToken();
    
