@@ -27,9 +27,7 @@ import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
 import javax.validation.constraints.NotNull;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,14 +48,9 @@ public class SimpleRestClient implements RestClient {
         httpGet.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
 
         HttpResponse httpResponse = httpClient.execute(httpGet);
-        //deal with the actual content
-        BufferedReader in = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
-        String inputLine;
-        StringBuffer content = new StringBuffer();
-        while ((inputLine = in.readLine()) != null) {
-            content.append(inputLine);
-        }
-        response.setContent(content.toString());
+
+        String content = handleResponse(httpResponse, httpGet);
+        response.setContent(content);
         response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
         Long endTime = System.currentTimeMillis();
         LOG.debug("GET call took: " + (endTime - beginTime) + "ms");
