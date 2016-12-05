@@ -27,7 +27,10 @@ import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
 import javax.validation.constraints.NotNull;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,9 +51,16 @@ public class SimpleRestClient implements RestClient {
         httpGet.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
 
         HttpResponse httpResponse = httpClient.execute(httpGet);
+        checkAuthenticationHeaders(httpResponse);
 
-        String content = handleResponse(httpResponse, httpGet);
-        response.setContent(content);
+        //deal with the actual content
+        BufferedReader in = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
+        String inputLine;
+        StringBuffer content = new StringBuffer();
+        while ((inputLine = in.readLine()) != null) {
+            content.append(inputLine);
+        }
+        response.setContent(content.toString());
         response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
         Long endTime = System.currentTimeMillis();
         LOG.debug("GET call took: " + (endTime - beginTime) + "ms");
@@ -212,19 +222,23 @@ public class SimpleRestClient implements RestClient {
         return response;
     }
 
-    private String handleResponse(HttpResponse httpResponse, HttpRequestBase request) throws IOException {
+    private void checkAuthenticationHeaders(HttpResponse httpResponse) {
         int statusCode = httpResponse.getStatusLine().getStatusCode();
         if (statusCode == 401) {
             //If the WWW-Authenticate header is set, it is a token problem.
             //If the header is not present, it is a user permission error.
             //See https://canvas.instructure.com/doc/api/file.oauth.html#storing-access-tokens
-            LOG.error("HTTP status 401 returned from " + request.getURI());
-            if (httpResponse.containsHeader(HttpHeaders.WWW_AUTHENTICATE)) {
+            if(httpResponse.containsHeader(HttpHeaders.WWW_AUTHENTICATE)) {
                 throw new InvalidOauthTokenException();
             }
-            LOG.debug("User is not authorized to perform this action");
+            LOG.error("User is not authorized to perform this action");
             throw new UnauthorizedException();
         }
+    }
+
+    private String handleResponse(HttpResponse httpResponse, HttpRequestBase request) throws IOException {
+        checkAuthenticationHeaders(httpResponse);
+        int statusCode = httpResponse.getStatusLine().getStatusCode();
         if(statusCode < 200 || statusCode > 299) {
             LOG.error("HTTP status " + statusCode + " returned from " + request.getURI());
             HttpEntity entity = httpResponse.getEntity();
