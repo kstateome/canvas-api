@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.Date;
 
 public class RefreshableOauthToken implements OauthToken {
+    private static final long serialVersionUID = 1L;
+
     private static final Logger LOG = Logger.getLogger(RefreshableOauthToken.class);
 
     private OauthTokenRefresher tokenRefresher;
