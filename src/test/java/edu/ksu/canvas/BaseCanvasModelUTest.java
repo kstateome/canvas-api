@@ -7,6 +7,7 @@ import org.junit.Test;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.util.List;
 import java.util.Map;
 
 public class BaseCanvasModelUTest {
@@ -27,10 +28,10 @@ public class BaseCanvasModelUTest {
         TestCanvasModel canvasModel = new TestCanvasModel();
         canvasModel.setField1(FIELD1_VALUE);
 
-        Map<String, Object> postMap = canvasModel.toPostMap();
+        Map<String, List<String>> postMap = canvasModel.toPostMap();
 
         Assert.assertTrue("PostKey from canvasModel.toPostMap() did not have expected key for field1", postMap.containsKey(expectedKey));
-        Assert.assertEquals("Field1Value from canvasModel.toPostMap() did not have expected value for field1", FIELD1_VALUE, postMap.get(expectedKey));
+        Assert.assertArrayEquals("Field1Value from canvasModel.toPostMap() did not have expected value for field1", new String[] { FIELD1_VALUE }, postMap.get(expectedKey).toArray());
     }
 
     /* Make sure canvasFields with arrays = false are of form 'field' */
@@ -40,10 +41,10 @@ public class BaseCanvasModelUTest {
         TestCanvasModel canvasModel = new TestCanvasModel();
         canvasModel.setField2(FIELD2_VALUE);
 
-        Map<String, Object> postMap = canvasModel.toPostMap();
+        Map<String, List<String>> postMap = canvasModel.toPostMap();
 
         Assert.assertTrue("PostKey from canvasModel.toPostMap() did not have expected key for field2", postMap.containsKey(expectedKey));
-        Assert.assertEquals("Field2Value from canvasModel.toPostMap() did not have expected value for field2", FIELD2_VALUE, postMap.get(expectedKey));
+        Assert.assertArrayEquals("Field2Value from canvasModel.toPostMap() did not have expected value for field2", new String[] { FIELD2_VALUE }, postMap.get(expectedKey).toArray());
     }
 
     /* Make sure canvasFields with arrays = true and an override key are of form override[field] */
@@ -53,10 +54,10 @@ public class BaseCanvasModelUTest {
         final TestCanvasModel canvasModel = new TestCanvasModel();
         canvasModel.setField3(FIELD3_VALUE);
 
-        final Map<String, Object> postMap = canvasModel.toPostMap();
+        final Map<String, List<String>> postMap = canvasModel.toPostMap();
 
         Assert.assertTrue("PostKey from canvasModel.toPostMap() did not have expected key for field3", postMap.containsKey(expectedKey));
-        Assert.assertEquals("Field3Value from canvasModel.toPostMap() did not have expected value for field3", FIELD3_VALUE, postMap.get(expectedKey));
+        Assert.assertArrayEquals("Field3Value from canvasModel.toPostMap() did not have expected value for field3", new String[] { FIELD3_VALUE }, postMap.get(expectedKey).toArray());
     }
 
     @Test

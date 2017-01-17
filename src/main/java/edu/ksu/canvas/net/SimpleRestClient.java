@@ -125,7 +125,7 @@ public class SimpleRestClient implements RestClient {
     }
 
     @Override
-    public Response sendApiPost(OauthToken token, String url, Map<String, String> postParameters,
+    public Response sendApiPost(OauthToken token, String url, Map<String, List<String>> postParameters,
                                        int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending API POST request to URL: " + url);
         Response response = new Response();
@@ -133,14 +133,7 @@ public class SimpleRestClient implements RestClient {
         Long beginTime = System.currentTimeMillis();
         HttpPost httpPost = new HttpPost(url);
         httpPost.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
-        List<NameValuePair> params = new ArrayList<>();
-
-        if (postParameters != null) {
-            for (Map.Entry<String, String> entry : postParameters.entrySet()) {
-                params.add(new BasicNameValuePair(entry.getKey(),entry.getValue()));
-                LOG.debug("key "+ entry.getKey() +"\t value : "+ entry.getValue());
-            }
-        }
+        List<NameValuePair> params = convertParameters(postParameters);
 
         httpPost.setEntity(new UrlEncodedFormEntity(params));
         HttpResponse httpResponse =  httpClient.execute(httpPost);
@@ -154,7 +147,7 @@ public class SimpleRestClient implements RestClient {
     }
 
     @Override
-    public Response sendApiPut(OauthToken token, String url, Map<String, Object> putParameters,
+    public Response sendApiPut(OauthToken token, String url, Map<String, List<String>> putParameters,
                                 int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending API PUT request to URL: " + url);
         Response response = new Response();
@@ -162,14 +155,7 @@ public class SimpleRestClient implements RestClient {
         Long beginTime = System.currentTimeMillis();
         HttpPut httpPut = new HttpPut(url);
         httpPut.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
-        List<NameValuePair> params = new ArrayList<>();
-
-        if (putParameters != null) {
-            for (Map.Entry<String, Object> entry : putParameters.entrySet()) {
-                params.add(new BasicNameValuePair(entry.getKey(),entry.getValue().toString()));
-                LOG.debug("key "+ entry.getKey() +"\t value : "+ entry.getValue());
-            }
-        }
+        List<NameValuePair> params = convertParameters(putParameters);
 
         httpPut.setEntity(new UrlEncodedFormEntity(params));
         HttpResponse httpResponse =  httpClient.execute(httpPut);
@@ -184,7 +170,7 @@ public class SimpleRestClient implements RestClient {
 
 
     @Override
-    public Response sendApiDelete(OauthToken token, String url,Map<String, String> deleteParameters,
+    public Response sendApiDelete(OauthToken token, String url, Map<String, List<String>> deleteParameters,
                                        int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending API DELETE request to URL: " + url);
         Response response = new Response();
@@ -204,12 +190,8 @@ public class SimpleRestClient implements RestClient {
 
         httpDelete.setURI(URI.create(url));
         httpDelete.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
-        List<NameValuePair> params = new ArrayList<>();
-        if (deleteParameters != null) {
-            for (Map.Entry<String, String> entry : deleteParameters.entrySet()) {
-                params.add(new BasicNameValuePair(entry.getKey(),entry.getValue()));
-            }
-        }
+        List<NameValuePair> params = convertParameters(deleteParameters);
+
         httpDelete.setEntity(new UrlEncodedFormEntity(params));
         HttpResponse httpResponse = httpClient.execute(httpDelete);
 
@@ -255,6 +237,23 @@ public class SimpleRestClient implements RestClient {
         params.setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, connectTimeout);
         params.setParameter(CoreConnectionPNames.SO_TIMEOUT, readTimeout);
         return httpClient;
+    }
+
+    private static List<NameValuePair> convertParameters(final Map<String, List<String>> parameterMap) {
+        final List<NameValuePair> params = new ArrayList<>();
+
+        if (parameterMap == null) {
+            return params;
+        }
+
+        for (final Map.Entry<String, List<String>> param : parameterMap.entrySet()) {
+            final String key = param.getKey();
+            for (final String value : param.getValue()) {
+                params.add(new BasicNameValuePair(key, value));
+                LOG.debug("key "+ key +"\t value : " + value);
+            }
+        }
+        return params;
     }
 
 }

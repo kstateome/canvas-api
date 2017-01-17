@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 public class RefreshingRestClient implements RestClient {
@@ -46,7 +47,7 @@ public class RefreshingRestClient implements RestClient {
     }
 
     @Override
-    public Response sendApiPost(@NotNull OauthToken token, @NotNull String url, Map<String, String> postParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+    public Response sendApiPost(@NotNull OauthToken token, @NotNull String url, Map<String, List<String>> postParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         try {
             return restClient.sendApiPost(token, url, postParameters, connectTimeout, readTimeout);
         } catch (InvalidOauthTokenException e) {
@@ -57,7 +58,7 @@ public class RefreshingRestClient implements RestClient {
     }
 
     @Override
-    public Response sendApiDelete(@NotNull OauthToken token, @NotNull String url, Map<String, String> deleteParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+    public Response sendApiDelete(@NotNull OauthToken token, @NotNull String url, Map<String, List<String>> deleteParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         try {
             return restClient.sendApiDelete(token, url, deleteParameters, connectTimeout, readTimeout);
         } catch (InvalidOauthTokenException e) {
@@ -68,7 +69,7 @@ public class RefreshingRestClient implements RestClient {
     }
 
     @Override
-    public Response sendApiPut(@NotNull OauthToken token, @NotNull String url, Map<String, Object> putParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+    public Response sendApiPut(@NotNull OauthToken token, @NotNull String url, Map<String, List<String>> putParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         try {
             return restClient.sendApiPut(token, url, putParameters, connectTimeout, readTimeout);
         } catch (InvalidOauthTokenException e) {

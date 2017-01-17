@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -32,8 +33,7 @@ public class RefreshingRestClientUTest {
 
     private final String arbitraryString = "arbitraryString";
     private final int arbitraryInt = 1;
-    private final Map<String, String> arbitraryMap = Collections.emptyMap();
-    private final Map<String, Object> arbitraryObjectMap = Collections.emptyMap();
+    private final Map<String, List<String>> arbitraryMap = Collections.emptyMap();
     private final Response response = new Response();
 
     @Before
@@ -71,7 +71,7 @@ public class RefreshingRestClientUTest {
                 .thenThrow(InvalidOauthTokenException.class)
                 .thenReturn(response);
 
-        Response returnedResponse = refreshRestClientUTest.sendApiPut(mockToken, arbitraryString, arbitraryObjectMap, arbitraryInt, arbitraryInt);
+        Response returnedResponse = refreshRestClientUTest.sendApiPut(mockToken, arbitraryString, arbitraryMap, arbitraryInt, arbitraryInt);
 
         verify(mockToken, times(1)).refresh();
         assertEquals("Expected response to be response returned from mockRestClient", response, returnedResponse);

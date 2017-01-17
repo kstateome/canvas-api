@@ -60,7 +60,7 @@ public class RestCanvasMessenger implements CanvasMessenger {
     }
 
     @Override
-    public Response sendToCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String,String> parameters) throws InvalidOauthTokenException, IOException {
+    public Response sendToCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String, List<String>> parameters) throws InvalidOauthTokenException, IOException {
         final Response response = restClient.sendApiPost(oauthToken, url, parameters, connectTimeout, readTimeout);
         if (response.getResponseCode() == 401) {
             throw new InvalidOauthTokenException();
@@ -87,7 +87,7 @@ public class RestCanvasMessenger implements CanvasMessenger {
     }
 
     @Override
-    public Response deleteFromCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String,String> parameters) throws InvalidOauthTokenException, IOException {
+    public Response deleteFromCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String, List<String>> parameters) throws InvalidOauthTokenException, IOException {
         final Response response = restClient.sendApiDelete(oauthToken, url, parameters, connectTimeout, readTimeout);
         if (response.getResponseCode() == 401) {
             throw new InvalidOauthTokenException();
@@ -96,7 +96,7 @@ public class RestCanvasMessenger implements CanvasMessenger {
     }
 
     @Override
-    public Response putToCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String,Object> parameters) throws InvalidOauthTokenException, IOException {
+    public Response putToCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String, List<String>> parameters) throws InvalidOauthTokenException, IOException {
         final Response response = restClient.sendApiPut(oauthToken, url, parameters, connectTimeout, readTimeout);
         if (response.getResponseCode() == 401) {
             throw new InvalidOauthTokenException();
