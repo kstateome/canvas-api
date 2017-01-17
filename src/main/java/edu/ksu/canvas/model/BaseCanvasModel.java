@@ -7,7 +7,9 @@ import org.apache.log4j.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gson.JsonElement;
@@ -20,16 +22,22 @@ public abstract class BaseCanvasModel {
      * they are just 'field'. This method will create a map with the correct post keys and values based on the
      * @CanvasField and @CanvasObject annotations.
      */
-    public Map<String, Object> toPostMap() {
+    public Map<String, List<String>> toPostMap() {
         Class<? extends BaseCanvasModel> clazz = this.getClass();
-        Map<String, Object> postMap = new HashMap<>();
+        Map<String, List<String>> postMap = new HashMap<>();
         for (Method method : clazz.getMethods()) {
             CanvasField canvasFieldAnnotation = method.getAnnotation(CanvasField.class);
             if (canvasFieldAnnotation != null && canvasFieldAnnotation.postKey() != null) {
-                String postKey = getPostKey(canvasFieldAnnotation);
+                final String postKey = getPostKey(canvasFieldAnnotation);
                 try {
-                    Object value = method.invoke(this, null);
-                    postMap.put(postKey, value);
+                    final List<String> fieldValues = getFieldValues(method);
+                    if (fieldValues != null) {
+                        if (postMap.containsKey(postKey)) {
+                            postMap.get(postKey).addAll(fieldValues);
+                        } else {
+                            postMap.put(postKey, fieldValues);
+                        }
+                    }
                 } catch (final IllegalAccessException | InvocationTargetException e) {
                     final String message = "Could not access Canvas model getter for" + postKey;
                     LOG.error(message, e);
@@ -77,5 +85,25 @@ public abstract class BaseCanvasModel {
             throw new IllegalArgumentException("CanvasObject does not contain postKey for " + this.getClass().getName());
         }
         return canvasObjectAnnotation.postKey() + "[" + canvasFieldAnnotation.postKey() + "]";
+    }
+
+    private List<String> getFieldValues(final Method getter) throws InvocationTargetException, IllegalAccessException {
+        final List<String> fieldValues = new ArrayList<>(1);
+        final Class<?> returnType = getter.getReturnType();
+        final Object returnValue = getter.invoke(this);
+
+        if (returnValue == null) {
+           return null;
+        }
+
+        if (Iterable.class.isAssignableFrom(returnType)) {
+            for (final Object value : (Iterable) returnValue) {
+                fieldValues.add(String.valueOf(value));
+            }
+        }
+        else {
+            fieldValues.add(String.valueOf(returnValue));
+        }
+        return fieldValues;
     }
 }

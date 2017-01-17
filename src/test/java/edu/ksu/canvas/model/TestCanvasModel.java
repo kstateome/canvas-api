@@ -4,6 +4,8 @@ import edu.ksu.canvas.BaseCanvasModelUTest;
 import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
 
+import java.util.List;
+
 /*
  * Class was created to help test BaseCanvasModel. The class needs to be public in order for the
  * reflection in BaseCanvasModel to work
@@ -13,6 +15,8 @@ public class TestCanvasModel extends BaseCanvasModel {
     private String field1;
     private String field2;
     private String field3;
+    private Integer field4;
+    private List<Integer> field5;
 
     @CanvasField(postKey = BaseCanvasModelUTest.FIELD1_POST_KEY)
     public String getField1() {
@@ -39,5 +43,23 @@ public class TestCanvasModel extends BaseCanvasModel {
 
     public void setField3(final String field3) {
         this.field3 = field3;
+    }
+
+    @CanvasField(postKey = BaseCanvasModelUTest.FIELD4_POST_KEY)
+    public Integer getField4() {
+        return field4;
+    }
+
+    public void setField4(final Integer field4) {
+        this.field4 = field4;
+    }
+
+    @CanvasField(postKey = BaseCanvasModelUTest.FIELD5_POST_KEY)
+    public List<Integer> getField5() {
+        return field5;
+    }
+
+    public void setField5(final List<Integer> field5) {
+        this.field5 = field5;
     }
 }
