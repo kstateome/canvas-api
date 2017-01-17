@@ -12,6 +12,7 @@ import edu.ksu.canvas.annotation.CanvasObject;
 public class TestCanvasModel extends BaseCanvasModel {
     private String field1;
     private String field2;
+    private String field3;
 
     @CanvasField(postKey = BaseCanvasModelUTest.FIELD1_POST_KEY)
     public String getField1() {
@@ -29,5 +30,14 @@ public class TestCanvasModel extends BaseCanvasModel {
 
     public void setField2(String field2) {
         this.field2 = field2;
+    }
+
+    @CanvasField(overrideObjectKey = BaseCanvasModelUTest.CLASS_POST_KEY_OVERRIDE, postKey = BaseCanvasModelUTest.FIELD3_POST_KEY)
+    public String getField3() {
+        return field3;
+    }
+
+    public void setField3(final String field3) {
+        this.field3 = field3;
     }
 }
