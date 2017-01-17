@@ -3,6 +3,7 @@ package edu.ksu.canvas.model;
 import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
 import edu.ksu.canvas.impl.GsonResponseParser;
+import org.apache.log4j.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -13,19 +14,27 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public abstract class BaseCanvasModel {
+    private static final Logger LOG = Logger.getLogger(BaseCanvasModel.class);
+
     /* Canvas has post parameter keys in non consistent formats. Occasionally they are 'class[field]' and other times
      * they are just 'field'. This method will create a map with the correct post keys and values based on the
      * @CanvasField and @CanvasObject annotations.
      */
-    public Map<String, Object> toPostMap() throws IllegalAccessException, InvocationTargetException {
+    public Map<String, Object> toPostMap() {
         Class<? extends BaseCanvasModel> clazz = this.getClass();
         Map<String, Object> postMap = new HashMap<>();
         for (Method method : clazz.getMethods()) {
             CanvasField canvasFieldAnnotation = method.getAnnotation(CanvasField.class);
             if (canvasFieldAnnotation != null && canvasFieldAnnotation.postKey() != null) {
                 String postKey = getPostKey(canvasFieldAnnotation);
-                Object value = method.invoke(this, null);
-                postMap.put(postKey, value);
+                try {
+                    Object value = method.invoke(this, null);
+                    postMap.put(postKey, value);
+                } catch (final IllegalAccessException | InvocationTargetException e) {
+                    final String message = "Could not access Canvas model getter for" + postKey;
+                    LOG.error(message, e);
+                    throw new IllegalStateException(message, e);
+                }
             }
         }
         return postMap;
