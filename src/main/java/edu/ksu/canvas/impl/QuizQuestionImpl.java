@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,19 @@ public class QuizQuestionImpl extends BaseImpl<QuizQuestion, QuizQuestionReader,
         List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url);
         return parseQuizQuestionList(responses);
 
+    }
+
+    @Override
+    public boolean deleteQuizQuestion(String courseId, Integer quizId, Integer questionId) throws IOException {
+        LOG.debug("Deleting quiz question in course " + courseId + ", quiz " + quizId + ", question " + questionId);
+        String url = buildCanvasUrl("courses/" + courseId + "/quizzes/" + quizId + "/" + questionId, Collections.emptyMap());
+        Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, Collections.emptyMap());
+        int responseCode = response.getResponseCode();
+        if (responseCode == 204) {
+            return true;
+        }
+        LOG.error("Canvas returned code " + responseCode + " (success = 204) when deleting question " + questionId);
+        return false;
     }
 
     private List <QuizQuestion> parseQuizQuestionList(final List<Response> responses) {
