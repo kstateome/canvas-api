@@ -12,7 +12,7 @@
     "all_dates": "",
     "course_id": 123,
     "html_url": "https://...",
-    "submissions_download_url": "https://example.com/courses/:course_id/assignments/:id/submissions?zip=1",
+    "submissions_download_url": "https://canvas.example.edu/courses/:course_id/assignments/:id/submissions?zip=1",
     "assignment_group_id": 2,
     "allowed_extensions": [
       "docx",
@@ -74,7 +74,7 @@
     "all_dates": "",
     "course_id": 123,
     "html_url": "https://...",
-    "submissions_download_url": "https://example.com/courses/:course_id/assignments/:id/submissions?zip=1",
+    "submissions_download_url": "https://canvas.example.edu/courses/:course_id/assignments/:id/submissions?zip=1",
     "assignment_group_id": 2,
     "allowed_extensions": [
       "docx",

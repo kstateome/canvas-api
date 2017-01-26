@@ -18,7 +18,7 @@
   "total_activity_time": 0,
   "sis_import_id": null,
   "grades": {
-    "html_url": "https://k-state.test.instructure.com/courses/25/grades/78839",
+    "html_url": "http://canvas.example.edu/courses/25/grades/78839",
     "current_score": null,
     "final_score": null,
     "current_grade": null,
@@ -29,5 +29,5 @@
   "course_integration_id": null,
   "sis_section_id": null,
   "section_integration_id": null,
-  "html_url": "https://k-state.test.instructure.com/courses/25/users/78839"
+  "html_url": "http://canvas.example.edu/courses/25/users/78839"
 }

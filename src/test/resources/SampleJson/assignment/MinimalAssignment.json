@@ -26,7 +26,7 @@
   ],
   "has_submitted_submissions": false,
   "muted": false,
-  "html_url": "https://domain/courses/1146/assignments/316000",
+  "html_url": "https://canvas.example.edu/courses/1146/assignments/316000",
   "has_overrides": false,
   "needs_grading_count": 0,
   "integration_id": null,
@@ -35,5 +35,5 @@
   "unpublishable": true,
   "only_visible_to_overrides": false,
   "locked_for_user": false,
-  "submissions_download_url": "https://domain/courses/1146/assignments/316000/submissions?zip=1"
+  "submissions_download_url": "https://canvas.example.edu/courses/1146/assignments/316000/submissions?zip=1"
 }

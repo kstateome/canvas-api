@@ -23,9 +23,9 @@
     "course_integration_id": null,
     "sis_section_id": null,
     "section_integration_id": null,
-    "html_url": "https://k-state.test.instructure.com/courses/25/users/38",
+    "html_url": "http://canvas.example.edu/courses/25/users/38",
     "grades": {
-      "html_url": "https://k-state.test.instructure.com/courses/25/grades/68794",
+      "html_url": "http://canvas.example.edu/courses/25/grades/68794",
       "current_score": 45,
       "final_score": 30.24,
       "current_grade": "F",
@@ -33,14 +33,14 @@
     },
     "user": {
       "id": 38,
-      "name": "Amanda Tross",
-      "sortable_name": "Tross, Amanda",
-      "short_name": "Amanda Tross",
-      "sis_user_id": "88888",
+      "name": "Jane Doe",
+      "sortable_name": "Doe, Jane",
+      "short_name": "Jane Doe",
+      "sis_user_id": "SIS_001",
       "integration_id": 5,
-      "sis_login_id": "loginId",
+      "sis_login_id": "user1",
       "sis_import_id": 800,
-      "login_id": "loginId"
+      "login_id": "user1"
     }
   },
   {
@@ -63,7 +63,7 @@
     "total_activity_time": 552,
     "sis_import_id": null,
     "grades": {
-      "html_url": "https://k-state.test.instructure.com/courses/25/grades/68794",
+      "html_url": "http://canvas.example.edu/courses/25/grades/68794",
       "current_score": 45,
       "final_score": 30.24,
       "current_grade": "F",
@@ -74,17 +74,17 @@
     "course_integration_id": null,
     "sis_section_id": null,
     "section_integration_id": null,
-    "html_url": "https://k-state.test.instructure.com/courses/25/users/68794",
+    "html_url": "http://canvas.example.edu/courses/25/users/68794",
     "user": {
       "id": 68794,
-      "name": "scott fink",
-      "sortable_name": "fink, scott",
-      "short_name": "scott fink",
-      "sis_user_id": "824194997",
+      "name": "Jack Stack",
+      "sortable_name": "Stack, Jack",
+      "short_name": "Jack Stack",
+      "sis_user_id": "SIS_002",
       "integration_id": null,
-      "sis_login_id": "curtain2",
+      "sis_login_id": "user2",
       "sis_import_id": null,
-      "login_id": "curtain2"
+      "login_id": "user2"
     }
   },
   {
@@ -107,7 +107,7 @@
     "total_activity_time": 40399,
     "sis_import_id": null,
     "grades": {
-      "html_url": "https://k-state.test.instructure.com/courses/25/grades/38264",
+      "html_url": "http://canvas.example.edu/courses/25/grades/38264",
       "current_score": null,
       "final_score": null,
       "current_grade": null,
@@ -118,17 +118,17 @@
     "course_integration_id": null,
     "sis_section_id": null,
     "section_integration_id": null,
-    "html_url": "https://k-state.test.instructure.com/courses/25/users/38264",
+    "html_url": "http://canvas.example.edu/courses/25/users/38264",
     "user": {
       "id": 38264,
-      "name": "Killian Stone",
-      "sortable_name": "Stone, Killian",
-      "short_name": "Killian Stone",
-      "sis_user_id": "88",
+      "name": "Wolf Blitzer",
+      "sortable_name": "Blitzer, Wolf",
+      "short_name": "Wolf Blitzer",
+      "sis_user_id": "SIS_003",
       "integration_id": null,
-      "sis_login_id": "killsto",
+      "sis_login_id": "user3",
       "sis_import_id": 841,
-      "login_id": "killsto"
+      "login_id": "user3"
     }
   }
 ]
