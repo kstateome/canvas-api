@@ -8,6 +8,9 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
 
 import edu.ksu.canvas.interfaces.ResponseParser;
@@ -15,7 +18,9 @@ import edu.ksu.canvas.net.Response;
 
 import java.lang.reflect.Type;
 import java.util.Date;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +70,16 @@ public class GsonResponseParser implements ResponseParser {
                     LOG.error("error parsing date from Canvas: " + json.getAsString());
                     throw new JsonParseException(e);
                 }
+            }
+        }).registerTypeAdapter(Date.class, new JsonSerializer<Date>() {
+            @Override
+            public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
+                if(src == null) {
+                    return null;
+                }
+                String dateString = ZonedDateTime.ofInstant(src.toInstant(), ZoneId.systemDefault())
+                        .format(DateTimeFormatter.ISO_INSTANT);
+                return new JsonPrimitive(dateString);
             }
         });
         return gsonBuilder.create();
