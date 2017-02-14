@@ -219,7 +219,10 @@ public class SimpleRestClient implements RestClient {
             LOG.error("Object not found in Canvas. Requested URL: " + request.getURI());
             throw new ObjectNotFoundException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
         }
-        //TODO: We might need to handle other specific error conditions but I'm not sure what all gets thrown yet.
+        //TODO: There are probably other error codes that should throw specific exceptions. For example, I would like
+        //to throw an exception if the API throttle limit is hit. But the API docs aren't specific enough on how to
+        //detect this situation (see https://canvas.instructure.com/doc/api/file.throttling.html). I don't know
+        //how to distinguish between a "Rate Liimit Exceeded" and other types of 403 conditions.
         if(statusCode < 200 || statusCode > 299) {
             LOG.error("HTTP status " + statusCode + " returned from " + request.getURI());
             throw new CanvasException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
