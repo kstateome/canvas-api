@@ -2,6 +2,13 @@ package edu.ksu.canvas.exception;
 
 import java.util.Optional;
 
+/**
+ * Base exception for errors arising while talking to Canvas.
+ * When thrown, it can optionally carry a string containing the
+ * human readable error message returned by Canvas, if any.
+ * Sometimes it may be appropriate to display this error message
+ * to the user.It can also carry the URL of the failed request.
+ */
 public class CanvasException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
