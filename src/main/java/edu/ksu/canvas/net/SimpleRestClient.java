@@ -210,6 +210,7 @@ public class SimpleRestClient implements RestClient {
             //If the header is not present, it is a user permission error.
             //See https://canvas.instructure.com/doc/api/file.oauth.html#storing-access-tokens
             if(httpResponse.containsHeader(HttpHeaders.WWW_AUTHENTICATE)) {
+                LOG.debug("User's token is invalid. It might need refreshing");
                 throw new InvalidOauthTokenException();
             }
             LOG.error("User is not authorized to perform this action");

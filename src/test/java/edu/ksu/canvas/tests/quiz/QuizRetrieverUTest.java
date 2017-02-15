@@ -3,7 +3,6 @@ package edu.ksu.canvas.tests.quiz;
 import com.google.gson.JsonSyntaxException;
 import edu.ksu.canvas.CanvasTestBase;
 import edu.ksu.canvas.constants.CanvasConstants;
-import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.impl.QuizImpl;
 import edu.ksu.canvas.interfaces.QuizReader;
 import edu.ksu.canvas.model.assignment.Quiz;
@@ -16,7 +15,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -51,18 +49,6 @@ public class QuizRetrieverUTest extends CanvasTestBase {
         Assert.assertTrue(quizzess.stream().map(Quiz::getTitle).filter("Quiz1"::equals).findFirst().isPresent());
         Assert.assertTrue(quizzess.stream().map(Quiz::getTitle).filter("Quiz2"::equals).findFirst().isPresent());
 
-    }
-
-
-    @Test(expected = InvalidOauthTokenException.class)
-    public void testListAssignments_canvasError() throws Exception {
-        String someCourseId = "123456";
-        Response erroredResponse = new Response();
-        erroredResponse.setErrorHappened(true);
-        String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion,
-                "courses/" + someCourseId + "/quizzes", Collections.emptyMap());
-        fakeRestClient.add401Response(url, "SampleJson/assignment/MinimalAssignment.json");
-        quizReader.getQuizzesInCourse(someCourseId);
     }
 
     @Test(expected = JsonSyntaxException.class)
@@ -112,19 +98,6 @@ public class QuizRetrieverUTest extends CanvasTestBase {
 
     }
 
-
-    @Test(expected = InvalidOauthTokenException.class)
-    public void testSisUserMasqueradeListAssignments_canvasError() throws Exception {
-        String someUserId = "899123456";
-        String someCourseId = "123456";
-        Response erroredResponse = new Response();
-        erroredResponse.setErrorHappened(true);
-        String url =  baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes?as_user_id="
-                + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
-        fakeRestClient.add401Response(url, "SampleJson/assignment/MinimalAssignment.json");
-        quizReader.readAsSisUser(someUserId).getQuizzesInCourse(someCourseId);
-    }
-
     @Test(expected = JsonSyntaxException.class)
     public void testSisUserMasqueradeListAssignments_responseInvalid() throws Exception {
         String someUserId = "899123456";
@@ -169,18 +142,6 @@ public class QuizRetrieverUTest extends CanvasTestBase {
         Assert.assertTrue(quizzess.stream().map(Quiz::getTitle).filter("Quiz1"::equals).findFirst().isPresent());
         Assert.assertTrue(quizzess.stream().map(Quiz::getTitle).filter("Quiz2"::equals).findFirst().isPresent());
 
-    }
-
-
-    @Test(expected = InvalidOauthTokenException.class)
-    public void testCanvasUserMasqueradeListAssignments_canvasError() throws Exception {
-        String someUserId = "899123456";
-        String someCourseId = "123456";
-        Response erroredResponse = new Response();
-        erroredResponse.setErrorHappened(true);
-        String url =  baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes?as_user_id=" + someUserId;
-        fakeRestClient.add401Response(url, "SampleJson/assignment/MinimalAssignment.json");
-        quizReader.readAsCanvasUser(someUserId).getQuizzesInCourse(someCourseId);
     }
 
     @Test(expected = JsonSyntaxException.class)
