@@ -1,7 +1,5 @@
 package edu.ksu.canvas.exception;
 
-import java.util.Optional;
-
 /**
  * Base exception for errors arising while talking to Canvas.
  * When thrown, it can optionally carry a string containing the
@@ -12,24 +10,24 @@ import java.util.Optional;
 public class CanvasException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
-    private final Optional<String> canvasErrorMessage;
-    private final Optional<String> requestUrl;
-    
+    private final String canvasErrorMessage;
+    private final String requestUrl;
+
     public CanvasException() {
-        canvasErrorMessage = Optional.empty();
-        requestUrl = Optional.empty();
+        canvasErrorMessage = null;
+        requestUrl = null;
     }
 
     public CanvasException(String canvasErrorString, String url) {
-        canvasErrorMessage = Optional.ofNullable(canvasErrorString);
-        requestUrl = Optional.ofNullable(url);
+        canvasErrorMessage = canvasErrorString;
+        requestUrl = url;
     }
 
-    public Optional<String> getCanvasErrorMessage() {
+    public String getCanvasErrorMessage() {
         return canvasErrorMessage;
     }
 
-    public Optional<String> getRequestUrl() {
+    public String getRequestUrl() {
         return requestUrl;
     }
 }
