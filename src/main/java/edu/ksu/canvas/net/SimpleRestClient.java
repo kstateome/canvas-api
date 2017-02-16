@@ -1,11 +1,15 @@
 package edu.ksu.canvas.net;
 
+import edu.ksu.canvas.exception.CanvasException;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
+import edu.ksu.canvas.exception.ObjectNotFoundException;
 import edu.ksu.canvas.exception.UnauthorizedException;
+import edu.ksu.canvas.impl.GsonResponseParser;
+import edu.ksu.canvas.model.status.CanvasErrorResponse;
+import edu.ksu.canvas.model.status.CanvasErrorResponse.ErrorMessage;
 import edu.ksu.canvas.oauth.OauthToken;
 
 import org.apache.http.Header;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -26,16 +30,17 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
+import com.google.gson.Gson;
+
 import javax.validation.constraints.NotNull;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class SimpleRestClient implements RestClient {
     private static final Logger LOG = Logger.getLogger(SimpleRestClient.class);
@@ -51,16 +56,10 @@ public class SimpleRestClient implements RestClient {
         httpGet.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
 
         HttpResponse httpResponse = httpClient.execute(httpGet);
-        checkAuthenticationHeaders(httpResponse);
+        checkHeaders(httpResponse, httpGet);
 
         //deal with the actual content
-        BufferedReader in = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
-        String inputLine;
-        StringBuffer content = new StringBuffer();
-        while ((inputLine = in.readLine()) != null) {
-            content.append(inputLine);
-        }
-        response.setContent(content.toString());
+        response.setContent(handleResponse(httpResponse, httpGet));
         response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
         Long endTime = System.currentTimeMillis();
         LOG.debug("GET call took: " + (endTime - beginTime) + "ms");
@@ -204,30 +203,61 @@ public class SimpleRestClient implements RestClient {
         return response;
     }
 
-    private void checkAuthenticationHeaders(HttpResponse httpResponse) {
+    private void checkHeaders(HttpResponse httpResponse, HttpRequestBase request) {
         int statusCode = httpResponse.getStatusLine().getStatusCode();
         if (statusCode == 401) {
             //If the WWW-Authenticate header is set, it is a token problem.
             //If the header is not present, it is a user permission error.
             //See https://canvas.instructure.com/doc/api/file.oauth.html#storing-access-tokens
             if(httpResponse.containsHeader(HttpHeaders.WWW_AUTHENTICATE)) {
+                LOG.debug("User's token is invalid. It might need refreshing");
                 throw new InvalidOauthTokenException();
             }
             LOG.error("User is not authorized to perform this action");
             throw new UnauthorizedException();
         }
+        if(statusCode == 404) {
+            LOG.error("Object not found in Canvas. Requested URL: " + request.getURI());
+            throw new ObjectNotFoundException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
+        }
+        //TODO: There are probably other error codes that should throw specific exceptions. For example, I would like
+        //to throw an exception if the API throttle limit is hit. But the API docs aren't specific enough on how to
+        //detect this situation (see https://canvas.instructure.com/doc/api/file.throttling.html). I don't know
+        //how to distinguish between a "Rate Liimit Exceeded" and other types of 403 conditions.
+        if(statusCode < 200 || statusCode > 299) {
+            LOG.error("HTTP status " + statusCode + " returned from " + request.getURI());
+            throw new CanvasException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
+        }
+    }
+
+    /**
+     * Attempts to extract a useful Canvas error message from a response object.
+     * Sometimes Canvas API errors come back with a JSON body containing something like
+     * <pre>{"errors":[{"message":"Human readable message here."}],"error_report_id":123456}</pre>.
+     * This method will attempt to extract the message. If it fails, it will return null.
+     * @param response HttpResponse object representing the error response from Canvas
+     * @return The Canvas human-readable error string or null if unable to extract it
+     */
+    private String extractErrorMessageFromResponse(HttpResponse response) {
+        try {
+            String contentType = response.getEntity().getContentType().getValue();
+            if(contentType.contains("application/json")) {
+                String jsonBody = EntityUtils.toString(response.getEntity());
+                Gson gson = GsonResponseParser.getDefaultGsonParser();
+                CanvasErrorResponse errorResponse = gson.fromJson(jsonBody, CanvasErrorResponse.class);
+                List<ErrorMessage> errors = errorResponse.getErrors();
+                if(errors != null) {
+                    return errors.stream().map(e -> e.getMessage()).collect(Collectors.joining(", "));
+                }
+            }
+        } catch(Exception e) {
+            LOG.warn("Failed to extract error message from Canvas response: " + e.getMessage());
+        }
+        return null;
     }
 
     private String handleResponse(HttpResponse httpResponse, HttpRequestBase request) throws IOException {
-        checkAuthenticationHeaders(httpResponse);
-        int statusCode = httpResponse.getStatusLine().getStatusCode();
-        if(statusCode < 200 || statusCode > 299) {
-            LOG.error("HTTP status " + statusCode + " returned from " + request.getURI());
-            HttpEntity entity = httpResponse.getEntity();
-            if(entity != null) {
-                LOG.error("Response from Canvas: " + EntityUtils.toString(entity));
-            }
-        }
+        checkHeaders(httpResponse, request);
         return new BasicResponseHandler().handleResponse(httpResponse);
     }
 

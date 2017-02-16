@@ -3,7 +3,6 @@ package edu.ksu.canvas.tests.assignment;
 import com.google.gson.JsonSyntaxException;
 import edu.ksu.canvas.CanvasTestBase;
 import edu.ksu.canvas.constants.CanvasConstants;
-import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.impl.AssignmentImpl;
 import edu.ksu.canvas.interfaces.AssignmentReader;
 import edu.ksu.canvas.model.assignment.Assignment;
@@ -52,16 +51,6 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         Assert.assertTrue(assignments.stream().map(Assignment::getName).filter("Assignment2"::equals).findFirst().isPresent());
     }
 
-    @Test(expected = InvalidOauthTokenException.class)
-    public void testListAssignments_canvasError() throws Exception {
-        String someCourseId = "123456";
-        Response erroredResponse = new Response();
-        erroredResponse.setErrorHappened(true);
-        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments";
-        fakeRestClient.add401Response(url, "SampleJson/assignment/MinimalAssignment.json");
-        assignmentReader.listCourseAssignments(new ListCourseAssignmentsOptions(someCourseId));
-    }
-
     @Test(expected = JsonSyntaxException.class)
     public void testListAssignments_responseInvalid() throws Exception {
         String someCourseId = "123456";
@@ -102,17 +91,6 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         Assert.assertEquals(2, assignments.size());
         Assert.assertTrue(assignments.stream().map(Assignment::getName).filter("Assignment1"::equals).findFirst().isPresent());
         Assert.assertTrue(assignments.stream().map(Assignment::getName).filter("Assignment2"::equals).findFirst().isPresent());
-    }
-
-    @Test(expected = InvalidOauthTokenException.class)
-    public void testSisUserMasqueradeListAssignments_canvasError() throws Exception {
-        String someUserId = "899123456";
-        String someCourseId = "123456";
-        Response erroredResponse = new Response();
-        erroredResponse.setErrorHappened(true);
-        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
-        fakeRestClient.add401Response(url, "SampleJson/assignment/MinimalAssignment.json");
-        assignmentReader.readAsSisUser(someUserId).listCourseAssignments(new ListCourseAssignmentsOptions(someCourseId));
     }
 
     @Test(expected = JsonSyntaxException.class)
@@ -156,17 +134,6 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         Assert.assertEquals(2, assignments.size());
         Assert.assertTrue(assignments.stream().map(Assignment::getName).filter("Assignment1"::equals).findFirst().isPresent());
         Assert.assertTrue(assignments.stream().map(Assignment::getName).filter("Assignment2"::equals).findFirst().isPresent());
-    }
-
-    @Test(expected = InvalidOauthTokenException.class)
-    public void testCanvasUserMasqueradeListAssignments_canvasError() throws Exception {
-        String someUserId = "899123456";
-        String someCourseId = "123456";
-        Response erroredResponse = new Response();
-        erroredResponse.setErrorHappened(true);
-        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments?as_user_id=" + someUserId;
-        fakeRestClient.add401Response(url, "SampleJson/assignment/MinimalAssignment.json");
-        assignmentReader.readAsCanvasUser(someUserId).listCourseAssignments(new ListCourseAssignmentsOptions(someCourseId));
     }
 
     @Test(expected = JsonSyntaxException.class)

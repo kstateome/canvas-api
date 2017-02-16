@@ -9,6 +9,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class wraps SimpleRestClient. It provides functionality to
+ * catch OAuth errors that may be the result of an expired access
+ * token that needs to be refreshed using the user's refresh token.
+ * After refreshing the token it retries the request once. If it
+ * still fails, the error is thrown up to the caller.
+ */
 public class RefreshingRestClient implements RestClient {
     private static final Logger LOG = Logger.getLogger(RefreshingRestClient.class);
     private RestClient restClient = new SimpleRestClient();
