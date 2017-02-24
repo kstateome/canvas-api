@@ -3,6 +3,7 @@ package edu.ksu.canvas.impl;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -24,22 +25,23 @@ public class ExternalToolImpl extends BaseImpl<ExternalTool, ExternalToolReader,
 
     @Override
     public List<ExternalTool> listExternalToolsInAccount(ListExternalToolsOptions options) throws IOException {
-        LOG.debug("Getting list of external tools in account " + options.getId());
-        String url = buildCanvasUrl("accounts/" + options.getId() + "/external_tools", options.getOptionsMap());
-        //Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
-        return getListFromCanvas(url);
+        return listexternalTools("accounts", options.getId(), options.getOptionsMap());
     }
 
     @Override
     public List<ExternalTool> listExternalToolsInCourse(ListExternalToolsOptions options) throws IOException {
-        // TODO Auto-generated method stub
-        return null;
+        return listexternalTools("courses", options.getId(), options.getOptionsMap());
     }
 
     @Override
     public List<ExternalTool> listExternalToolsInGroup(ListExternalToolsOptions options) throws IOException {
-        // TODO Auto-generated method stub
-        return null;
+        return listexternalTools("groups", options.getId(), options.getOptionsMap());
+    }
+
+    private List<ExternalTool> listexternalTools(String objectType, String objectId, Map<String, List<String>> optionsMap) throws IOException {
+        LOG.debug("Getting list of external tools from " + objectType + ": " + objectId);
+        String url = buildCanvasUrl(objectType + "/" + objectId + "/external_tools", optionsMap);
+        return getListFromCanvas(url);
     }
 
     @Override
