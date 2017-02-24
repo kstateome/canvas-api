@@ -1,12 +1,14 @@
 package edu.ksu.canvas.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
 
 @CanvasObject(postKey = "wiki_page")
-public class Page extends BaseCanvasModel {
+public class Page extends BaseCanvasModel implements Serializable {
+    public static final long serialVersionUID = 1L;
 
     private String url;
     private String title;

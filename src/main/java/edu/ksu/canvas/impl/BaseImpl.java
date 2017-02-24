@@ -2,9 +2,6 @@ package edu.ksu.canvas.impl;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.interfaces.CanvasMessenger;
@@ -13,6 +10,7 @@ import edu.ksu.canvas.interfaces.CanvasWriter;
 import edu.ksu.canvas.interfaces.ResponseParser;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.util.CanvasURLBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -38,7 +36,7 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
 
     protected String canvasBaseUrl;
     protected Integer apiVersion;
-    protected String oauthToken;
+    protected OauthToken oauthToken;
     protected ResponseParser responseParser;
     protected CanvasMessenger canvasMessenger;
     protected Consumer<List<T>> responseCallback;
@@ -56,7 +54,7 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
      * @param readTimeout Timeout in seconds to use when waiting for data to come back from an open connection
      * @param paginationPageSize How many objects to request per page on paginated requests
      */
-    public BaseImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
+    public BaseImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
         this.canvasBaseUrl = canvasBaseUrl;
         this.apiVersion = apiVersion;
         this.oauthToken = oauthToken;
@@ -82,10 +80,6 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
         List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url, consumer);
         responseCallback = null;
         return parseListOfResponses(responses);
-    }
-
-    protected Gson getDefaultGsonParser() {
-        return new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
     }
 
     @Override

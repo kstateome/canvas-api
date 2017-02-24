@@ -1,12 +1,14 @@
 package edu.ksu.canvas;
 
-import edu.ksu.canvas.enums.EnrollmentType;
-import edu.ksu.canvas.impl.EnrollmentsImpl;
-import edu.ksu.canvas.interfaces.EnrollmentsReader;
+import edu.ksu.canvas.impl.EnrollmentImpl;
+import edu.ksu.canvas.interfaces.EnrollmentReader;
 import edu.ksu.canvas.model.Enrollment;
 import edu.ksu.canvas.model.Grade;
 import edu.ksu.canvas.model.User;
 import edu.ksu.canvas.net.FakeRestClient;
+import edu.ksu.canvas.requestOptions.GetEnrollmentOptions;
+import edu.ksu.canvas.requestOptions.GetEnrollmentOptions.EnrollmentType;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,18 +23,18 @@ public class EnrollmentUTest extends CanvasTestBase {
     private FakeRestClient fakeRestClient;
     @Autowired
     private String baseUrl;
-    private EnrollmentsReader enrollmentsReader;
+    private EnrollmentReader enrollmentsReader;
 
     @Before
     public void setup() {
         String url =  baseUrl  + "/api/v1/sections/" + SECTION_ID + "/enrollments?type[]=StudentEnrollment";
         fakeRestClient.addSuccessResponse(url, "SampleJson/Enrollments.json");
-        enrollmentsReader = new EnrollmentsImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE);
+        enrollmentsReader = new EnrollmentImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE);
     }
     
     @Test
     public void getSectionEnrollmentParsesEnrollmentObject() throws Exception {
-        List<Enrollment> enrollments = enrollmentsReader.getSectionEnrollments(SECTION_ID, Collections.singletonList(EnrollmentType.STUDENT));
+        List<Enrollment> enrollments = enrollmentsReader.getSectionEnrollments(new GetEnrollmentOptions(SECTION_ID).type(Collections.singletonList(EnrollmentType.STUDENT)));
         
         Enrollment firstEnrollment = enrollments.get(0);
         Assert.assertEquals("Expected id in object to match id in json", 1, firstEnrollment.getId());
@@ -45,30 +47,30 @@ public class EnrollmentUTest extends CanvasTestBase {
         Assert.assertEquals("Expected enrollmentState in object to match enrollmentState in json", "active", firstEnrollment.getEnrollmentState());
         Assert.assertEquals("Expected role in object to match role in json", "StudentEnrollment", firstEnrollment.getRole());
         Assert.assertEquals("Expected sisCourseId in object to match sisCourseId in json", "12345", firstEnrollment.getSisCourseId());
-        Assert.assertEquals("Expected htmlUrl in object to match htmlUrl in json", "https://k-state.test.instructure.com/courses/25/users/38", firstEnrollment.getHtmlUrl());
+        Assert.assertEquals("Expected htmlUrl in object to match htmlUrl in json", "http://canvas.example.edu/courses/25/users/38", firstEnrollment.getHtmlUrl());
     }
 
     @Test
     public void getSectionEnrollmentParsesUserObject() throws Exception {
-        List<Enrollment> enrollments = enrollmentsReader.getSectionEnrollments(SECTION_ID, Collections.singletonList(EnrollmentType.STUDENT));
+        List<Enrollment> enrollments = enrollmentsReader.getSectionEnrollments(new GetEnrollmentOptions(SECTION_ID).type(Collections.singletonList(EnrollmentType.STUDENT)));
 
         Enrollment firstEnrollment = enrollments.get(0);
         User firstUser = firstEnrollment.getUser();
         Assert.assertEquals("Expected id in object to match id in json", 38, firstUser.getId());
-        Assert.assertEquals("Expected name in object to match name in json", "Amanda Tross", firstUser.getName());
-        Assert.assertEquals("Expected sortableName in object to match sortableName in json", "Tross, Amanda", firstUser.getSortableName());
-        Assert.assertEquals("Expected shortName in object to match shortName in json", "Amanda Tross", firstUser.getShortName());
-        Assert.assertEquals("Expected sisUserId in object to match sisUserId in json", "88888", firstUser.getSisUserId());
-        Assert.assertEquals("Expected loginId in object to match loginId in json", "loginId", firstUser.getLoginId());
+        Assert.assertEquals("Expected name in object to match name in json", "Jane Doe", firstUser.getName());
+        Assert.assertEquals("Expected sortableName in object to match sortableName in json", "Doe, Jane", firstUser.getSortableName());
+        Assert.assertEquals("Expected shortName in object to match shortName in json", "Jane Doe", firstUser.getShortName());
+        Assert.assertEquals("Expected sisUserId in object to match sisUserId in json", "SIS_001", firstUser.getSisUserId());
+        Assert.assertEquals("Expected loginId in object to match loginId in json", "user1", firstUser.getLoginId());
     }
 
     @Test
     public void getSectionEnrollmentsParsesGradeObject() throws Exception {
-        List<Enrollment> enrollments = enrollmentsReader.getSectionEnrollments(SECTION_ID, Collections.singletonList(EnrollmentType.STUDENT));
+        List<Enrollment> enrollments = enrollmentsReader.getSectionEnrollments(new GetEnrollmentOptions(SECTION_ID).type(Collections.singletonList(EnrollmentType.STUDENT)));
 
         Enrollment firstEnrollment = enrollments.get(0);
         Grade grade = firstEnrollment.getGrades();
-        Assert.assertEquals("Expected htmlUrl to match htmlUrl in json", "https://k-state.test.instructure.com/courses/25/grades/68794", grade.getHtmlUrl());
+        Assert.assertEquals("Expected htmlUrl to match htmlUrl in json", "http://canvas.example.edu/courses/25/grades/68794", grade.getHtmlUrl());
         Assert.assertEquals("Expected currentScore to match currentScore in json", "45", grade.getCurrentScore());
         Assert.assertEquals("Expected finalScore to match finalScore in json", "30.24", grade.getFinalScore());
         Assert.assertEquals("Expected currentGrade to match currentGrade in json", "F", grade.getCurrentGrade());
@@ -77,7 +79,7 @@ public class EnrollmentUTest extends CanvasTestBase {
 
     @Test
     public void getSectionEnrollmentsHasCorrectSizeList() throws Exception {
-        List<Enrollment> enrollments = enrollmentsReader.getSectionEnrollments(SECTION_ID, Collections.singletonList(EnrollmentType.STUDENT));
+        List<Enrollment> enrollments = enrollmentsReader.getSectionEnrollments(new GetEnrollmentOptions(SECTION_ID).type(Collections.singletonList(EnrollmentType.STUDENT)));
         Assert.assertEquals("Expected enrollmentReader to return 3 enrollments from the JSON", 3, enrollments.size());
     }
     

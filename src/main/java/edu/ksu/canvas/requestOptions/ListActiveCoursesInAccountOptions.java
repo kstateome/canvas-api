@@ -1,8 +1,6 @@
 package edu.ksu.canvas.requestOptions;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * A class to represent parameters to be passed to the "List active courses in account" API call.
@@ -14,15 +12,21 @@ public class ListActiveCoursesInAccountOptions extends BaseOptions {
     private String accountId;
 
     public enum EnrollmentType {
-        student, teacher, ta, observer, designer;
+        STUDENT, TEACHER, TA, OBSERVER, DESIGNER;
+
+        public String toString() { return name().toLowerCase(); }
     }
 
     public enum State {
-        created, claimed, available, completed, deleted, all;
+        CREATED, CLAIMED, AVAILABLE, COMPLETED, DELETED, ALL;
+
+        public String toString() { return name().toLowerCase(); }
     }
 
     public enum Include {
-        syllabus_body, term, course_progress, storage_quota_used_mb, total_students, teachers;
+        SYLLABUS_BODY, TERM, COURSE_PROGRESS, STORAGE_QUOTA_USED_MB, TOTAL_STUDENTS, TEACHERS;
+
+        public String toString() { return name().toLowerCase(); }
     }
 
     public ListActiveCoursesInAccountOptions(String accountId) {
@@ -41,7 +45,7 @@ public class ListActiveCoursesInAccountOptions extends BaseOptions {
      * @return This object to allow adding more options
      */
     public ListActiveCoursesInAccountOptions withEnrollments(Boolean enrollments) {
-        optionsMap.put("with_enrollments", Arrays.asList(enrollments.toString()));
+        addSingleItem("with_enrollments", enrollments.toString());
         return this;
     }
 
@@ -52,8 +56,7 @@ public class ListActiveCoursesInAccountOptions extends BaseOptions {
      * @return This object to allow adding more options
      */
     public ListActiveCoursesInAccountOptions withEnrollmentTypes(List<EnrollmentType> enrollmentTypes) {
-        List<String> enrollmentStrings = enrollmentTypes.stream().map(e -> e.name()).collect(Collectors.toList());
-        optionsMap.put("enrollment_type[]", enrollmentStrings);
+        addEnumList("enrollment_type[]", enrollmentTypes);
         return this;
     }
 
@@ -65,7 +68,7 @@ public class ListActiveCoursesInAccountOptions extends BaseOptions {
      * @return This object to allow adding more options
      */
     public ListActiveCoursesInAccountOptions onlyPublished(Boolean published) {
-        optionsMap.put("published", Arrays.asList(published.toString()));
+        addSingleItem("published", published.toString());
         return this;
     }
 
@@ -77,7 +80,7 @@ public class ListActiveCoursesInAccountOptions extends BaseOptions {
      * @return This object to allow adding more options
      */
     public ListActiveCoursesInAccountOptions onlyCompleted(Boolean completed) {
-        optionsMap.put("published", Arrays.asList(completed.toString()));
+        addSingleItem("published", completed.toString());
         return this;
     }
 
@@ -108,8 +111,7 @@ public class ListActiveCoursesInAccountOptions extends BaseOptions {
      * @return This object to allow adding more options
      */
     public ListActiveCoursesInAccountOptions inState(List<State> stateList) {
-        List<String> stateStrings = stateList.stream().map(s -> s.name()).collect(Collectors.toList());
-        optionsMap.put("state[]", stateStrings);
+        addEnumList("state[]", stateList);
         return this;
     }
 
@@ -119,7 +121,7 @@ public class ListActiveCoursesInAccountOptions extends BaseOptions {
      * @return This object to allow adding more options
      */
     public ListActiveCoursesInAccountOptions addEnrollmentTermId(String enrollmentTermId) {
-        optionsMap.put("enrollment_term_id", Arrays.asList(enrollmentTermId));
+        addSingleItem("enrollment_term_id", enrollmentTermId);
         return this;
     }
 
@@ -132,7 +134,7 @@ public class ListActiveCoursesInAccountOptions extends BaseOptions {
         if(searchTerm == null || searchTerm.length() < 3) {
             throw new IllegalArgumentException("Search term must be at least 3 characters");
         }
-        optionsMap.put("search_term", Arrays.asList(searchTerm));
+        addSingleItem("search_term", searchTerm);
         return this;
     }
 
@@ -143,8 +145,7 @@ public class ListActiveCoursesInAccountOptions extends BaseOptions {
      * @return This object to allow adding more options
      */
     public ListActiveCoursesInAccountOptions includes(List<Include> includes) {
-        List<String> includeStrings = includes.stream().map(i -> i.name()).collect(Collectors.toList());
-        optionsMap.put("include[]", includeStrings);
+        addEnumList("include[]", includes);
         return this;
     }
 }

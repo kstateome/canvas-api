@@ -9,8 +9,6 @@ import java.util.Optional;
 
 import org.apache.log4j.Logger;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import edu.ksu.canvas.constants.CanvasConstants;
@@ -19,11 +17,12 @@ import edu.ksu.canvas.interfaces.PageWriter;
 import edu.ksu.canvas.model.Page;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.oauth.OauthToken;
 
 public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements PageReader, PageWriter {
     private static final Logger LOG = Logger.getLogger(PageImpl.class);
 
-    public PageImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
+    public PageImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }
 
@@ -46,14 +45,11 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
     }
 
     @Override
-    public Optional<Page> updateCoursePage(Page page, String courseId) throws Exception {
+    public Optional<Page> updateCoursePage(Page page, String courseId) throws IOException {
         LOG.debug("Updating page in course" + courseId);
         String encodedUrl = URLEncoder.encode(page.getUrl(), CanvasConstants.URLENCODING_TYPE);
         String url = buildCanvasUrl("courses/" + courseId + "/pages/" + encodedUrl, Collections.emptyMap());
-        JsonElement pageElement = getDefaultGsonParser().toJsonTree(page);
-        JsonObject pageObject = new JsonObject();
-        pageObject.add("wiki_page", pageElement);
-        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, pageObject);
+        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, page.toJsonObject());
         return responseParser.parseToObject(Page.class, response);
     }
 

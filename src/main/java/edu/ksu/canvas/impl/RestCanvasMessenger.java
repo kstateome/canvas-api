@@ -2,10 +2,13 @@ package edu.ksu.canvas.impl;
 
 
 import com.google.gson.JsonObject;
+
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.CanvasMessenger;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.oauth.OauthToken;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -31,19 +34,17 @@ public class RestCanvasMessenger implements CanvasMessenger {
         this.restClient = restClient;
     }
 
-    public List<Response> getFromCanvas(@NotNull String oauthToken, @NotNull String url) throws InvalidOauthTokenException, IOException {
+    public List<Response> getFromCanvas(@NotNull OauthToken oauthToken, @NotNull String url) throws InvalidOauthTokenException, IOException {
         return getFromCanvas(oauthToken, url, null);
     }
 
 
-    public List<Response> getFromCanvas(@NotNull String oauthToken, @NotNull String url, Consumer<Response> callback) throws InvalidOauthTokenException, IOException {
+    public List<Response> getFromCanvas(@NotNull OauthToken oauthToken, @NotNull String url, Consumer<Response> callback) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending GET request to: " + url);
         final List<Response> responses = new ArrayList<>();
         while (StringUtils.isNotBlank(url)) {
             Response response = getSingleResponseFromCanvas(oauthToken, url);
-            if (response.getResponseCode() == 401) {
-                throw new InvalidOauthTokenException();
-            } else if (response.getErrorHappened() || response.getResponseCode() != 200) {
+            if (response.getErrorHappened() || response.getResponseCode() != 200) {
                 LOG.error("Errors retrieving responses from canvas for url:  " + url);
                 return Collections.emptyList();
             }
@@ -57,52 +58,32 @@ public class RestCanvasMessenger implements CanvasMessenger {
     }
 
     @Override
-    public Response sendToCanvas(@NotNull String oauthToken, @NotNull String url, @NotNull Map<String,String> parameters) throws InvalidOauthTokenException, IOException {
-        final Response response = restClient.sendApiPost(oauthToken, url, parameters, connectTimeout, readTimeout);
-        if (response.getResponseCode() == 401) {
-            throw new InvalidOauthTokenException();
-        }
-        return response;
+    public Response sendToCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String, List<String>> parameters) throws InvalidOauthTokenException, IOException {
+        return restClient.sendApiPost(oauthToken, url, parameters, connectTimeout, readTimeout);
    }
 
     @Override
-    public Response sendJsonPostToCanvas(String oauthToken, String url, JsonObject requestBody) throws InvalidOauthTokenException, IOException {
-        final Response response = restClient.sendJsonPost(oauthToken, url, requestBody.toString(), connectTimeout, readTimeout);
-        if (response.getResponseCode() == 401) {
-            throw new InvalidOauthTokenException();
-        }
-        return response;
+    public Response sendJsonPostToCanvas(OauthToken oauthToken, String url, JsonObject requestBody) throws InvalidOauthTokenException, IOException {
+        return restClient.sendJsonPost(oauthToken, url, requestBody.toString(), connectTimeout, readTimeout);
     }
 
     @Override
-    public Response sendJsonPutToCanvas(String oauthToken, String url, JsonObject requestBody) throws InvalidOauthTokenException, IOException {
-        final Response response = restClient.sendJsonPut(oauthToken, url, requestBody.toString(), connectTimeout, readTimeout);
-        if (response.getResponseCode() == 401) {
-            throw new InvalidOauthTokenException();
-        }
-        return response;
+    public Response sendJsonPutToCanvas(OauthToken oauthToken, String url, JsonObject requestBody) throws InvalidOauthTokenException, IOException {
+        return restClient.sendJsonPut(oauthToken, url, requestBody.toString(), connectTimeout, readTimeout);
     }
 
     @Override
-    public Response deleteFromCanvas(@NotNull String oauthToken, @NotNull String url, @NotNull Map<String,String> parameters) throws InvalidOauthTokenException, IOException {
-        final Response response = restClient.sendApiDelete(oauthToken, url, parameters, connectTimeout, readTimeout);
-        if (response.getResponseCode() == 401) {
-            throw new InvalidOauthTokenException();
-        }
-        return response;
+    public Response deleteFromCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String, List<String>> parameters) throws InvalidOauthTokenException, IOException {
+        return restClient.sendApiDelete(oauthToken, url, parameters, connectTimeout, readTimeout);
     }
 
     @Override
-    public Response putToCanvas(@NotNull String oauthToken, @NotNull String url, @NotNull Map<String,Object> parameters) throws InvalidOauthTokenException, IOException {
-        final Response response = restClient.sendApiPut(oauthToken, url, parameters, connectTimeout, readTimeout);
-        if (response.getResponseCode() == 401) {
-            throw new InvalidOauthTokenException();
-        }
-        return response;
+    public Response putToCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String, List<String>> parameters) throws InvalidOauthTokenException, IOException {
+        return restClient.sendApiPut(oauthToken, url, parameters, connectTimeout, readTimeout);
     }
 
     @Override
-    public Response getSingleResponseFromCanvas(@NotNull String oauthToken, @NotNull String url) throws InvalidOauthTokenException, IOException {
+    public Response getSingleResponseFromCanvas(@NotNull OauthToken oauthToken, @NotNull String url) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending GET request to: " + url);
         return restClient.sendApiGet(oauthToken, url, connectTimeout, readTimeout);
     }

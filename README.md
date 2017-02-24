@@ -29,15 +29,24 @@ Every API call requires an OAuth token for authentication. It is up to you to ac
 Once you have a token, executing an API call can be as simple as creating a new `CanvasApiFactory`, getting a reader object from it and executing a call. A short example of retrieving an object representing the root Canvas account:
 
     String canvasBaseUrl = "https://<institution>.instructure.com";
-    String oauthToken = "mYSecreTtoKen932781";
+    OauthToken oauthToken = new NonRefreshableOauthToken("mYSecreTtoKen932781");
     CanvasApiFactory apiFactory = new CanvasApiFactory(canvasBaseUrl);
     AccountReader acctReader = apiFactory.getReader(AccountReader.class, oauthToken);
     Account rootAccount = acctReader.getSingleAccount("1").get();
 
+### API Options
+Many of the API methods take some form of method-specific *Options* class as a parameter. This is done instead of just accepting multiple (possibly null) parameters because some API calls have a gigantic list of optional parameters. It also insulates the users of this library from compilation breaking changes just because Canvas added a new optional parameter to an API call. Information required to execute the API call is passed into the option class constructor while optional parameters are added to the option class via methods in a pseudo-builder pattern. For example the "[Get Users in Course](https://canvas.instructure.com/doc/api/courses.html#method.courses.users)" method has one required piece of information (`course ID`) and 8 optional parameters. To query all students and observers who match the search term "John" you would do as follows:
+
+    GetUsersInCourseOptions options =
+        new GetUsersInCourseOptions("1234") //required course ID
+        .searchTerm("John")
+        .enrollmentType(Arrays.asList(EnrollmentType.STUDENT, EnrollmentType.OBSERVER));
+    List<User> users = userReader.getUsersInCourse(options);
+
 ### Masquerading
 Canvas allows you to execute API calls while masquerading as another user. In order to do this, your OAuth token must have sufficient privileges. Details can be found in the [Canvas documentation](https://canvas.instructure.com/doc/api/file.masquerading.html).
 
-To execute a read API call while masquerading, simply add a call to the `readAsCanvasUser("<canvas user ID>")` or `readAsSisUser("<SIS user ID>")` method on the reader object. Corrosponding methods also exist in writer objects
+To execute a read API call while masquerading, simply add a call to the `readAsCanvasUser("<canvas user ID>")` or `readAsSisUser("<SIS user ID>")` method on the reader object. Corresponding methods also exist in writer objects
 
     acctReader.readAsSisUser("1234567").getSingleAccount("1");
 
@@ -49,13 +58,32 @@ To request an object by its SIS ID, prepend the ID with the appropriate string, 
     acctReader.getSingleAccount("sis_account_id:12345");
 
 ### Pagination
-All API calls that return a list of objects have the potential to require pagination to get all of the requested objects. If no `per_page` parameter is specified on a request, Canvas defaults to only returning 10 objets at a time which can cause problems if you are trying to query large lists in a timely fashion. Details on pagination can be found in the [Canvas documentation](https://canvas.instructure.com/doc/api/file.pagination.html)
+All API calls that return a list of objects have the potential to require pagination to get all of the requested objects. If no `per_page` parameter is specified on a request, Canvas defaults to only returning 10 objects at a time which can cause problems if you are trying to query large lists in a timely fashion. Details on pagination can be found in the [Canvas documentation](https://canvas.instructure.com/doc/api/file.pagination.html)
 
-To spcify the pagination page size to be used on calls, an additional parameter is passed into the `CanvasApiFactory` when requesting a reader object. Note that while you can request any number you like, Canvas can also choose to ignore this number and return however many objects it wants. Currently, hosted instances of Canvas are set to max out at 100 objects per page but this is subject to change without warning. To set the pagination page size to 100:
+To specify the pagination page size to be used on calls, an additional parameter is passed into the `CanvasApiFactory` when requesting a reader object. Note that while you can request any number you like, Canvas can also choose to ignore this number and return however many objects it wants. Currently, hosted instances of Canvas are set to max out at 100 objects per page but this is subject to change without warning. To set the pagination page size to 100:
 
     UserReader userReader = apiFactory.getReader(UserReader.class, oauthToken, 100);
 
 All requests made using this `UserReader` object will request 100 objects per page.
+
+### Pagination Callbacks
+Calls that return a large list of objects can take a while even if you set the pagination page size to 100. Querying certain lists in large courses may take 15+ seconds. If you are trying to do this in real time to display to a user, you may want to take chunks of the data as they come in from Canvas and either display the partial list to the user or do some back end processing so that your results will be ready to display more quickly once the full list is done downloading. For this situation, the library provides optional callbacks for reader methods which will call a method you specify every time a page of results comes back from Canvas and pass the partial list in so you can start processing. To use this feature, it looks like this:
+
+    GetUsersInCourseOptions options = new GetUsersInCourseOptions("1146");
+    List<User> courseUsers = userReader.withCallback(this::processUserPage).getUsersInCourse(options);
+    System.out.println("Total users in course: " + courseUsers.size());
+
+    private void processUserPage(List<User> users) {
+        System.out.println("Got a page of users back: " + users.size());
+    }
+
+If this code is run on a course with 325 users it would print the following:
+
+    Got a page of users back: 100
+    Got a page of users back: 100
+    Got a page of users back: 100
+    Got a page of users back: 25
+    Total users in course: 325
 
 ## License
 This software is licensed under the LGPL v3 license. Please see the [License.txt file](License.txt) in this repository for license details.

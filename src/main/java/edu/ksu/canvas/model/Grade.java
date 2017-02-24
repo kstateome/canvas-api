@@ -7,7 +7,7 @@ import java.io.Serializable;
  * See <a href="https://canvas.instructure.com/doc/api/enrollments.html#Grade">Canvas Enrollments</a> documentation.
  */
 public class Grade implements Serializable {
-    private static final long serialVersionUID = 1L;
+    public static final long serialVersionUID = 1L;
 
     private String htmlUrl;
     private String currentScore;

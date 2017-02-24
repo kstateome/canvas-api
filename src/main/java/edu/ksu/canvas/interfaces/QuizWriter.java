@@ -1,9 +1,9 @@
 package edu.ksu.canvas.interfaces;
 
-import edu.ksu.canvas.model.quizzes.Quiz;
-
 import java.io.IOException;
 import java.util.Optional;
+
+import edu.ksu.canvas.model.assignment.Quiz;
 
 public interface QuizWriter extends CanvasWriter<Quiz, QuizWriter> {
     /**

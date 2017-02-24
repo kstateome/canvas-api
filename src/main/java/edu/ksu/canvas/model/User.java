@@ -12,8 +12,8 @@ import java.util.List;
  */
 @CanvasObject(postKey = "user")
 public class User extends BaseCanvasModel implements Serializable {
+    public static final long serialVersionUID = 1L;
 
-    private static final long serialVersionUID = 1L;
     private int id;
     private String name;
     private String sortableName;
@@ -21,12 +21,13 @@ public class User extends BaseCanvasModel implements Serializable {
     private String sisUserId;
     private String sisImportId;
     private String loginId;
+    private String integrationId;
     private String avatarUrl;
     private List<Enrollment> enrollments;
     private String email;
     private String locale;
-    private String last_login;
-    private String time_zone;
+    private String lastLogin;
+    private String timeZone;
     private String bio;
 
 
@@ -81,12 +82,22 @@ public class User extends BaseCanvasModel implements Serializable {
         this.sisImportId = sisImportId;
     }
 
+    @CanvasField(overrideObjectKey = "pseudonym", postKey = "unique_id")
     public String getLoginId() {
         return loginId;
     }
 
     public void setLoginId(String loginId) {
         this.loginId = loginId;
+    }
+
+    @CanvasField(overrideObjectKey = "pseudonym", postKey = "integration_id")
+    public String getIntegrationId() {
+        return integrationId;
+    }
+
+    public void setIntegrationId(final String integrationId) {
+        this.integrationId = integrationId;
     }
 
     @CanvasField(postKey = "avatar][url")
@@ -123,21 +134,21 @@ public class User extends BaseCanvasModel implements Serializable {
         this.locale = locale;
     }
 
-    public String getLast_login() {
-        return last_login;
+    public String getLastLogin() {
+        return lastLogin;
     }
 
-    public void setLast_login(String last_login) {
-        this.last_login = last_login;
+    public void setLastLogin(String lastLogin) {
+        this.lastLogin = lastLogin;
     }
 
     @CanvasField(postKey = "time_zone")
-    public String getTime_zone() {
-        return time_zone;
+    public String getTimeZone() {
+        return timeZone;
     }
 
-    public void setTime_zone(String time_zone) {
-        this.time_zone = time_zone;
+    public void setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
     }
 
     public String getBio() {

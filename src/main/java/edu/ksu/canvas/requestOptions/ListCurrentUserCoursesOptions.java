@@ -1,24 +1,27 @@
 package edu.ksu.canvas.requestOptions;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-
 
 public class ListCurrentUserCoursesOptions extends BaseOptions {
 
     public enum EnrollmentType {
-        student, teacher, ta, observer, designer;
+        STUDENT, TEACHER, TA, OBSERVER, DESIGNER;
+
+        public String toString() { return name().toLowerCase(); }
     }
 
     public enum Include {
-        needs_grading_count, syllabus_body, total_scores, term, course_progress,
-        sections, storage_quota_used_mb, total_students, favorites, teachers,
-        observed_users, current_grading_period_scores
+        NEEDS_GRADING_COUNT, SYLLABUS_BODY, TOTAL_SCORES, TERM, COURSE_PROGRESS,
+        SECTIONS, STORAGE_QUOTA_USED_MB, TOTAL_STUDENTS, FAVORITES, TEACHERS,
+        OBSERVED_USERS, CURRENT_GRADING_PERIOD_SCORES;
+
+        public String toString() { return name().toLowerCase(); }
     }
 
     public enum State {
-        unpublished, available, completed, deleted
+        UNPUBLISHED, AVAILABLE, COMPLETED, DELETED;
+
+        public String toString() { return name().toLowerCase(); }
     }
 
     /**
@@ -27,7 +30,7 @@ public class ListCurrentUserCoursesOptions extends BaseOptions {
      * @return This object to allow adding more options
      */
     public ListCurrentUserCoursesOptions withEnrollmentType(EnrollmentType enrollmentType) {
-        optionsMap.put("enrollment_type", Arrays.asList(enrollmentType.name()));
+        addSingleItem("enrollment_type", enrollmentType.toString());
         return this;
     }
 
@@ -37,7 +40,7 @@ public class ListCurrentUserCoursesOptions extends BaseOptions {
      * @return This object to allow adding more options
      */
     public ListCurrentUserCoursesOptions withEnrollmentRoleId(Integer roleId) {
-        optionsMap.put("enrollment_role_id", Arrays.asList(roleId.toString()));
+        addSingleItem("enrollment_role_id", roleId.toString());
         return this;
     }
 
@@ -47,8 +50,7 @@ public class ListCurrentUserCoursesOptions extends BaseOptions {
      * @return This object to allow adding more options
      */
     public ListCurrentUserCoursesOptions includes(List<Include> includes) {
-        List<String> includeStrings = includes.stream().map(i -> i.name()).collect(Collectors.toList());
-        optionsMap.put("include[]", includeStrings);
+        addEnumList("include[]", includes);
         return this;
     }
 
@@ -58,8 +60,7 @@ public class ListCurrentUserCoursesOptions extends BaseOptions {
      * @return This object to allow adding more options
      */
     public ListCurrentUserCoursesOptions states(List<State> states) {
-        List<String> stateStrings = states.stream().map(i -> i.name()).collect(Collectors.toList());
-        optionsMap.put("state[]", stateStrings);
+        addEnumList("state[]", states);
         return this;
     }
 }
