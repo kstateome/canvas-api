@@ -12,12 +12,13 @@ import edu.ksu.canvas.interfaces.ExternalToolReader;
 import edu.ksu.canvas.interfaces.ExternalToolWriter;
 import edu.ksu.canvas.model.ExternalTool;
 import edu.ksu.canvas.net.RestClient;
+import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.ListExternalToolsOptions;
 
 public class ExternalToolImpl extends BaseImpl<ExternalTool, ExternalToolReader, ExternalToolWriter> implements ExternalToolReader, ExternalToolWriter {
     private static final Logger LOG = Logger.getLogger(ExternalToolImpl.class);
 
-    public ExternalToolImpl(String canvasBaseUrl, Integer apiVersion, String oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
+    public ExternalToolImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }
 
