@@ -1,7 +1,5 @@
 package edu.ksu.canvas.requestOptions;
 
-import java.util.Arrays;
-
 public class ListExternalToolsOptions extends BaseOptions {
 
     private String id;
@@ -14,17 +12,39 @@ public class ListExternalToolsOptions extends BaseOptions {
         return id;
     }
 
+    /**
+     * Only return tools with a name matching this partial string
+     * @param searchTerm Tool name to search for
+     * @return This object to allow adding more options
+     */
     public ListExternalToolsOptions searchTerm(String searchTerm) {
         if(searchTerm == null || searchTerm.length() < 3) {
             throw new IllegalArgumentException("Search term must be at least 3 characters");
         }
-        optionsMap.put("search_term", Arrays.asList(searchTerm));
+        addSingleItem("search_term", searchTerm);
         return this;
     }
 
+    /**
+     * If true, only tools that are meant to be selectable are returned
+     * @param selectable Whether to filter tools by selectability
+     * @return This object to allow adding more options
+     */
     public ListExternalToolsOptions isSelectable(Boolean selectable) {
-        optionsMap.put("selectable", Arrays.asList(selectable.toString()));
+        addSingleItem("selectable", selectable.toString());
         return this;
     }
 
+    /**
+     * If true, include tools installed in all accounts above the current context.
+     * <p>
+     * This will give you ALL the tools available in the specified course/group/account
+     * even if they were installed in a parent account.
+     * @param includeParents True to include tools from parent accounts
+     * @return This object to allow adding more options
+     */
+    public ListExternalToolsOptions includeParentTools(Boolean includeParents) {
+        addSingleItem("include_parents", includeParents.toString());
+        return this;
+    }
 }
