@@ -44,9 +44,7 @@ public class RestCanvasMessenger implements CanvasMessenger {
         final List<Response> responses = new ArrayList<>();
         while (StringUtils.isNotBlank(url)) {
             Response response = getSingleResponseFromCanvas(oauthToken, url);
-            if (response.getResponseCode() == 401) {
-                throw new InvalidOauthTokenException();
-            } else if (response.getErrorHappened() || response.getResponseCode() != 200) {
+            if (response.getErrorHappened() || response.getResponseCode() != 200) {
                 LOG.error("Errors retrieving responses from canvas for url:  " + url);
                 return Collections.emptyList();
             }
@@ -60,48 +58,28 @@ public class RestCanvasMessenger implements CanvasMessenger {
     }
 
     @Override
-    public Response sendToCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String,String> parameters) throws InvalidOauthTokenException, IOException {
-        final Response response = restClient.sendApiPost(oauthToken, url, parameters, connectTimeout, readTimeout);
-        if (response.getResponseCode() == 401) {
-            throw new InvalidOauthTokenException();
-        }
-        return response;
+    public Response sendToCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String, List<String>> parameters) throws InvalidOauthTokenException, IOException {
+        return restClient.sendApiPost(oauthToken, url, parameters, connectTimeout, readTimeout);
    }
 
     @Override
     public Response sendJsonPostToCanvas(OauthToken oauthToken, String url, JsonObject requestBody) throws InvalidOauthTokenException, IOException {
-        final Response response = restClient.sendJsonPost(oauthToken, url, requestBody.toString(), connectTimeout, readTimeout);
-        if (response.getResponseCode() == 401) {
-            throw new InvalidOauthTokenException();
-        }
-        return response;
+        return restClient.sendJsonPost(oauthToken, url, requestBody.toString(), connectTimeout, readTimeout);
     }
 
     @Override
     public Response sendJsonPutToCanvas(OauthToken oauthToken, String url, JsonObject requestBody) throws InvalidOauthTokenException, IOException {
-        final Response response = restClient.sendJsonPut(oauthToken, url, requestBody.toString(), connectTimeout, readTimeout);
-        if (response.getResponseCode() == 401) {
-            throw new InvalidOauthTokenException();
-        }
-        return response;
+        return restClient.sendJsonPut(oauthToken, url, requestBody.toString(), connectTimeout, readTimeout);
     }
 
     @Override
-    public Response deleteFromCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String,String> parameters) throws InvalidOauthTokenException, IOException {
-        final Response response = restClient.sendApiDelete(oauthToken, url, parameters, connectTimeout, readTimeout);
-        if (response.getResponseCode() == 401) {
-            throw new InvalidOauthTokenException();
-        }
-        return response;
+    public Response deleteFromCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String, List<String>> parameters) throws InvalidOauthTokenException, IOException {
+        return restClient.sendApiDelete(oauthToken, url, parameters, connectTimeout, readTimeout);
     }
 
     @Override
-    public Response putToCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String,Object> parameters) throws InvalidOauthTokenException, IOException {
-        final Response response = restClient.sendApiPut(oauthToken, url, parameters, connectTimeout, readTimeout);
-        if (response.getResponseCode() == 401) {
-            throw new InvalidOauthTokenException();
-        }
-        return response;
+    public Response putToCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String, List<String>> parameters) throws InvalidOauthTokenException, IOException {
+        return restClient.sendApiPut(oauthToken, url, parameters, connectTimeout, readTimeout);
     }
 
     @Override

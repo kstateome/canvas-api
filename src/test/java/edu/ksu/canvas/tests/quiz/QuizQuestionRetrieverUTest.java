@@ -3,7 +3,6 @@ package edu.ksu.canvas.tests.quiz;
 import com.google.gson.JsonSyntaxException;
 import edu.ksu.canvas.CanvasTestBase;
 import edu.ksu.canvas.constants.CanvasConstants;
-import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.impl.QuizQuestionImpl;
 import edu.ksu.canvas.interfaces.QuizQuestionReader;
 import edu.ksu.canvas.model.assignment.QuizQuestion;
@@ -46,17 +45,6 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
         Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestionName).filter("Quiz Question 1"::equals).findFirst().isPresent());
         Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestionName).filter("Quiz Question 2"::equals).findFirst().isPresent());
     }
-    @Test(expected = InvalidOauthTokenException.class)
-    public void testListAssignments_canvasError() throws Exception {
-        String someCourseId = "123456";
-        Integer someQUizId = 123456;
-        Response erroredResponse = new Response();
-        erroredResponse.setErrorHappened(true);
-        String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion,
-                "courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions", Collections.emptyMap());  Response notErroredResponse = new Response();
-        fakeRestClient.add401Response(url, "SampleJson/quiz/QuizQuestionList.json");
-        quizQuestionReader.getQuizQuestions(new GetQuizQuestionsOptions(someCourseId, someQUizId));
-    }
 
     @Test(expected = JsonSyntaxException.class)
     public void testListAssignments_responseInvalid() throws Exception {
@@ -87,17 +75,6 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
         Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestionName).filter("Quiz Question 1"::equals).findFirst().isPresent());
         Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestionName).filter("Quiz Question 2"::equals).findFirst().isPresent());
     }
-    @Test(expected = InvalidOauthTokenException.class)
-    public void testSisUserMasqueradeListAssignments_canvasError() throws Exception {
-        String someUserId = "899123456";
-        String someCourseId = "123456";
-        Integer someQUizId = 123456;
-        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
-        Response erroredResponse = new Response();
-        erroredResponse.setErrorHappened(true);
-        fakeRestClient.add401Response(url, "SampleJson/quiz/QuizQuestionList.json");
-        quizQuestionReader.readAsSisUser(someUserId).getQuizQuestions(new GetQuizQuestionsOptions(someCourseId, someQUizId));
-    }
 
     @Test(expected = JsonSyntaxException.class)
     public void testSisUserMasqueradeListAssignments_responseInvalid() throws Exception {
@@ -126,17 +103,6 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
         Assert.assertEquals(2, quizQuestions.size());
         Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestionName).filter("Quiz Question 1"::equals).findFirst().isPresent());
         Assert.assertTrue(quizQuestions.stream().map(QuizQuestion::getQuestionName).filter("Quiz Question 2"::equals).findFirst().isPresent());
-    }
-    @Test(expected = InvalidOauthTokenException.class)
-    public void testCanvasUserMasqueradeListAssignments_canvasError() throws Exception {
-        String someUserId = "899123456";
-        String someCourseId = "123456";
-        Integer someQUizId = 123456;
-        String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions?as_user_id=" + someUserId;
-        Response erroredResponse = new Response();
-        erroredResponse.setErrorHappened(true);
-        fakeRestClient.add401Response(url, "SampleJson/quiz/QuizQuestionList.json");
-        quizQuestionReader.readAsCanvasUser(someUserId).getQuizQuestions(new GetQuizQuestionsOptions(someCourseId, someQUizId));
     }
 
     @Test(expected = JsonSyntaxException.class)

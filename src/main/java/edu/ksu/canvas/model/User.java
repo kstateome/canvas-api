@@ -21,6 +21,7 @@ public class User extends BaseCanvasModel implements Serializable {
     private String sisUserId;
     private String sisImportId;
     private String loginId;
+    private String integrationId;
     private String avatarUrl;
     private List<Enrollment> enrollments;
     private String email;
@@ -81,12 +82,22 @@ public class User extends BaseCanvasModel implements Serializable {
         this.sisImportId = sisImportId;
     }
 
+    @CanvasField(overrideObjectKey = "pseudonym", postKey = "unique_id")
     public String getLoginId() {
         return loginId;
     }
 
     public void setLoginId(String loginId) {
         this.loginId = loginId;
+    }
+
+    @CanvasField(overrideObjectKey = "pseudonym", postKey = "integration_id")
+    public String getIntegrationId() {
+        return integrationId;
+    }
+
+    public void setIntegrationId(final String integrationId) {
+        this.integrationId = integrationId;
     }
 
     @CanvasField(postKey = "avatar][url")

@@ -7,7 +7,6 @@ import edu.ksu.canvas.model.assignment.Quiz;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
-import edu.ksu.canvas.exception.MessageUndeliverableException;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -42,10 +41,10 @@ public class QuizImpl extends BaseImpl<Quiz, QuizReader, QuizWriter> implements 
     }
 
     @Override
-    public Optional<Quiz> updateQuiz(Quiz quiz, String courseId) throws MessageUndeliverableException, IOException {
+    public Optional<Quiz> updateQuiz(Quiz quiz, String courseId) throws IOException {
         LOG.debug("Updating quiz " + quiz.getId() + " in course " + courseId);
         String url = buildCanvasUrl("courses/" + courseId + "/quizzes/" + quiz.getId(), Collections.emptyMap());
-        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url,quiz.toJsonObject());
+        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url,quiz.toJsonObject());
         return responseParser.parseToObject(Quiz.class, response);
     }
 

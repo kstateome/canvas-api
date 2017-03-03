@@ -1,4 +1,4 @@
-package edu.ksu.canvas.model;
+package edu.ksu.canvas.model.status;
 
 import java.io.Serializable;
 

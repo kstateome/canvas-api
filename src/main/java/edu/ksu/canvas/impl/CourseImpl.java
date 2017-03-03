@@ -5,7 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.CourseReader;
 import edu.ksu.canvas.interfaces.CourseWriter;
 import edu.ksu.canvas.model.Course;
-import edu.ksu.canvas.model.Delete;
+import edu.ksu.canvas.model.status.Delete;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
@@ -62,8 +62,8 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
 
     @Override
     public Boolean deleteCourse(String courseId) throws IOException {
-        Map<String,String> postParams = new HashMap<>();
-        postParams.put("event", "delete");
+        Map<String, List<String>> postParams = new HashMap<>();
+        postParams.put("event", Collections.singletonList("delete"));
         String createdUrl = buildCanvasUrl("courses/" + courseId, Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, createdUrl, postParams);
         LOG.debug("response "+ response.toString());

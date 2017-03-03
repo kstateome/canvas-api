@@ -60,8 +60,8 @@ public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, Assig
 
     @Override
     public Optional<Assignment> deleteAssignment(String courseId, String assignmentId) throws IOException {
-        Map<String, String> postParams = new HashMap<>();
-        postParams.put("event", "delete");
+        Map<String, List<String>> postParams = new HashMap<>();
+        postParams.put("event", Collections.singletonList("delete"));
         String createdUrl = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentId, Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, createdUrl, postParams);
         LOG.debug("response " + response.toString());

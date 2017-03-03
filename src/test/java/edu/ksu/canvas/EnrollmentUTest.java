@@ -47,7 +47,7 @@ public class EnrollmentUTest extends CanvasTestBase {
         Assert.assertEquals("Expected enrollmentState in object to match enrollmentState in json", "active", firstEnrollment.getEnrollmentState());
         Assert.assertEquals("Expected role in object to match role in json", "StudentEnrollment", firstEnrollment.getRole());
         Assert.assertEquals("Expected sisCourseId in object to match sisCourseId in json", "12345", firstEnrollment.getSisCourseId());
-        Assert.assertEquals("Expected htmlUrl in object to match htmlUrl in json", "https://k-state.test.instructure.com/courses/25/users/38", firstEnrollment.getHtmlUrl());
+        Assert.assertEquals("Expected htmlUrl in object to match htmlUrl in json", "http://canvas.example.edu/courses/25/users/38", firstEnrollment.getHtmlUrl());
     }
 
     @Test
@@ -57,11 +57,11 @@ public class EnrollmentUTest extends CanvasTestBase {
         Enrollment firstEnrollment = enrollments.get(0);
         User firstUser = firstEnrollment.getUser();
         Assert.assertEquals("Expected id in object to match id in json", 38, firstUser.getId());
-        Assert.assertEquals("Expected name in object to match name in json", "Amanda Tross", firstUser.getName());
-        Assert.assertEquals("Expected sortableName in object to match sortableName in json", "Tross, Amanda", firstUser.getSortableName());
-        Assert.assertEquals("Expected shortName in object to match shortName in json", "Amanda Tross", firstUser.getShortName());
-        Assert.assertEquals("Expected sisUserId in object to match sisUserId in json", "88888", firstUser.getSisUserId());
-        Assert.assertEquals("Expected loginId in object to match loginId in json", "loginId", firstUser.getLoginId());
+        Assert.assertEquals("Expected name in object to match name in json", "Jane Doe", firstUser.getName());
+        Assert.assertEquals("Expected sortableName in object to match sortableName in json", "Doe, Jane", firstUser.getSortableName());
+        Assert.assertEquals("Expected shortName in object to match shortName in json", "Jane Doe", firstUser.getShortName());
+        Assert.assertEquals("Expected sisUserId in object to match sisUserId in json", "SIS_001", firstUser.getSisUserId());
+        Assert.assertEquals("Expected loginId in object to match loginId in json", "user1", firstUser.getLoginId());
     }
 
     @Test
@@ -70,7 +70,7 @@ public class EnrollmentUTest extends CanvasTestBase {
 
         Enrollment firstEnrollment = enrollments.get(0);
         Grade grade = firstEnrollment.getGrades();
-        Assert.assertEquals("Expected htmlUrl to match htmlUrl in json", "https://k-state.test.instructure.com/courses/25/grades/68794", grade.getHtmlUrl());
+        Assert.assertEquals("Expected htmlUrl to match htmlUrl in json", "http://canvas.example.edu/courses/25/grades/68794", grade.getHtmlUrl());
         Assert.assertEquals("Expected currentScore to match currentScore in json", "45", grade.getCurrentScore());
         Assert.assertEquals("Expected finalScore to match finalScore in json", "30.24", grade.getFinalScore());
         Assert.assertEquals("Expected currentGrade to match currentGrade in json", "F", grade.getCurrentGrade());

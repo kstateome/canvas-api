@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FakeRestClient implements RestClient {
@@ -39,21 +40,21 @@ public class FakeRestClient implements RestClient {
     }
 
     @Override
-    public Response sendApiPost(OauthToken token, String url, Map<String, String> postParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+    public Response sendApiPost(OauthToken token, String url, Map<String, List<String>> postParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending fake POST to " + url);
         checkForTimeout(connectTimeout, readTimeout);
         return response(url);
     }
 
     @Override
-    public Response sendApiDelete(@NotNull OauthToken token, @NotNull String url, Map<String, String> deleteParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+    public Response sendApiDelete(@NotNull OauthToken token, @NotNull String url, Map<String, List<String>> deleteParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending fake DEL to " + url);
         checkForTimeout(connectTimeout, readTimeout);
         return response(url);
     }
 
     @Override
-    public Response sendApiPut(@NotNull OauthToken token, @NotNull String url, Map<String, Object> putParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+    public Response sendApiPut(@NotNull OauthToken token, @NotNull String url, Map<String, List<String>> putParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending fake PUT to " + url);
         checkForTimeout(connectTimeout, readTimeout);
         return response(url);

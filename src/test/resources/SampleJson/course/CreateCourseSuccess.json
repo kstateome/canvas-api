@@ -23,7 +23,7 @@
   "hide_final_grades": false,
   "apply_assignment_group_weights": false,
   "calendar": {
-    "ics": "https://k-state.test.instructure.com/feeds/calendars/course_b22Ue3gLiAfl3D1B9YedUPP1BFsHe3ME6PXTuj2m.ics"
+    "ics": "https://canvas.example.edu/feeds/calendars/course_b22Ue3gLiAfl3D1B9YedUPP1BFsHe3ME6PXTuj2m.ics"
   },
   "sis_course_id": null,
   "integration_id": null,

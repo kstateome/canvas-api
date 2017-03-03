@@ -127,7 +127,7 @@ public class QuizQuestion extends BaseCanvasModel {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if(!(o instanceof QuizQuestion)) return false;
 
         QuizQuestion that = (QuizQuestion) o;
 
