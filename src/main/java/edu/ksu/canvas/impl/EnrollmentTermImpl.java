@@ -1,10 +1,13 @@
 package edu.ksu.canvas.impl;
 
 
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.EnrollmentTermReader;
 import edu.ksu.canvas.interfaces.EnrollmentTermWriter;
 import edu.ksu.canvas.model.EnrollmentTerm;
+import edu.ksu.canvas.model.EnrollmentTermWrapper;
+import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.GetEnrollmentTermOptions;
@@ -26,7 +29,10 @@ public class EnrollmentTermImpl extends BaseImpl<EnrollmentTerm, EnrollmentTermR
         LOG.debug("getting enrollment term with account id " + options.getAccountId());
         String url = buildCanvasUrl("accounts/" + options.getAccountId() + "/terms/" , options.getOptionsMap());
         LOG.debug("Final URL of API call: " + url);
-        return getListFromCanvas(url);
+        JsonObject requestBody = new JsonObject();
+        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, requestBody);
+        EnrollmentTermWrapper wrapper = GsonResponseParser.getDefaultGsonParser().fromJson(response.getContent(), EnrollmentTermWrapper.class);
+        return wrapper.getEnrollmentTerms();
     }
 
     @Override

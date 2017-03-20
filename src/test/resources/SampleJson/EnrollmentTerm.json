@@ -1,4 +1,5 @@
-[
+{
+  "enrollment_terms":[
     {
       "id": 1,
       "name": "Fall 2016",
@@ -6,5 +7,6 @@
       "end_at": "2016-12-20T20:00:00Z",
       "sis_term_id": "81"
     }
-]
+  ]
+}
 
