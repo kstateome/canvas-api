@@ -21,15 +21,16 @@ public class ExternalTool extends BaseCanvasModel {
     private String configType;
     private String configXml;
     private String configUrl;
-    //These should ideally be more strictly typed.
-    //I'm having trouble finding out exactly what possible values can be in here though.
-    //Some seem to have sub-nested structures that the API docs don't talk about.
-    private Map<String, Object> customFields;
-    private Map<String, Object> accountNavigation;
-    private Map<String, Object> userNavigation;
-    private Map<String, Object> courseNavigation;
-    private Map<String, Object> editorButton;
-    private Map<String, Object> resourceSelection;
+    //These navigation settings could maybe be split into their own objects
+    //instead of just being maps but I'm not sure if it is worth it.
+    //For possible values, see the API docs for the "Create external tool"
+    //API call: https://canvas.instructure.com/doc/api/external_tools.html#method.external_tools.create
+    private Map<String, String> customFields;
+    private Map<String, String> accountNavigation;
+    private Map<String, String> userNavigation;
+    private Map<String, String> courseNavigation;
+    private Map<String, String> editorButton;
+    private Map<String, String> resourceSelection;
 
     public Integer getId() {
         return id;
@@ -163,51 +164,56 @@ public class ExternalTool extends BaseCanvasModel {
         this.consumerKey = consumerKey;
     }
 
-    public Map<String, Object> getCustomFields() {
+    /**
+     * A map of Canvas specific custom fields that will be added to the LTI launch request.
+     * See <a href="https://canvas.instructure.com/doc/api/file.tools_variable_substitutions.html">Variable Subsitution</a> docs
+     * @return Map of custom variables configured for this tool
+     */
+    public Map<String, String> getCustomFields() {
         return customFields;
     }
 
-    public void setCustomFields(Map<String, Object> customFields) {
+    public void setCustomFields(Map<String, String> customFields) {
         this.customFields = customFields;
     }
 
-    public Map<String, Object> getAccountNavigation() {
+    public Map<String, String> getAccountNavigation() {
         return accountNavigation;
     }
 
-    public void setAccountNavigation(Map<String, Object> accountNavigation) {
+    public void setAccountNavigation(Map<String, String> accountNavigation) {
         this.accountNavigation = accountNavigation;
     }
 
-    public Map<String, Object> getUserNavigation() {
+    public Map<String, String> getUserNavigation() {
         return userNavigation;
     }
 
-    public void setUserNavigation(Map<String, Object> userNavigation) {
+    public void setUserNavigation(Map<String, String> userNavigation) {
         this.userNavigation = userNavigation;
     }
 
-    public Map<String, Object> getCourseNavigation() {
+    public Map<String, String> getCourseNavigation() {
         return courseNavigation;
     }
 
-    public void setCourseNavigation(Map<String, Object> courseNavigation) {
+    public void setCourseNavigation(Map<String, String> courseNavigation) {
         this.courseNavigation = courseNavigation;
     }
 
-    public Map<String, Object> getEditorButton() {
+    public Map<String, String> getEditorButton() {
         return editorButton;
     }
 
-    public void setEditorButton(Map<String, Object> editorButton) {
+    public void setEditorButton(Map<String, String> editorButton) {
         this.editorButton = editorButton;
     }
 
-    public Map<String, Object> getResourceSelection() {
+    public Map<String, String> getResourceSelection() {
         return resourceSelection;
     }
 
-    public void setResourceSelection(Map<String, Object> resourceSelection) {
+    public void setResourceSelection(Map<String, String> resourceSelection) {
         this.resourceSelection = resourceSelection;
     }
 }
