@@ -4,6 +4,7 @@ import edu.ksu.canvas.annotation.CanvasObject;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Class to represent Canvas enrollment termss.
@@ -18,6 +19,9 @@ public class EnrollmentTerm extends BaseCanvasModel implements Serializable {
     private String name;
     private Date startAt;
     private Date endAt;
+    private Date createdAt;
+    private String workflowState;
+    private Map<String, EnrollmentTermOverride> overrides;
 
     public long getId() {
         return id;
@@ -59,6 +63,30 @@ public class EnrollmentTerm extends BaseCanvasModel implements Serializable {
         this.endAt = endAt;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getWorkflowState() {
+        return workflowState;
+    }
+
+    public void setWorkflowState(String workflowState) {
+        this.workflowState = workflowState;
+    }
+
+    public Map<String, EnrollmentTermOverride> getOverrides() {
+        return overrides;
+    }
+
+    public void setOverrides(Map<String, EnrollmentTermOverride> overrides) {
+        this.overrides = overrides;
+    }
+
     @Override
     public String toString() {
         return "EnrollmentTerm{" +
@@ -67,7 +95,28 @@ public class EnrollmentTerm extends BaseCanvasModel implements Serializable {
                 ", name='" + name + '\'' +
                 ", startAt=" + startAt +
                 ", endAt=" + endAt +
+                ", createdAt=" + createdAt +
                 '}';
     }
 
+    public class EnrollmentTermOverride {
+        private Date startAt;
+        private Date endAt;
+
+        public Date getStartAt() {
+            return startAt;
+        }
+
+        public void setStartAt(Date startAt) {
+            this.startAt = startAt;
+        }
+
+        public Date getEndAt() {
+            return endAt;
+        }
+
+        public void setEndAt(Date endAt) {
+            this.endAt = endAt;
+        }
+    }
 }
