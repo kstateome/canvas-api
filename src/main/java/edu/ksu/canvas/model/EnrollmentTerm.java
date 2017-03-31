@@ -21,6 +21,7 @@ public class EnrollmentTerm extends BaseCanvasModel implements Serializable {
     private Date endAt;
     private Date createdAt;
     private String workflowState;
+    private Long gradingPeriodGroupId;
     private Map<String, EnrollmentTermOverride> overrides;
 
     public long getId() {
@@ -77,6 +78,15 @@ public class EnrollmentTerm extends BaseCanvasModel implements Serializable {
 
     public void setWorkflowState(String workflowState) {
         this.workflowState = workflowState;
+    }
+
+
+    public Long getGradingPeriodGroupId() {
+        return gradingPeriodGroupId;
+    }
+
+    public void setGradingPeriodGroupId(Long gradingPeriodGroupId) {
+        this.gradingPeriodGroupId = gradingPeriodGroupId;
     }
 
     public Map<String, EnrollmentTermOverride> getOverrides() {
