@@ -39,11 +39,14 @@ public class EnrollmentTermUTest extends CanvasTestBase {
         SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ssX");
         Date startDate = sdf.parse("2016-08-31T20:00:00Z");
         Date endDate = sdf.parse("2016-12-20T20:00:00Z");
+        Date createdDate = sdf.parse("2016-07-16T20:00:00Z");
 
         Assert.assertEquals("Expected id in object to match id in json", 1, firstEnrollmentTerm.getId());
         Assert.assertEquals("Expected name in object to match name in json", "Fall 2016", firstEnrollmentTerm.getName());
         Assert.assertEquals("Expected start date in object to match start date in json", startDate, firstEnrollmentTerm.getStartAt());
         Assert.assertEquals("Expected end date in object to match end date in json", endDate, firstEnrollmentTerm.getEndAt());
+        Assert.assertEquals("Expected created date in object to match created date in json", createdDate, firstEnrollmentTerm.getCreatedAt());
+        Assert.assertEquals("Expected workflow state 'active' not returned", "active", firstEnrollmentTerm.getWorkflowState());
         Assert.assertEquals("Expected sis id in object to match name in json", "81", firstEnrollmentTerm.getSisTermId());
     }
 }
