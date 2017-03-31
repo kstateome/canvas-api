@@ -34,6 +34,8 @@ public class EnrollmentTermImpl extends BaseImpl<EnrollmentTerm, EnrollmentTermR
         return parseEnrollmentTermList(response);
     }
 
+    //Unfortunately we can't use the generic list parse methods in BaseImpl because Canvas wraps enrollment terms in
+    //a useless object at the top level of the response JSON for no reason at all.
     private List<EnrollmentTerm> parseEnrollmentTermList(final List<Response> responses) {
         return responses.stream().
                 map(this::parseEnrollmentTermList).
