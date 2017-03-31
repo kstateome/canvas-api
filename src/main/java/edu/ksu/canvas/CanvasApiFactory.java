@@ -143,6 +143,7 @@ public class CanvasApiFactory {
         readerMap.put(SectionReader.class, SectionsImpl.class);
         readerMap.put(UserReader.class, UserImpl.class);
         readerMap.put(PageReader.class, PageImpl.class);
+        readerMap.put(EnrollmentTermReader.class, EnrollmentTermImpl.class);
         readerMap.put(ExternalToolReader.class, ExternalToolImpl.class);
 
         writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImpl.class);
