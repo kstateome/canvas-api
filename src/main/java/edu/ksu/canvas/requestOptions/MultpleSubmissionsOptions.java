@@ -5,7 +5,46 @@ import java.util.Map;
 /**
  * Rubric_Assessment not supported yet.
  */
-public class SubmissionOptions extends BaseOptions {
+public class MultpleSubmissionsOptions extends BaseOptions {
+
+    private String objectId;
+    private Integer assignmentId;
+    private Map<Integer, StudentSubmissionOption> studentSubmissionOptionMap;
+
+    public MultpleSubmissionsOptions(String objectId, Integer assignemnetId, Map<Integer, StudentSubmissionOption> studentSubmissionOptionMap) {
+        this.objectId = objectId;
+        this.assignmentId = assignemnetId;
+        this.studentSubmissionOptionMap = studentSubmissionOptionMap;
+    }
+
+    public String getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
+    }
+
+    public Map<Integer, StudentSubmissionOption> getStudentSubmissionOptionMap() {
+        return studentSubmissionOptionMap;
+    }
+
+    public void setStudentSubmissionOptionMap(Map<Integer, StudentSubmissionOption> studentSubmissionOptionMap) {
+        this.studentSubmissionOptionMap = studentSubmissionOptionMap;
+    }
+
+    public Integer getAssignmentId() {
+        return assignmentId;
+    }
+
+    public void setAssignmentId(Integer assignmentId) {
+        this.assignmentId = assignmentId;
+    }
+
+    public StudentSubmissionOption createStudentSubmissionOption(String comments, String grade, Boolean excuse, Boolean groupComment, String mediaCommentId, String mediaCommentType) {
+        return new StudentSubmissionOption(comments, grade, excuse, groupComment, mediaCommentId, mediaCommentType);
+    }
+
 
     public class StudentSubmissionOption {
         private String textComment;
@@ -72,53 +111,5 @@ public class SubmissionOptions extends BaseOptions {
         public void setMediaCommentType(String mediaCommentType) {
             this.mediaCommentType = mediaCommentType;
         }
-    }
-
-    private Integer courseId;
-    private Integer sectionId;
-    private Integer assignmentId;
-    private Map<Integer, StudentSubmissionOption> studentSubmissionOptionMap;
-
-    public SubmissionOptions(Integer courseId, Integer sectionId, Integer assignemnetId, Map<Integer, StudentSubmissionOption> studentSubmissionOptionMap) {
-        this.courseId = courseId;
-        this.sectionId = sectionId;
-        this.assignmentId = assignemnetId;
-        this.studentSubmissionOptionMap = studentSubmissionOptionMap;
-    }
-
-    public Integer getSectionId() {
-        return sectionId;
-    }
-
-    public void setSectionId(Integer sectionId) {
-        this.sectionId = sectionId;
-    }
-
-    public Integer getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
-    }
-
-    public Map<Integer, StudentSubmissionOption> getStudentSubmissionOptionMap() {
-        return studentSubmissionOptionMap;
-    }
-
-    public void setStudentSubmissionOptionMap(Map<Integer, StudentSubmissionOption> studentSubmissionOptionMap) {
-        this.studentSubmissionOptionMap = studentSubmissionOptionMap;
-    }
-
-    public Integer getAssignmentId() {
-        return assignmentId;
-    }
-
-    public void setAssignmentId(Integer assignmentId) {
-        this.assignmentId = assignmentId;
-    }
-
-    public StudentSubmissionOption createStudentSubmissionOption(String comments, String grade, Boolean excuse, Boolean groupComment, String mediaCommentId, String mediaCommentType) {
-        return new StudentSubmissionOption(comments, grade, excuse, groupComment, mediaCommentId, mediaCommentType);
     }
 }

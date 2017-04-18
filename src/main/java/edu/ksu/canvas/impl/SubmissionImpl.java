@@ -6,12 +6,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.SubmissionReader;
 import edu.ksu.canvas.interfaces.SubmissionWriter;
-import edu.ksu.canvas.model.assignment.Progress;
+import edu.ksu.canvas.model.Progress;
 import edu.ksu.canvas.model.assignment.Submission;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
-import edu.ksu.canvas.requestOptions.SubmissionOptions;
+import edu.ksu.canvas.requestOptions.MultpleSubmissionsOptions;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -37,12 +37,41 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }
 
+    /**
+     * Update the grading and comments on multiple student's assignment submissions in an asynchronous job. By section.
+     *
+     * @param options      Parameters object containing parameters such as: section_id, assignment_id, student_id,
+     *                     posted_grade, text_comment, group_comment, excuse, media_comment_id, media_comment_type.
+     * @return             The progress object created by Canvas
+     * @throws             IOException If there is an error talking to Canvas
+     */
     @Override
-    public Optional<Progress> sectionGradeSubmission(SubmissionOptions options) throws IOException {
+    public Optional<Progress> gradeMultipleSubmissionsBySection(MultpleSubmissionsOptions options) throws IOException {
 
-        LOG.debug("assignment submission for section/" + options.getSectionId());
-        String url = buildCanvasUrl("sections/" + options.getSectionId() + "/assignments/" + options.getAssignmentId() + "/submissions/update_grades", options.getOptionsMap());
+        LOG.debug("assignment submission for section/" + options.getObjectId());
+        String url = buildCanvasUrl("sections/" + options.getObjectId() + "/assignments/" + options.getAssignmentId() + "/submissions/update_grades", options.getOptionsMap());
 
+        return gradeMultipleSubmissions(options, url);
+    }
+
+    /**
+     * Update the grading and comments on multiple student's assignment submissions in an asynchronous job. By Course.
+     *
+     * @param options      Parameters object containing parameters such as: course_id, assignment_id, student_id,
+     *                     posted_grade, text_comment, group_comment, excuse, media_comment_id, media_comment_type.
+     * @return             The progress object created by Canvas
+     * @throws             IOException If there is an error talking to Canvas
+     */
+    @Override
+    public Optional<Progress> gradeMultipleSubmissionsByCourse(MultpleSubmissionsOptions options) throws IOException {
+
+        LOG.debug("assignment submission for course/" + options.getObjectId());
+        String url = buildCanvasUrl("courses/" + options.getObjectId() + "/assignments/" + options.getAssignmentId() + "/submissions/update_grades", options.getOptionsMap());
+
+        return gradeMultipleSubmissions(options, url);
+    }
+
+    private Optional<Progress> gradeMultipleSubmissions(MultpleSubmissionsOptions options, String url) throws IOException {
         Gson gson = GsonResponseParser.getDefaultGsonParser();
         JsonObject jsonObject = new JsonObject();
         jsonObject.add("grade_data", gson.toJsonTree(options.getStudentSubmissionOptionMap()));

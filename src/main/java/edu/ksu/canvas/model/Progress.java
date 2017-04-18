@@ -1,9 +1,22 @@
-package edu.ksu.canvas.model.assignment;
+package edu.ksu.canvas.model;
 
 import edu.ksu.canvas.annotation.CanvasObject;
 
 import java.util.Date;
 
+/**
+ * API for querying the progress of asynchronous API operations.
+ * id: the ID of the Progress object
+ * contextId        the context owning the job.
+ * userId           the id of the user who started the job
+ * tag              the type of operation
+ * completion       percent completed
+ * workflowState    the state of the job one of 'queued', 'running', 'completed', 'failed'
+ * createdAt        the time the job was created
+ * updatedAt        the time the job was last updated
+ * message          optional details about the job
+ * url              url where a progress update can be retrieved
+ */
 @CanvasObject(postKey = "progress")
 public class Progress {
     private Integer id;
