@@ -1,0 +1,13 @@
+{
+    "id": 61111111,
+    "context_id": 37836,
+    "context_type": "Course",
+    "user_id": null,
+    "tag": "submissions_update",
+    "completion": null,
+    "workflow_state": "queued",
+    "created_at": "2017-04-14T14:32:18Z",
+    "updated_at": "2017-04-14T14:32:18Z",
+    "message": null,
+    "url": "canvas.example.edu/api/v1/progress/61111111"
+}
