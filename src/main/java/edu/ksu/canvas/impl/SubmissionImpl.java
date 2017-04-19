@@ -37,14 +37,6 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }
 
-    /**
-     * Update the grading and comments on multiple student's assignment submissions in an asynchronous job. By section.
-     *
-     * @param options      Parameters object containing parameters such as: section_id, assignment_id, student_id,
-     *                     posted_grade, text_comment, group_comment, excuse, media_comment_id, media_comment_type.
-     * @return             The progress object created by Canvas
-     * @throws             IOException If there is an error talking to Canvas
-     */
     @Override
     public Optional<Progress> gradeMultipleSubmissionsBySection(MultpleSubmissionsOptions options) throws IOException {
 
@@ -54,15 +46,6 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
         return gradeMultipleSubmissions(options, url);
     }
 
-    /**
-     * Update the grading and comments on multiple student's assignment submissions in an asynchronous job. By Course.
-     *
-     * @param options      Parameters object containing parameters such as: course_id, assignment_id, student_id,
-     *                     posted_grade, text_comment, group_comment, excuse, media_comment_id, media_comment_type.
-     * @return             The progress object created by Canvas
-     * @throws             IOException If there is an error talking to Canvas
-     */
-    @Override
     public Optional<Progress> gradeMultipleSubmissionsByCourse(MultpleSubmissionsOptions options) throws IOException {
 
         LOG.debug("assignment submission for course/" + options.getObjectId());
