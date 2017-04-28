@@ -21,16 +21,18 @@ public class ExternalTool extends BaseCanvasModel {
     private String configType;
     private String configXml;
     private String configUrl;
-    //These navigation settings could maybe be split into their own objects
-    //instead of just being maps but I'm not sure if it is worth it.
-    //For possible values, see the API docs for the "Create external tool"
-    //API call: https://canvas.instructure.com/doc/api/external_tools.html#method.external_tools.create
     private Map<String, String> customFields;
-    private Map<String, String> accountNavigation;
-    private Map<String, String> userNavigation;
-    private Map<String, String> courseNavigation;
-    private Map<String, String> editorButton;
-    private Map<String, String> resourceSelection;
+    //These navigation settings are problematic. The possible values in these maps are documented
+    //at https://canvas.instructure.com/doc/api/external_tools.html#method.external_tools.create
+    //It looks like they are all just string values that could go into a Map<String, String>
+    //or a custom object of some kind. Unfortunately there are additional undocumented values
+    //which can be nested objects. The example I have right now is a course_navigation element
+    //that has this inside of it: "custom_fields": { "Domain_URL":"https://domain.example.com/"}
+    private Map<String, Object> accountNavigation;
+    private Map<String, Object> userNavigation;
+    private Map<String, Object> courseNavigation;
+    private Map<String, Object> editorButton;
+    private Map<String, Object> resourceSelection;
 
     public Integer getId() {
         return id;
@@ -177,43 +179,43 @@ public class ExternalTool extends BaseCanvasModel {
         this.customFields = customFields;
     }
 
-    public Map<String, String> getAccountNavigation() {
+    public Map<String, Object> getAccountNavigation() {
         return accountNavigation;
     }
 
-    public void setAccountNavigation(Map<String, String> accountNavigation) {
+    public void setAccountNavigation(Map<String, Object> accountNavigation) {
         this.accountNavigation = accountNavigation;
     }
 
-    public Map<String, String> getUserNavigation() {
+    public Map<String, Object> getUserNavigation() {
         return userNavigation;
     }
 
-    public void setUserNavigation(Map<String, String> userNavigation) {
+    public void setUserNavigation(Map<String, Object> userNavigation) {
         this.userNavigation = userNavigation;
     }
 
-    public Map<String, String> getCourseNavigation() {
+    public Map<String, Object> getCourseNavigation() {
         return courseNavigation;
     }
 
-    public void setCourseNavigation(Map<String, String> courseNavigation) {
+    public void setCourseNavigation(Map<String, Object> courseNavigation) {
         this.courseNavigation = courseNavigation;
     }
 
-    public Map<String, String> getEditorButton() {
+    public Map<String, Object> getEditorButton() {
         return editorButton;
     }
 
-    public void setEditorButton(Map<String, String> editorButton) {
+    public void setEditorButton(Map<String, Object> editorButton) {
         this.editorButton = editorButton;
     }
 
-    public Map<String, String> getResourceSelection() {
+    public Map<String, Object> getResourceSelection() {
         return resourceSelection;
     }
 
-    public void setResourceSelection(Map<String, String> resourceSelection) {
+    public void setResourceSelection(Map<String, Object> resourceSelection) {
         this.resourceSelection = resourceSelection;
     }
 }
