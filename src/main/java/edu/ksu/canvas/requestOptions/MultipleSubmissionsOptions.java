@@ -5,13 +5,13 @@ import java.util.Map;
 /**
  * Rubric_Assessment not supported yet.
  */
-public class MultpleSubmissionsOptions extends BaseOptions {
+public class MultipleSubmissionsOptions extends BaseOptions {
 
     private String objectId;
     private Integer assignmentId;
-    private Map<Integer, StudentSubmissionOption> studentSubmissionOptionMap;
+    private Map<String, StudentSubmissionOption> studentSubmissionOptionMap;
 
-    public MultpleSubmissionsOptions(String objectId, Integer assignemnetId, Map<Integer, StudentSubmissionOption> studentSubmissionOptionMap) {
+    public MultipleSubmissionsOptions(String objectId, Integer assignemnetId, Map<String, StudentSubmissionOption> studentSubmissionOptionMap) {
         this.objectId = objectId;
         this.assignmentId = assignemnetId;
         this.studentSubmissionOptionMap = studentSubmissionOptionMap;
@@ -25,11 +25,11 @@ public class MultpleSubmissionsOptions extends BaseOptions {
         this.objectId = objectId;
     }
 
-    public Map<Integer, StudentSubmissionOption> getStudentSubmissionOptionMap() {
+    public Map<String, StudentSubmissionOption> getStudentSubmissionOptionMap() {
         return studentSubmissionOptionMap;
     }
 
-    public void setStudentSubmissionOptionMap(Map<Integer, StudentSubmissionOption> studentSubmissionOptionMap) {
+    public void setStudentSubmissionOptionMap(Map<String, StudentSubmissionOption> studentSubmissionOptionMap) {
         this.studentSubmissionOptionMap = studentSubmissionOptionMap;
     }
 
