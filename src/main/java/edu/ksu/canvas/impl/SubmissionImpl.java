@@ -11,7 +11,7 @@ import edu.ksu.canvas.model.assignment.Submission;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
-import edu.ksu.canvas.requestOptions.MultpleSubmissionsOptions;
+import edu.ksu.canvas.requestOptions.MultipleSubmissionsOptions;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -38,7 +38,7 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
     }
 
     @Override
-    public Optional<Progress> gradeMultipleSubmissionsBySection(MultpleSubmissionsOptions options) throws IOException {
+    public Optional<Progress> gradeMultipleSubmissionsBySection(MultipleSubmissionsOptions options) throws IOException {
 
         LOG.debug("assignment submission for section/" + options.getObjectId());
         String url = buildCanvasUrl("sections/" + options.getObjectId() + "/assignments/" + options.getAssignmentId() + "/submissions/update_grades", options.getOptionsMap());
@@ -46,7 +46,7 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
         return gradeMultipleSubmissions(options, url);
     }
 
-    public Optional<Progress> gradeMultipleSubmissionsByCourse(MultpleSubmissionsOptions options) throws IOException {
+    public Optional<Progress> gradeMultipleSubmissionsByCourse(MultipleSubmissionsOptions options) throws IOException {
 
         LOG.debug("assignment submission for course/" + options.getObjectId());
         String url = buildCanvasUrl("courses/" + options.getObjectId() + "/assignments/" + options.getAssignmentId() + "/submissions/update_grades", options.getOptionsMap());
@@ -54,7 +54,7 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
         return gradeMultipleSubmissions(options, url);
     }
 
-    private Optional<Progress> gradeMultipleSubmissions(MultpleSubmissionsOptions options, String url) throws IOException {
+    private Optional<Progress> gradeMultipleSubmissions(MultipleSubmissionsOptions options, String url) throws IOException {
         Gson gson = GsonResponseParser.getDefaultGsonParser();
         JsonObject jsonObject = new JsonObject();
         jsonObject.add("grade_data", gson.toJsonTree(options.getStudentSubmissionOptionMap()));

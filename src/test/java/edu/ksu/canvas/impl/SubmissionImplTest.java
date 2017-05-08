@@ -3,7 +3,7 @@ package edu.ksu.canvas.impl;
 import edu.ksu.canvas.CanvasTestBase;
 import edu.ksu.canvas.interfaces.SubmissionWriter;
 import edu.ksu.canvas.model.Progress;
-import edu.ksu.canvas.requestOptions.MultpleSubmissionsOptions;
+import edu.ksu.canvas.requestOptions.MultipleSubmissionsOptions;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,8 +23,8 @@ public class SubmissionImplTest extends CanvasTestBase {
     public static final String GRADE_1 = "5";
     public static final String SOME_COMMENT_2 = "COMMENT 2";
     public static final String GRADE_2 = "5.3";
-    public static final int STUDENT_ID_1 = 52359;
-    public static final int STUDENT_ID_2 = 90605;
+    public static final String STUDENT_ID_1 = "52359";
+    public static final String STUDENT_ID_2 = "90605";
 
     SubmissionWriter submissionWriter;
 
@@ -37,10 +37,10 @@ public class SubmissionImplTest extends CanvasTestBase {
 
     @Test
     public void sectionGradeSubmissionHappyPath() throws IOException {
-        MultpleSubmissionsOptions multpleSubmissionsOptions = new MultpleSubmissionsOptions(SECTION_ID, ASSIGNEMNET_ID, null);
-        Map<Integer, MultpleSubmissionsOptions.StudentSubmissionOption> map = new HashMap<>();
-        MultpleSubmissionsOptions.StudentSubmissionOption studentSubmissionOption1 = multpleSubmissionsOptions.createStudentSubmissionOption(SOME_COMMENT_1, GRADE_1, null, null, null, null);
-        MultpleSubmissionsOptions.StudentSubmissionOption studentSubmissionOption2 = multpleSubmissionsOptions.createStudentSubmissionOption(SOME_COMMENT_2, GRADE_2, true, null, null, null);
+        MultipleSubmissionsOptions multpleSubmissionsOptions = new MultipleSubmissionsOptions(SECTION_ID, ASSIGNEMNET_ID, null);
+        Map<String, MultipleSubmissionsOptions.StudentSubmissionOption> map = new HashMap<>();
+        MultipleSubmissionsOptions.StudentSubmissionOption studentSubmissionOption1 = multpleSubmissionsOptions.createStudentSubmissionOption(SOME_COMMENT_1, GRADE_1, null, null, null, null);
+        MultipleSubmissionsOptions.StudentSubmissionOption studentSubmissionOption2 = multpleSubmissionsOptions.createStudentSubmissionOption(SOME_COMMENT_2, GRADE_2, true, null, null, null);
         map.put(STUDENT_ID_1, studentSubmissionOption1);
         map.put(STUDENT_ID_2, studentSubmissionOption2);
         multpleSubmissionsOptions.setStudentSubmissionOptionMap(map);
