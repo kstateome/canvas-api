@@ -46,6 +46,7 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
         return gradeMultipleSubmissions(options, url);
     }
 
+    @Override
     public Optional<Progress> gradeMultipleSubmissionsByCourse(MultipleSubmissionsOptions options) throws IOException {
 
         LOG.debug("assignment submission for course/" + options.getObjectId());
