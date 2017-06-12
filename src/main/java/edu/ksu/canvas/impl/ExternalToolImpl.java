@@ -111,7 +111,7 @@ public class ExternalToolImpl extends BaseImpl<ExternalTool, ExternalToolReader,
         }
         Gson gson = GsonResponseParser.getDefaultGsonParser();
         JsonObject toolJson = gson.toJsonTree(tool).getAsJsonObject();
-        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, toolJson);
+        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, toolJson);
         return responseParser.parseToObject(ExternalTool.class, response);
     }
 
