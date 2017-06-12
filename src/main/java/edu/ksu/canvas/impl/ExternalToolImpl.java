@@ -50,12 +50,14 @@ public class ExternalToolImpl extends BaseImpl<ExternalTool, ExternalToolReader,
         return getListFromCanvas(url);
     }
 
+    @Override
     public Optional<ExternalTool> createExternalToolInCourse(String courseId, ExternalTool tool) throws IOException {
         LOG.debug("Creating external tool \"" + tool.getName() + "\" in course " + courseId);
         String url = buildCanvasUrl("courses/" + courseId + "/external_tools", Collections.emptyMap());
         return createExternalTool(url, tool);
     }
 
+    @Override
     public Optional<ExternalTool> createExternalToolInAccount(String accountId, ExternalTool tool) throws IOException {
         LOG.debug("Creating external tool \"" + tool.getName() + "\" in account " + accountId);
         String url = buildCanvasUrl("accounts/" + accountId + "/external_tools", Collections.emptyMap());
@@ -64,6 +66,30 @@ public class ExternalToolImpl extends BaseImpl<ExternalTool, ExternalToolReader,
 
     private Optional<ExternalTool> createExternalTool(String url, ExternalTool tool) throws IOException {
         validateToolForCreation(tool);
+        Gson gson = GsonResponseParser.getDefaultGsonParser();
+        JsonObject toolJson = gson.toJsonTree(tool).getAsJsonObject();
+        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, toolJson);
+        return responseParser.parseToObject(ExternalTool.class, response);
+    }
+
+    @Override
+    public Optional<ExternalTool> editExternalToolInCourse(String courseId, ExternalTool tool) throws IOException {
+        LOG.debug("Editing external tool \"" + tool.getName() + "\" in course " + courseId);
+        String url = buildCanvasUrl("courses/" + courseId + "/external_tools/" + tool.getId(), Collections.emptyMap());
+        return editExternalTool(url, tool);
+    }
+
+    @Override
+    public Optional<ExternalTool> editExternalToolInAccount(String accountId, ExternalTool tool) throws IOException {
+        LOG.debug("Editing external tool \"" + tool.getName() + "\" in course " + accountId);
+        String url = buildCanvasUrl("accounts/" + accountId + "/external_tools/" + tool.getId(), Collections.emptyMap());
+        return editExternalTool(url, tool);
+    }
+
+    private Optional<ExternalTool> editExternalTool(String url, ExternalTool tool) throws IOException {
+        if(tool.getId() == null) {
+            throw new IllegalArgumentException("Tool being edited must have a tool ID");
+        }
         Gson gson = GsonResponseParser.getDefaultGsonParser();
         JsonObject toolJson = gson.toJsonTree(tool).getAsJsonObject();
         Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, toolJson);
