@@ -30,6 +30,25 @@ public class ExternalToolImpl extends BaseImpl<ExternalTool, ExternalToolReader,
     }
 
     @Override
+    public Optional<ExternalTool> getExternalToolInCourse(String courseId, Integer toolId) throws IOException {
+        return getExternalTool("courses", courseId, toolId);
+    }
+
+    @Override
+    public Optional<ExternalTool> getExternalToolInAccount(String accountId, Integer toolId) throws IOException {
+        return getExternalTool("accounts", accountId, toolId);
+    }
+
+    private Optional<ExternalTool> getExternalTool(String objectType, String objectId, Integer toolId) throws IOException {
+        LOG.debug("Getting external tool " + toolId + " from " + objectType + " " + objectId);
+        if(StringUtils.isBlank(objectId) || toolId == null) {
+            throw new IllegalArgumentException("course/account ID and tool ID cannot be blank");
+        }
+        String url = buildCanvasUrl(objectType + "/" + objectId + "/external_tools/" + toolId, Collections.emptyMap());
+        return getFromCanvas(url);
+    }
+
+    @Override
     public List<ExternalTool> listExternalToolsInAccount(ListExternalToolsOptions options) throws IOException {
         return listexternalTools("accounts", options.getId(), options.getOptionsMap());
     }
