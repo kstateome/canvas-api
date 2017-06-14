@@ -1,0 +1,15 @@
+{
+  "enrollment_terms":[
+    {
+      "id": 1,
+      "name": "Fall 2016",
+      "start_at": "2016-08-31T20:00:00Z",
+      "end_at": "2016-12-20T20:00:00Z",
+      "created_at": "2016-07-16T20:00:00Z",
+      "workflow_state": "active",
+      "grading_period_group_id": null,
+      "sis_term_id": "81"
+    }
+  ]
+}
+
