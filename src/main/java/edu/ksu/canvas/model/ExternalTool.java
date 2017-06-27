@@ -86,7 +86,7 @@ public class ExternalTool extends BaseCanvasModel {
         return consumerKey;
     }
 
-    public void setConsumer_key(String consumerKey) {
+    public void setConsumerKey(String consumerKey) {
         this.consumerKey = consumerKey;
     }
 
@@ -160,10 +160,6 @@ public class ExternalTool extends BaseCanvasModel {
 
     public void setConfigUrl(String configUrl) {
         this.configUrl = configUrl;
-    }
-
-    public void setConsumerKey(String consumerKey) {
-        this.consumerKey = consumerKey;
     }
 
     /**
