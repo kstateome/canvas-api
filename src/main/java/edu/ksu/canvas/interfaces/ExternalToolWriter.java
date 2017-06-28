@@ -42,4 +42,22 @@ public interface ExternalToolWriter extends CanvasWriter<ExternalTool, ExternalT
      * @throws IOException if there is an error communicating with Canvas
      */
     public Optional<ExternalTool> editExternalToolInAccount(String accountId, ExternalTool tool) throws IOException;
+
+    /**
+     * Delete an external tool from a course.
+     * @param courseId Canvas course ID or sis_course_id:[SIS ID] for the course to delete the tool from
+     * @param toolId The Canvas ID of the tool to delete
+     * @return The deleted tool. Should have a workflow state of "deleted"
+     * @throws IOException if there is an error communicating with Canvas
+     */
+    public Optional<ExternalTool> deleteExternalToolInCourse(String courseId, Integer toolId) throws IOException;
+
+    /**
+     * Delete an external tool from an account.
+     * @param accountId Canvas account ID or sis_account_id:[SIS ID] for the account to delete the tool from
+     * @param toolId Canvas ID of the tool to delete
+     * @return The deleted tool. Should have a workflow state of "deleted"
+     * @throws IOException if there is an error communicating with Canvas
+     */
+    public Optional<ExternalTool> deleteExternalToolInAccount(String accountId, Integer toolId) throws IOException;
 }

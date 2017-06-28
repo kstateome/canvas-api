@@ -115,6 +115,20 @@ public class ExternalToolImpl extends BaseImpl<ExternalTool, ExternalToolReader,
         return responseParser.parseToObject(ExternalTool.class, response);
     }
 
+    public Optional<ExternalTool> deleteExternalToolInCourse(String courseId, Integer toolId) throws IOException {
+        LOG.debug("Deleting external tool " + toolId + " from course " + courseId);
+        String url = buildCanvasUrl("courses/" + courseId + "/external_tools/" + toolId, Collections.emptyMap());
+        Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, Collections.emptyMap());
+        return responseParser.parseToObject(ExternalTool.class, response);
+    }
+
+    public Optional<ExternalTool> deleteExternalToolInAccount(String accountId, Integer toolId) throws IOException {
+        LOG.debug("Deleting external tool " + toolId + " from account " + accountId);
+        String url = buildCanvasUrl("accounts/" + accountId + "/external_tools/" + toolId, Collections.emptyMap());
+        Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, Collections.emptyMap());
+        return responseParser.parseToObject(ExternalTool.class, response);
+    }
+
     /**
      * Ensure that a tool object is valid for creation. The API requires certain fields to be filled out.
      * Throws an IllegalArgumentException if the conditions are not met.
