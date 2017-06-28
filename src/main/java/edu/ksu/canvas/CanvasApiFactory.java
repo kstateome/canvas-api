@@ -144,6 +144,7 @@ public class CanvasApiFactory {
         readerMap.put(UserReader.class, UserImpl.class);
         readerMap.put(PageReader.class, PageImpl.class);
         readerMap.put(EnrollmentTermReader.class, EnrollmentTermImpl.class);
+        readerMap.put(SubmissionReader.class, SubmissionImpl.class);
         readerMap.put(ExternalToolReader.class, ExternalToolImpl.class);
 
         writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImpl.class);
@@ -157,6 +158,7 @@ public class CanvasApiFactory {
         writerMap.put(QuizSubmissionWriter.class, QuizSubmissionImpl.class);
         writerMap.put(UserWriter.class, UserImpl.class);
         writerMap.put(PageWriter.class, PageImpl.class);
+        writerMap.put(SubmissionWriter.class, SubmissionImpl.class);
         writerMap.put(ExternalToolWriter.class, ExternalToolImpl.class);
     }
 }
