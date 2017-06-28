@@ -15,6 +15,7 @@ public class ExternalTool extends BaseCanvasModel {
     private String sharedSecret;
     private Date createdAt;
     private Date updatedAt;
+    private String workflowState;
     private String iconUrl;
     private String text;
     private Boolean notSelectable;
@@ -112,6 +113,14 @@ public class ExternalTool extends BaseCanvasModel {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getWorkflowState() {
+        return workflowState;
+    }
+
+    public void setWorkflowState(String workflowState) {
+        this.workflowState = workflowState;
     }
 
     public String getIconUrl() {
