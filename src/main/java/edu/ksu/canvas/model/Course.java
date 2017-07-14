@@ -33,6 +33,7 @@ public class Course extends BaseCanvasModel implements Serializable {
     private Integer totalStudents;
 
     private List<Section> sections;
+    private List<Enrollment> enrollments;
 
     @SerializedName("term")
     private EnrollmentTerm enrollmentTerm;
@@ -182,5 +183,14 @@ public class Course extends BaseCanvasModel implements Serializable {
 
     public void setSections(List<Section> sections) {
         this.sections = sections;
+    }
+
+    @CanvasField(postKey = "enrollments")
+    public List<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(List<Enrollment> enrollments) {
+        this.enrollments = enrollments;
     }
 }
