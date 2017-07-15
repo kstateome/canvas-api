@@ -1,7 +1,6 @@
 package edu.ksu.canvas.impl;
 
 import com.google.gson.reflect.TypeToken;
-
 import edu.ksu.canvas.interfaces.CourseReader;
 import edu.ksu.canvas.interfaces.CourseWriter;
 import edu.ksu.canvas.model.Course;
@@ -12,12 +11,16 @@ import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.GetSingleCourseOptions;
 import edu.ksu.canvas.requestOptions.ListActiveCoursesInAccountOptions;
 import edu.ksu.canvas.requestOptions.ListCurrentUserCoursesOptions;
-import edu.ksu.canvas.util.CanvasURLBuilder;
+import edu.ksu.canvas.requestOptions.ListUserCoursesOptions;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 
 public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> implements CourseReader, CourseWriter {
@@ -31,6 +34,12 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
     public List<Course> listCurrentUserCourses(ListCurrentUserCoursesOptions options) throws IOException {
         LOG.info("listing courses for user");
         String url = buildCanvasUrl("courses/", options.getOptionsMap());
+        return getListFromCanvas(url);
+    }
+
+    public List<Course> listUserCourses(ListUserCoursesOptions options) throws  IOException {
+        LOG.info("listing course for user");
+        String url = buildCanvasUrl("users/" + options.getCanvasUserId() + "/courses", options.getOptionsMap());
         return getListFromCanvas(url);
     }
 
