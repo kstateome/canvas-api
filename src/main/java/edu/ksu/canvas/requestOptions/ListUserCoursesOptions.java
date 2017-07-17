@@ -9,29 +9,36 @@ public class ListUserCoursesOptions extends BaseOptions {
         STORAGE_QUOTA_USED_MB, TOTAL_STUDENTS, PASSBACK_STATUS, FAVORITES,
         TEACHERS, OBSERVED_USERS, TABS, COURSE_IMAGE;
 
+        @Override
         public String toString() { return name().toLowerCase(); }
     }
 
     public enum State {
         UNPUBLISHED, AVAILABLE, COMPLETED, DELETED;
 
+        @Override
         public String toString() { return name().toLowerCase(); }
     }
 
     public enum EnrollmentState {
         ACTIVE, INVITED_OR_PENDING, COMPLETED;
 
+        @Override
         public String toString() { return name().toLowerCase(); }
     }
 
-    private final String canvasUserId;
+    private final String userId;
 
-    public ListUserCoursesOptions(String canvasUserId) {
-        this.canvasUserId = canvasUserId;
+    /**
+     * Constructor with required userId
+     * @param userId can be the canvasUserId or sis_login_id:loginName
+     */
+    public ListUserCoursesOptions(String userId) {
+        this.userId = userId;
     }
 
-    public String getCanvasUserId() {
-        return canvasUserId;
+    public String getUserId() {
+        return userId;
     }
 
     /**

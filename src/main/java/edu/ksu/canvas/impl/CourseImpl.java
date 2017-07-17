@@ -39,7 +39,7 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
 
     public List<Course> listUserCourses(ListUserCoursesOptions options) throws  IOException {
         LOG.info("listing course for user");
-        String url = buildCanvasUrl("users/" + options.getCanvasUserId() + "/courses", options.getOptionsMap());
+        String url = buildCanvasUrl("users/" + options.getUserId() + "/courses", options.getOptionsMap());
         return getListFromCanvas(url);
     }
 
