@@ -19,6 +19,7 @@ public class Section extends BaseCanvasModel implements Serializable {
     private String sisSectionId;
     private String integrationId;
     private String sisImportId;
+    private String enrollmentRole;
     private Integer courseId;
     private String sisCourseId;
     private Date startAt;
@@ -116,5 +117,14 @@ public class Section extends BaseCanvasModel implements Serializable {
 
     public void setTotalStudents(Integer totalStudents) {
         this.totalStudents = totalStudents;
+    }
+
+    @CanvasField(postKey = "enrollment_role")
+    public String getEnrollmentRole() {
+        return enrollmentRole;
+    }
+
+    public void setEnrollmentRole(String enrollmentRole) {
+        this.enrollmentRole = enrollmentRole;
     }
 }
