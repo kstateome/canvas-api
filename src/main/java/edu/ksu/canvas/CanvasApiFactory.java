@@ -157,6 +157,7 @@ public class CanvasApiFactory {
         writerMap.put(QuizSubmissionWriter.class, QuizSubmissionImpl.class);
         writerMap.put(UserWriter.class, UserImpl.class);
         writerMap.put(PageWriter.class, PageImpl.class);
+        writerMap.put(SectionWriter.class, SectionsImpl.class);
         writerMap.put(SubmissionWriter.class, SubmissionImpl.class);
     }
 }
