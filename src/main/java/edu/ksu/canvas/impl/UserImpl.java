@@ -11,12 +11,17 @@ import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.GetUsersInCourseOptions;
+import edu.ksu.canvas.requestOptions.ShowUserDetailsOptions;
 
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements UserReader, UserWriter{
     private static final Logger LOG = Logger.getLogger(UserImpl.class);
@@ -58,6 +63,24 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
         String url = buildCanvasUrl("courses/" + options.getCourseId() + "/users", options.getOptionsMap());
 
         return getListFromCanvas(url);
+    }
+
+    @Override
+    public Optional<User> showUserDetails(ShowUserDetailsOptions options) throws IOException{
+        LOG.debug("Retrieving user details");
+        String userId = options.getUserId();
+        String sisUserIntegrationId = options.getSisIntegrationId();
+        String url = null;
+
+        if((sisUserIntegrationId!=null) && (!sisUserIntegrationId.isEmpty())){
+            url = buildCanvasUrl("users/sis_integration_id:" + sisUserIntegrationId, options.getOptionsMap());
+        }else{
+            url = buildCanvasUrl("users/" +userId, options.getOptionsMap());
+        }
+
+        LOG.debug("Final URL of API call: " + url);
+        Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
+        return responseParser.parseToObject(User.class, response);
     }
 
     @Override
