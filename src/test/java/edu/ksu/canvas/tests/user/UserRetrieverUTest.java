@@ -8,6 +8,7 @@ import edu.ksu.canvas.model.User;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.requestOptions.GetUsersInCourseOptions;
+import edu.ksu.canvas.requestOptions.ShowUserDetailsOptions;
 import edu.ksu.canvas.util.CanvasURLBuilder;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -77,4 +78,36 @@ public class UserRetrieverUTest extends CanvasTestBase {
         Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 1"::equals).findFirst().isPresent());
         Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 2"::equals).findFirst().isPresent());
     }
+    
+    @Test
+    public void testShowUserDetailsByUserId() throws Exception {    	
+    	int userId = 20;    	
+        ShowUserDetailsOptions options = new ShowUserDetailsOptions();
+        options.setUserId(String.valueOf(userId));
+        
+        String url = baseUrl + "/api/v1/users/" + options.getUserId();
+        fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserById.json");
+        
+        Optional<User> result = userReader.showUserDetails(options);
+                
+        User user = result.get();        
+        Assert.assertEquals(userId, user.getId());       
+    }
+    
+    @Test
+    public void testShowUserDetailsBySisUserId() throws Exception {    	
+    	String sisIntegrationUserId = "ABC123";    	
+    	int userId = 31;
+        ShowUserDetailsOptions options = new ShowUserDetailsOptions();
+        options.setUserId(String.valueOf(userId));
+        options.setSisIntegrationId(sisIntegrationUserId);
+
+        String url = baseUrl + "/api/v1/users/sis_integration_id:" + options.getSisIntegrationId();
+        fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserBySisIntegrationId.json");
+        
+        Optional<User> result = userReader.showUserDetails(options);
+                
+        User user = result.get();        
+        Assert.assertEquals(userId, user.getId());       
+    }    
 }
