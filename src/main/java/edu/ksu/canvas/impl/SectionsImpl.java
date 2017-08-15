@@ -18,6 +18,7 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -59,23 +60,21 @@ public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter
     }
 
     @Override
-    public Optional<Section> createSection(String courseId, Section section) throws IOException {
+    public Optional<Section> createSection(String courseId, Section section, boolean enableSisReactivation)
+            throws IOException {
         LOG.debug("creating section for course " + courseId);
+        Map<String, String> params = new HashMap<>();
+        params.put("enable_sis_reactivation", Boolean.toString(enableSisReactivation));
         String url = buildCanvasUrl(String.format("/courses/%s/sections", courseId), Collections.emptyMap());
         Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, section.toJsonObject());
         return responseParser.parseToObject(Section.class, response);
     }
 
     @Override
-    public Boolean deleteSection(String sectionId) throws IOException {
+    public Optional<Section> deleteSection(String sectionId) throws IOException {
         LOG.debug("deleting section " + sectionId);
         String url = buildCanvasUrl("/sections/" + sectionId, Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, Collections.emptyMap());
-        if (response.getErrorHappened() || response.getResponseCode() != 200) {
-            LOG.debug(String.format("Failed to delete section %s, error message: %s", sectionId, response.toString()));
-            return false;
-        }
-        Optional<Delete> responseParsed = responseParser.parseToObject(Delete.class, response);
-        return responseParsed.map(r -> r.getDelete()).orElse(false);
+        return responseParser.parseToObject(Section.class, response);
     }
 }
