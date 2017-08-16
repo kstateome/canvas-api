@@ -7,14 +7,15 @@ import edu.ksu.canvas.enums.SectionIncludes;
 import edu.ksu.canvas.interfaces.SectionReader;
 import edu.ksu.canvas.interfaces.SectionWriter;
 import edu.ksu.canvas.model.Section;
-import edu.ksu.canvas.model.status.Delete;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
+
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -60,12 +61,14 @@ public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter
     }
 
     @Override
-    public Optional<Section> createSection(String courseId, Section section, boolean enableSisReactivation)
+    public Optional<Section> createSection(String courseId, Section section, Boolean enableSisReactivation)
             throws IOException {
         LOG.debug("creating section for course " + courseId);
-        Map<String, String> params = new HashMap<>();
-        params.put("enable_sis_reactivation", Boolean.toString(enableSisReactivation));
-        String url = buildCanvasUrl(String.format("/courses/%s/sections", courseId), Collections.emptyMap());
+        Map<String, List<String>> params = new HashMap<>();
+        if(enableSisReactivation != null) {
+            params.put("enable_sis_reactivation", Arrays.asList(Boolean.toString(enableSisReactivation)));
+        }
+        String url = buildCanvasUrl(String.format("/courses/%s/sections", courseId), params);
         Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, section.toJsonObject());
         return responseParser.parseToObject(Section.class, response);
     }

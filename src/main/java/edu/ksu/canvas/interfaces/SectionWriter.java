@@ -17,11 +17,11 @@ public interface SectionWriter extends CanvasWriter<Section, SectionWriter> {
      * @param section a section object containing the information needed to create
      *         the section in Canvas
      * @param enableSisReactivation when true, will first try to re-activate a
-     *         deleted section with matching sis_section_id if possible
+     *         deleted section with matching sis_section_id if possible. Ignored if null
      * @return the newly created section
      * @throws IOException
      */
-    Optional<Section> createSection(String courseId, Section section, boolean enableSisReactivation) throws IOException;
+    Optional<Section> createSection(String courseId, Section section, Boolean enableSisReactivation) throws IOException;
 
     /**
      * Delete an existing section in Canvas.
