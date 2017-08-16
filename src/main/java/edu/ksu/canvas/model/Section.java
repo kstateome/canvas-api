@@ -26,6 +26,7 @@ public class Section extends BaseCanvasModel implements Serializable {
     private Date endAt;
     private Integer nonxlistCourseId;
     private Integer totalStudents;
+    private Boolean restrictEnrollmentsToSectionDates;
 
     public Long getId() {
         return id;
@@ -117,6 +118,14 @@ public class Section extends BaseCanvasModel implements Serializable {
 
     public void setTotalStudents(Integer totalStudents) {
         this.totalStudents = totalStudents;
+    }
+
+    public Boolean getRestrictEnrollmentsToSectionDates() {
+        return restrictEnrollmentsToSectionDates;
+    }
+
+    public void setRestrictEnrollmentsToSectionDates(Boolean restrictEnrollmentsToSectionDates) {
+        this.restrictEnrollmentsToSectionDates = restrictEnrollmentsToSectionDates;
     }
 
     @CanvasField(postKey = "enrollment_role")
