@@ -14,7 +14,7 @@ import java.util.Date;
 public class Section extends BaseCanvasModel implements Serializable {
     public static final long serialVersionUID = 1L;
 
-    private long id;
+    private Long id;
     private String name;
     private String sisSectionId;
     private String integrationId;
@@ -27,11 +27,11 @@ public class Section extends BaseCanvasModel implements Serializable {
     private Integer nonxlistCourseId;
     private Integer totalStudents;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
