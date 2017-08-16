@@ -10,6 +10,7 @@ import edu.ksu.canvas.model.Enrollment;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
+import edu.ksu.canvas.requestOptions.EnrollUserOptions;
 import edu.ksu.canvas.requestOptions.GetEnrollmentOptions;
 
 import org.apache.log4j.Logger;
@@ -48,11 +49,17 @@ public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentReader, Enrol
 
     @Override
     public Optional<Enrollment> enrollUser(String courseId, String userId) throws InvalidOauthTokenException, IOException {
-        Map<String, List<String>> courseMap = new HashMap<>();
-        courseMap.put("enrollment[user_id]", Collections.singletonList(String.valueOf(userId)));
+        EnrollUserOptions options = new EnrollUserOptions();
+        options.userId(userId);
+        return enrollUser(courseId, options);
+    }
+
+    @Override
+    public Optional<Enrollment> enrollUser(String courseId, EnrollUserOptions options)
+            throws InvalidOauthTokenException, IOException {
         String createdUrl = buildCanvasUrl("courses/" + courseId + "/enrollments", Collections.emptyMap());
         LOG.debug("create URl for course enrollments: "+ createdUrl);
-        Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, courseMap);
+        Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, options.getOptionsMap());
         if (response.getErrorHappened() ||  response.getResponseCode() != 200) {
             LOG.debug("Failed to enroll in course, error message: " + response.toString());
             return Optional.empty();
