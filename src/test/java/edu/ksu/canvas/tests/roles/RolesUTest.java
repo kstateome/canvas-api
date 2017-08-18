@@ -24,13 +24,13 @@ public class RolesUTest extends CanvasTestBase {
     
     @Before
     public void setupReader() {
-    	rolesReader = new RolesImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE);
+         rolesReader = new RolesImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE);
     }
 
     @Test
     public void testListRoles() throws Exception {
-    	
-    	ListRolesOptions options = new ListRolesOptions(ROOT_ACCOUNT_ID);    	
+
+        ListRolesOptions options = new ListRolesOptions(ROOT_ACCOUNT_ID);
 
         String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion,"accounts/" + options.getAccountId() + "/roles", options.getOptionsMap());
         fakeRestClient.addSuccessResponse(url, "SampleJson/role/Role.json");

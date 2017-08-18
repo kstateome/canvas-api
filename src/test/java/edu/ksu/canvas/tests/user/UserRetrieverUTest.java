@@ -80,34 +80,34 @@ public class UserRetrieverUTest extends CanvasTestBase {
     }
     
     @Test
-    public void testShowUserDetailsByUserId() throws Exception {    	
-    	int userId = 20;    	
+    public void testShowUserDetailsByUserId() throws Exception {
+        int userId = 20;
         ShowUserDetailsOptions options = new ShowUserDetailsOptions();
         options.setUserId(String.valueOf(userId));
-        
+
         String url = baseUrl + "/api/v1/users/" + options.getUserId();
         fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserById.json");
         
         Optional<User> result = userReader.showUserDetails(options);
-                
-        User user = result.get();        
-        Assert.assertEquals(userId, user.getId());       
+
+        User user = result.get();
+        Assert.assertEquals(userId, user.getId());
     }
-    
+
     @Test
-    public void testShowUserDetailsBySisUserId() throws Exception {    	
-    	String sisIntegrationUserId = "ABC123";    	
-    	int userId = 31;
+    public void testShowUserDetailsBySisUserId() throws Exception {
+        String sisIntegrationUserId = "ABC123";
+        int userId = 31;
         ShowUserDetailsOptions options = new ShowUserDetailsOptions();
         options.setUserId(String.valueOf(userId));
         options.setSisIntegrationId(sisIntegrationUserId);
 
         String url = baseUrl + "/api/v1/users/sis_integration_id:" + options.getSisIntegrationId();
         fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserBySisIntegrationId.json");
-        
+
         Optional<User> result = userReader.showUserDetails(options);
-                
-        User user = result.get();        
-        Assert.assertEquals(userId, user.getId());       
-    }    
+
+        User user = result.get();
+        Assert.assertEquals(userId, user.getId());
+    }
 }

@@ -15,32 +15,32 @@ import edu.ksu.canvas.model.Section;
 import edu.ksu.canvas.net.FakeRestClient;
 
 public class SectionManagerUTest extends CanvasTestBase {
-	@Autowired
-	private FakeRestClient fakeRestClient;
-	private SectionWriter sectionWriter;
+    @Autowired
+    private FakeRestClient fakeRestClient;
+    private SectionWriter sectionWriter;
 
-	private static final String ARBITRARY_COURSE_ID = "503";
+    private static final String ARBITRARY_COURSE_ID = "503";
 
-	@Before
-	public void setupData() {
-		sectionWriter = new SectionsImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT,
-				SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE);
-	}
+    @Before
+    public void setupData() {
+        sectionWriter = new SectionsImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT,
+            SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE);
+    }
 
-	@Test
-	public void testSectionCreation() throws IOException {
+    @Test
+    public void testSectionCreation() throws IOException {
 
-		String sectionName = "someName";
+        String sectionName = "someName";
 
-		Section newSection = new Section();
-		newSection.setName(sectionName);
+        Section newSection = new Section();
+        newSection.setName(sectionName);
 
-		String url = baseUrl + "/api/v1/courses/" + ARBITRARY_COURSE_ID + "/sections";
-		fakeRestClient.addSuccessResponse(url, "SampleJson/section/CreateSectionsSuccess.json");
-		Optional<Section> response = sectionWriter.createSection(ARBITRARY_COURSE_ID, newSection);
+        String url = baseUrl + "/api/v1/courses/" + ARBITRARY_COURSE_ID + "/sections";
+        fakeRestClient.addSuccessResponse(url, "SampleJson/section/CreateSectionsSuccess.json");
+        Optional<Section> response = sectionWriter.createSection(ARBITRARY_COURSE_ID, newSection, null);
 
-		Assert.assertNotNull(response.get().getId());
-		Assert.assertEquals(sectionName, response.get().getName());
-	}
+        Assert.assertNotNull(response.get().getId());
+        Assert.assertEquals(sectionName, response.get().getName());
+    }
 
 }

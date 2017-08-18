@@ -38,7 +38,7 @@ public class Course extends BaseCanvasModel implements Serializable {
 
     @SerializedName("term")
     private EnrollmentTerm enrollmentTerm;
-    
+
     public long getEnrollmentTermId() {
         return enrollmentTermId;
     }
