@@ -3,6 +3,8 @@ package edu.ksu.canvas;
 import java.io.IOException;
 import java.util.List;
 
+import edu.ksu.canvas.interfaces.AssignmentGroupWriter;
+import edu.ksu.canvas.model.assignment.AssignmentGroup;
 import org.apache.log4j.Logger;
 
 import edu.ksu.canvas.interfaces.AccountReader;
@@ -54,8 +56,9 @@ public class TestLauncher {
 
         TestLauncher launcher = new TestLauncher(canvasUrl, oauthToken);
         try {
-            launcher.getRootAccount();
-            launcher.getOwnCourses();
+//            launcher.getRootAccount();
+//            launcher.getOwnCourses();
+            launcher.createAssignmentGroup();
         } catch(Exception e) {
             LOG.error("Problem while executing example methods", e);
         }
@@ -81,5 +84,17 @@ public class TestLauncher {
         for(Course course : myCourses) {
             LOG.info("  " + course.getName());
         }
+    }
+
+    public void createAssignmentGroup() throws IOException{
+
+        CanvasApiFactory apiFactory = new CanvasApiFactory(canvasUrl);
+        AssignmentGroupWriter writer = apiFactory.getWriter(AssignmentGroupWriter.class, oauthToken);
+        AssignmentGroup group = new AssignmentGroup();
+        group.setName("Attendance");
+
+        AssignmentGroup temp = writer.createAssignmentGroup("49895", group).get();
+        System.out.println(temp.getId());
+
     }
 }

@@ -3,11 +3,13 @@ package edu.ksu.canvas.impl;
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.AssignmentGroupReader;
 import edu.ksu.canvas.interfaces.AssignmentGroupWriter;
+import edu.ksu.canvas.interfaces.AssignmentReader;
 import edu.ksu.canvas.model.assignment.AssignmentGroup;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -31,6 +33,8 @@ public class AssignmentGroupImpl extends BaseImpl<AssignmentGroup, AssignmentGro
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }
 
+    private static final Logger LOG = Logger.getLogger(AssignmentGroupImpl.class);
+
     @Override
     public List<AssignmentGroup> listAssignmentGroup(String courseId) throws IOException {
         String url = buildCanvasUrl("courses/" + courseId + "/assignment_groups", Collections.emptyMap());
@@ -38,12 +42,14 @@ public class AssignmentGroupImpl extends BaseImpl<AssignmentGroup, AssignmentGro
     }
 
     @Override
-    public Optional<AssignmentGroup> createAssignmenGroup(String courseId, AssignmentGroup assignmentGroup) throws IOException {
+    public Optional<AssignmentGroup> createAssignmentGroup(String courseId, AssignmentGroup assignmentGroup) throws IOException {
         if(StringUtils.isBlank(assignmentGroup.getName())) {
             throw new IllegalArgumentException("Assignment must have a name");
         }
         String url = buildCanvasUrl("courses/" + courseId + "/assignment_groups", Collections.emptyMap());
         Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, assignmentGroup.toJsonObject());
+        LOG.warn("DFFJDKFJLSDJDFLDJSFJLSDFJklS");
+        LOG.warn(assignmentGroup.toJsonObject().toString());
         return responseParser.parseToObject(AssignmentGroup.class, response);
     }
 

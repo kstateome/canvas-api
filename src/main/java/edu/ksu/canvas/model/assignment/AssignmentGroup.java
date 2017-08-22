@@ -3,16 +3,16 @@ package edu.ksu.canvas.model.assignment;
 import edu.ksu.canvas.annotation.CanvasObject;
 import edu.ksu.canvas.model.BaseCanvasModel;
 
-@CanvasObject(postKey = "assignment_group")
+@CanvasObject(postKey = "")
 public class AssignmentGroup extends BaseCanvasModel{
 
-    long id;
+    Long id;
     String name;
-    long position;
-    long group_weight;
-    long sis_source_id;
+    Long position;
+    Long group_weight;
+    Long sis_source_id;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -28,7 +28,7 @@ public class AssignmentGroup extends BaseCanvasModel{
         this.name = name;
     }
 
-    public long getPosition() {
+    public Long getPosition() {
         return position;
     }
 
@@ -36,7 +36,7 @@ public class AssignmentGroup extends BaseCanvasModel{
         this.position = position;
     }
 
-    public long getGroup_weight() {
+    public Long getGroup_weight() {
         return group_weight;
     }
 
@@ -44,7 +44,7 @@ public class AssignmentGroup extends BaseCanvasModel{
         this.group_weight = group_weight;
     }
 
-    public long getSis_source_id() {
+    public Long getSis_source_id() {
         return sis_source_id;
     }
 

@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface AssignmentGroupWriter extends CanvasWriter<AssignmentGroup, AssignmentGroupWriter>{
 
-    Optional<AssignmentGroup> createAssignmenGroup(String courseId, AssignmentGroup assignmentGroup) throws IOException;
+    Optional<AssignmentGroup> createAssignmentGroup(String courseId, AssignmentGroup assignmentGroup) throws IOException;
 }
