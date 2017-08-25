@@ -3,7 +3,6 @@ package edu.ksu.canvas.impl;
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.AssignmentGroupReader;
 import edu.ksu.canvas.interfaces.AssignmentGroupWriter;
-import edu.ksu.canvas.interfaces.AssignmentReader;
 import edu.ksu.canvas.model.assignment.AssignmentGroup;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
@@ -47,9 +46,8 @@ public class AssignmentGroupImpl extends BaseImpl<AssignmentGroup, AssignmentGro
             throw new IllegalArgumentException("Assignment must have a name");
         }
         String url = buildCanvasUrl("courses/" + courseId + "/assignment_groups", Collections.emptyMap());
-        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, assignmentGroup.toJsonObject());
+        Response response = canvasMessenger.sendToCanvas(oauthToken, url, assignmentGroup.toPostMap());
         LOG.warn("DFFJDKFJLSDJDFLDJSFJLSDFJklS");
-        LOG.warn(assignmentGroup.toJsonObject().toString());
         return responseParser.parseToObject(AssignmentGroup.class, response);
     }
 
