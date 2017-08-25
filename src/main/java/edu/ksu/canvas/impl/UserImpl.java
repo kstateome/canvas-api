@@ -11,7 +11,6 @@ import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.GetUsersInCourseOptions;
-import edu.ksu.canvas.requestOptions.ShowUserDetailsOptions;
 
 import org.apache.log4j.Logger;
 
@@ -66,19 +65,9 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
     }
 
     @Override
-    public Optional<User> showUserDetails(ShowUserDetailsOptions options) throws IOException{
+    public Optional<User> showUserDetails(String userIdentifier) throws IOException{
         LOG.debug("Retrieving user details");
-        String userId = options.getUserId();
-        String sisUserIntegrationId = options.getSisIntegrationId();
-        String url = null;
-
-        if((sisUserIntegrationId!=null) && (!sisUserIntegrationId.isEmpty())){
-            url = buildCanvasUrl("users/sis_integration_id:" + sisUserIntegrationId, options.getOptionsMap());
-        }else{
-            url = buildCanvasUrl("users/" +userId, options.getOptionsMap());
-        }
-
-        LOG.debug("Final URL of API call: " + url);
+        String url = buildCanvasUrl("users/" + userIdentifier, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(User.class, response);
     }

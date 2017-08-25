@@ -14,10 +14,10 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class RolesImpl extends BaseImpl<Role, RolesReader, RolesWriter> implements RolesReader, RolesWriter {
-    private static final Logger LOG = Logger.getLogger(RolesImpl.class);
+public class RoleImpl extends BaseImpl<Role, RoleReader, RoleWriter> implements RoleReader, RoleWriter {
+    private static final Logger LOG = Logger.getLogger(RoleImpl.class);
 
-    public RolesImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
+    public RoleImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
     }
 

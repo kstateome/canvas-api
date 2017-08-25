@@ -2,7 +2,6 @@ package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.User;
 import edu.ksu.canvas.requestOptions.GetUsersInCourseOptions;
-import edu.ksu.canvas.requestOptions.ShowUserDetailsOptions;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,10 +17,14 @@ public interface UserReader extends CanvasReader<User, UserReader> {
     List<User> getUsersInCourse(GetUsersInCourseOptions options) throws IOException;
 
     /**
-     * Retrieve a specific user details from Canvas by Id or SisIntegrationId
-     * @param options The object holding options for this API call
+     * Retrieve a specific user details from Canvas by user identifier
+     * @param userIdentifier The object holding a user identifier value, for example:
+     *    Numeric Canvas user ID
+     *    A string like "sis_integration_id:123" to query by SIS integration ID
+     *    A string like "sis_user_id:ABC" to query by SIS ID
+     *    The special string "self" that the Canvas API interprets as "the currently logged in user"
      * @return The User returned by Canvas or an empty Optional
      * @throws IOException When there is an error communicating with Canvas
      */
-     Optional<User> showUserDetails(ShowUserDetailsOptions options) throws IOException;
+     Optional<User> showUserDetails(String userIdentifier) throws IOException;
 }

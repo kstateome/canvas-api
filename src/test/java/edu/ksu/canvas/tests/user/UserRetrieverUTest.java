@@ -8,7 +8,6 @@ import edu.ksu.canvas.model.User;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.requestOptions.GetUsersInCourseOptions;
-import edu.ksu.canvas.requestOptions.ShowUserDetailsOptions;
 import edu.ksu.canvas.util.CanvasURLBuilder;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -78,35 +77,46 @@ public class UserRetrieverUTest extends CanvasTestBase {
         Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 1"::equals).findFirst().isPresent());
         Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 2"::equals).findFirst().isPresent());
     }
-    
+
     @Test
     public void testShowUserDetailsByUserId() throws Exception {
         int userId = 20;
-        ShowUserDetailsOptions options = new ShowUserDetailsOptions();
-        options.setUserId(String.valueOf(userId));
-
-        String url = baseUrl + "/api/v1/users/" + options.getUserId();
+        String url = baseUrl + "/api/v1/users/" + String.valueOf(userId);
         fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserById.json");
-        
-        Optional<User> result = userReader.showUserDetails(options);
-
+        Optional<User> result = userReader.showUserDetails(String.valueOf(userId));
         User user = result.get();
         Assert.assertEquals(userId, user.getId());
     }
 
     @Test
     public void testShowUserDetailsBySisUserId() throws Exception {
-        String sisIntegrationUserId = "ABC123";
         int userId = 31;
-        ShowUserDetailsOptions options = new ShowUserDetailsOptions();
-        options.setUserId(String.valueOf(userId));
-        options.setSisIntegrationId(sisIntegrationUserId);
+        String sisUserId = "sis_user_id:ABC123";
+        String url = baseUrl + "/api/v1/users/" + sisUserId;
+        fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserBySisUserId.json");
+        Optional<User> result = userReader.showUserDetails(sisUserId);
+        User user = result.get();
+        Assert.assertEquals(userId, user.getId());
+    }
 
-        String url = baseUrl + "/api/v1/users/sis_integration_id:" + options.getSisIntegrationId();
+    @Test
+    public void testShowUserDetailsBySelfIdentifier() throws Exception {
+        int userId = 32;
+        String selfIdentifier = "self";
+        String url = baseUrl + "/api/v1/users/" + selfIdentifier;
+        fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserBySelfIdentifier.json");
+        Optional<User> result = userReader.showUserDetails(selfIdentifier);
+        User user = result.get();
+        Assert.assertEquals(userId, user.getId());
+    }
+
+    @Test
+    public void testShowUserDetailsBySisIntegrationId() throws Exception {
+    	int userId = 33;
+        String sisIntegrationUserId = "sis_integration_id:ABC123";
+        String url = baseUrl + "/api/v1/users/" + sisIntegrationUserId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserBySisIntegrationId.json");
-
-        Optional<User> result = userReader.showUserDetails(options);
-
+        Optional<User> result = userReader.showUserDetails(sisIntegrationUserId);
         User user = result.get();
         Assert.assertEquals(userId, user.getId());
     }
