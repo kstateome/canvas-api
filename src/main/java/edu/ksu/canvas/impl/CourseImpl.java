@@ -68,6 +68,13 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
         return responseParser.parseToObject(Course.class, response);
     }
 
+    @Override
+    public Optional<Course> updateCourse(Course course) throws IOException {
+        LOG.debug("updating course");
+        String url = buildCanvasUrl("courses/" + course.getId(), Collections.emptyMap());
+        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, course.toJsonObject());
+        return responseParser.parseToObject(Course.class, response);
+    }
 
     @Override
     public Boolean deleteCourse(String courseId) throws IOException {

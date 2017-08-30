@@ -16,7 +16,11 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements UserReader, UserWriter{
     private static final Logger LOG = Logger.getLogger(UserImpl.class);
@@ -58,6 +62,14 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
         String url = buildCanvasUrl("courses/" + options.getCourseId() + "/users", options.getOptionsMap());
 
         return getListFromCanvas(url);
+    }
+
+    @Override
+    public Optional<User> showUserDetails(String userIdentifier) throws IOException{
+        LOG.debug("Retrieving user details");
+        String url = buildCanvasUrl("users/" + userIdentifier, Collections.emptyMap());
+        Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
+        return responseParser.parseToObject(User.class, response);
     }
 
     @Override
