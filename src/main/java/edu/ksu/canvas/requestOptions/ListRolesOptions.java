@@ -24,6 +24,11 @@ public class ListRolesOptions extends BaseOptions {
         return accountId;
     }
 
+    /**
+     * If set to true, inherited roles from parent accounts will be included
+     * @param show Whether or not to include inherited roles
+     * @return This object to allow adding more options
+     */
     public ListRolesOptions showInherited(Boolean show) {
         if( show != null ) {
             addSingleItem("show_inherited", show.toString());
@@ -32,8 +37,8 @@ public class ListRolesOptions extends BaseOptions {
     }
 
     /**
-     * Include additional optional fields in the course objects
-     * @param includes List of additional fields to include
+     * Filter returned roles by activity state. Default is only "active" roles
+     * @param states List of states to filter by (active or inactive)
      * @return This object to allow adding more options
      */
     public ListRolesOptions state(List<State> states) {
