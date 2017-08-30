@@ -77,4 +77,47 @@ public class UserRetrieverUTest extends CanvasTestBase {
         Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 1"::equals).findFirst().isPresent());
         Assert.assertTrue(users.stream().map(User::getName).filter("Student Number 2"::equals).findFirst().isPresent());
     }
+
+    @Test
+    public void testShowUserDetailsByUserId() throws Exception {
+        int userId = 20;
+        String url = baseUrl + "/api/v1/users/" + String.valueOf(userId);
+        fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserById.json");
+        Optional<User> result = userReader.showUserDetails(String.valueOf(userId));
+        User user = result.get();
+        Assert.assertEquals(userId, user.getId());
+    }
+
+    @Test
+    public void testShowUserDetailsBySisUserId() throws Exception {
+        int userId = 31;
+        String sisUserId = "sis_user_id:ABC123";
+        String url = baseUrl + "/api/v1/users/" + sisUserId;
+        fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserBySisUserId.json");
+        Optional<User> result = userReader.showUserDetails(sisUserId);
+        User user = result.get();
+        Assert.assertEquals(userId, user.getId());
+    }
+
+    @Test
+    public void testShowUserDetailsBySelfIdentifier() throws Exception {
+        int userId = 32;
+        String selfIdentifier = "self";
+        String url = baseUrl + "/api/v1/users/" + selfIdentifier;
+        fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserBySelfIdentifier.json");
+        Optional<User> result = userReader.showUserDetails(selfIdentifier);
+        User user = result.get();
+        Assert.assertEquals(userId, user.getId());
+    }
+
+    @Test
+    public void testShowUserDetailsBySisIntegrationId() throws Exception {
+    	int userId = 33;
+        String sisIntegrationUserId = "sis_integration_id:ABC123";
+        String url = baseUrl + "/api/v1/users/" + sisIntegrationUserId;
+        fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserBySisIntegrationId.json");
+        Optional<User> result = userReader.showUserDetails(sisIntegrationUserId);
+        User user = result.get();
+        Assert.assertEquals(userId, user.getId());
+    }
 }

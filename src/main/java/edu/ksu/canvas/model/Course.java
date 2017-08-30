@@ -6,6 +6,7 @@ import edu.ksu.canvas.annotation.CanvasObject;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Class to represent Canvas courses.
@@ -30,8 +31,21 @@ public class Course extends BaseCanvasModel implements Serializable {
     private Integer integrationId;
     private String workflowState;
     private Integer totalStudents;
+    private Long enrollmentTermId;
+
+    private List<Section> sections;
+    private List<Enrollment> enrollments;
+
     @SerializedName("term")
     private EnrollmentTerm enrollmentTerm;
+
+    public long getEnrollmentTermId() {
+        return enrollmentTermId;
+    }
+
+    public void setEnrollmentTermId(long enrollmentTermId) {
+        this.enrollmentTermId = enrollmentTermId;
+    }
 
     @CanvasField(postKey = "account_id")
     public Integer getAccountId() {
@@ -171,4 +185,21 @@ public class Course extends BaseCanvasModel implements Serializable {
         this.enrollmentTerm = enrollmentTerm;
     }
 
+    @CanvasField(postKey = "sections")
+    public List<Section> getSections() {
+        return sections;
+    }
+
+    public void setSections(List<Section> sections) {
+        this.sections = sections;
+    }
+
+    @CanvasField(postKey = "enrollments")
+    public List<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(List<Enrollment> enrollments) {
+        this.enrollments = enrollments;
+    }
 }

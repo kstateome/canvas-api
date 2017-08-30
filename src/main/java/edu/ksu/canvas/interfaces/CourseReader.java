@@ -8,6 +8,7 @@ import edu.ksu.canvas.model.Course;
 import edu.ksu.canvas.requestOptions.GetSingleCourseOptions;
 import edu.ksu.canvas.requestOptions.ListActiveCoursesInAccountOptions;
 import edu.ksu.canvas.requestOptions.ListCurrentUserCoursesOptions;
+import edu.ksu.canvas.requestOptions.ListUserCoursesOptions;
 
 /**
  * Methods to read information from and about courses
@@ -21,6 +22,14 @@ public interface CourseReader extends CanvasReader<Course, CourseReader> {
      * @throws IOException When there is an error communicating with Canvas
      */
      List<Course> listCurrentUserCourses(ListCurrentUserCoursesOptions options) throws IOException;
+
+    /**
+     * Returns the list of active courses for the a user
+     * @param options The object holding options for this API call
+     * @return List of courses for the user matching any optional criteria
+     * @throws IOException When there is an error communicating with Canvas
+     */
+    List<Course> listUserCourses(ListUserCoursesOptions options) throws  IOException;
 
     /**
      * Retrieve a specific course from Canvas by its Canvas ID number

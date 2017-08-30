@@ -14,23 +14,25 @@ import java.util.Date;
 public class Section extends BaseCanvasModel implements Serializable {
     public static final long serialVersionUID = 1L;
 
-    private long id;
+    private Long id;
     private String name;
     private String sisSectionId;
     private String integrationId;
     private String sisImportId;
+    private String enrollmentRole;
     private Integer courseId;
     private String sisCourseId;
     private Date startAt;
     private Date endAt;
     private Integer nonxlistCourseId;
     private Integer totalStudents;
+    private Boolean restrictEnrollmentsToSectionDates;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -116,5 +118,22 @@ public class Section extends BaseCanvasModel implements Serializable {
 
     public void setTotalStudents(Integer totalStudents) {
         this.totalStudents = totalStudents;
+    }
+
+    public Boolean getRestrictEnrollmentsToSectionDates() {
+        return restrictEnrollmentsToSectionDates;
+    }
+
+    public void setRestrictEnrollmentsToSectionDates(Boolean restrictEnrollmentsToSectionDates) {
+        this.restrictEnrollmentsToSectionDates = restrictEnrollmentsToSectionDates;
+    }
+
+    @CanvasField(postKey = "enrollment_role")
+    public String getEnrollmentRole() {
+        return enrollmentRole;
+    }
+
+    public void setEnrollmentRole(String enrollmentRole) {
+        this.enrollmentRole = enrollmentRole;
     }
 }
