@@ -12,7 +12,7 @@ public interface ExternalToolReader extends CanvasReader<ExternalTool, ExternalT
 
     /**
      * Retrieve a specific external tool configuration in a given account
-     * @param courseId The Canvas ID or sis_account_id:[SIS ID] for the account to query
+     * @param accountId The Canvas ID or sis_account_id:[SIS ID] for the account to query
      * @param toolId The Canvas ID of the tool to query
      * @return The requested tool's configuration
      * @throws IOException if there is an error communicating with Canvas
