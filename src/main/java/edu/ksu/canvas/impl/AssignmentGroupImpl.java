@@ -58,6 +58,17 @@ public class AssignmentGroupImpl extends BaseImpl<AssignmentGroup, AssignmentGro
     }
 
     @Override
+    public Optional<AssignmentGroup> editAssignmentGroup(String courseId, AssignmentGroup assignmentGroup) throws IOException {
+        if(StringUtils.isBlank(courseId) || assignmentGroup == null || assignmentGroup.getId() == null || assignmentGroup.getId() == 0l) {
+            throw new IllegalArgumentException("Course ID and assignment group ID must not be empty when editing an assignment group");
+        }
+        LOG.debug("Modifying assignment group " + assignmentGroup.getId() + " in course " + courseId);
+        String url = buildCanvasUrl("courses/" + courseId + "/assignment_groups/" + assignmentGroup.getId(), Collections.emptyMap());
+        Response response = canvasMessenger.putToCanvas(oauthToken, url, assignmentGroup.toPostMap());
+        return responseParser.parseToObject(AssignmentGroup.class, response);
+    }
+
+    @Override
     protected Type listType() {
         return new TypeToken<List<AssignmentGroup>>(){}.getType();
     }
