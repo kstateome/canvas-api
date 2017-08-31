@@ -8,6 +8,7 @@ import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.ListAssignmentGroupOptions;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -37,15 +38,20 @@ public class AssignmentGroupImpl extends BaseImpl<AssignmentGroup, AssignmentGro
 
     @Override
     public List<AssignmentGroup> listAssignmentGroup(ListAssignmentGroupOptions options) throws IOException {
+        if(StringUtils.isBlank(options.getCourseId())) {
+            throw new IllegalArgumentException("Must supply a course ID when listing assignment groups");
+        }
+        LOG.debug("Listing assignment groups in course " + options.getCourseId());
         String url = buildCanvasUrl("courses/" + options.getCourseId() + "/assignment_groups", options.getOptionsMap());
         return getListFromCanvas(url);
     }
 
     @Override
     public Optional<AssignmentGroup> createAssignmentGroup(String courseId, AssignmentGroup assignmentGroup) throws IOException {
-        if(StringUtils.isBlank(assignmentGroup.getName())) {
-            throw new IllegalArgumentException("Assignment must have a name");
+        if(StringUtils.isBlank(courseId)) {
+            throw new IllegalArgumentException("Must supply a course ID when creating an assignment group");
         }
+        LOG.debug("Creating new assignment group in course " + courseId + ", group name: " + assignmentGroup.getName());
         String url = buildCanvasUrl("courses/" + courseId + "/assignment_groups", Collections.emptyMap());
         Response response = canvasMessenger.sendToCanvas(oauthToken, url, assignmentGroup.toPostMap());
         return responseParser.parseToObject(AssignmentGroup.class, response);
