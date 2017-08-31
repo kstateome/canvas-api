@@ -24,7 +24,7 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     private Date dueAt;
     private Date lockAt;
     private Date unlockAt;
-    private String allDates;
+    private List<AssignmentDate> allDates;
     private String courseId;
     private String htmlUrl;
     private Long assignmentGroupId;
@@ -127,11 +127,11 @@ public class Assignment extends BaseCanvasModel implements Serializable{
         this.unlockAt = unlockAt;
     }
 
-    public String getAllDates() {
+    public List<AssignmentDate> getAllDates() {
         return allDates;
     }
 
-    public void setAllDates(String allDates) {
+    public void setAllDates(List<AssignmentDate> allDates) {
         this.allDates = allDates;
     }
 

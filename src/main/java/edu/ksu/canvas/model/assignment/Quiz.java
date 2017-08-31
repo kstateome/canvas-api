@@ -7,7 +7,6 @@ import edu.ksu.canvas.model.assignment.LockInfo;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Class to represent Canvas quizzes.
@@ -51,7 +50,7 @@ public class Quiz extends BaseCanvasModel {
     private String speedgraderUrl;
     private String quizExtensionsUrl;
     private QuizPermission permissions;
-    private List<Map<String, String>> allDates;
+    private List<AssignmentDate> allDates;
     private Integer versionNumber;
     private List<String> questionTypes;
     private Integer assignmentId;
@@ -355,11 +354,11 @@ public class Quiz extends BaseCanvasModel {
         this.quizExtensionsUrl = quizExtensionsUrl;
     }
 
-    public List<Map<String, String>> getAllDates() {
+    public List<AssignmentDate> getAllDates() {
         return allDates;
     }
 
-    public void setAllDates(List<Map<String, String>> allDates) {
+    public void setAllDates(List<AssignmentDate> allDates) {
         this.allDates = allDates;
     }
 
