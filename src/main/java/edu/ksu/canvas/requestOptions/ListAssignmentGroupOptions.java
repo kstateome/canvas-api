@@ -2,7 +2,7 @@ package edu.ksu.canvas.requestOptions;
 
 import java.util.List;
 
-public class AssignmentGroupOptions extends BaseOptions{
+public class ListAssignmentGroupOptions extends BaseOptions{
     private String courseId;
 
 
@@ -22,7 +22,7 @@ public class AssignmentGroupOptions extends BaseOptions{
         }
     }
 
-    public AssignmentGroupOptions(String courseId) {
+    public ListAssignmentGroupOptions(String courseId) {
         this.courseId = courseId;
     }
 
@@ -37,7 +37,7 @@ public class AssignmentGroupOptions extends BaseOptions{
      * @param includes List of optional associations to include in the assignment request.
      * @return this to continue building options
      */
-    public AssignmentGroupOptions includes(List<Include> includes) {
+    public ListAssignmentGroupOptions includes(List<Include> includes) {
         addEnumList("include[]", includes);
         return this;
     }
@@ -48,7 +48,7 @@ public class AssignmentGroupOptions extends BaseOptions{
      * @param toExclude A list of the types of assignments that will be excluded.
      * @return this to continue building options
      */
-    public AssignmentGroupOptions excludeAssignmentSubmissionTypes (List<ExcludeSubmissionTypes> toExclude) {
+    public ListAssignmentGroupOptions excludeAssignmentSubmissionTypes (List<ExcludeSubmissionTypes> toExclude) {
         addEnumList("exclude_assignment_submission_types[]", toExclude);
         return this;
     }
@@ -58,7 +58,7 @@ public class AssignmentGroupOptions extends BaseOptions{
      * @param overrideDates Whether or not to apply override
      * @return this to continue building options
      */
-    public AssignmentGroupOptions overrideAssignmentDates (Boolean overrideDates){
+    public ListAssignmentGroupOptions overrideAssignmentDates (Boolean overrideDates){
         addSingleItem("override_assignment_dates", overrideDates.toString());
         return this;
     }
@@ -68,7 +68,7 @@ public class AssignmentGroupOptions extends BaseOptions{
      * @param periodId The ID of the appropriate period
      * @return this to continue building options
      */
-    public AssignmentGroupOptions gradingPeriodId (Integer periodId){
+    public ListAssignmentGroupOptions gradingPeriodId (Integer periodId){
         addSingleItem("grading_period_id", periodId.toString());
         return this;
     }
@@ -81,7 +81,7 @@ public class AssignmentGroupOptions extends BaseOptions{
      * @param scopeToStudent Whether or not all assignments will apply to the current user in the specified grading period.
      * @return this to continue building options
      */
-    public AssignmentGroupOptions scopeAssignmentsToStudent (Boolean scopeToStudent){
+    public ListAssignmentGroupOptions scopeAssignmentsToStudent (Boolean scopeToStudent){
         addSingleItem("scope_assignments_to_student", scopeToStudent.toString());
         return this;
     }

@@ -7,7 +7,7 @@ import edu.ksu.canvas.model.assignment.AssignmentGroup;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
-import edu.ksu.canvas.requestOptions.AssignmentGroupOptions;
+import edu.ksu.canvas.requestOptions.ListAssignmentGroupOptions;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -36,8 +36,8 @@ public class AssignmentGroupImpl extends BaseImpl<AssignmentGroup, AssignmentGro
     private static final Logger LOG = Logger.getLogger(AssignmentGroupImpl.class);
 
     @Override
-    public List<AssignmentGroup> listAssignmentGroup(String courseId, AssignmentGroupOptions options) throws IOException {
-        String url = buildCanvasUrl("courses/" + courseId + "/assignment_groups", options.getOptionsMap());
+    public List<AssignmentGroup> listAssignmentGroup(ListAssignmentGroupOptions options) throws IOException {
+        String url = buildCanvasUrl("courses/" + options.getCourseId() + "/assignment_groups", options.getOptionsMap());
         return getListFromCanvas(url);
     }
 
