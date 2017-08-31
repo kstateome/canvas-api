@@ -1,5 +1,7 @@
 package edu.ksu.canvas.model.assignment;
 
+import java.util.List;
+
 import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.model.BaseCanvasModel;
 
@@ -8,14 +10,15 @@ public class AssignmentGroup extends BaseCanvasModel{
     Long id;
     String name;
     Long position;
-    Long groupWeight;
+    Float groupWeight;
     Long sisSourceId;
+    List<Assignment> assignments;
 
     public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -33,16 +36,16 @@ public class AssignmentGroup extends BaseCanvasModel{
         return position;
     }
 
-    public void setPosition(long position) {
+    public void setPosition(Long position) {
         this.position = position;
     }
 
     @CanvasField(postKey = "group_weight", array = false)
-    public Long getGroupWeight() {
+    public Float getGroupWeight() {
         return groupWeight;
     }
 
-    public void setGroupWeight(long groupWeight) {
+    public void setGroupWeight(Float groupWeight) {
         this.groupWeight = groupWeight;
     }
 
@@ -51,7 +54,18 @@ public class AssignmentGroup extends BaseCanvasModel{
         return sisSourceId;
     }
 
-    public void setSisSourceId(long sisSourceId) {
+    public void setSisSourceId(Long sisSourceId) {
         this.sisSourceId = sisSourceId;
+    }
+
+    /**
+     * @return List of assignments in group. Only populated if explicitly requested via the include[] option
+     */
+    public List<Assignment> getAssignments() {
+        return assignments;
+    }
+
+    public void setAssignments(List<Assignment> assignments) {
+        this.assignments = assignments;
     }
 }
