@@ -1,0 +1,43 @@
+[
+    {
+        "id": 1,
+        "role": "AccountAdmin",
+        "label": "Account Admin",
+        "base_role_type": "AccountMembership",
+        "workflow_state": "built_in",
+        "permissions": {
+            "view_analytics": {
+                "enabled": true,
+                "locked": false,
+                "readonly": false,
+                "explicit": false,
+                "applies_to_descendants": true,
+                "applies_to_self": true
+            },
+            "manage_webhooks": {
+                "enabled": true,
+                "locked": false,
+                "readonly": false,
+                "explicit": false,
+                "applies_to_descendants": true,
+                "applies_to_self": true
+            },
+            "manage_wiki": {
+                "enabled": true,
+                "locked": false,
+                "readonly": false,
+                "explicit": false,
+                "applies_to_descendants": true,
+                "applies_to_self": true
+            },
+            "read_forum": {
+                "enabled": true,
+                "locked": false,
+                "readonly": false,
+                "explicit": false,
+                "applies_to_descendants": true,
+                "applies_to_self": true
+            }
+        }
+    }
+]    
