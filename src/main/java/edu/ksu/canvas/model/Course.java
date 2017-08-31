@@ -31,12 +31,21 @@ public class Course extends BaseCanvasModel implements Serializable {
     private Integer integrationId;
     private String workflowState;
     private Integer totalStudents;
+    private Long enrollmentTermId;
 
     private List<Section> sections;
     private List<Enrollment> enrollments;
 
     @SerializedName("term")
     private EnrollmentTerm enrollmentTerm;
+
+    public long getEnrollmentTermId() {
+        return enrollmentTermId;
+    }
+
+    public void setEnrollmentTermId(long enrollmentTermId) {
+        this.enrollmentTermId = enrollmentTermId;
+    }
 
     @CanvasField(postKey = "account_id")
     public Integer getAccountId() {

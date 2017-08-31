@@ -1,0 +1,12 @@
+{
+    "id": 410,
+    "course_id": 503,
+    "name": "someName",
+    "start_at": null,
+    "end_at": null,
+    "nonxlist_course_id": null,
+    "sis_section_id": null,
+    "sis_course_id": null,
+    "integration_id": null,
+    "sis_import_id": null
+}

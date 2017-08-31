@@ -1,0 +1,28 @@
+{
+    "id": 705,
+    "name": "UpdatedSeleniumTestName",
+    "account_id": 63,
+    "start_at": null,
+    "grading_standard_id": null,
+    "is_public": null,
+    "course_code": "UpdatedSeleniumTestCourseCode",
+    "default_view": "feed",
+    "root_account_id": 1,
+    "enrollment_term_id": 1,
+    "end_at": null,
+    "public_syllabus": false,
+    "public_syllabus_to_auth": false,
+    "storage_quota_mb": 5000,
+    "is_public_to_auth_users": false,
+    "hide_final_grades": false,
+    "apply_assignment_group_weights": false,
+    "calendar": {
+        "ics": "https://sandbox.test.com/feeds/calendars/course_BW7Qv3BtXWpUX.ics"
+    },
+    "time_zone": "America/Los_Angeles",
+    "sis_course_id": null,
+    "integration_id": null,
+    "enrollments": [],
+    "workflow_state": "unpublished",
+    "restrict_enrollments_to_course_dates": false
+}

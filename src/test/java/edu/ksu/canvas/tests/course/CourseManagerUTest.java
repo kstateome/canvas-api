@@ -41,6 +41,19 @@ public class CourseManagerUTest extends CanvasTestBase {
     }
 
     @Test
+    public void testCourseUpdate() throws IOException {
+        Course newCourse = new Course();
+        newCourse.setId(new Integer(ARBITRARY_COURSE_ID));
+        newCourse.setCourseCode("UpdatedSeleniumTestCourseCode");
+        newCourse.setName("UpdatedSeleniumTestName");
+        String url = baseUrl + "/api/v1/courses/" + ARBITRARY_COURSE_ID;
+        fakeRestClient.addSuccessResponse(url, "SampleJson/course/UpdateCourseSuccess.json");
+        Optional<Course> response = courseWriter.updateCourse(newCourse);
+        Assert.assertNotNull(response.get().getName());
+        Assert.assertEquals(newCourse.getCourseCode(), response.get().getCourseCode());
+    }
+
+    @Test
     public void testCourseDeletion() throws IOException {
         String url = baseUrl + "/api/v1/courses/" + ARBITRARY_COURSE_ID;
         fakeRestClient.addSuccessResponse(url, "SampleJson/course/DeleteCourseSuccess.json");
