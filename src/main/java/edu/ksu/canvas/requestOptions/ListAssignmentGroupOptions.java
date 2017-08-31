@@ -32,7 +32,7 @@ public class ListAssignmentGroupOptions extends BaseOptions{
 
     /**
      * Associations to include with the group. “discussion_topic”, “all_dates” “assignment_visibility” & “submission”
-     * are only valid are only valid if “assignments” is also included. The “assignment_visibility” option additionally
+     * are only valid if “assignments” is also included. The “assignment_visibility” option additionally
      * requires that the Differentiated Assignments course feature be turned on.
      * @param includes List of optional associations to include in the assignment request.
      * @return this to continue building options
