@@ -50,20 +50,20 @@ public class ExternalToolImpl extends BaseImpl<ExternalTool, ExternalToolReader,
 
     @Override
     public List<ExternalTool> listExternalToolsInAccount(ListExternalToolsOptions options) throws IOException {
-        return listexternalTools("accounts", options.getId(), options.getOptionsMap());
+        return listExternalTools("accounts", options.getId(), options.getOptionsMap());
     }
 
     @Override
     public List<ExternalTool> listExternalToolsInCourse(ListExternalToolsOptions options) throws IOException {
-        return listexternalTools("courses", options.getId(), options.getOptionsMap());
+        return listExternalTools("courses", options.getId(), options.getOptionsMap());
     }
 
     @Override
     public List<ExternalTool> listExternalToolsInGroup(ListExternalToolsOptions options) throws IOException {
-        return listexternalTools("groups", options.getId(), options.getOptionsMap());
+        return listExternalTools("groups", options.getId(), options.getOptionsMap());
     }
 
-    private List<ExternalTool> listexternalTools(String objectType, String objectId, Map<String, List<String>> optionsMap) throws IOException {
+    private List<ExternalTool> listExternalTools(String objectType, String objectId, Map<String, List<String>> optionsMap) throws IOException {
         LOG.debug("Getting list of external tools from " + objectType + ": " + objectId);
         String url = buildCanvasUrl(objectType + "/" + objectId + "/external_tools", optionsMap);
         return getListFromCanvas(url);
