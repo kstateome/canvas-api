@@ -7,6 +7,7 @@ import edu.ksu.canvas.model.assignment.AssignmentGroup;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
+import edu.ksu.canvas.requestOptions.GetAssignmentGroupOptions;
 import edu.ksu.canvas.requestOptions.ListAssignmentGroupOptions;
 
 import org.apache.commons.lang3.StringUtils;
@@ -35,6 +36,16 @@ public class AssignmentGroupImpl extends BaseImpl<AssignmentGroup, AssignmentGro
     }
 
     private static final Logger LOG = Logger.getLogger(AssignmentGroupImpl.class);
+
+    @Override
+    public Optional<AssignmentGroup> getAssignmentGroup(GetAssignmentGroupOptions options) throws IOException {
+        if(StringUtils.isBlank(options.getCourseId()) || options.getAssignmentGroupId() == null || options.getAssignmentGroupId() == 0l) {
+            throw new IllegalArgumentException("Must supply a course ID and assignment group ID");
+        }
+        LOG.debug("Fetching assignment group " + options.getAssignmentGroupId() + " from course " + options.getCourseId());
+        String url = buildCanvasUrl("courses/" + options.getCourseId() + "/assignment_groups/" + options.getAssignmentGroupId(), options.getOptionsMap());
+        return getFromCanvas(url);
+    }
 
     @Override
     public List<AssignmentGroup> listAssignmentGroup(ListAssignmentGroupOptions options) throws IOException {
