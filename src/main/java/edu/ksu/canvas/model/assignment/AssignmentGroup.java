@@ -7,18 +7,18 @@ import edu.ksu.canvas.model.BaseCanvasModel;
 
 public class AssignmentGroup extends BaseCanvasModel{
 
-    Long id;
+    Integer id;
     String name;
-    Long position;
-    Float groupWeight;
-    Long sisSourceId;
+    Integer position;
+    Double groupWeight;
+    String sisSourceId;
     List<Assignment> assignments;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -32,29 +32,29 @@ public class AssignmentGroup extends BaseCanvasModel{
     }
 
     @CanvasField(postKey = "position", array = false)
-    public Long getPosition() {
+    public Integer getPosition() {
         return position;
     }
 
-    public void setPosition(Long position) {
+    public void setPosition(Integer position) {
         this.position = position;
     }
 
     @CanvasField(postKey = "group_weight", array = false)
-    public Float getGroupWeight() {
+    public Double getGroupWeight() {
         return groupWeight;
     }
 
-    public void setGroupWeight(Float groupWeight) {
+    public void setGroupWeight(Double groupWeight) {
         this.groupWeight = groupWeight;
     }
 
     @CanvasField(postKey = "sis_source_id", array = false)
-    public Long getSisSourceId() {
+    public String getSisSourceId() {
         return sisSourceId;
     }
 
-    public void setSisSourceId(Long sisSourceId) {
+    public void setSisSourceId(String sisSourceId) {
         this.sisSourceId = sisSourceId;
     }
 
