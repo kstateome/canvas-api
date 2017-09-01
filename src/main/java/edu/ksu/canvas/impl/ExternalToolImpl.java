@@ -84,7 +84,7 @@ public class ExternalToolImpl extends BaseImpl<ExternalTool, ExternalToolReader,
     }
 
     private Optional<ExternalTool> createExternalTool(String url, ExternalTool tool) throws IOException {
-        validateToolForCreation(tool);
+        ensureToolValidForCreation(tool);
         Gson gson = GsonResponseParser.getDefaultGsonParser();
         JsonObject toolJson = gson.toJsonTree(tool).getAsJsonObject();
         Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, toolJson);
@@ -134,14 +134,14 @@ public class ExternalToolImpl extends BaseImpl<ExternalTool, ExternalToolReader,
      * Throws an IllegalArgumentException if the conditions are not met.
      * @param tool The external tool object we are trying to create
      */
-    private void validateToolForCreation(ExternalTool tool) {
+    private void ensureToolValidForCreation(ExternalTool tool) {
         //check for the unconditionally required fields
         if(StringUtils.isAnyBlank(tool.getName(), tool.getPrivacyLevel(), tool.getConsumerKey(), tool.getSharedSecret())) {
-            throw new IllegalArgumentException("name, privacy level, consumer key and shared secret are all required to create an external tool");
+            throw new IllegalArgumentException("External tool requires all of the following for creation: name, privacy level, consumer key, shared secret");
         }
         //check that there is either a URL or a domain. One or the other is required
         if(StringUtils.isBlank(tool.getUrl()) && StringUtils.isBlank(tool.getDomain())) {
-            throw new IllegalArgumentException("Either URL or domain is required to create an external tool");
+            throw new IllegalArgumentException("External tool requires either a URL or domain for creation");
         }
     }
 
