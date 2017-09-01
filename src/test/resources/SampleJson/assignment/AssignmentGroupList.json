@@ -1,0 +1,29 @@
+[
+   {
+      "id":123,
+      "name":"Assignments",
+      "position":1,
+      "group_weight":50.0,
+      "sis_source_id":null,
+      "integration_data":{},
+      "rules":{}
+   },
+   {
+      "id":456,
+      "name":"Exams",
+      "position":2,
+      "group_weight":50.0,
+      "sis_source_id":null,
+      "integration_data":{},
+      "rules":{}
+   },
+   {
+      "id":789,
+      "name":"Imported Assignments",
+      "position":3,
+      "group_weight":0.0,
+      "sis_source_id":null,
+      "integration_data":{},
+      "rules":{}
+   }
+]
