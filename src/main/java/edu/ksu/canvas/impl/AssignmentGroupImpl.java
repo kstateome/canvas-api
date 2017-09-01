@@ -7,6 +7,7 @@ import edu.ksu.canvas.model.assignment.AssignmentGroup;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
+import edu.ksu.canvas.requestOptions.DeleteAssignmentGroupOptions;
 import edu.ksu.canvas.requestOptions.GetAssignmentGroupOptions;
 import edu.ksu.canvas.requestOptions.ListAssignmentGroupOptions;
 
@@ -76,6 +77,14 @@ public class AssignmentGroupImpl extends BaseImpl<AssignmentGroup, AssignmentGro
         LOG.debug("Modifying assignment group " + assignmentGroup.getId() + " in course " + courseId);
         String url = buildCanvasUrl("courses/" + courseId + "/assignment_groups/" + assignmentGroup.getId(), Collections.emptyMap());
         Response response = canvasMessenger.putToCanvas(oauthToken, url, assignmentGroup.toPostMap());
+        return responseParser.parseToObject(AssignmentGroup.class, response);
+    }
+
+    @Override
+    public Optional<AssignmentGroup> deleteAssignmentGroup(DeleteAssignmentGroupOptions options) throws IOException {
+        LOG.debug("Deleting assignment group " + options.getAssignmentGroupId() + " from course " + options.getCourseId());
+        String url = buildCanvasUrl("courses/" + options.getCourseId() + "/assignment_groups/" + options.getAssignmentGroupId(), options.getOptionsMap());
+        Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, Collections.emptyMap());
         return responseParser.parseToObject(AssignmentGroup.class, response);
     }
 

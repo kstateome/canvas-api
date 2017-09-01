@@ -2,6 +2,7 @@ package edu.ksu.canvas.interfaces;
 
 
 import edu.ksu.canvas.model.assignment.AssignmentGroup;
+import edu.ksu.canvas.requestOptions.DeleteAssignmentGroupOptions;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -25,4 +26,15 @@ public interface AssignmentGroupWriter extends CanvasWriter<AssignmentGroup, Ass
      * @throws IOException When there is an error communicating with Canvas
      */
     Optional<AssignmentGroup> editAssignmentGroup(String courseId, AssignmentGroup assignmentGroup) throws IOException;
+
+    /**
+     * Delete an assignment group from Canvas.
+     * Optionally, move assignments in the deleted group to a new group. If not specified, these assignments are deleted.
+     * @param courseId Course ID of the course containing the assignment group to delete
+     * @param assignmentGroupId The ID of the assignment group to delete
+     * @param moveAssignmentsToGroup The ID of another assignment group to move assignments to. May be null
+     * @return The deleted assignment group object
+     * @throws IOException When there is an error communicating with Canvas
+     */
+    Optional<AssignmentGroup> deleteAssignmentGroup(DeleteAssignmentGroupOptions options) throws IOException;
 }
