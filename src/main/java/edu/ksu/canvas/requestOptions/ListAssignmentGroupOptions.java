@@ -46,7 +46,7 @@ public class ListAssignmentGroupOptions extends BaseOptions{
     public ListAssignmentGroupOptions includes(List<Include> includes) {
         List<Include> assignmentDependents = Arrays.asList(Include.DISCUSSION_TOPIC, Include.ALL_DATES, Include.ASSIGNMENT_VISIBILITY, Include.SUBMISSION);
         if(includes.stream().anyMatch(assignmentDependents::contains) && !includes.contains(Include.ASSIGNMENTS)) {
-            throw new IllegalArgumentException("Including discussion topics, all dates, assignment visibility or submissions is only valid if you also include submissions");
+            throw new IllegalArgumentException("Including discussion topics, all dates, assignment visibility or submissions is only valid if you also include assignments");
         }
         addEnumList("include[]", includes);
         return this;
