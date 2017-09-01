@@ -5,6 +5,7 @@ import edu.ksu.canvas.annotation.CanvasObject;
 import edu.ksu.canvas.model.BaseCanvasModel;
 import edu.ksu.canvas.model.assignment.LockInfo;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +14,8 @@ import java.util.List;
  * See <a href="https://canvas.instructure.com/doc/api/quizzes.html#Quiz">Canvas Quiz</a> documentation.
  */
 @CanvasObject(postKey = "quiz")
-public class Quiz extends BaseCanvasModel {
+public class Quiz extends BaseCanvasModel implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private Integer id;
     private String title;

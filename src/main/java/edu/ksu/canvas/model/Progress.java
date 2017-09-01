@@ -2,6 +2,7 @@ package edu.ksu.canvas.model;
 
 import edu.ksu.canvas.annotation.CanvasObject;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -18,7 +19,9 @@ import java.util.Date;
  * url              url where a progress update can be retrieved
  */
 @CanvasObject(postKey = "progress")
-public class Progress {
+public class Progress implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Integer id;
     private Integer contextId;
     private String contextType;

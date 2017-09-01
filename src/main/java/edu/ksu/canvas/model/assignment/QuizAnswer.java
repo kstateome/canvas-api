@@ -1,5 +1,7 @@
 package edu.ksu.canvas.model.assignment;
 
+import java.io.Serializable;
+
 /**
  * Class to represent Canvas quiz answer.
  * * See <a href="https://canvas.instructure.com/doc/api/quiz_questions.html#Answer">Canvas Quiz Answer</a> documentation.
@@ -7,7 +9,9 @@ package edu.ksu.canvas.model.assignment;
 
 import java.util.List;
 
-public class QuizAnswer {
+public class QuizAnswer implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Integer id;
     private String text;
     private String html;

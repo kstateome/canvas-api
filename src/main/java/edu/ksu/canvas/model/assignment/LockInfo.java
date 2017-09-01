@@ -1,8 +1,11 @@
 package edu.ksu.canvas.model.assignment;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class LockInfo {
+public class LockInfo implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String assetString;
     private Date unlockAt;
     private Date lockAt;

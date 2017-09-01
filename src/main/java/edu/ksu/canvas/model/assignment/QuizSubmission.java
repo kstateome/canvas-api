@@ -1,5 +1,7 @@
 package edu.ksu.canvas.model.assignment;
 
+import java.io.Serializable;
+
 import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
 import edu.ksu.canvas.model.BaseCanvasModel;
@@ -10,7 +12,9 @@ import edu.ksu.canvas.model.BaseCanvasModel;
  */
 
 @CanvasObject(postKey = "quizSubmission")
-public class QuizSubmission extends BaseCanvasModel {
+public class QuizSubmission extends BaseCanvasModel implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Integer id;
     private Integer quizId;
     private Integer userId;

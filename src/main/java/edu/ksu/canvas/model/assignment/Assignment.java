@@ -398,7 +398,9 @@ public class Assignment extends BaseCanvasModel implements Serializable{
         this.notifyOfUpdate = notifyOfUpdate;
     }
 
-    public class ExternalToolTagAttribute {
+    public class ExternalToolTagAttribute implements Serializable {
+        private static final long serialVersionUID = 1L;
+
         private String url;
         private Boolean newTab;
         private String resourceLinkId;
@@ -428,7 +430,9 @@ public class Assignment extends BaseCanvasModel implements Serializable{
         }
     }
 
-    public class TurnitinSettings {
+    public class TurnitinSettings implements Serializable {
+        private static final long serialVersionUID = 1L;
+
         private String originalityReportVisibility;
         private Boolean sPaperCheck;
         private Boolean internetCheck;
@@ -504,7 +508,9 @@ public class Assignment extends BaseCanvasModel implements Serializable{
         }
     }
 
-    public class NeedsGradingCount {
+    public class NeedsGradingCount implements Serializable {
+        private static final long serialVersionUID = 1L;
+
         private String sectionId;
         private Integer needsGradingCount;
 

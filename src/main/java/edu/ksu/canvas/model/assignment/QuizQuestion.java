@@ -9,10 +9,13 @@ import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
 import edu.ksu.canvas.model.BaseCanvasModel;
 
+import java.io.Serializable;
 import java.util.List;
 
 @CanvasObject(postKey = "quizQuestion")
-public class QuizQuestion extends BaseCanvasModel {
+public class QuizQuestion extends BaseCanvasModel implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Integer id;
     private Integer quizId;
     private Integer position;

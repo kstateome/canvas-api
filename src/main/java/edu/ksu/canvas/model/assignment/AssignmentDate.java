@@ -1,5 +1,6 @@
 package edu.ksu.canvas.model.assignment;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -7,7 +8,8 @@ import java.util.Date;
  * See <a href="https://canvas.instructure.com/doc/api/assignments.html#AssignmentDate">API docs</a>
  *
  */
-public class AssignmentDate {
+public class AssignmentDate implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private Long id;
     private String title;

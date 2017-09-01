@@ -1,5 +1,7 @@
 package edu.ksu.canvas.model;
 
+import java.io.Serializable;
+
 import edu.ksu.canvas.annotation.CanvasObject;
 
 /**
@@ -7,7 +9,9 @@ import edu.ksu.canvas.annotation.CanvasObject;
  * See <a href="https://canvas.instructure.com/doc/api/roles.html#Role">Roles</a> documentation.
  */
 @CanvasObject(postKey = "role")
-public class Role {
+public class Role extends BaseCanvasModel implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private long id;
     private String label;
 

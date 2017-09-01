@@ -1,11 +1,13 @@
 package edu.ksu.canvas.model.assignment;
 
+import java.io.Serializable;
 import java.util.List;
 
 import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.model.BaseCanvasModel;
 
-public class AssignmentGroup extends BaseCanvasModel{
+public class AssignmentGroup extends BaseCanvasModel implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     Integer id;
     String name;
