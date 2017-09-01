@@ -24,10 +24,10 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     private Date dueAt;
     private Date lockAt;
     private Date unlockAt;
-    private String allDates;
+    private List<AssignmentDate> allDates;
     private String courseId;
     private String htmlUrl;
-    private String assingmentGroupId;
+    private Long assignmentGroupId;
     private String[] allowedExtensions;
     private Boolean turnitinEnabled;
     private TurnitinSettings turnitinSettings;
@@ -127,11 +127,11 @@ public class Assignment extends BaseCanvasModel implements Serializable{
         this.unlockAt = unlockAt;
     }
 
-    public String getAllDates() {
+    public List<AssignmentDate> getAllDates() {
         return allDates;
     }
 
-    public void setAllDates(String allDates) {
+    public void setAllDates(List<AssignmentDate> allDates) {
         this.allDates = allDates;
     }
 
@@ -151,12 +151,12 @@ public class Assignment extends BaseCanvasModel implements Serializable{
         this.htmlUrl = htmlUrl;
     }
 
-    public String getAssingmentGroupId() {
-        return assingmentGroupId;
+    public Long getAssignmentGroupId() {
+        return assignmentGroupId;
     }
 
-    public void setAssingmentGroupId(String assingmentGroupId) {
-        this.assingmentGroupId = assingmentGroupId;
+    public void setAssignmentGroupId(Long assignmentGroupId) {
+        this.assignmentGroupId = assignmentGroupId;
     }
 
     public String[] getAllowedExtensions() {

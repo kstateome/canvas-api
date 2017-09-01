@@ -85,6 +85,7 @@ public class FakeRestClient implements RestClient {
         response.setContent(JsonTestUtil.loadJson("/" + fileName, FakeRestClient.class));
         response.setResponseCode(200);
         response.setNextLink(nextLink);
+        LOG.info("adding url to response map: " + url);
         responseMap.put(url, response);
         return response;
     }
