@@ -10,6 +10,7 @@ public class GetAssignmentGroupOptions extends BaseOptions {
     public enum Include {
         ASSIGNMENTS, DISCUSSION_TOPIC, ASSIGNMENT_VISIBILITY, SUBMISSION;
 
+        @Override
         public String toString() {
             return name().toLowerCase();
         }

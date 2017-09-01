@@ -6,6 +6,7 @@ public class GetSingleConversationOptions extends BaseOptions {
 
     public enum FilterMode {AND, OR, DEFAULT_OR;
 
+        @Override
         public String toString() { return name().toLowerCase(); }
     }
 

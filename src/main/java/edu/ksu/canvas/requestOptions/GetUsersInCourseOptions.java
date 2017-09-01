@@ -8,18 +8,21 @@ public class GetUsersInCourseOptions extends BaseOptions {
     public enum EnrollmentType {
         TEACHER, STUDENT, STUDENT_VIEW, TA, OBSERVER, DESIGNER;
 
+        @Override
         public String toString() { return name().toLowerCase(); }
     }
 
     public enum Include {
         EMAIL, ENROLLMENTS, LOCKED, AVATAR_URL, TEST_STUDENT, BIO, CUSTOM_LINKS;
 
+        @Override
         public String toString() { return name().toLowerCase(); }
     }
 
     public enum EnrollmentState{
         ACTIVE, INVITED, REJECTED, COMPLETED, INACTIVE;
 
+        @Override
         public String toString() { return name().toLowerCase(); }
     }
 

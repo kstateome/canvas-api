@@ -13,6 +13,7 @@ public class ListRolesOptions extends BaseOptions {
 
     public enum State {
         ACTIVE, INACTIVE;
+        @Override
         public String toString() { return name().toLowerCase(); }
     }
 

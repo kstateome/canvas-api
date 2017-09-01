@@ -23,6 +23,7 @@ public class GetEnrollmentOptions extends BaseOptions {
             this.canvasValue = canvasValue;
         }
     
+        @Override
         public String toString() {
             return canvasValue;
         }
@@ -31,6 +32,7 @@ public class GetEnrollmentOptions extends BaseOptions {
     public enum EnrollmentState {
         ACTIVE, INVITED, CREATION_PENDING, DELETED, REJECTED, COMPLETED, INACTIVE;
 
+        @Override
         public String toString() {
             return name().toLowerCase();
         }
@@ -39,6 +41,7 @@ public class GetEnrollmentOptions extends BaseOptions {
     public enum Include {
         AVATAR_URL, GROUP_IDS, LOCKED, OBSERVED_USERS, CAN_BE_REMOVED;
 
+        @Override
         public String toString() {
             return name().toLowerCase();
         }

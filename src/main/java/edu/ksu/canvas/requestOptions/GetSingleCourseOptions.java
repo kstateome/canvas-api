@@ -14,6 +14,7 @@ public class GetSingleCourseOptions extends BaseOptions {
         //options specific to get single course call
         ALL_COURSES, PERMISSIONS;
 
+        @Override
         public String toString() { return name().toLowerCase(); }
     }
 

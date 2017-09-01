@@ -12,6 +12,7 @@ public class ListAssignmentGroupOptions extends BaseOptions{
     public enum Include {
         ASSIGNMENTS, DISCUSSION_TOPIC, ALL_DATES, ASSIGNMENT_VISIBILITY, OVERRIDES, SUBMISSION;
 
+        @Override
         public String toString() {
             return name().toLowerCase();
         }
@@ -20,6 +21,7 @@ public class ListAssignmentGroupOptions extends BaseOptions{
     public enum ExcludeSubmissionTypes {
         ONLINE_QUIZ, DISCUSSION_TOPIC, WIKI_PAGE, EXTERNAL_TOOL;
 
+        @Override
         public String toString() {
             return name().toLowerCase();
         }

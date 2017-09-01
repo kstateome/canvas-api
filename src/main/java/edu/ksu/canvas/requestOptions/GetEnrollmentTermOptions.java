@@ -10,7 +10,7 @@ public class GetEnrollmentTermOptions extends BaseOptions {
     public enum Include {
         OVERRIDES;
 
-
+        @Override
         public String toString() { return name().toLowerCase(); }
     }
 

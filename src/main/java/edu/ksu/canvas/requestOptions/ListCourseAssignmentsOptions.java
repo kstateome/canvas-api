@@ -7,12 +7,14 @@ public class ListCourseAssignmentsOptions extends BaseOptions {
     public enum Include {
         SUBMISSION, ASSIGNMENT_VISIBILITY, ALL_DATES, OVERRIDES, OBSERVED_USERS;
 
+        @Override
         public String toString() { return name().toLowerCase(); }
     }
 
     public enum Bucket {
         PAST, OVERDUE, UNDATED, UNGRADED, UNSUBMITTED, UPCOMING, FUTURE;
 
+        @Override
         public String toString() { return name().toLowerCase(); }
     }
 
