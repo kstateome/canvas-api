@@ -1,6 +1,9 @@
 package edu.ksu.canvas.requestOptions;
 
+import java.util.Arrays;
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 
 public class ListAssignmentGroupOptions extends BaseOptions{
     private String courseId;
@@ -23,6 +26,9 @@ public class ListAssignmentGroupOptions extends BaseOptions{
     }
 
     public ListAssignmentGroupOptions(String courseId) {
+        if(StringUtils.isBlank(courseId)) {
+            throw new IllegalArgumentException("Course ID can not be blank");
+        }
         this.courseId = courseId;
     }
 
@@ -38,6 +44,10 @@ public class ListAssignmentGroupOptions extends BaseOptions{
      * @return this to continue building options
      */
     public ListAssignmentGroupOptions includes(List<Include> includes) {
+        List<Include> assignmentDependents = Arrays.asList(Include.DISCUSSION_TOPIC, Include.ALL_DATES, Include.ASSIGNMENT_VISIBILITY, Include.SUBMISSION);
+        if(includes.stream().anyMatch(assignmentDependents::contains) && !includes.contains(Include.ASSIGNMENTS)) {
+            throw new IllegalArgumentException("Including discussion topics, all dates, assignment visibility or submissions is only valid if you also include submissions");
+        }
         addEnumList("include[]", includes);
         return this;
     }

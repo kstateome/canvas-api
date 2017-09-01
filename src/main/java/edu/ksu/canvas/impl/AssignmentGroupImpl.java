@@ -40,9 +40,6 @@ public class AssignmentGroupImpl extends BaseImpl<AssignmentGroup, AssignmentGro
 
     @Override
     public Optional<AssignmentGroup> getAssignmentGroup(GetAssignmentGroupOptions options) throws IOException {
-        if(StringUtils.isBlank(options.getCourseId()) || options.getAssignmentGroupId() == null || options.getAssignmentGroupId() == 0l) {
-            throw new IllegalArgumentException("Must supply a course ID and assignment group ID");
-        }
         LOG.debug("Fetching assignment group " + options.getAssignmentGroupId() + " from course " + options.getCourseId());
         String url = buildCanvasUrl("courses/" + options.getCourseId() + "/assignment_groups/" + options.getAssignmentGroupId(), options.getOptionsMap());
         return getFromCanvas(url);
@@ -50,9 +47,6 @@ public class AssignmentGroupImpl extends BaseImpl<AssignmentGroup, AssignmentGro
 
     @Override
     public List<AssignmentGroup> listAssignmentGroup(ListAssignmentGroupOptions options) throws IOException {
-        if(StringUtils.isBlank(options.getCourseId())) {
-            throw new IllegalArgumentException("Must supply a course ID when listing assignment groups");
-        }
         LOG.debug("Listing assignment groups in course " + options.getCourseId());
         String url = buildCanvasUrl("courses/" + options.getCourseId() + "/assignment_groups", options.getOptionsMap());
         return getListFromCanvas(url);
@@ -72,7 +66,7 @@ public class AssignmentGroupImpl extends BaseImpl<AssignmentGroup, AssignmentGro
     @Override
     public Optional<AssignmentGroup> editAssignmentGroup(String courseId, AssignmentGroup assignmentGroup) throws IOException {
         if(StringUtils.isBlank(courseId) || assignmentGroup == null || assignmentGroup.getId() == null || assignmentGroup.getId() == 0l) {
-            throw new IllegalArgumentException("Course ID and assignment group ID must not be empty when editing an assignment group");
+            throw new IllegalArgumentException("Course ID and assignment group ID must be provided");
         }
         LOG.debug("Modifying assignment group " + assignmentGroup.getId() + " in course " + courseId);
         String url = buildCanvasUrl("courses/" + courseId + "/assignment_groups/" + assignmentGroup.getId(), Collections.emptyMap());
