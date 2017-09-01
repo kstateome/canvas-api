@@ -128,7 +128,9 @@ public class Page extends BaseCanvasModel implements Serializable {
      * Pages include a "last edited by user" object. Unfortunately it doesn't
      * seem to be any kind of existing Canvas User or DisplayUser object type.
      */
-    public class PageUser {
+    public class PageUser implements Serializable {
+        private static final long serialVersionUID = 1L;
+
         private Long id;
         private String displayName;
         private String avatarImageUrl;

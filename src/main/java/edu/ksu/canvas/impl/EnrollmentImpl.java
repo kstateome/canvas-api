@@ -16,7 +16,11 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentReader, EnrollmentWriter> implements EnrollmentReader,EnrollmentWriter {
     private static final Logger LOG = Logger.getLogger(CourseReader.class);
@@ -47,12 +51,10 @@ public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentReader, Enrol
     }
 
     @Override
-    public Optional<Enrollment> enrollUser(String courseId, String userId) throws InvalidOauthTokenException, IOException {
-        Map<String, List<String>> courseMap = new HashMap<>();
-        courseMap.put("enrollment[user_id]", Collections.singletonList(String.valueOf(userId)));
-        String createdUrl = buildCanvasUrl("courses/" + courseId + "/enrollments", Collections.emptyMap());
+    public Optional<Enrollment> enrollUser(Enrollment enrollment) throws InvalidOauthTokenException, IOException {
+        String createdUrl = buildCanvasUrl("courses/" + enrollment.getCourseId() + "/enrollments", Collections.emptyMap());
         LOG.debug("create URl for course enrollments: "+ createdUrl);
-        Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, courseMap);
+        Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, enrollment.toPostMap());
         if (response.getErrorHappened() ||  response.getResponseCode() != 200) {
             LOG.debug("Failed to enroll in course, error message: " + response.toString());
             return Optional.empty();

@@ -5,9 +5,11 @@ import java.util.List;
 public class CreateConversationOptions extends BaseOptions {
 
     public enum MediaCommentType {AUDIO, VIDEO;
+        @Override
         public String toString() { return name().toLowerCase(); }
     }
     public enum Mode {SYNC, ASYNC;
+        @Override
         public String toString() { return name().toLowerCase(); }
     }
 

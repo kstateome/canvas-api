@@ -7,6 +7,7 @@ public class ListCurrentUserCoursesOptions extends BaseOptions {
     public enum EnrollmentType {
         STUDENT, TEACHER, TA, OBSERVER, DESIGNER;
 
+        @Override
         public String toString() { return name().toLowerCase(); }
     }
 
@@ -15,12 +16,14 @@ public class ListCurrentUserCoursesOptions extends BaseOptions {
         SECTIONS, STORAGE_QUOTA_USED_MB, TOTAL_STUDENTS, FAVORITES, TEACHERS,
         OBSERVED_USERS, CURRENT_GRADING_PERIOD_SCORES;
 
+        @Override
         public String toString() { return name().toLowerCase(); }
     }
 
     public enum State {
         UNPUBLISHED, AVAILABLE, COMPLETED, DELETED;
 
+        @Override
         public String toString() { return name().toLowerCase(); }
     }
 

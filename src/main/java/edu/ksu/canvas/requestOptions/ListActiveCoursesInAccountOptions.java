@@ -14,18 +14,21 @@ public class ListActiveCoursesInAccountOptions extends BaseOptions {
     public enum EnrollmentType {
         STUDENT, TEACHER, TA, OBSERVER, DESIGNER;
 
+        @Override
         public String toString() { return name().toLowerCase(); }
     }
 
     public enum State {
         CREATED, CLAIMED, AVAILABLE, COMPLETED, DELETED, ALL;
 
+        @Override
         public String toString() { return name().toLowerCase(); }
     }
 
     public enum Include {
         SYLLABUS_BODY, TERM, COURSE_PROGRESS, STORAGE_QUOTA_USED_MB, TOTAL_STUDENTS, TEACHERS;
 
+        @Override
         public String toString() { return name().toLowerCase(); }
     }
 

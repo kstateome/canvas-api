@@ -121,15 +121,13 @@ public class Conversation extends BaseCanvasModel implements Serializable {
         }
     }
 
-    public class MessageParticipant {
+    public class MessageParticipant implements Serializable {
+        private static final long serialVersionUID = 1L;
+
         private Integer id;
-
         private String name;
-
         private Object commonCourses; //TODO: Refine this object type
-
         private Object commonGroups; //TODO: Refine this object type
-
         private String avatarUrl;
 
         public Integer getId() {

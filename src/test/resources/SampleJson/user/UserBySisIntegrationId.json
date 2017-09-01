@@ -1,0 +1,13 @@
+{
+    "id": 33,
+    "name": "Student 33",
+    "sortable_name": "Student ThirtyOne",
+    "short_name": "Student ThirtyOne",
+    "login_id": "student@test.example.com",
+    "avatar_url": "https://en.gravatar.com/avatar/12321asdfd",
+    "locale": null,
+    "permissions": {
+        "can_update_name": false,
+        "can_update_avatar": true
+    }
+}

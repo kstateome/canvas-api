@@ -37,6 +37,7 @@ public class Enrollment extends BaseCanvasModel implements Serializable {
     private String htmlUrl;
     private Grade grades;
     private User user;
+    private Long roleId;
 
     public long getId() {
         return id;
@@ -44,6 +45,15 @@ public class Enrollment extends BaseCanvasModel implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    @CanvasField(postKey = "role_id")
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
     public Integer getCourseId() {

@@ -7,6 +7,7 @@ public enum SectionIncludes {
     TOTAL_STUDENTS,
     PASSBACK_STATUS;
 
+    @Override
     public String toString() {
         return name().toLowerCase();
     }

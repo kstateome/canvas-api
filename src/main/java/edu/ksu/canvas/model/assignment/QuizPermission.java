@@ -1,12 +1,15 @@
 package edu.ksu.canvas.model.assignment;
 
+import java.io.Serializable;
+
 /**
  * Class to hold the permissions returned when querying quizzes.
  * Each one represents whether the user making the query has the permission described
  * See <a href="https://canvas.instructure.com/doc/api/quizzes.html#QuizPermissions">Canvas Quiz Permission</a> documentation.
  */
 
-public class QuizPermission {
+public class QuizPermission implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private Boolean read;
     private Boolean submit;

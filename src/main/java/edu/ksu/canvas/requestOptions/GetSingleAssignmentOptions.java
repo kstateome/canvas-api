@@ -10,6 +10,7 @@ public class GetSingleAssignmentOptions extends BaseOptions {
     public enum Include {
         SUBMISSION, ASSIGNMENT_VISIBILITY, OVERRIDES, OBSERVED_USERS;
 
+        @Override
         public String toString() {
             return name().toLowerCase();
         }

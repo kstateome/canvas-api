@@ -1,5 +1,6 @@
 package edu.ksu.canvas.model.assignment;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -7,7 +8,9 @@ import edu.ksu.canvas.annotation.CanvasObject;
 import edu.ksu.canvas.model.BaseCanvasModel;
 
 @CanvasObject(postKey="assignment_override")
-public class AssignmentOverride extends BaseCanvasModel {
+public class AssignmentOverride extends BaseCanvasModel implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Integer id;
     private Integer assignmentId;
     private List<Integer> studentIds;

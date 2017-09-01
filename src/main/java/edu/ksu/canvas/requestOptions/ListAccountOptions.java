@@ -7,6 +7,7 @@ public class ListAccountOptions extends BaseOptions {
     public enum Include {
         LTI_GUID, REGISTRATION_SETTINGS;
 
+        @Override
         public String toString() { return name().toLowerCase(); }
     }
 

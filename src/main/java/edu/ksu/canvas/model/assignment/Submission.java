@@ -4,10 +4,13 @@ import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
 import edu.ksu.canvas.model.BaseCanvasModel;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @CanvasObject(postKey = "submission")
-public class Submission extends BaseCanvasModel{
+public class Submission extends BaseCanvasModel implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Integer id;
     private Integer assignmentId;
     private String assignment;
