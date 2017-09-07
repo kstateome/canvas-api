@@ -12,6 +12,7 @@ import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.GetEnrollmentOptions;
 
+import edu.ksu.canvas.requestOptions.UnEnrollOptions;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -64,8 +65,13 @@ public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentReader, Enrol
 
     @Override
     public Optional<Enrollment> dropUser(String courseId, String enrollmentId) throws InvalidOauthTokenException, IOException {
+        return dropUser(courseId, enrollmentId, UnEnrollOptions.DELETE.toString());
+    }
+
+    @Override
+    public Optional<Enrollment> dropUser(String courseId, String enrollmentId, String unEnrollOption) throws InvalidOauthTokenException, IOException {
         Map<String, List<String>> postParams = new HashMap<>();
-        postParams.put("task", Collections.singletonList("delete"));
+        postParams.put("task", Collections.singletonList(unEnrollOption));
         String createdUrl = buildCanvasUrl("courses/" + courseId + "/enrollments/" + enrollmentId, Collections.emptyMap());
         LOG.debug("create URl for course enrollments: "+ createdUrl);
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, createdUrl, postParams);

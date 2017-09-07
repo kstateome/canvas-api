@@ -13,5 +13,28 @@ public interface EnrollmentWriter extends CanvasWriter<Enrollment, EnrollmentWri
 
      Optional<Enrollment> enrollUser(Enrollment enrollment) throws InvalidOauthTokenException, IOException;
 
+     /**
+      *
+      * Drop a user enrolled in a course passing the UnEnrollOptions string (i.e. canvas task param).
+      *
+      * @param courseId - Canvas course identifier
+      * @param enrollmentId - Canvas enrollment identifier
+      * @param unEnrollOption - UnEnrollOption enum toString value of delete, conclude, inactivate or deactivate
+      * @return Populated Enrollment Dropped when successful
+      * @throws InvalidOauthTokenException
+      * @throws IOException
+      */
+     Optional<Enrollment> dropUser(String courseId, String enrollmentId, String unEnrollOption) throws InvalidOauthTokenException, IOException;
+
+     /**
+      *
+      *  Drop a user enrolled in a course using the Unenrollment option of DELETE.
+      *
+      * @param courseId - Canvas course identifier
+      * @param enrollmentId enrollmentId - Canvas enrollment identifier
+      * @return Populated Enrollment Dropped when successful
+      * @throws InvalidOauthTokenException
+      * @throws IOException
+      */
      Optional<Enrollment> dropUser(String courseId, String enrollmentId) throws InvalidOauthTokenException, IOException;
 }
