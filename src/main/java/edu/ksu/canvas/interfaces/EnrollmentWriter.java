@@ -13,9 +13,11 @@ public interface EnrollmentWriter extends CanvasWriter<Enrollment, EnrollmentWri
 
      Optional<Enrollment> enrollUser(Enrollment enrollment) throws InvalidOauthTokenException, IOException;
 
+     Optional<Enrollment> enrollUser(Enrollment enrollment, boolean isSectionEnrollment) throws InvalidOauthTokenException, IOException;
+
      /**
       *
-      * Drop a user enrolled in a course passing the UnEnrollOptions string (i.e. canvas task param).
+      * Drop a user enrolled in a course passing the UnEnrollOptions string in the task param.
       *
       * @param courseId - Canvas course identifier
       * @param enrollmentId - Canvas enrollment identifier

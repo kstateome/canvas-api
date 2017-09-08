@@ -53,7 +53,26 @@ public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentReader, Enrol
 
     @Override
     public Optional<Enrollment> enrollUser(Enrollment enrollment) throws InvalidOauthTokenException, IOException {
-        String createdUrl = buildCanvasUrl("courses/" + enrollment.getCourseId() + "/enrollments", Collections.emptyMap());
+        return enrollUser(enrollment, false);
+    }
+
+    /**
+     * Enrolls a user into either a course or section based on the boolean isSectionEnrollment value.
+     *
+     * @param enrollment partially populated Enrollment object
+     * @param isSectionEnrollment when true, invoke canvas url to enroll a user in a section, otherwise enroll a user in a course.
+     * @return Optional<Enrollment>
+     * @throws InvalidOauthTokenException
+     * @throws IOException
+     */
+    @Override
+    public Optional<Enrollment> enrollUser(Enrollment enrollment, boolean isSectionEnrollment) throws InvalidOauthTokenException, IOException {
+        String createdUrl = null;
+        if (isSectionEnrollment) {
+            createdUrl = buildCanvasUrl("sections/" + enrollment.getCourseSectionId() + "/enrollments", Collections.emptyMap());
+        } else {
+            createdUrl = buildCanvasUrl("courses/" + enrollment.getCourseId() + "/enrollments", Collections.emptyMap());
+        }
         LOG.debug("create URl for course enrollments: "+ createdUrl);
         Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, enrollment.toPostMap());
         if (response.getErrorHappened() ||  response.getResponseCode() != 200) {
