@@ -16,11 +16,11 @@ public interface EnrollmentWriter extends CanvasWriter<Enrollment, EnrollmentWri
       * Enrolls a user in a course has been deprecated, use enrollUserInCourse or enrollUserInSection instead.
       * For backward compatibility, it will enroll a user in a course.
       *
-      * @param enrollment partially populated Enrollment object
-      * @return Optional<Enrollment>
-      * @throws InvalidOauthTokenException
-      * @throws IOException
+      * @param  enrollment partially populated Enrollment object
+      * @return optional enrollment
       * @throws IllegalArgumentException when the enrollment courseID is not set
+      * @throws IOException runtime error
+      * @throws InvalidOauthTokenException runtime error
       */
      @Deprecated
      Optional<Enrollment> enrollUser(Enrollment enrollment) throws InvalidOauthTokenException, IOException, IllegalArgumentException;
@@ -29,10 +29,10 @@ public interface EnrollmentWriter extends CanvasWriter<Enrollment, EnrollmentWri
       * Enrolls a user in a course
       *
       * @param enrollment partially populated Enrollment object
-      * @return Optional<Enrollment>
-      * @throws InvalidOauthTokenException
-      * @throws IOException
+      * @return optional enrollment
       * @throws IllegalArgumentException when the enrollment courseID is not set
+      * @throws IOException runtime error
+      * @throws InvalidOauthTokenException runtime error
       */
      Optional<Enrollment> enrollUserInCourse(Enrollment enrollment) throws InvalidOauthTokenException, IOException, IllegalArgumentException;
 
@@ -40,10 +40,10 @@ public interface EnrollmentWriter extends CanvasWriter<Enrollment, EnrollmentWri
       * Enrolls a user in a section.
       *
       * @param enrollment partially populated Enrollment object
-      * @return Optional<Enrollment>
-      * @throws InvalidOauthTokenException
-      * @throws IOException
+      * @return optional enrollment
       * @throws IllegalArgumentException when the enrollment courseSectionId is not set
+      * @throws IOException runtime error
+      * @throws InvalidOauthTokenException runtime error
       */
      Optional<Enrollment> enrollUserInSection(Enrollment enrollment) throws InvalidOauthTokenException, IOException, IllegalArgumentException;
 
@@ -55,8 +55,8 @@ public interface EnrollmentWriter extends CanvasWriter<Enrollment, EnrollmentWri
       * @param enrollmentId - Canvas enrollment identifier
       * @param unEnrollOption - UnEnrollOption enum value of delete, conclude, inactivate or deactivate
       * @return Populated Enrollment Dropped when successful
-      * @throws InvalidOauthTokenException
-      * @throws IOException
+      * @throws IOException runtime error
+      * @throws InvalidOauthTokenException runtime error
       */
      Optional<Enrollment> dropUser(String courseId, String enrollmentId, UnEnrollOptions unEnrollOption) throws InvalidOauthTokenException, IOException;
 
@@ -67,8 +67,8 @@ public interface EnrollmentWriter extends CanvasWriter<Enrollment, EnrollmentWri
       * @param courseId - Canvas course identifier
       * @param enrollmentId enrollmentId - Canvas enrollment identifier
       * @return Populated Enrollment Dropped when successful
-      * @throws InvalidOauthTokenException
-      * @throws IOException
+      * @throws IOException runtime error
+      * @throws InvalidOauthTokenException runtime error
       */
      Optional<Enrollment> dropUser(String courseId, String enrollmentId) throws InvalidOauthTokenException, IOException;
 }
