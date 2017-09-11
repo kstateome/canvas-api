@@ -2,6 +2,7 @@ package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.model.Enrollment;
+import edu.ksu.canvas.requestOptions.UnEnrollOptions;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -11,9 +12,40 @@ import java.util.Optional;
  */
 public interface EnrollmentWriter extends CanvasWriter<Enrollment, EnrollmentWriter> {
 
-     Optional<Enrollment> enrollUser(Enrollment enrollment) throws InvalidOauthTokenException, IOException;
+     /**
+      * Enrolls a user in a course has been deprecated, use enrollUserInCourse or enrollUserInSection instead.
+      * For backward compatibility, it will enroll a user in a course.
+      *
+      * @param enrollment partially populated Enrollment object
+      * @return Optional<Enrollment>
+      * @throws InvalidOauthTokenException
+      * @throws IOException
+      * @throws IllegalArgumentException when the enrollment courseID is not set
+      */
+     @Deprecated
+     Optional<Enrollment> enrollUser(Enrollment enrollment) throws InvalidOauthTokenException, IOException, IllegalArgumentException;
 
-     Optional<Enrollment> enrollUser(Enrollment enrollment, boolean isSectionEnrollment) throws InvalidOauthTokenException, IOException;
+     /**
+      * Enrolls a user in a course
+      *
+      * @param enrollment partially populated Enrollment object
+      * @return Optional<Enrollment>
+      * @throws InvalidOauthTokenException
+      * @throws IOException
+      * @throws IllegalArgumentException when the enrollment courseID is not set
+      */
+     Optional<Enrollment> enrollUserInCourse(Enrollment enrollment) throws InvalidOauthTokenException, IOException, IllegalArgumentException;
+
+     /**
+      * Enrolls a user in a section.
+      *
+      * @param enrollment partially populated Enrollment object
+      * @return Optional<Enrollment>
+      * @throws InvalidOauthTokenException
+      * @throws IOException
+      * @throws IllegalArgumentException when the enrollment courseSectionId is not set
+      */
+     Optional<Enrollment> enrollUserInSection(Enrollment enrollment) throws InvalidOauthTokenException, IOException, IllegalArgumentException;
 
      /**
       *
@@ -21,12 +53,12 @@ public interface EnrollmentWriter extends CanvasWriter<Enrollment, EnrollmentWri
       *
       * @param courseId - Canvas course identifier
       * @param enrollmentId - Canvas enrollment identifier
-      * @param unEnrollOption - UnEnrollOption enum toString value of delete, conclude, inactivate or deactivate
+      * @param unEnrollOption - UnEnrollOption enum value of delete, conclude, inactivate or deactivate
       * @return Populated Enrollment Dropped when successful
       * @throws InvalidOauthTokenException
       * @throws IOException
       */
-     Optional<Enrollment> dropUser(String courseId, String enrollmentId, String unEnrollOption) throws InvalidOauthTokenException, IOException;
+     Optional<Enrollment> dropUser(String courseId, String enrollmentId, UnEnrollOptions unEnrollOption) throws InvalidOauthTokenException, IOException;
 
      /**
       *
