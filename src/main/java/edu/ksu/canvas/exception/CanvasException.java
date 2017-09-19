@@ -19,6 +19,7 @@ public class CanvasException extends RuntimeException {
     }
 
     public CanvasException(String canvasErrorString, String url) {
+        super(String.format("Error from URL %s : %s", url, canvasErrorString));
         canvasErrorMessage = canvasErrorString;
         requestUrl = url;
     }
