@@ -26,7 +26,7 @@ public class Enrollment extends BaseCanvasModel implements Serializable {
     private String sisImportId;
     private Integer rootAccountId;
     private String type;
-    private Integer userId;
+    private String userId;
     private Integer associatedUserId;
     private String role;
     private Date updatedAt;
@@ -148,11 +148,11 @@ public class Enrollment extends BaseCanvasModel implements Serializable {
     }
 
     @CanvasField(postKey = "user_id")
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
