@@ -65,7 +65,7 @@ public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentReader, Enrol
         if (enrollment.getCourseId() == null || enrollment.getCourseId() == 0) {
             throw new IllegalArgumentException("Required CourseId in enrollment was not found.");
         }
-        LOG.debug(String.format("Enrolling user %d in course %d", enrollment.getUserId(), enrollment.getCourseId()));
+        LOG.debug(String.format("Enrolling user %s in course %d", enrollment.getUserId(), enrollment.getCourseId()));
         return enrollUser(enrollment, false);
     }
 
@@ -74,7 +74,7 @@ public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentReader, Enrol
         if (StringUtils.isBlank(enrollment.getCourseSectionId())) {
             throw new IllegalArgumentException("Required CourseSectionId in enrollment was not found.");
         }
-        LOG.debug(String.format("Enrolling user %d in section %d", enrollment.getUserId(), enrollment.getCourseSectionId()));
+        LOG.debug(String.format("Enrolling user %s in section %s", enrollment.getUserId(), enrollment.getCourseSectionId()));
         return enrollUser(enrollment,true);
     }
 
