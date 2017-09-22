@@ -218,8 +218,8 @@ public class SimpleRestClient implements RestClient {
             //Throws a 403 with a "Rate Limit Exceeded" error message if the API throttle limit is hit.
             //See https://canvas.instructure.com/doc/api/file.throttling.html.
             if(xRateLimitRemaining < rateLimitThreshold) {
-                LOG.error("Canvas API rate limit exceeded. Bucket quota: " + xRateLimitRemaining + "Cost: " + xRateCost
-                        + "HTTP status " + statusCode + " Requested URL: " + request.getURI());
+                LOG.error("Canvas API rate limit exceeded. Bucket quota: " + xRateLimitRemaining + " Cost: " + xRateCost
+                        + " Threshold: " + rateLimitThreshold + " HTTP status: " + statusCode + " Requested URL: " + request.getURI());
                 throw new RateLimitException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
             }
         } catch (NullPointerException e) {
