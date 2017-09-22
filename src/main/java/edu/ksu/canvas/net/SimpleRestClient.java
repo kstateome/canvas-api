@@ -3,6 +3,7 @@ package edu.ksu.canvas.net;
 import edu.ksu.canvas.exception.CanvasException;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.exception.ObjectNotFoundException;
+import edu.ksu.canvas.exception.RateLimitException;
 import edu.ksu.canvas.exception.UnauthorizedException;
 import edu.ksu.canvas.impl.GsonResponseParser;
 import edu.ksu.canvas.model.status.CanvasErrorResponse;
@@ -206,9 +207,24 @@ public class SimpleRestClient implements RestClient {
 
     private void checkHeaders(HttpResponse httpResponse, HttpRequestBase request) {
         int statusCode = httpResponse.getStatusLine().getStatusCode();
-        double xRateLimitRemaining = Double.parseDouble(httpResponse.getFirstHeader("x-rate-limit-remaining").getValue());
-        double xRateCost = Double.parseDouble(httpResponse.getFirstHeader("x-request-cost").getValue());
         double rateLimitThreshold = 0.1;
+        double xRateCost = 0;
+        double xRateLimitRemaining = 0;
+
+        try {
+            xRateCost = Double.parseDouble(httpResponse.getFirstHeader("x-request-cost").getValue());
+            xRateLimitRemaining = Double.parseDouble(httpResponse.getFirstHeader("x-rate-limit-remaining").getValue());
+
+            //Throws a 403 with a "Rate Limit Exceeded" error message if the API throttle limit is hit.
+            //See https://canvas.instructure.com/doc/api/file.throttling.html.
+            if(xRateLimitRemaining < rateLimitThreshold) {
+                LOG.error("Canvas API rate limit exceeded. Bucket quota: " + xRateLimitRemaining + "Cost: " + xRateCost
+                        + "HTTP status " + statusCode + " Requested URL: " + request.getURI());
+                throw new RateLimitException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
+            }
+        } catch (NullPointerException e) {
+            LOG.debug("Rate not being limited: " + e);
+        }
 
         if (statusCode == 401) {
             //If the WWW-Authenticate header is set, it is a token problem.
@@ -227,13 +243,6 @@ public class SimpleRestClient implements RestClient {
         }
         if(statusCode < 200 || statusCode > 299) {
             LOG.error("HTTP status " + statusCode + " returned from " + request.getURI());
-            throw new CanvasException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
-        }
-        //Throws a 403 with a "Rate Limit Exceeded" error message if the API throttle limit is hit.
-        //See https://canvas.instructure.com/doc/api/file.throttling.html.
-        if(xRateLimitRemaining < rateLimitThreshold) {
-            LOG.error("Canvas API rate limit exceeded. Bucket quota: " + xRateLimitRemaining + "Cost: " + xRateCost
-                    + "HTTP status " + statusCode + " Requested URL: " + request.getURI());
             throw new CanvasException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
         }
     }
