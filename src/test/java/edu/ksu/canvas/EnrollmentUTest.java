@@ -38,7 +38,7 @@ public class EnrollmentUTest extends CanvasTestBase {
         
         Enrollment firstEnrollment = enrollments.get(0);
         Assert.assertEquals("Expected id in object to match id in json", 1, firstEnrollment.getId());
-        Assert.assertEquals("Expected userId in object to match userId in json", 38, (int) firstEnrollment.getUserId());
+        Assert.assertEquals("Expected userId in object to match userId in json", "38", firstEnrollment.getUserId());
         Assert.assertEquals("Expected type in object to match type in json", "StudentEnrollment", firstEnrollment.getType());
         Assert.assertEquals("Expected associatedUserID in object to match associatedUserID in json", 40, (int)firstEnrollment.getAssociatedUserId());
         Assert.assertEquals("Expected courseSectionId in object to match courseSectionId in json", "6546", firstEnrollment.getCourseSectionId());
