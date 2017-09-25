@@ -12,37 +12,37 @@ import java.io.Serializable;
 @CanvasObject(postKey = "login")
 @SuppressWarnings("serial")
 public class Login extends BaseCanvasModel implements Serializable {
-	private int id;
-	private int userId;
-	private int accountId;
+	private String id;
+	private String userId;
+	private String accountId;
 	private String uniqueId;
 	private String sisUserId;
 	private String integrationId;
-	private int integrationProviderId;
-	private String integrationProviderType;
+	private String authenticationProviderId;
+	private String authenticationProviderType;
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
 	@CanvasField(overrideObjectKey = "user", postKey = "user_id")
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
-	public int getAccountId() {
+	public String getAccountId() {
 		return accountId;
 	}
 
-	public void setAccountId(int accountId) {
+	public void setAccountId(String accountId) {
 		this.accountId = accountId;
 	}
 
@@ -73,20 +73,20 @@ public class Login extends BaseCanvasModel implements Serializable {
 		this.integrationId = integrationId;
 	}
 
-	@CanvasField(postKey = "integration_provider_id")
-	public int getIntegrationProviderId() {
-		return integrationProviderId;
+	@CanvasField(postKey = "authentication_provider_id")
+	public String getAuthenticationProviderId() {
+		return authenticationProviderId;
 	}
 
-	public void setIntegrationProviderId(int integrationProviderId) {
-		this.integrationProviderId = integrationProviderId;
+	public void setAuthenticationProviderId(String authenticationProviderId) {
+		this.authenticationProviderId = authenticationProviderId;
 	}
 
-	public String getIntegrationProviderType() {
-		return integrationProviderType;
+	public String getAuthenticationProviderType() {
+		return authenticationProviderType;
 	}
 
-	public void setIntegrationProviderType(String integrationProviderType) {
-		this.integrationProviderType = integrationProviderType;
+	public void setAuthenticationProviderType(String authenticationProviderType) {
+		this.authenticationProviderType = authenticationProviderType;
 	}
 }
