@@ -75,7 +75,7 @@ public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter
 
     @Override
     public Optional<Section> updateSection(Section section) throws IOException {
-        LOG.debug("updating section");
+        LOG.debug("updating section " + section.getId());
         String url = buildCanvasUrl("sections/" + section.getId(), Collections.emptyMap());
         Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, section.toJsonObject());
         return responseParser.parseToObject(Section.class, response);
