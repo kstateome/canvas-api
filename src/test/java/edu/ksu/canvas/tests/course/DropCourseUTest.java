@@ -31,10 +31,10 @@ public class DropCourseUTest extends CanvasTestBase {
         fakeRestClient.addSuccessResponse(url, "SampleJson/EnrollmentResponse.json");
         Enrollment enrollment = new Enrollment();
         enrollment.setCourseId(25);
-        enrollment.setUserId(78839);
+        enrollment.setUserId("78839");
         Optional<Enrollment> enrollmentResponse = enrollmentsWriter.enrollUser(enrollment);
         Assert.assertTrue(25==enrollmentResponse.get().getCourseId());
-        Assert.assertTrue(78839 == enrollmentResponse.get().getUserId());
+        Assert.assertEquals(enrollmentResponse.get().getUserId(),"78839");
         Assert.assertTrue(enrollmentResponse.get().getId()!=0);
     }
 
@@ -54,10 +54,10 @@ public class DropCourseUTest extends CanvasTestBase {
         fakeRestClient.addSuccessResponse(url, "SampleJson/EnrollmentResponse.json");
         Enrollment enrollment = new Enrollment();
         enrollment.setCourseId(25);
-        enrollment.setUserId(78839);
+        enrollment.setUserId("78839");
         Optional<Enrollment> enrollmentResponse = enrollmentsWriter.writeAsSisUser(userId).enrollUser(enrollment);
         Assert.assertTrue(25==enrollmentResponse.get().getCourseId());
-        Assert.assertTrue(78839 == enrollmentResponse.get().getUserId());
+        Assert.assertEquals(enrollmentResponse.get().getUserId(),"78839");
         Assert.assertTrue(enrollmentResponse.get().getId()!=0);
     }
 
@@ -78,10 +78,10 @@ public class DropCourseUTest extends CanvasTestBase {
         fakeRestClient.addSuccessResponse(url, "SampleJson/EnrollmentResponse.json");
         Enrollment enrollment = new Enrollment();
         enrollment.setCourseId(25);
-        enrollment.setUserId(78839);
+        enrollment.setUserId("78839");
         Optional<Enrollment> enrollmentResponse = enrollmentsWriter.writeAsCanvasUser(userId).enrollUser(enrollment);
         Assert.assertTrue(25==enrollmentResponse.get().getCourseId());
-        Assert.assertTrue(78839 == enrollmentResponse.get().getUserId());
+        Assert.assertEquals(enrollmentResponse.get().getUserId(),"78839");
         Assert.assertTrue(enrollmentResponse.get().getId()!=0);
     }
 

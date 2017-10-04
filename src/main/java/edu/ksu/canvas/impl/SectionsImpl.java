@@ -74,6 +74,14 @@ public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter
     }
 
     @Override
+    public Optional<Section> updateSection(Section section) throws IOException {
+        LOG.debug("updating section " + section.getId());
+        String url = buildCanvasUrl("sections/" + section.getId(), Collections.emptyMap());
+        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, section.toJsonObject());
+        return responseParser.parseToObject(Section.class, response);
+    }
+
+    @Override
     public Optional<Section> deleteSection(String sectionId) throws IOException {
         LOG.debug("deleting section " + sectionId);
         String url = buildCanvasUrl("/sections/" + sectionId, Collections.emptyMap());

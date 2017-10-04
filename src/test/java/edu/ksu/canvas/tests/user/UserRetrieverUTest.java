@@ -112,7 +112,7 @@ public class UserRetrieverUTest extends CanvasTestBase {
 
     @Test
     public void testShowUserDetailsBySisIntegrationId() throws Exception {
-    	int userId = 33;
+        int userId = 33;
         String sisIntegrationUserId = "sis_integration_id:ABC123";
         String url = baseUrl + "/api/v1/users/" + sisIntegrationUserId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserBySisIntegrationId.json");

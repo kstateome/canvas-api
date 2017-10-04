@@ -3,6 +3,7 @@ package edu.ksu.canvas.net;
 import edu.ksu.canvas.exception.CanvasException;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.exception.ObjectNotFoundException;
+import edu.ksu.canvas.exception.RateLimitException;
 import edu.ksu.canvas.exception.UnauthorizedException;
 import edu.ksu.canvas.impl.GsonResponseParser;
 import edu.ksu.canvas.model.status.CanvasErrorResponse;
@@ -48,7 +49,7 @@ public class SimpleRestClient implements RestClient {
 
     @Override
     public Response sendApiGet(@NotNull OauthToken token, @NotNull String url,
-                                      int connectTimeout, int readTimeout) throws IOException {
+                               int connectTimeout, int readTimeout) throws IOException {
         LOG.debug("Sending GET request to URL: " + url);
         Long beginTime = System.currentTimeMillis();
         Response response = new Response();
@@ -94,7 +95,7 @@ public class SimpleRestClient implements RestClient {
 
     // PUT and POST are identical calls except for the header specifying the method
     private Response sendJsonPostOrPut(OauthToken token, String url, String json,
-                                        int connectTimeout, int readTimeout, String method) throws IOException {
+                                       int connectTimeout, int readTimeout, String method) throws IOException {
         LOG.debug("Sending JSON " + method + " to URL: " + url);
         Response response = new Response();
 
@@ -126,7 +127,7 @@ public class SimpleRestClient implements RestClient {
 
     @Override
     public Response sendApiPost(OauthToken token, String url, Map<String, List<String>> postParameters,
-                                       int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+                                int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending API POST request to URL: " + url);
         Response response = new Response();
         HttpClient httpClient = createHttpClient(connectTimeout, readTimeout);
@@ -148,7 +149,7 @@ public class SimpleRestClient implements RestClient {
 
     @Override
     public Response sendApiPut(OauthToken token, String url, Map<String, List<String>> putParameters,
-                                int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+                               int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending API PUT request to URL: " + url);
         Response response = new Response();
         HttpClient httpClient = createHttpClient(connectTimeout, readTimeout);
@@ -171,7 +172,7 @@ public class SimpleRestClient implements RestClient {
 
     @Override
     public Response sendApiDelete(OauthToken token, String url, Map<String, List<String>> deleteParameters,
-                                       int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+                                  int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending API DELETE request to URL: " + url);
         Response response = new Response();
 
@@ -206,6 +207,25 @@ public class SimpleRestClient implements RestClient {
 
     private void checkHeaders(HttpResponse httpResponse, HttpRequestBase request) {
         int statusCode = httpResponse.getStatusLine().getStatusCode();
+        double rateLimitThreshold = 0.1;
+        double xRateCost = 0;
+        double xRateLimitRemaining = 0;
+
+        try {
+            xRateCost = Double.parseDouble(httpResponse.getFirstHeader("x-request-cost").getValue());
+            xRateLimitRemaining = Double.parseDouble(httpResponse.getFirstHeader("x-rate-limit-remaining").getValue());
+
+            //Throws a 403 with a "Rate Limit Exceeded" error message if the API throttle limit is hit.
+            //See https://canvas.instructure.com/doc/api/file.throttling.html.
+            if(xRateLimitRemaining < rateLimitThreshold) {
+                LOG.error("Canvas API rate limit exceeded. Bucket quota: " + xRateLimitRemaining + " Cost: " + xRateCost
+                        + " Threshold: " + rateLimitThreshold + " HTTP status: " + statusCode + " Requested URL: " + request.getURI());
+                throw new RateLimitException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
+            }
+        } catch (NullPointerException e) {
+            LOG.debug("Rate not being limited: " + e);
+        }
+
         if (statusCode == 401) {
             //If the WWW-Authenticate header is set, it is a token problem.
             //If the header is not present, it is a user permission error.
@@ -221,10 +241,6 @@ public class SimpleRestClient implements RestClient {
             LOG.error("Object not found in Canvas. Requested URL: " + request.getURI());
             throw new ObjectNotFoundException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
         }
-        //TODO: There are probably other error codes that should throw specific exceptions. For example, I would like
-        //to throw an exception if the API throttle limit is hit. But the API docs aren't specific enough on how to
-        //detect this situation (see https://canvas.instructure.com/doc/api/file.throttling.html). I don't know
-        //how to distinguish between a "Rate Liimit Exceeded" and other types of 403 conditions.
         if(statusCode < 200 || statusCode > 299) {
             LOG.error("HTTP status " + statusCode + " returned from " + request.getURI());
             throw new CanvasException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
