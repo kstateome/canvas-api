@@ -26,7 +26,14 @@ public class ListActiveCoursesInAccountOptions extends BaseOptions {
     }
 
     public enum Include {
-        SYLLABUS_BODY, TERM, COURSE_PROGRESS, STORAGE_QUOTA_USED_MB, TOTAL_STUDENTS, TEACHERS;
+        SYLLABUS_BODY, TERM, COURSE_PROGRESS, STORAGE_QUOTA_USED_MB, TOTAL_STUDENTS, TEACHERS, SUBACCOUNT;
+
+        @Override
+        public String toString() { return name().toLowerCase(); }
+    }
+
+    public enum SearchBy {
+        COURSE, TEACHER;
 
         @Override
         public String toString() { return name().toLowerCase(); }
@@ -149,6 +156,11 @@ public class ListActiveCoursesInAccountOptions extends BaseOptions {
      */
     public ListActiveCoursesInAccountOptions includes(List<Include> includes) {
         addEnumList("include[]", includes);
+        return this;
+    }
+
+    public ListActiveCoursesInAccountOptions searchBy(SearchBy searchType) {
+        addSingleItem("search_by", searchType.toString());
         return this;
     }
 }
