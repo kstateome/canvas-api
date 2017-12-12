@@ -32,6 +32,7 @@ public class Course extends BaseCanvasModel implements Serializable {
     private String workflowState;
     private Integer totalStudents;
     private Long enrollmentTermId;
+    private Boolean restrictEnrollmentsToCourseDates;
 
     private List<Section> sections;
     private List<Enrollment> enrollments;
@@ -197,6 +198,15 @@ public class Course extends BaseCanvasModel implements Serializable {
     @CanvasField(postKey = "enrollments")
     public List<Enrollment> getEnrollments() {
         return enrollments;
+    }
+
+    @CanvasField(postKey = "restrict_enrollments_to_course_dates")
+    public Boolean getRestrictEnrollmentsToCourseDates() {
+        return restrictEnrollmentsToCourseDates;
+    }
+
+    public void setRestrictEnrollmentsToCourseDates(Boolean restrictEnrollmentsToCourseDates) {
+        this.restrictEnrollmentsToCourseDates = restrictEnrollmentsToCourseDates;
     }
 
     public void setEnrollments(List<Enrollment> enrollments) {
