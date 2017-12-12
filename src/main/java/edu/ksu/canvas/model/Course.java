@@ -200,6 +200,10 @@ public class Course extends BaseCanvasModel implements Serializable {
         return enrollments;
     }
 
+    public void setEnrollments(List<Enrollment> enrollments) {
+        this.enrollments = enrollments;
+    }
+
     @CanvasField(postKey = "restrict_enrollments_to_course_dates")
     public Boolean getRestrictEnrollmentsToCourseDates() {
         return restrictEnrollmentsToCourseDates;
@@ -207,9 +211,5 @@ public class Course extends BaseCanvasModel implements Serializable {
 
     public void setRestrictEnrollmentsToCourseDates(Boolean restrictEnrollmentsToCourseDates) {
         this.restrictEnrollmentsToCourseDates = restrictEnrollmentsToCourseDates;
-    }
-
-    public void setEnrollments(List<Enrollment> enrollments) {
-        this.enrollments = enrollments;
     }
 }
