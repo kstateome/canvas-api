@@ -5,7 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.EnrollmentTermReader;
 import edu.ksu.canvas.interfaces.EnrollmentTermWriter;
 import edu.ksu.canvas.model.EnrollmentTerm;
-import edu.ksu.canvas.model.EnrollmentTermWrapper;
+import edu.ksu.canvas.model.wrapper.EnrollmentTermWrapper;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
