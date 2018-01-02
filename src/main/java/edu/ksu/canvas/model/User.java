@@ -13,7 +13,7 @@ import java.util.Objects;
  */
 @CanvasObject(postKey = "user")
 public class User extends BaseCanvasModel implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     private int id;
     private String name;
