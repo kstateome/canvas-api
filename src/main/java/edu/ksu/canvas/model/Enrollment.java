@@ -13,7 +13,7 @@ import java.util.Objects;
  */
 @CanvasObject(postKey = "enrollment")
 public class Enrollment extends BaseCanvasModel implements Serializable {
-    private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 3L;
 
     private long id;
     private Integer courseId;
