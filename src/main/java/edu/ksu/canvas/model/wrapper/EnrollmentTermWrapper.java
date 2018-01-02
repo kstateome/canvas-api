@@ -1,7 +1,9 @@
-package edu.ksu.canvas.model;
+package edu.ksu.canvas.model.wrapper;
 
 
 import java.util.List;
+
+import edu.ksu.canvas.model.EnrollmentTerm;
 
 /**
  * Wrapper class made necessary because canvas returns an object that
