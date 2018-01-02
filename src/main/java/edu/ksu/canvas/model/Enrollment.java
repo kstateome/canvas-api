@@ -5,6 +5,7 @@ import edu.ksu.canvas.annotation.CanvasObject;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Class to represent Canvas enrollments.
@@ -12,7 +13,7 @@ import java.util.Date;
  */
 @CanvasObject(postKey = "enrollment")
 public class Enrollment extends BaseCanvasModel implements Serializable {
-    public static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 3L;
 
     private long id;
     private Integer courseId;
@@ -236,5 +237,29 @@ public class Enrollment extends BaseCanvasModel implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Enrollment)) return false;
+        Enrollment that = (Enrollment) o;
+        // Use only attributes that can always be seen
+        return Objects.equals(courseId, that.courseId) &&
+                Objects.equals(courseSectionId, that.courseSectionId) &&
+                Objects.equals(enrollmentState, that.enrollmentState) &&
+                Objects.equals(limitPrivilegesToCourseSection, that.limitPrivilegesToCourseSection) &&
+                Objects.equals(rootAccountId, that.rootAccountId) &&
+                Objects.equals(type, that.type) &&
+                Objects.equals(userId, that.userId) &&
+                Objects.equals(associatedUserId, that.associatedUserId) &&
+                Objects.equals(role, that.role) &&
+                Objects.equals(user, that.user) &&
+                Objects.equals(roleId, that.roleId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(courseId, courseSectionId, enrollmentState, limitPrivilegesToCourseSection, rootAccountId, type, userId, associatedUserId, role, user, roleId);
     }
 }
