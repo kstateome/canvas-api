@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>edu.ksu.canvas</groupId>
   <artifactId>canvas-api</artifactId>
-  <version>1.0.15</version>
+  <version>1.0.16-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>Canvas API Library</name>
@@ -40,7 +40,7 @@
     <connection>scm:git:ssh://git@github.com/kstateome/canvas-api.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/kstateome/canvas-api.git</developerConnection>
     <url>https://github.com/kstateome/canvas-api</url>
-    <tag>1.0.15</tag>
+    <tag>release-1.0</tag>
   </scm>
 
   <distributionManagement>
