@@ -36,7 +36,7 @@ public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter
     public List<Section> listCourseSections(String courseId, List<SectionIncludes> includes) throws IOException {
         LOG.debug("Looking up sections for course " + courseId);
         ImmutableMap<String, List<String>> parameters = ImmutableMap.<String,List<String>>builder()
-                .put("include[]", includes.stream().map(Enum::name).collect(Collectors.toList()))
+                .put("include[]", includes.stream().map(Enum::toString).collect(Collectors.toList()))
                 .build();
         String url = buildCanvasUrl("/courses/" + courseId + "/sections", parameters);
         return getListFromCanvas(url);
