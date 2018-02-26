@@ -12,8 +12,12 @@ public class Grade implements Serializable {
     private String htmlUrl;
     private String currentScore;
     private String finalScore;
+    private String unpostedCurrentScore;
+    private String unpostedFinalScore;
     private String currentGrade;
     private String finalGrade;
+    private String unpostedCurrentGrade;
+    private String unpostedFinalGrade;
 
     public String getHtmlUrl() {
         return htmlUrl;
@@ -39,6 +43,22 @@ public class Grade implements Serializable {
         this.finalScore = finalScore;
     }
 
+    public String getUnpostedCurrentScore() {
+        return unpostedCurrentScore;
+    }
+
+    public void setUnpostedCurrentScore(String unpostedCurrentScore) {
+        this.unpostedCurrentScore = unpostedCurrentScore;
+    }
+
+    public String getUnpostedFinalScore() {
+        return unpostedFinalScore;
+    }
+
+    public void setUnpostedFinalScore(String unpostedFinalScore) {
+        this.unpostedFinalScore = unpostedFinalScore;
+    }
+
     public String getCurrentGrade() {
         return currentGrade;
     }
@@ -53,5 +73,21 @@ public class Grade implements Serializable {
 
     public void setFinalGrade(String finalGrade) {
         this.finalGrade = finalGrade;
+    }
+
+    public String getUnpostedCurrentGrade() {
+        return unpostedCurrentGrade;
+    }
+
+    public void setUnpostedCurrentGrade(String unpostedCurrentGrade) {
+        this.unpostedCurrentGrade = unpostedCurrentGrade;
+    }
+
+    public String getUnpostedFinalGrade() {
+        return unpostedFinalGrade;
+    }
+
+    public void setUnpostedFinalGrade(String unpostedFinalGrade) {
+        this.unpostedFinalGrade = unpostedFinalGrade;
     }
 }
