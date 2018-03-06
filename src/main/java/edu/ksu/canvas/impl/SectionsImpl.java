@@ -1,6 +1,7 @@
 package edu.ksu.canvas.impl;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import edu.ksu.canvas.enums.SectionIncludes;
@@ -86,6 +87,14 @@ public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter
         LOG.debug("deleting section " + sectionId);
         String url = buildCanvasUrl("/sections/" + sectionId, Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, Collections.emptyMap());
+        return responseParser.parseToObject(Section.class, response);
+    }
+
+    @Override
+    public Optional<Section> crosslist(String sectionId, String courseId) throws IOException {
+        LOG.debug("crosslisting section " + sectionId + " to course " + courseId);
+        String url = buildCanvasUrl("/sections/" + sectionId + "/crosslist/" + courseId, Collections.emptyMap());
+        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, new JsonObject());
         return responseParser.parseToObject(Section.class, response);
     }
 }
