@@ -33,6 +33,7 @@ public class Course extends BaseCanvasModel implements Serializable {
     private Integer totalStudents;
     private Long enrollmentTermId;
     private Boolean restrictEnrollmentsToCourseDates;
+    private Long gradingStandardId;
 
     private List<Section> sections;
     private List<Enrollment> enrollments;
@@ -211,5 +212,14 @@ public class Course extends BaseCanvasModel implements Serializable {
 
     public void setRestrictEnrollmentsToCourseDates(Boolean restrictEnrollmentsToCourseDates) {
         this.restrictEnrollmentsToCourseDates = restrictEnrollmentsToCourseDates;
+    }
+
+    @CanvasField(postKey = "grading_standard_id")
+    public Long getGradingStandardId() {
+        return gradingStandardId;
+    }
+
+    public void setGradingStandardId(Long gradingStandardId) {
+        this.gradingStandardId = gradingStandardId;
     }
 }
