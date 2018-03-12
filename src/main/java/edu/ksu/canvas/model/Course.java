@@ -28,7 +28,7 @@ public class Course extends BaseCanvasModel implements Serializable {
     private Boolean hideFinalGrades;
     private Boolean applyAssignmentGroupWeights;
     private String sisCourseId;
-    private Integer integrationId;
+    private String integrationId;
     private String workflowState;
     private Integer totalStudents;
     private Long enrollmentTermId;
@@ -154,11 +154,11 @@ public class Course extends BaseCanvasModel implements Serializable {
     }
 
     @CanvasField(postKey = "integration_id")
-    public Integer getIntegrationId() {
+    public String getIntegrationId() {
         return integrationId;
     }
 
-    public void setIntegrationId(Integer integrationId) {
+    public void setIntegrationId(String integrationId) {
         this.integrationId = integrationId;
     }
 
