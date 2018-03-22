@@ -32,9 +32,12 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
      * @param connectTimeout     Timeout in seconds to use when connecting
      * @param readTimeout        Timeout in seconds to use when waiting for data to come back from an open connection
      * @param paginationPageSize How many objects to request per page on paginated requests
+     * @param serializeNulls     Whether or not to include null fields in the serialized JSON. Defaults to false if null
      */
-    public SubmissionImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
+    public SubmissionImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
+                          int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout,
+                paginationPageSize, serializeNulls);
     }
 
     @Override
@@ -56,7 +59,7 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
     }
 
     private Optional<Progress> gradeMultipleSubmissions(MultipleSubmissionsOptions options, String url) throws IOException {
-        Gson gson = GsonResponseParser.getDefaultGsonParser();
+        Gson gson = GsonResponseParser.getDefaultGsonParser(serializeNulls);
         JsonObject jsonObject = new JsonObject();
         jsonObject.add("grade_data", gson.toJsonTree(options.getStudentSubmissionOptionMap()));
 
@@ -69,7 +72,7 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
     }
 
     private Progress parseSubmissionResponse(final Response response) {
-        return GsonResponseParser.getDefaultGsonParser().fromJson(response.getContent(), Progress.class);
+        return GsonResponseParser.getDefaultGsonParser(serializeNulls).fromJson(response.getContent(), Progress.class);
     }
 
     @Override

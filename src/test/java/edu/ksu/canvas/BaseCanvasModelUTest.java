@@ -102,7 +102,7 @@ public class BaseCanvasModelUTest {
         TestCanvasModel canvasModel = new TestCanvasModel();
         canvasModel.setField1(FIELD1_VALUE);
 
-        JsonObject jsonObject = canvasModel.toJsonObject();
+        JsonObject jsonObject = canvasModel.toJsonObject(false);
         JsonElement element = jsonObject.get(CLASS_POST_KEY);
 
         Assert.assertNotNull("JSON object should have a top level element: " + CLASS_POST_KEY, element);
@@ -113,7 +113,7 @@ public class BaseCanvasModelUTest {
         TestCanvasModel canvasModel = new TestCanvasModel();
         canvasModel.setField1(FIELD1_VALUE);
 
-        JsonObject jsonObject = canvasModel.toJsonObject();
+        JsonObject jsonObject = canvasModel.toJsonObject(false);
         JsonElement element = jsonObject.get(CLASS_POST_KEY);
         JsonObject field1Obj = element.getAsJsonObject();
         String field1Value = field1Obj.get("field1").getAsString();

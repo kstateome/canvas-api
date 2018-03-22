@@ -25,8 +25,9 @@ public class ConversationImpl extends BaseImpl<Conversation, ConversationReader,
     private static final Logger LOG = Logger.getLogger(ConversationImpl.class);
 
     public ConversationImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
-            int connectTimeout, int readTimeout, Integer paginationPageSize) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout,readTimeout, paginationPageSize);
+                            int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout,
+                paginationPageSize, serializeNulls);
     }
 
     @Override
@@ -67,7 +68,7 @@ public class ConversationImpl extends BaseImpl<Conversation, ConversationReader,
     public Optional<Conversation> editConversation(Conversation conversation) throws IOException {
         LOG.debug("Editing conversation: " + conversation.getId());
         String url = buildCanvasUrl("conversations/" + conversation.getId(), Collections.emptyMap());
-        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, conversation.toJsonObject());
+        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, conversation.toJsonObject(serializeNulls));
         return responseParser.parseToObject(Conversation.class, response);
     }
 

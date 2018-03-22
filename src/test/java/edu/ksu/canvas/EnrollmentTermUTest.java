@@ -28,7 +28,7 @@ public class EnrollmentTermUTest extends CanvasTestBase {
     public void setup() {
         String url =  baseUrl  + "/api/v1/accounts/" + ACCOUNT_ID + "/terms";
         fakeRestClient.addSuccessResponse(url, "SampleJson/EnrollmentTerm.json");
-        enrollmentTermReader = new EnrollmentTermImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE);
+        enrollmentTermReader = new EnrollmentTermImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE, false);
     }
 
     @Test
