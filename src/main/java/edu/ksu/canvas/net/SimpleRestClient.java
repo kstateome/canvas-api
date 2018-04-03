@@ -242,6 +242,7 @@ public class SimpleRestClient implements RestClient {
             LOG.error("HTTP status " + statusCode + " returned from " + request.getURI());
             throw new CanvasException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
         }
+        //TODO Handling of 422 when the entity is malformed.
     }
 
     /**

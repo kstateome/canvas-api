@@ -85,5 +85,16 @@ If this code is run on a course with 325 users it would print the following:
     Got a page of users back: 25
     Total users in course: 325
 
+## Notes
+
+Currently this library is hand coded, however there is a machine readable API specification at
+https://canvas.instructure.com/doc/api/api-docs.json which could be used to generate an API 
+automatically, however it's currently using an outdated version of Swagger which doesn't work
+well with the existing libraries.
+
+If you don't supply enough data to the the Canvas API on a creation request (POST) you can 
+end up getting a 404 response. That endpoint does exist, you just haven't supplied the correct
+information.
+
 ## License
 This software is licensed under the LGPL v3 license. Please see the [License.txt file](License.txt) in this repository for license details.
