@@ -40,6 +40,30 @@ pipeline {
             }
         }
 
+        stage('Unit Tests') {
+            steps {
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit '**/target/surefire-reports/*.xml'
+                }
+                failure {
+                    rocketSend avatar: "$JENKINS_AVATAR_URL", message: "${env.JOB_NAME} had unit test failures on branch ${env.BRANCH_NAME} \nRecent Changes - ${getChangeString(10)}\nBuild: ${BUILD_URL}", rawMessage: true
+                }
+                unstable {
+                    rocketSend avatar: "$JENKINS_AVATAR_URL", message: "${env.JOB_NAME} had unit test failures on branch ${env.BRANCH_NAME} \nRecent Changes - ${getChangeString(10)}\nBuild: ${BUILD_URL}", rawMessage: true
+                }
+                changed {
+                    script {
+                        if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
+                            rocketSend avatar: "$JENKINS_AVATAR_URL", message: "${env.JOB_NAME} now has passing unit tests on branch ${env.BRANCH_NAME} \nRecent Changes - ${getChangeString(10)}\nBuild: ${BUILD_URL}", rawMessage: true
+                        }
+                    }
+                }
+            }
+        }
+
         stage('Sonar') {
             when {
                 branch 'master'
