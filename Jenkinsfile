@@ -28,6 +28,7 @@ pipeline {
                 }
                 sh 'mvn clean package -DskipTests'
             }
+
             post {
                 always {
                     script {
@@ -61,26 +62,6 @@ pipeline {
             }
         }
 
-
-        stage('release-dry-run') {
-            when {
-                branch 'release'
-            }
-            steps {
-                sh 'mvn --batch-mode -DdryRun=true release:clean release:prepare release:perform'
-                rocketSend avatar: "${env.JENKINS_AVATAR_URL}", channel: "${env.releaseConfirmChannel}", message: "Release Dry Run of ${JOB_NAME} ${version()} finished. Continue Release? - ${BUILD_URL}console", rawMessage: true
-            }
-        }
-
-        stage('confirm-release') {
-            agent none
-            when {
-                branch 'release'
-            }
-            steps {
-                input "Click continue to release ${JOB_NAME}"
-            }
-        }
 
     }
     post {
