@@ -82,22 +82,6 @@ pipeline {
             }
         }
 
-        stage('release') {
-            when {
-                branch 'release'
-            }
-            steps {
-                sh 'mvn --batch-mode release:clean release:prepare release:perform'
-            }
-
-            post {
-                success {
-                    rocketSend avatar: "${env.JENKINS_AVATAR_URL}", channel: "${env.releaseBuiltNotificationChannel}", message: "Successfully built release  ${version()}\n Build: ${BUILD_URL}", rawMessage: true
-                }
-            }
-        }
-
-
     }
     post {
         always {
