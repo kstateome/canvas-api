@@ -1,6 +1,6 @@
 package edu.ksu.canvas.requestOptions;
 
-import static java.util.Arrays.asList;
+import java.util.List;
 
 public class ListAccountAdminsOptions extends BaseOptions {
     private String accountId;
@@ -13,8 +13,8 @@ public class ListAccountAdminsOptions extends BaseOptions {
         return accountId;
     }
 
-    public ListAccountAdminsOptions includes(Integer... userIds) {
-        addNumberList("user_id[]", asList(userIds));
+    public ListAccountAdminsOptions includes(List<Integer> userIds) {
+        addNumberList("user_id[]", userIds);
         return this;
     }
 }
