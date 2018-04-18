@@ -5,6 +5,7 @@ import edu.ksu.canvas.interfaces.*;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.net.RefreshingRestClient;
 import edu.ksu.canvas.oauth.OauthToken;
+
 import org.apache.log4j.Logger;
 
 import java.lang.reflect.Constructor;
@@ -148,6 +149,7 @@ public class CanvasApiFactory {
         readerMap = new HashMap<>();
         writerMap = new HashMap<>();
         readerMap.put(AccountReader.class, AccountImpl.class);
+        readerMap.put(AdminReader.class, AdminImpl.class);
         readerMap.put(AssignmentOverrideReader.class, AssignmentOverrideImpl.class);
         readerMap.put(AssignmentReader.class, AssignmentImpl.class);
         readerMap.put(ConversationReader.class, ConversationImpl.class);
@@ -168,6 +170,7 @@ public class CanvasApiFactory {
         readerMap.put(LoginReader.class, LoginImpl.class);
 
         writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImpl.class);
+        writerMap.put(AdminWriter.class, AdminImpl.class);
         writerMap.put(AssignmentWriter.class, AssignmentImpl.class);
         writerMap.put(ConversationWriter.class, ConversationImpl.class);
         writerMap.put(CourseWriter.class, CourseImpl.class);

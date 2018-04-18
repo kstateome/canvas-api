@@ -53,6 +53,10 @@
       <id>ome-appdev-snapshot</id>
       <url>https://artifactory.ome.k-state.edu/artifactory/ome-appdev-snapshot</url>
     </snapshotRepository>
+    <site>
+      <id>canvas-api-site</id>
+      <url>file:///var/www/maven-site/canvas-api</url>
+    </site>
   </distributionManagement>
 
   <build>

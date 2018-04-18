@@ -25,8 +25,19 @@ public class ListActiveCoursesInAccountOptions extends BaseOptions {
         public String toString() { return name().toLowerCase(); }
     }
 
+    /* Note: The SUBACCOUNT include is undocumented. When this was pointed out to Canvas, they changed how it works.
+    The documented way to get subaccount info now is to use the "account" include which will add the entire
+    account object to the response JSON. However I don't know when this change will get rolled out to production
+    and the old undocumented behavior will still work so I am leaving this as is for now (April 2018) */
     public enum Include {
-        SYLLABUS_BODY, TERM, COURSE_PROGRESS, STORAGE_QUOTA_USED_MB, TOTAL_STUDENTS, TEACHERS;
+        SYLLABUS_BODY, TERM, COURSE_PROGRESS, STORAGE_QUOTA_USED_MB, TOTAL_STUDENTS, TEACHERS, SUBACCOUNT;
+
+        @Override
+        public String toString() { return name().toLowerCase(); }
+    }
+
+    public enum SearchBy {
+        COURSE, TEACHER;
 
         @Override
         public String toString() { return name().toLowerCase(); }
@@ -149,6 +160,11 @@ public class ListActiveCoursesInAccountOptions extends BaseOptions {
      */
     public ListActiveCoursesInAccountOptions includes(List<Include> includes) {
         addEnumList("include[]", includes);
+        return this;
+    }
+
+    public ListActiveCoursesInAccountOptions searchBy(SearchBy searchType) {
+        addSingleItem("search_by", searchType.toString());
         return this;
     }
 }
