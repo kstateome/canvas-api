@@ -33,7 +33,7 @@ public class GsonDateParsingUTest extends CanvasTestBase {
 
     @Before
     public void setUpGson() {
-        gson = GsonResponseParser.getDefaultGsonParser();
+        gson = GsonResponseParser.getDefaultGsonParser(false);
         assignment = new Assignment();
         assignment.setName("Assignment 1");
     }

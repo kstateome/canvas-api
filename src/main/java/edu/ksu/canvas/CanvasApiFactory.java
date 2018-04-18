@@ -93,8 +93,10 @@ public class CanvasApiFactory {
 
         LOG.debug("got class: " + concreteClass);
         try {
-            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, OauthToken.class, RestClient.class, Integer.TYPE, Integer.TYPE, Integer.class);
-            return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
+            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class,
+                    OauthToken.class, RestClient.class, Integer.TYPE, Integer.TYPE, Integer.class, Boolean.class);
+            return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient,
+                    connectTimeout, readTimeout, paginationPageSize, false);
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
             throw new UnsupportedOperationException("Unknown error instantiating the concrete API class: " + type.getName(), e);
         }
@@ -108,6 +110,20 @@ public class CanvasApiFactory {
      * @return A writer implementation class
      */
     public <T extends CanvasWriter> T getWriter(Class<T> type, OauthToken oauthToken) {
+        return getWriter(type, oauthToken, false);
+    }
+
+    /**
+     * Get a writer implementation to push data into Canvas while being able to control the behavior of blank values.
+     * If the serializeNulls parameter is set to true, this writer will serialize null fields in the JSON being
+     * sent to Canvas. This is required if you want to explicitly blank out a value that is currently set to something.
+     * @param type Interface type you wish to get an implementation for
+     * @param oauthToken An OAuth token to use for authentication when making API calls
+     * @param serializeNulls Whether or not to include null fields in the serialized JSON. Defaults to false if null
+     * @param <T> A writer implementation
+     * @return An instantiated instance of the requested writer type
+     */
+    public <T extends CanvasWriter> T getWriter(Class<T> type, OauthToken oauthToken, Boolean serializeNulls) {
         LOG.debug("Factory call to instantiate class: " + type.getName());
         RestClient restClient = new RefreshingRestClient();
 
@@ -118,10 +134,12 @@ public class CanvasApiFactory {
             throw new UnsupportedOperationException("No implementation for requested interface found: " + type.getName());
         }
 
-        LOG.debug("got class: " + concreteClass);
+        LOG.debug("got writer class: " + concreteClass);
         try {
-            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, OauthToken.class, RestClient.class, Integer.TYPE, Integer.TYPE, Integer.class);
-            return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient, connectTimeout, readTimeout, null);
+            Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, OauthToken.class,
+                    RestClient.class, Integer.TYPE, Integer.TYPE, Integer.class, Boolean.class);
+            return constructor.newInstance(canvasBaseUrl, CANVAS_API_VERSION, oauthToken, restClient,
+                    connectTimeout, readTimeout, null, serializeNulls);
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
             throw new UnsupportedOperationException("Unknown error instantiating the concrete API class: " + type.getName(), e);
         }

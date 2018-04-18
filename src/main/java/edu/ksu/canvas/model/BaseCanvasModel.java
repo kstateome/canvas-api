@@ -53,16 +53,17 @@ public abstract class BaseCanvasModel {
      * can be pushed to Canvas create/edit endpoints. For example, to create an assignment, the JSON
      * must look like: <pre>{assignment: {name: "Assignment 1"}}</pre>.
      * This method adds the outer "assignment" container based on CanvasObject notations on the model classes
+     * @param serializeNulls Whether or not to include null fields in the serialized JSON. Defaults to false if null
      * @return A JsonObject suitable for serializing out to the Canvas API
      */
-    public JsonObject toJsonObject() {
+    public JsonObject toJsonObject(Boolean serializeNulls) {
         Class<? extends BaseCanvasModel> clazz = this.getClass();
         CanvasObject canvasObjectAnnotation = clazz.getAnnotation(CanvasObject.class);
         if(canvasObjectAnnotation == null || canvasObjectAnnotation.postKey() == null) {
             throw new IllegalArgumentException("Object to wrap must have a CanvasObject annotation with a postKey");
         }
         String objectPostKey = canvasObjectAnnotation.postKey();
-        JsonElement element = GsonResponseParser.getDefaultGsonParser().toJsonTree(this);
+        JsonElement element = GsonResponseParser.getDefaultGsonParser(serializeNulls).toJsonTree(this);
         JsonObject jsonObject = new JsonObject();
         jsonObject.add(objectPostKey, element);
         return jsonObject;

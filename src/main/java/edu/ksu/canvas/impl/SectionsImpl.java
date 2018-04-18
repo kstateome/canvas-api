@@ -29,8 +29,10 @@ public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter
 
     private static final Logger LOG = Logger.getLogger(SectionReader.class);
 
-    public SectionsImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
+    public SectionsImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
+                        int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout,
+                paginationPageSize, serializeNulls);
     }
 
     @Override
@@ -70,7 +72,7 @@ public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter
             params.put("enable_sis_reactivation", Arrays.asList(Boolean.toString(enableSisReactivation)));
         }
         String url = buildCanvasUrl(String.format("/courses/%s/sections", courseId), params);
-        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, section.toJsonObject());
+        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, section.toJsonObject(serializeNulls));
         return responseParser.parseToObject(Section.class, response);
     }
 
@@ -78,7 +80,7 @@ public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter
     public Optional<Section> updateSection(Section section) throws IOException {
         LOG.debug("updating section " + section.getId());
         String url = buildCanvasUrl("sections/" + section.getId(), Collections.emptyMap());
-        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, section.toJsonObject());
+        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, section.toJsonObject(serializeNulls));
         return responseParser.parseToObject(Section.class, response);
     }
 

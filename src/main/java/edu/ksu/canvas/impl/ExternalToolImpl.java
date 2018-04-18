@@ -25,8 +25,10 @@ import edu.ksu.canvas.requestOptions.ListExternalToolsOptions;
 public class ExternalToolImpl extends BaseImpl<ExternalTool, ExternalToolReader, ExternalToolWriter> implements ExternalToolReader, ExternalToolWriter {
     private static final Logger LOG = Logger.getLogger(ExternalToolImpl.class);
 
-    public ExternalToolImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
+    public ExternalToolImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
+                            int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout,
+                paginationPageSize, serializeNulls);
     }
 
     @Override
@@ -85,7 +87,7 @@ public class ExternalToolImpl extends BaseImpl<ExternalTool, ExternalToolReader,
 
     private Optional<ExternalTool> createExternalTool(String url, ExternalTool tool) throws IOException {
         ensureToolValidForCreation(tool);
-        Gson gson = GsonResponseParser.getDefaultGsonParser();
+        Gson gson = GsonResponseParser.getDefaultGsonParser(serializeNulls);
         JsonObject toolJson = gson.toJsonTree(tool).getAsJsonObject();
         Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, toolJson);
         return responseParser.parseToObject(ExternalTool.class, response);
@@ -109,7 +111,7 @@ public class ExternalToolImpl extends BaseImpl<ExternalTool, ExternalToolReader,
         if(tool.getId() == null) {
             throw new IllegalArgumentException("Tool being edited must have a tool ID");
         }
-        Gson gson = GsonResponseParser.getDefaultGsonParser();
+        Gson gson = GsonResponseParser.getDefaultGsonParser(serializeNulls);
         JsonObject toolJson = gson.toJsonTree(tool).getAsJsonObject();
         Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, toolJson);
         return responseParser.parseToObject(ExternalTool.class, response);
