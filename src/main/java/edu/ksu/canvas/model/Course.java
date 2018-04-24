@@ -36,8 +36,8 @@ public class Course extends BaseCanvasModel implements Serializable {
     private Long gradingStandardId;
     private String subaccountName;
     private String license;
-    private Boolean publicToAllUsers;
-    private Boolean publicToAuthUsers;
+    private Boolean isPublic;
+    private Boolean isPublicToAuthUsers;
     private Boolean publicSyllabusToAuth;
     private Boolean allowStudentWikiEdits;
     private Boolean allowWikiComments;
@@ -269,21 +269,21 @@ public class Course extends BaseCanvasModel implements Serializable {
     }
 
     @CanvasField(postKey = "is_public")
-    public Boolean getPublicToAllUsers() {
-        return publicToAllUsers;
+    public Boolean getIsPublic() {
+        return isPublic;
     }
 
-    public void setPublicToAllUsers(Boolean publicToAllUsers) {
-        this.publicToAllUsers = publicToAllUsers;
+    public void setIsPublic(Boolean isPublic) {
+        this.isPublic = isPublic;
     }
 
     @CanvasField(postKey = "is_public_to_auth_users")
-    public Boolean getPublicToAuthUsers() {
-        return publicToAuthUsers;
+    public Boolean getIsPublicToAuthUsers() {
+        return isPublicToAuthUsers;
     }
 
-    public void setPublicToAuthUsers(Boolean publicToAuthUsers) {
-        this.publicToAuthUsers = publicToAuthUsers;
+    public void setIsPublicToAuthUsers(Boolean isPublicToAuthUsers) {
+        this.isPublicToAuthUsers = isPublicToAuthUsers;
     }
 
     @CanvasField(postKey = "public_syllabus_to_auth")
