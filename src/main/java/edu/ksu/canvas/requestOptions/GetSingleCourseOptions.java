@@ -12,7 +12,7 @@ public class GetSingleCourseOptions extends BaseOptions {
         SECTIONS, STORAGE_QUOTA_USED_MB, TOTAL_STUDENTS, FAVORITES, TEACHERS,
         OBSERVED_USERS, CURRENT_GRADING_PERIOD_SCORES,
         //options specific to get single course call
-        ALL_COURSES, PERMISSIONS;
+        ALL_COURSES, PERMISSIONS, LICENSE;
 
         @Override
         public String toString() { return name().toLowerCase(); }
