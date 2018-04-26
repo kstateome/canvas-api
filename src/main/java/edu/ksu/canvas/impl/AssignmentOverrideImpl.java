@@ -21,8 +21,10 @@ public class AssignmentOverrideImpl extends BaseImpl<AssignmentOverride, Assignm
     private static final Logger LOG = Logger.getLogger(AssignmentOverrideImpl.class);
 
 
-    public AssignmentOverrideImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
+    public AssignmentOverrideImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
+                                  int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout,
+                paginationPageSize, serializeNulls);
     }
 
     @Override
@@ -32,7 +34,7 @@ public class AssignmentOverrideImpl extends BaseImpl<AssignmentOverride, Assignm
         }
         LOG.debug("Creating an assignment override in course " + courseId + " for assignment " + assignmentOverride.getAssignmentId());
         String url = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentOverride.getAssignmentId() + "/overrides", Collections.emptyMap());
-        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, assignmentOverride.toJsonObject());
+        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, assignmentOverride.toJsonObject(serializeNulls));
         return responseParser.parseToObject(AssignmentOverride.class, response);
     }
 

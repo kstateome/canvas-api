@@ -23,8 +23,10 @@ import java.util.stream.Collectors;
 public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionReader, QuizSubmissionWriter> implements QuizSubmissionReader, QuizSubmissionWriter {
     private static final Logger LOG = Logger.getLogger(QuizSubmissionImpl.class);
 
-     public QuizSubmissionImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
-         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
+     public QuizSubmissionImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
+                               int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {
+         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout,
+                 paginationPageSize, serializeNulls);
      }
 
     @Override
@@ -60,7 +62,7 @@ public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionR
     }
 
     private List<QuizSubmission> parseQuizSubmissionList(final Response response) {
-        QuizSubmissionListWrapper wrapper = GsonResponseParser.getDefaultGsonParser().fromJson(response.getContent(), QuizSubmissionListWrapper.class);
+        QuizSubmissionListWrapper wrapper = GsonResponseParser.getDefaultGsonParser(serializeNulls).fromJson(response.getContent(), QuizSubmissionListWrapper.class);
         return wrapper.getQuiz_submissions();
     }
 

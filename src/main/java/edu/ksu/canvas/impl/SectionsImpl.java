@@ -1,6 +1,7 @@
 package edu.ksu.canvas.impl;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import edu.ksu.canvas.enums.SectionIncludes;
@@ -28,15 +29,17 @@ public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter
 
     private static final Logger LOG = Logger.getLogger(SectionReader.class);
 
-    public SectionsImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
+    public SectionsImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
+                        int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout,
+                paginationPageSize, serializeNulls);
     }
 
     @Override
     public List<Section> listCourseSections(String courseId, List<SectionIncludes> includes) throws IOException {
         LOG.debug("Looking up sections for course " + courseId);
         ImmutableMap<String, List<String>> parameters = ImmutableMap.<String,List<String>>builder()
-                .put("include[]", includes.stream().map(Enum::name).collect(Collectors.toList()))
+                .put("include[]", includes.stream().map(Enum::toString).collect(Collectors.toList()))
                 .build();
         String url = buildCanvasUrl("/courses/" + courseId + "/sections", parameters);
         return getListFromCanvas(url);
@@ -69,7 +72,7 @@ public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter
             params.put("enable_sis_reactivation", Arrays.asList(Boolean.toString(enableSisReactivation)));
         }
         String url = buildCanvasUrl(String.format("/courses/%s/sections", courseId), params);
-        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, section.toJsonObject());
+        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, section.toJsonObject(serializeNulls));
         return responseParser.parseToObject(Section.class, response);
     }
 
@@ -77,7 +80,7 @@ public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter
     public Optional<Section> updateSection(Section section) throws IOException {
         LOG.debug("updating section " + section.getId());
         String url = buildCanvasUrl("sections/" + section.getId(), Collections.emptyMap());
-        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, section.toJsonObject());
+        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, section.toJsonObject(serializeNulls));
         return responseParser.parseToObject(Section.class, response);
     }
 
@@ -86,6 +89,14 @@ public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter
         LOG.debug("deleting section " + sectionId);
         String url = buildCanvasUrl("/sections/" + sectionId, Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, Collections.emptyMap());
+        return responseParser.parseToObject(Section.class, response);
+    }
+
+    @Override
+    public Optional<Section> crosslist(String sectionId, String courseId) throws IOException {
+        LOG.debug("crosslisting section " + sectionId + " to course " + courseId);
+        String url = buildCanvasUrl("/sections/" + sectionId + "/crosslist/" + courseId, Collections.emptyMap());
+        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, new JsonObject());
         return responseParser.parseToObject(Section.class, response);
     }
 }

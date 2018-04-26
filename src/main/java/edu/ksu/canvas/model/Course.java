@@ -28,14 +28,33 @@ public class Course extends BaseCanvasModel implements Serializable {
     private Boolean hideFinalGrades;
     private Boolean applyAssignmentGroupWeights;
     private String sisCourseId;
-    private Integer integrationId;
+    private String integrationId;
     private String workflowState;
     private Integer totalStudents;
     private Long enrollmentTermId;
     private Boolean restrictEnrollmentsToCourseDates;
+    private Long gradingStandardId;
+    private String subaccountName;
+    private String license;
+    private Boolean isPublic;
+    private Boolean isPublicToAuthUsers;
+    private Boolean publicSyllabusToAuth;
+    private Boolean allowStudentWikiEdits;
+    private Boolean allowWikiComments;
+    private Boolean allowStudentForumAttachments;
+    private Boolean openEnrollment;
+    private Boolean selfEnrollment;
+    private Boolean termId;
+    private String timeZone;
+    private Boolean offer;
+    private Boolean enrollMe;
+    private String syllabusBody;
+    private String courseFormat;
+    private Boolean enableSisReactivation;
 
     private List<Section> sections;
     private List<Enrollment> enrollments;
+    private List<UserDisplay> teachers;
 
     @SerializedName("term")
     private EnrollmentTerm enrollmentTerm;
@@ -154,11 +173,11 @@ public class Course extends BaseCanvasModel implements Serializable {
     }
 
     @CanvasField(postKey = "integration_id")
-    public Integer getIntegrationId() {
+    public String getIntegrationId() {
         return integrationId;
     }
 
-    public void setIntegrationId(Integer integrationId) {
+    public void setIntegrationId(String integrationId) {
         this.integrationId = integrationId;
     }
 
@@ -211,5 +230,173 @@ public class Course extends BaseCanvasModel implements Serializable {
 
     public void setRestrictEnrollmentsToCourseDates(Boolean restrictEnrollmentsToCourseDates) {
         this.restrictEnrollmentsToCourseDates = restrictEnrollmentsToCourseDates;
+    }
+
+    @CanvasField(postKey = "grading_standard_id")
+    public Long getGradingStandardId() {
+        return gradingStandardId;
+    }
+
+    public void setGradingStandardId(Long gradingStandardId) {
+        this.gradingStandardId = gradingStandardId;
+    }
+
+    @CanvasField(postKey = "subaccount_name")
+    public String getSubaccountName() {
+        return subaccountName;
+    }
+
+    public void setSubaccountName(String subaccountName) {
+        this.subaccountName = subaccountName;
+    }
+
+    @CanvasField(postKey = "teachers")
+    public List<UserDisplay> getTeachers() {
+        return teachers;
+    }
+
+    public void setTeachers(List<UserDisplay> teachers) {
+        this.teachers = teachers;
+    }
+
+    @CanvasField(postKey = "license")
+    public String getLicense() {
+        return license;
+    }
+
+    public void setLicense(String license) {
+        this.license = license;
+    }
+
+    @CanvasField(postKey = "is_public")
+    public Boolean getIsPublic() {
+        return isPublic;
+    }
+
+    public void setIsPublic(Boolean isPublic) {
+        this.isPublic = isPublic;
+    }
+
+    @CanvasField(postKey = "is_public_to_auth_users")
+    public Boolean getIsPublicToAuthUsers() {
+        return isPublicToAuthUsers;
+    }
+
+    public void setIsPublicToAuthUsers(Boolean isPublicToAuthUsers) {
+        this.isPublicToAuthUsers = isPublicToAuthUsers;
+    }
+
+    @CanvasField(postKey = "public_syllabus_to_auth")
+    public Boolean getPublicSyllabusToAuth() {
+        return publicSyllabusToAuth;
+    }
+
+    public void setPublicSyllabusToAuth(Boolean publicSyllabusToAuth) {
+        this.publicSyllabusToAuth = publicSyllabusToAuth;
+    }
+
+    @CanvasField(postKey = "allow_student_wiki_edits")
+    public Boolean getAllowStudentWikiEdits() {
+        return allowStudentWikiEdits;
+    }
+
+    public void setAllowStudentWikiEdits(Boolean allowStudentWikiEdits) {
+        this.allowStudentWikiEdits = allowStudentWikiEdits;
+    }
+
+    @CanvasField(postKey = "allow_wiki_comments")
+    public Boolean getAllowWikiComments() {
+        return allowWikiComments;
+    }
+
+    public void setAllowWikiComments(Boolean allowWikiComments) {
+        this.allowWikiComments = allowWikiComments;
+    }
+
+    @CanvasField(postKey = "allow_student_forum_attachments")
+    public Boolean getAllowStudentForumAttachments() {
+        return allowStudentForumAttachments;
+    }
+
+    public void setAllowStudentForumAttachments(Boolean allowStudentForumAttachments) {
+        this.allowStudentForumAttachments = allowStudentForumAttachments;
+    }
+
+    @CanvasField(postKey = "open_enrollment")
+    public Boolean getOpenEnrollment() {
+        return openEnrollment;
+    }
+
+    public void setOpenEnrollment(Boolean openEnrollment) {
+        this.openEnrollment = openEnrollment;
+    }
+
+    @CanvasField(postKey = "self_enrollment")
+    public Boolean getSelfEnrollment() {
+        return selfEnrollment;
+    }
+
+    public void setSelfEnrollment(Boolean selfEnrollment) {
+        this.selfEnrollment = selfEnrollment;
+    }
+
+    @CanvasField(postKey = "term_id")
+    public Boolean getTermId() {
+        return termId;
+    }
+
+    public void setTermId(Boolean termId) {
+        this.termId = termId;
+    }
+
+    @CanvasField(postKey = "time_zone")
+    public String getTimeZone() {
+        return timeZone;
+    }
+
+    public void setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
+    }
+
+    public Boolean getOffer() {
+        return offer;
+    }
+
+    public void setOffer(Boolean offer) {
+        this.offer = offer;
+    }
+
+    public Boolean getEnrollMe() {
+        return enrollMe;
+    }
+
+    public void setEnrollMe(Boolean enrollMe) {
+        this.enrollMe = enrollMe;
+    }
+
+    @CanvasField(postKey = "syllabus_body")
+    public String getSyllabusBody() {
+        return syllabusBody;
+    }
+
+    public void setSyllabusBody(String syllabusBody) {
+        this.syllabusBody = syllabusBody;
+    }
+
+    @CanvasField(postKey = "course_format")
+    public String getCourseFormat() {
+        return courseFormat;
+    }
+
+    public void setCourseFormat(String courseFormat) {
+        this.courseFormat = courseFormat;
+    }
+
+    public Boolean getEnableSisReactivation() {
+        return enableSisReactivation;
+    }
+
+    public void setEnableSisReactivation(Boolean enableSisReactivation) {
+        this.enableSisReactivation = enableSisReactivation;
     }
 }

@@ -26,8 +26,10 @@ import java.util.Optional;
 public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> implements CourseReader, CourseWriter {
     private static final Logger LOG = Logger.getLogger(CourseReader.class);
 
-    public CourseImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
+    public CourseImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
+                      int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout,
+                paginationPageSize, serializeNulls);
     }
 
     @Override
@@ -64,7 +66,7 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
     public Optional<Course> createCourse(String accountId, Course course) throws IOException {
         LOG.debug("creating course");
         String url = buildCanvasUrl("accounts/" + accountId + "/courses", Collections.emptyMap());
-        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, course.toJsonObject());
+        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, course.toJsonObject(serializeNulls));
         return responseParser.parseToObject(Course.class, response);
     }
 
@@ -72,7 +74,7 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
     public Optional<Course> updateCourse(Course course) throws IOException {
         LOG.debug("updating course");
         String url = buildCanvasUrl("courses/" + course.getId(), Collections.emptyMap());
-        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, course.toJsonObject());
+        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, course.toJsonObject(serializeNulls));
         return responseParser.parseToObject(Course.class, response);
     }
 

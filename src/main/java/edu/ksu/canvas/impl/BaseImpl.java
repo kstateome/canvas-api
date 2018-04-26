@@ -12,6 +12,7 @@ import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.util.CanvasURLBuilder;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -43,6 +44,7 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
     protected String masqueradeAs;
     protected String masqueradeType;
     protected Integer paginationPageSize;
+    protected Boolean serializeNulls = false;
 
     /**
      * Construct a new CanvasApi class with an OAuth token
@@ -53,12 +55,15 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
      * @param connectTimeout Timeout in seconds to use when connecting
      * @param readTimeout Timeout in seconds to use when waiting for data to come back from an open connection
      * @param paginationPageSize How many objects to request per page on paginated requests
+     * @param serializeNulls Whether or not to include null fields in the serialized JSON. Defaults to false if null
      */
-    public BaseImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
+    public BaseImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
+                    int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {
         this.canvasBaseUrl = canvasBaseUrl;
         this.apiVersion = apiVersion;
         this.oauthToken = oauthToken;
         this.paginationPageSize = paginationPageSize;
+        this.serializeNulls = BooleanUtils.isTrue(serializeNulls);
         responseParser = new GsonResponseParser();
         canvasMessenger = new RestCanvasMessenger(connectTimeout, readTimeout, restClient);
     }

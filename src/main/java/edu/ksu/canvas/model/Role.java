@@ -14,6 +14,7 @@ public class Role extends BaseCanvasModel implements Serializable {
 
     private long id;
     private String label;
+    private String baseRoleType;
 
     public long getId() {
         return id;
@@ -26,5 +27,11 @@ public class Role extends BaseCanvasModel implements Serializable {
     }
     public void setLabel(String label) {
         this.label = label;
+    }
+    public String getBaseRoleType() {
+        return baseRoleType;
+    }
+    public void setBaseRoleType(String baseRoleType) {
+        this.baseRoleType = baseRoleType;
     }
 }

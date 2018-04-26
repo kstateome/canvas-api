@@ -41,4 +41,14 @@ public interface SectionWriter extends CanvasWriter<Section, SectionWriter> {
      * @throws IOException When there is an error communicating with Canvas
      */
     Optional<Section> deleteSection(String sectionId) throws IOException;
+
+    /**
+     * Move the Section to another course in Canvas.
+     *
+     * @param sectionId identifies the section to move
+     * @param courseId identifies the course to move the section into
+     * @return the section object that was moved
+     * @throws IOException When there is an error communicating with Canvas
+     */
+    Optional<Section> crosslist(String sectionId, String courseId) throws IOException;
 }

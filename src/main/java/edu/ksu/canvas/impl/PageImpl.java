@@ -22,8 +22,10 @@ import edu.ksu.canvas.oauth.OauthToken;
 public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements PageReader, PageWriter {
     private static final Logger LOG = Logger.getLogger(PageImpl.class);
 
-    public PageImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
+    public PageImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
+                    int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout,
+                paginationPageSize, serializeNulls);
     }
 
     @Override
@@ -49,7 +51,7 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
         LOG.debug("Updating page in course" + courseId);
         String encodedUrl = URLEncoder.encode(page.getUrl(), CanvasConstants.URLENCODING_TYPE);
         String url = buildCanvasUrl("courses/" + courseId + "/pages/" + encodedUrl, Collections.emptyMap());
-        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, page.toJsonObject());
+        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, page.toJsonObject(serializeNulls));
         return responseParser.parseToObject(Page.class, response);
     }
 

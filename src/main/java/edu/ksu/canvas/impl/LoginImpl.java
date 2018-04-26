@@ -19,8 +19,9 @@ public class LoginImpl extends BaseImpl<Login, LoginReader, LoginWriter> impleme
     private static final Logger LOG = Logger.getLogger(LoginImpl.class);
 
     public LoginImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
-            int connectTimeout, int readTimeout, Integer paginationPageSize) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
+                     int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout,
+                paginationPageSize, serializeNulls);
     }
 
     @Override

@@ -28,7 +28,8 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
 
     @Before
     public void setupData() {
-        assignmentReader = new AssignmentImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE);
+        assignmentReader = new AssignmentImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT,
+                SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE, false);
     }
 
 

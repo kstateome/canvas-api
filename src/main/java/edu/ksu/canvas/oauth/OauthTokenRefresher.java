@@ -60,7 +60,7 @@ public class OauthTokenRefresher implements Serializable {
         }
         HttpEntity entity = httpResponse.getEntity();
         String responseBody = EntityUtils.toString(entity);
-        Gson gson = GsonResponseParser.getDefaultGsonParser();
+        Gson gson = GsonResponseParser.getDefaultGsonParser(false);
         return gson.fromJson(responseBody, TokenRefreshResponse.class);
     }
 }

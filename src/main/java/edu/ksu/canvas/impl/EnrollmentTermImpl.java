@@ -21,8 +21,10 @@ import java.util.stream.Collectors;
 public class EnrollmentTermImpl extends BaseImpl<EnrollmentTerm, EnrollmentTermReader, EnrollmentTermWriter> implements EnrollmentTermReader, EnrollmentTermWriter {
     private static final Logger LOG = Logger.getLogger(EnrollmentTermReader.class);
 
-    public EnrollmentTermImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
+    public EnrollmentTermImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
+                              int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout,
+                paginationPageSize, serializeNulls);
     }
 
     @Override
@@ -44,7 +46,7 @@ public class EnrollmentTermImpl extends BaseImpl<EnrollmentTerm, EnrollmentTermR
     }
 
     private List<EnrollmentTerm> parseEnrollmentTermList(final Response response) {
-        EnrollmentTermWrapper wrapper = GsonResponseParser.getDefaultGsonParser().fromJson(response.getContent(), EnrollmentTermWrapper.class);
+        EnrollmentTermWrapper wrapper = GsonResponseParser.getDefaultGsonParser(serializeNulls).fromJson(response.getContent(), EnrollmentTermWrapper.class);
         return wrapper.getEnrollmentTerms();
     }
 

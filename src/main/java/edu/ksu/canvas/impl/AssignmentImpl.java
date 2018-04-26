@@ -26,8 +26,10 @@ import java.util.Optional;
 public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, AssignmentWriter> implements AssignmentReader, AssignmentWriter{
     private static final Logger LOG = Logger.getLogger(AssignmentReader.class);
 
-    public AssignmentImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
+    public AssignmentImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
+                          int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout,
+                paginationPageSize, serializeNulls);
     }
 
     @Override
@@ -54,7 +56,7 @@ public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, Assig
             throw new IllegalArgumentException("Assignment must have a name");
         }
         String url = buildCanvasUrl("courses/" + courseId + "/assignments", Collections.emptyMap());
-        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, assignment.toJsonObject());
+        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, assignment.toJsonObject(serializeNulls));
         return responseParser.parseToObject(Assignment.class, response);
     }
 
@@ -75,7 +77,7 @@ public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, Assig
     @Override
     public Optional<Assignment> editAssignment(String courseId, Assignment assignment) throws IOException {
         String url = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignment.getId(), Collections.emptyMap());
-        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, assignment.toJsonObject());
+        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, assignment.toJsonObject(serializeNulls));
         return responseParser.parseToObject(Assignment.class, response);
     }
 
