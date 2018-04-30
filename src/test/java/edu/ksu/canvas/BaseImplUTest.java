@@ -2,14 +2,20 @@ package edu.ksu.canvas;
 
 import com.google.gson.JsonSyntaxException;
 import edu.ksu.canvas.model.TestCanvasModel;
+import edu.ksu.canvas.net.FakeRestClient;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
+
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
 
 public class BaseImplUTest extends CanvasTestBase {
     public static final String TEST_OBJECT_ID_1 = "1";
@@ -17,10 +23,12 @@ public class BaseImplUTest extends CanvasTestBase {
     public static final String TEST_OBJECT_ID_3 = "model";
     private TestCanvasReader canvasReader;
     private boolean callbackWasCalled;
+    private FakeRestClient restClientSpy;
 
     @Before
     public void setup() {
-        canvasReader = new TestCanvasReaderImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT);
+        this.restClientSpy = Mockito.spy(fakeRestClient);
+        canvasReader = new TestCanvasReaderImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, restClientSpy, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT);
         callbackWasCalled = false;
     }
 
@@ -50,7 +58,7 @@ public class BaseImplUTest extends CanvasTestBase {
     @Test
     public void callbackGets2ndObject() throws IOException {
         String firstUrl = canvasReader.buildTestUrl(TEST_OBJECT_ID_1);
-        String secondUrl = canvasReader.buildTestUrl(TEST_OBJECT_ID_1);
+        String secondUrl = canvasReader.buildTestUrl(TEST_OBJECT_ID_2);
         fakeRestClient.addSuccessResponse(firstUrl, "TestModels/TestModels1.json");
         fakeRestClient.addSuccessResponse(secondUrl, "TestModels/TestModels2.json");
         Consumer<List<TestCanvasModel>> callback = modelList -> {
@@ -100,6 +108,38 @@ public class BaseImplUTest extends CanvasTestBase {
         TestCanvasModel model = modelOptional.orElseThrow(() -> new AssertionError("Expected getfromCanvas to return non-empty object"));
         Assert.assertEquals("field1", model.getField1());
         Assert.assertEquals("field2", model.getField2());
+    }
+
+
+    /*
+     * This test ensures that masquerade functionality is not trivially not thread safe. Meaning, this is the simple test shows that it isn't thread safe
+     * but it does not prove thread safety.
+     */
+    @Test
+    public void readAsCanvasUserIsNotObviouslyNotThreadsafe() throws IOException {
+        String user1Url = canvasReader.buildTestUrl(TEST_OBJECT_ID_1) + "?as_user_id=user1";
+        String user2Url = canvasReader.buildTestUrl(TEST_OBJECT_ID_1)+ "?as_user_id=user2";
+        fakeRestClient.addSuccessResponse(user1Url, "TestModels/TestModel.json");
+        // Since this test currently fails, this is needed because the second call to getTestModel() does not have the user parameter. It makes the test failure make more sense
+        fakeRestClient.addSuccessResponse(canvasReader.buildTestUrl(TEST_OBJECT_ID_1), "TestModels/TestModel.json");
+        fakeRestClient.addSuccessResponse(user2Url, "TestModels/TestModel.json");
+        TestCanvasReader readerAsUser1 = canvasReader.readAsCanvasUser("user1");
+        TestCanvasReader readerAsUser2 = canvasReader.readAsCanvasUser("user2");
+
+        readerAsUser1.getTestModel(TEST_OBJECT_ID_1);
+        readerAsUser2.getTestModel(TEST_OBJECT_ID_1);
+
+        verify(restClientSpy).sendApiGet(eq(SOME_OAUTH_TOKEN), eq(user1Url), anyInt(), anyInt());
+        verify(restClientSpy).sendApiGet(eq(SOME_OAUTH_TOKEN), eq(user2Url), anyInt(), anyInt());
+    }
+
+    @Test
+    public void readAsCanvasUserAppendsParamCorrectly() throws IOException {
+        String urlWithMasqueradeParam = canvasReader.buildTestUrl(TEST_OBJECT_ID_1) + "?as_user_id=user1";
+        fakeRestClient.addSuccessResponse(urlWithMasqueradeParam, "TestModels/TestModel.json");
+        canvasReader.readAsCanvasUser("user1").getTestModel(TEST_OBJECT_ID_1);
+
+        verify(restClientSpy).sendApiGet(eq(SOME_OAUTH_TOKEN), eq(urlWithMasqueradeParam), anyInt(), anyInt());
     }
 
 
