@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface TestCanvasReader extends CanvasReader<TestCanvasModel, TestCanvasReader> {
    List<TestCanvasModel> getTestModels(String url) throws IOException;
    Optional<TestCanvasModel> getTestModel(String url) throws IOException;
+
+   String buildTestUrl(String id);
 }

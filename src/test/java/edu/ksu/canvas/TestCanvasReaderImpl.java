@@ -8,8 +8,7 @@ import edu.ksu.canvas.oauth.OauthToken;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class TestCanvasReaderImpl extends BaseImpl<TestCanvasModel, TestCanvasReader, TestCanvasWriter> implements TestCanvasReader {
 
@@ -17,12 +16,12 @@ public class TestCanvasReaderImpl extends BaseImpl<TestCanvasModel, TestCanvasRe
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, CanvasTestBase.DEFAULT_PAGINATION_PAGE_SIZE, false);
     }
 
-    public List<TestCanvasModel> getTestModels(String url) throws IOException {
-        return getListFromCanvas(url);
+    public List<TestCanvasModel> getTestModels(String objectId) throws IOException {
+        return getListFromCanvas(buildTestUrl(objectId));
     }
 
-    public Optional<TestCanvasModel> getTestModel(String url) throws IOException {
-        return getFromCanvas(url);
+    public Optional<TestCanvasModel> getTestModel(String objectId) throws IOException {
+        return getFromCanvas(buildTestUrl(objectId));
     }
 
     @Override
@@ -33,6 +32,11 @@ public class TestCanvasReaderImpl extends BaseImpl<TestCanvasModel, TestCanvasRe
     @Override
     protected Class<TestCanvasModel> objectType() {
         return TestCanvasModel.class;
+    }
+
+    @Override
+    public String buildTestUrl(String id) {
+        return buildCanvasUrl("testModels/" + id, Collections.emptyMap());
     }
 
 }
