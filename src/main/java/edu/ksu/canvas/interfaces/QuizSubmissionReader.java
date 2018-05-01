@@ -3,7 +3,6 @@ package edu.ksu.canvas.interfaces;
 import java.io.IOException;
 import java.util.List;
 
-import com.google.gson.JsonSyntaxException;
 import edu.ksu.canvas.model.assignment.QuizSubmission;
 
 public interface QuizSubmissionReader extends CanvasReader<QuizSubmission, QuizSubmissionReader> {
