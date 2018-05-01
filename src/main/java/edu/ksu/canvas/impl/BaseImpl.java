@@ -17,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.Collection;
@@ -106,7 +107,23 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
     private READERTYPE readAsUser(String masqueradeAs, String masqueradeType){
         this.masqueradeAs = masqueradeAs;
         this.masqueradeType = masqueradeType;
-        return (READERTYPE) this;
+        //Move this to its own unit if this functionally passes POC
+        Class<?> thisClass = this.getClass();
+        Class<?>[] classes = this.getClass().getInterfaces();
+        Class<?> readerInterface = null;
+        for(Class<?> clazz : classes) {
+            if (CanvasReader.class.isAssignableFrom(clazz) && clazz != CanvasReader.class && clazz.isInterface()) {
+                readerInterface = clazz;
+                break;
+            }
+        }
+        if (readerInterface == null) {
+            throw new IllegalArgumentException("readAsUser was called on an object which does not implement CanvasReader");
+        }
+        return (READERTYPE) Proxy.newProxyInstance(
+                this.getClass().getClassLoader(),
+                new Class[] { readerInterface },
+                new BaseImplThreadSafetyProxy(this, canvasMessenger, responseParser, oauthToken, objectType(), masqueradeAs, masqueradeType));
     }
 
     @Override
@@ -189,5 +206,17 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
                 .map(this::parseListResponse)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
+    }
+
+    public Integer getPaginationPageSize() {
+        return paginationPageSize;
+    }
+
+    public String getCanvasBaseUrl() {
+        return canvasBaseUrl;
+    }
+
+    public int getApiVersion() {
+        return apiVersion;
     }
 }
