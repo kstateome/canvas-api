@@ -1,0 +1,85 @@
+[
+  {
+    "title": "SIS Export",
+    "parameters": {
+      "enrollment_term_id": {
+        "required": false,
+        "description": "The canvas id of the term of courses to report on"
+      },
+      "users": {
+        "required": false,
+        "description": "Get the SIS file for users"
+      },
+      "accounts": {
+        "required": false,
+        "description": "Get the SIS file for accounts"
+      },
+      "terms": {
+        "required": false,
+        "description": "Get the SIS file for terms"
+      },
+      "courses": {
+        "required": false,
+        "description": "Get the SIS file for courses"
+      },
+      "sections": {
+        "required": false,
+        "description": "Get the SIS file for sections"
+      },
+      "enrollments": {
+        "required": false,
+        "description": "Get the SIS file for enrollments"
+      },
+      "groups": {
+        "required": false,
+        "description": "Get the SIS file for groups"
+      },
+      "group_categories": {
+        "required": false,
+        "description": "Get the SIS file for group_categories"
+      },
+      "group_membership": {
+        "required": false,
+        "description": "Get the SIS file for group_membership"
+      },
+      "xlist": {
+        "required": false,
+        "description": "Get the SIS file for cross listed courses"
+      },
+      "user_observers": {
+        "required": false,
+        "description": "Get the SIS file for user_observers"
+      },
+      "admins": {
+        "required": false,
+        "description": "Get the SIS file for admins"
+      },
+      "created_by_sis": {
+        "required": false,
+        "description": "Only include objects that were created by sis"
+      },
+      "include_deleted": {
+        "required": false,
+        "description": "Include deleted objects"
+      }
+    },
+    "report": "sis_export_csv",
+    "last_run": {
+      "id": 1,
+      "progress": 1,
+      "parameters": {
+        "enrollment_term_id": "",
+        "enrollments": "1",
+        "extra_text": "Term: All Terms; Reports: enrollments "
+      },
+      "current_line": 100,
+      "status": "processing",
+      "report": "sis_export_csv",
+      "created_at": "2018-05-11T08:30:39-06:00",
+      "started_at": "2018-05-11T08:30:40-06:00",
+      "ended_at": "2018-05-11T08:34:15-06:00",
+      "file_url": "https://canvas.example.com/accounts/1/files/0/download",
+      "attachment": null
+    }
+  }
+]

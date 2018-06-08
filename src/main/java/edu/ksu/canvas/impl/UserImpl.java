@@ -1,7 +1,6 @@
 package edu.ksu.canvas.impl;
 
 import com.google.gson.reflect.TypeToken;
-
 import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.interfaces.UserReader;
@@ -33,14 +32,14 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
 
     @Override
     public Optional<User> createUser(User user) throws InvalidOauthTokenException, IOException {
-        String createdUrl = buildCanvasUrl( "accounts/" + CanvasConstants.ACCOUNT_ID + "/users", Collections.emptyMap());
-        LOG.debug("create URl for user creation : "+ createdUrl);
+        String createdUrl = buildCanvasUrl("accounts/" + CanvasConstants.ACCOUNT_ID + "/users", Collections.emptyMap());
+        LOG.debug("create URl for user creation : " + createdUrl);
         Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, user.toPostMap(serializeNulls));
-        if (response.getErrorHappened() || ( response.getResponseCode() != 200)) {
+        if (response.getErrorHappened() || (response.getResponseCode() != 200)) {
             LOG.debug("Failed to create user, error message: " + response.toString());
             return Optional.empty();
         }
-        return responseParser.parseToObject(User.class,response);
+        return responseParser.parseToObject(User.class, response);
     }
 
     @Override
@@ -68,7 +67,7 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
     }
 
     @Override
-    public Optional<User> showUserDetails(String userIdentifier) throws IOException{
+    public Optional<User> showUserDetails(String userIdentifier) throws IOException {
         LOG.debug("Retrieving user details");
         String url = buildCanvasUrl("users/" + userIdentifier, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
@@ -76,8 +75,25 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
     }
 
     @Override
+    public List<User> getAllUsers(GetUsersInAccountOptions options) throws IOException {
+        LOG.debug("Retrieving users for account " + options.getAccountId());
+        String url = buildCanvasUrl("accounts/" + options.getAccountId() + "/users", options.getOptionsMap());
+        List<Response> response = canvasMessenger.getFromCanvas(oauthToken, url);
+        return parseUserList(response);
+    }
+
+    @Override
+    public Optional<User> updateUser(UpdateUserOptions options) throws InvalidOauthTokenException, IOException {
+        LOG.debug("Updating basic user account information for Canvas user ID " + options.getInternalUserId());
+        String url = buildCanvasUrl("users/" + options.getInternalUserId(), Collections.emptyMap());
+        Response response = canvasMessenger.putToCanvas(oauthToken, url, options.getOptionsMap());
+        return responseParser.parseToObject(User.class, response);
+    }
+
+    @Override
     protected Type listType() {
-        return new TypeToken<List<User>>(){}.getType();
+        return new TypeToken<List<User>>() {
+        }.getType();
     }
 
     @Override
@@ -85,4 +101,16 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
         return User.class;
     }
 
+    private List<User> parseUserList(final List<Response> response) {
+        return response.stream()
+                       .map(this::parseUserResponse)
+                       .flatMap(Collection::stream)
+                       .collect(Collectors.toList());
+    }
+
+    private List<User> parseUserResponse(final Response response) {
+        Type listType = new TypeToken<List<User>>() {
+        }.getType();
+        return GsonResponseParser.getDefaultGsonParser().fromJson(response.getContent(), listType);
+    }
 }

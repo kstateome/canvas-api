@@ -1,0 +1,71 @@
+[
+  {
+    "id": 3,
+    "progress": 100,
+    "parameters": {
+      "extra_text": "Failed, please report the following error code to your system administrator: ErrorReport:479,000;"
+    },
+    "current_line": null,
+    "status": "error",
+    "report": "sis_export_csv",
+    "created_at": "2018-05-29T15:15:21-06:00",
+    "started_at": "2018-05-29T15:17:28-06:00",
+    "ended_at": "2018-05-29T15:17:29-06:00",
+    "file_url": null
+  },
+  {
+    "id": 2,
+    "progress": 50,
+    "parameters": {
+      "enrollment_term_id": "",
+      "enrollments": "1",
+      "extra_text": "Term: All Terms; Reports: enrollments "
+    },
+    "current_line": 25000,
+    "status": "running",
+    "report": "sis_export_csv",
+    "created_at": "2018-05-11T08:30:39-06:00",
+    "started_at": "2018-05-11T08:30:40-06:00",
+    "ended_at": null,
+    "file_url": "https://canvas.example.com/accounts/1/files/0/download",
+    "attachment": null
+  },
+  {
+    "id": 1,
+    "progress": 100,
+    "parameters": {
+      "enrollment_term_id": "",
+      "users": "1",
+      "extra_text": "Term: All Terms; Reports: users "
+    },
+    "current_line": 100000,
+    "status": "complete",
+    "report": "sis_export_csv",
+    "created_at": "2018-05-10T13:47:24-06:00",
+    "started_at": "2018-05-10T13:47:24-06:00",
+    "ended_at": "2018-05-10T13:49:30-06:00",
+    "file_url": "https://canvas.example.com/accounts/1/files/0/download",
+    "attachment": {
+      "id": 1,
+      "uuid": "sample-uuid",
+      "folder_id": 0,
+      "display_name": "sis_export_csv_10_May_2018_bar.csv",
+      "filename": "sis_export_csv_10_May_2018_bar.csv",
+      "content-type": "text/csv",
+      "url": "https://canvas.example.com/files/0/download?download_frd=1&verifier=sample-uuid",
+      "size": 1000,
+      "created_at": "2018-05-10T19:49:29Z",
+      "updated_at": "2018-05-10T19:49:29Z",
+      "unlock_at": null,
+      "locked": false,
+      "hidden": false,
+      "lock_at": null,
+      "hidden_for_user": false,
+      "thumbnail_url": null,
+      "modified_at": "2018-05-10T19:49:29Z",
+      "mime_class": "file",
+      "media_entry_id": null,
+      "locked_for_user": false
+    }
+  }
+]
