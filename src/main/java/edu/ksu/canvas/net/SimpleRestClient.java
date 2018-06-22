@@ -237,6 +237,14 @@ public class SimpleRestClient implements RestClient {
             LOG.error("User is not authorized to perform this action");
             throw new UnauthorizedException();
         }
+
+        // Add the if statement code for Http status 400 code
+        if(statusCode == 400){
+            LOG.error("Incorrect server request :)  Requested URL: " + request.getURI());
+            throw new CanvasException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
+        }
+
+
         if(statusCode == 404) {
             LOG.error("Object not found in Canvas. Requested URL: " + request.getURI());
             throw new ObjectNotFoundException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
@@ -258,12 +266,11 @@ public class SimpleRestClient implements RestClient {
      */
     private String extractErrorMessageFromResponse(HttpResponse response) {
         String contentType = response.getEntity().getContentType().getValue();
+        String responseBody = null;
         if(contentType.contains("application/json")) {
             Gson gson = GsonResponseParser.getDefaultGsonParser(false);
-            String responseBody = null;
             try {
                 responseBody = EntityUtils.toString(response.getEntity());
-                LOG.error("Body of error response from Canvas: " + responseBody);
                 CanvasErrorResponse errorResponse = gson.fromJson(responseBody, CanvasErrorResponse.class);
                 List<ErrorMessage> errors = errorResponse.getErrors();
                 if(errors != null) {
@@ -277,7 +284,7 @@ public class SimpleRestClient implements RestClient {
                 }
             }
         }
-        return null;
+        return responseBody;
     }
 
     private String handleResponse(HttpResponse httpResponse, HttpRequestBase request) throws IOException {
