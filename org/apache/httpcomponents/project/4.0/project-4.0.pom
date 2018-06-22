@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+/*
+ * Copyright 2001-2004 The Apache Software Foundation.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.apache.httpcomponents</groupId>
+  <artifactId>project</artifactId>
+  <version>4.0</version>
+  <packaging>pom</packaging>
+  <name>HttpComponents</name>
+  <url>http://jakarta.apache.org/httpcomponents/</url>
+  <description>Components to build HTTP enabled services</description>
+  <inceptionYear>2005</inceptionYear>
+
+  <organization>
+    <name>Apache Software Foundation</name>
+    <url>http://www.apache.org/</url>
+  </organization>
+
+  <issueManagement>
+    <system>Jira</system>
+    <url>http://issues.apache.org/jira/</url>
+  </issueManagement>
+
+  <scm>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/jakarta/httpcomponents/project-trunk/</connection>
+    <developerConnection>scm:svn:http://svn.apache.org/repos/asf/jakarta/httpcomponents/project-trunk/</developerConnection>
+    <url>http://svn.apache.org/repos/asf/jakarta/httpcomponents/project-trunk/</url>
+  </scm>
+
+  <developers>
+    <developer>
+      <name>Michael Becke</name>
+      <id>mbecke</id>
+      <email>mbecke -at- apache.org</email>
+      <organization></organization>
+      <roles>
+        <role>Release Prime</role>
+        <role>Java Developer</role>
+      </roles>
+      <timezone>-5</timezone>
+    </developer>
+    <developer>
+      <name>Ortwin Glueck</name>
+      <id>oglueck</id>
+      <email>oglueck -at- apache.org</email>
+      <organization></organization>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+      <url>http://www.odi.ch/</url>
+      <timezone>+1</timezone>
+    </developer>
+    <developer>
+      <name>Oleg Kalnichevski</name>
+      <id>olegk</id>
+      <email>olegk -at- apache.org</email>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+      <timezone>+1</timezone>
+    </developer>
+    <developer>
+      <name>Roland Weber</name>
+      <id>rolandw</id>
+      <email>rolandw -at- apache.org</email>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+      <timezone>+1</timezone>
+    </developer>
+  </developers>
+
+  <mailingLists>
+    <mailingList>
+      <name>HttpClient Dev List</name>
+      <subscribe>httpclient-dev-subscribe@jakarta.apache.org</subscribe>
+      <unsubscribe>httpclient-dev-unsubscribe@jakarta.apache.org</unsubscribe>
+      <post>httpclient-dev@jakarta.apache.org</post>
+      <archive>http://mail-archives.apache.org/mod_mbox/jakarta-httpclient-dev</archive>
+      <otherArchives>
+        <otherArchive>http://www.mail-archive.com/httpclient-dev%40jakarta.apache.org/</otherArchive>
+        <otherArchive>http://marc.theaimsgroup.com/?l=httpclient-commons-dev</otherArchive>
+      </otherArchives>
+    </mailingList>
+    <mailingList>
+      <name>HttpClient User List</name>
+      <subscribe>httpclient-user-subscribe@jakarta.apache.org</subscribe>
+      <unsubscribe>httpclient-user-unsubscribe@jakarta.apache.org</unsubscribe>
+      <post>httpclient-user@jakarta.apache.org</post>
+      <archive>http://mail-archives.apache.org/mod_mbox/jakarta-httpclient-user</archive>
+      <otherArchives>
+        <otherArchive>http://www.mail-archive.com/httpclient-user%40jakarta.apache.org/</otherArchive>
+      </otherArchives>
+    </mailingList>
+  </mailingLists>
+
+ <distributionManagement>
+    <snapshotRepository>
+      <id>apache.snapshots</id>
+      <name>Apache Snapshot Repository</name>
+      <url>scp://minotaur.apache.org/www/cvs.apache.org/maven-snapshot-repository</url>
+    </snapshotRepository>
+    <site>
+      <id>apache.website</id>
+      <name>Apache Website</name>
+      <url>scp://people.apache.org/www/jakarta.apache.org/httpcomponents/</url>
+    </site>
+    <repository>
+      <id>apache.releases</id>
+      <name>Apache Release Repository</name>
+      <!--<url>scp://people.apache.org/www/www.apache.org/dist/maven-repository</url>-->
+      <url>scp://people.apache.org/home/olegk/repository</url>
+    </repository>
+  </distributionManagement>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>${maven.compile.source}</source>
+          <target>${maven.compile.target}</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <Implementation-Vendor-Id>org.apache</Implementation-Vendor-Id>
+              <X-Compile-Source-JDK>${maven.compile.source}</X-Compile-Source-JDK>
+              <X-Compile-Target-JDK>${maven.compile.target}</X-Compile-Target-JDK>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-site-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+  <reporting>
+    <plugins>
+        <plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-project-info-reports-plugin</artifactId>
+           <reportSets>
+             <reportSet>
+               <reports>
+                 <report>project-team</report>
+                 <report>mailing-list</report>
+                 <report>issue-tracking</report>
+                 <report>scm</report>
+               </reports>
+             </reportSet>
+           </reportSets>
+        </plugin>
+    </plugins>
+  </reporting>
+
+  <modules>
+    <module>../httpcore</module>
+    <module>../httpasync</module>
+  </modules>
+
+</project>
