@@ -264,7 +264,7 @@ public class SimpleRestClient implements RestClient {
      */
     private String extractErrorMessageFromResponse(HttpResponse response) {
         String contentType = response.getEntity().getContentType().getValue();
-        String responseBody = null;
+        String responseBody = "";
         if(contentType.contains("application/json")) {
             Gson gson = GsonResponseParser.getDefaultGsonParser(false);
             try {
