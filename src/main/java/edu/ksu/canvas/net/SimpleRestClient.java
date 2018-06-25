@@ -226,6 +226,12 @@ public class SimpleRestClient implements RestClient {
             LOG.debug("Rate not being limited: " + e);
         }
 
+        // Add the if statement code for Http status 400 code
+        if(statusCode == 400){
+            LOG.error("Incorrect server request :)  Requested URL: " + request.getURI());
+            throw new CanvasException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
+        }
+
         if (statusCode == 401) {
             //If the WWW-Authenticate header is set, it is a token problem.
             //If the header is not present, it is a user permission error.
@@ -258,9 +264,9 @@ public class SimpleRestClient implements RestClient {
      */
     private String extractErrorMessageFromResponse(HttpResponse response) {
         String contentType = response.getEntity().getContentType().getValue();
+        String responseBody = null;
         if(contentType.contains("application/json")) {
             Gson gson = GsonResponseParser.getDefaultGsonParser(false);
-            String responseBody = null;
             try {
                 responseBody = EntityUtils.toString(response.getEntity());
                 LOG.error("Body of error response from Canvas: " + responseBody);
@@ -277,7 +283,7 @@ public class SimpleRestClient implements RestClient {
                 }
             }
         }
-        return null;
+        return responseBody;
     }
 
     private String handleResponse(HttpResponse httpResponse, HttpRequestBase request) throws IOException {
