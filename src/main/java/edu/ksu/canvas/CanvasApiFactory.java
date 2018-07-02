@@ -168,6 +168,8 @@ public class CanvasApiFactory {
         readerMap.put(RoleReader.class, RoleImpl.class);
         readerMap.put(ExternalToolReader.class, ExternalToolImpl.class);
         readerMap.put(LoginReader.class, LoginImpl.class);
+        readerMap.put(AccountReportSummaryReader.class, AccountReportSummaryImpl.class);
+        readerMap.put(AccountReportReader.class, AccountReportImpl.class);
 
         writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImpl.class);
         writerMap.put(AdminWriter.class, AdminImpl.class);
