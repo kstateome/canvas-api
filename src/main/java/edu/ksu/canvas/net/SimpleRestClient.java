@@ -225,7 +225,6 @@ public class SimpleRestClient implements RestClient {
         } catch (NullPointerException e) {
             LOG.debug("Rate not being limited: " + e);
         }
-
         if (statusCode == 401) {
             //If the WWW-Authenticate header is set, it is a token problem.
             //If the header is not present, it is a user permission error.
@@ -241,7 +240,8 @@ public class SimpleRestClient implements RestClient {
             LOG.error("Object not found in Canvas. Requested URL: " + request.getURI());
             throw new ObjectNotFoundException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
         }
-        if(statusCode < 200 || statusCode > 299) {
+        // If we receive a 5xx exception, we should not wrap it in an unchecked exception for upstream clients to deal with.
+        if(statusCode < 200 || (statusCode > 299 && statusCode <= 499)) {
             LOG.error("HTTP status " + statusCode + " returned from " + request.getURI());
             throw new CanvasException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
         }
