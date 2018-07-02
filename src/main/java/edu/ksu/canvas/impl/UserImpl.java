@@ -9,17 +9,21 @@ import edu.ksu.canvas.model.User;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
+import edu.ksu.canvas.requestOptions.GetUsersInAccountOptions;
 import edu.ksu.canvas.requestOptions.GetUsersInCourseOptions;
+import edu.ksu.canvas.requestOptions.UpdateUserOptions;
 
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements UserReader, UserWriter{
     private static final Logger LOG = Logger.getLogger(UserImpl.class);
@@ -111,6 +115,6 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
     private List<User> parseUserResponse(final Response response) {
         Type listType = new TypeToken<List<User>>() {
         }.getType();
-        return GsonResponseParser.getDefaultGsonParser().fromJson(response.getContent(), listType);
+        return GsonResponseParser.getDefaultGsonParser(true).fromJson(response.getContent(), listType);
     }
 }

@@ -18,7 +18,7 @@ public class AccountReportSummaryImpl extends BaseImpl<AccountReportSummary, Acc
     private static final Logger LOG = Logger.getLogger(AccountReportSummaryImpl.class);
 
     public AccountReportSummaryImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize);
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize, true);
     }
 
     @Override
