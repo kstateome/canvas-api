@@ -6,7 +6,6 @@ import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.exception.UnauthorizedException;
 import edu.ksu.canvas.oauth.NonRefreshableOauthToken;
 import edu.ksu.canvas.oauth.OauthToken;
-import edu.ksu.canvas.util.JsonTestUtil;
 import org.apache.http.HttpHeaders;
 import org.junit.Rule;
 import org.junit.Test;
@@ -58,18 +57,30 @@ public class SimpleRestClientUTest extends LocalServerTestBase {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    public void testCanvasExceptionErrorMessage() throws Exception{
+    public void testErrorMessageWithoutErrorArray() throws Exception{
         // The url can be any string
         String url = "/canvasException";
         HashMap<String, String> map = new HashMap<>();
         map.put("Content-Type", "application/json");
-        String jsonFilePath = "/SampleJson/errorMessageResponse.json";
+        String jsonFilePath = "/SampleJson/sampleErrorMessageWithoutErrorArray.json";
         registerUrlResponse(url, jsonFilePath, 400, map);
         expectedException.expect(CanvasException.class);
-        String jsonContent = JsonTestUtil.loadJson(jsonFilePath, SimpleRestClientUTest.class);
-        expectedException.expectMessage(jsonContent);
+        String errorMessage = "Sample error message";
+        expectedException.expectMessage(errorMessage);
         restClient.sendApiGet(emptyAdminToken, baseUrl + url, 100, 100);
     }
 
+    @Test
+    public void testErrorMessageWithErrorArray() throws Exception{
+        String url = "/canvasException";
+        HashMap<String, String> map = new HashMap<>();
+        map.put("Content-Type", "application/json");
+        String jsonFilePath = "/SampleJson/sampleErrorMessageWithErrorArray.json";
+        registerUrlResponse(url, jsonFilePath, 400, map);
+        expectedException.expect(CanvasException.class);
+        String errorMessages = "sample error message 1, sample error message 2";
+        expectedException.expectMessage(errorMessages);
+        restClient.sendApiGet(emptyAdminToken, baseUrl + url, 100, 100);
+    }
 
 }
