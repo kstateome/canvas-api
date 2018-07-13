@@ -1,20 +1,24 @@
 package edu.ksu.canvas.net;
 
-import static org.junit.Assert.assertNull;
-
-import java.io.IOException;
-import java.util.Collections;
-
-import org.apache.http.HttpHeaders;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-
 import edu.ksu.canvas.LocalServerTestBase;
+import edu.ksu.canvas.exception.CanvasException;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.exception.UnauthorizedException;
 import edu.ksu.canvas.oauth.NonRefreshableOauthToken;
 import edu.ksu.canvas.oauth.OauthToken;
+import edu.ksu.canvas.util.JsonTestUtil;
+import org.apache.http.HttpHeaders;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+
+import java.io.IOException;
+import java.util.Collections;
+import java.util.HashMap;
+
+import static org.junit.Assert.assertNull;
 
 
 
@@ -47,5 +51,25 @@ public class SimpleRestClientUTest extends LocalServerTestBase {
 
         final Response response = restClient.sendApiGet(emptyAdminToken, baseUrl + url, 100, 100);
         assertNull(response.getContent());
+
     }
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+
+    @Test
+    public void testCanvasExceptionErrorMessage() throws Exception{
+        // The url can be any string
+        String url = "/canvasException";
+        HashMap<String, String> map = new HashMap<>();
+        map.put("Content-Type", "application/json");
+        String jsonFilePath = "/SampleJson/errorMessageResponse.json";
+        registerUrlResponse(url, jsonFilePath, 400, map);
+        expectedException.expect(CanvasException.class);
+        String jsonContent = JsonTestUtil.loadJson(jsonFilePath, SimpleRestClientUTest.class);
+        expectedException.expectMessage(jsonContent);
+        restClient.sendApiGet(emptyAdminToken, baseUrl + url, 100, 100);
+    }
+
+
 }
