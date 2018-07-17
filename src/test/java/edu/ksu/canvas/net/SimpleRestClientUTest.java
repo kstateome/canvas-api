@@ -83,4 +83,16 @@ public class SimpleRestClientUTest extends LocalServerTestBase {
         restClient.sendApiGet(emptyAdminToken, baseUrl + url, 100, 100);
     }
 
+    @Test
+    public void testErrorMessageWithWrongContentType() throws Exception{
+        String url = "/canvasException";
+        // It doesn't matter what file because error message will be null if content type isn't json
+        String jsonFilePath = "/SampleJson/sampleErrorMessageWithoutErrorArray.json";
+        // By default, the content type will be plain text if just using Collections.emptyMap()
+        registerUrlResponse(url, jsonFilePath, 400, Collections.emptyMap());
+        expectedException.expect(CanvasException.class);
+        expectedException.expectMessage("null");
+        restClient.sendApiGet(emptyAdminToken, baseUrl + url, 100, 100);
+    }
+
 }
