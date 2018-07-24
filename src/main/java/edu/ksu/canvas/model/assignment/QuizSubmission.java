@@ -27,10 +27,10 @@ public class QuizSubmission extends BaseCanvasModel implements Serializable {
     private Integer extraTime;
     private Boolean manuallyUnlocked;
     private Integer timeSpent;
-    private Double score;
-    private Double scoreBeforeRegrade;
-    private Double keptScore;
-    private Double fudgePoints;
+    private Integer score;
+    private Integer scoreBeforeRegrade;
+    private Integer keptScore;
+    private Integer fudgePoints;
     private Boolean hasSeenResults;
     private String workflowState;
     private Boolean overdueAndNeedsSubmission;
@@ -129,36 +129,36 @@ public class QuizSubmission extends BaseCanvasModel implements Serializable {
         this.timeSpent = timeSpent;
     }
 
-    public Double getScore() {
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(Double score) {
+    public void setScore(Integer score) {
         this.score = score;
     }
 
-    public Double getScoreBeforeRegrade() {
+    public Integer getScoreBeforeRegrade() {
         return scoreBeforeRegrade;
     }
 
-    public void setScoreBeforeRegrade(Double scoreBeforeRegrade) {
+    public void setScoreBeforeRegrade(Integer scoreBeforeRegrade) {
         this.scoreBeforeRegrade = scoreBeforeRegrade;
     }
 
-    public Double getKeptScore() {
+    public Integer getKeptScore() {
         return keptScore;
     }
 
-    public void setKeptScore(Double keptScore) {
+    public void setKeptScore(Integer keptScore) {
         this.keptScore = keptScore;
     }
 
     @CanvasField(postKey = "fudge_points", array = false)
-    public Double getFudgePoints() {
+    public Integer getFudgePoints() {
         return fudgePoints;
     }
 
-    public void setFudgePoints(Double fudgePoints) {
+    public void setFudgePoints(Integer fudgePoints) {
         this.fudgePoints = fudgePoints;
     }
 
