@@ -9,6 +9,7 @@ import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.AccountReportOptions;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -26,6 +27,9 @@ public class AccountReportImpl extends BaseImpl<AccountReport, AccountReportRead
 
     @Override
     public List<AccountReport> listReports(String accountId, String report) throws IOException {
+        if(StringUtils.isBlank(report)) {
+            throw new IllegalArgumentException("You must specify the report you want to run.");
+        }
         LOG.debug("Retrieving information about all " + report + " reports for account " + accountId);
         String url = buildCanvasUrl("accounts/" + accountId + "/reports/" + report, Collections.emptyMap());
 

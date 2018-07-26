@@ -96,4 +96,14 @@ public class AccountReportUTest extends CanvasTestBase {
 
         Assert.assertTrue(accountReport.isPresent());
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testListReportsReportAsEmptyString() throws Exception {
+        accountReportReader.listReports(ROOT_ACCOUNT_ID, "");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testListReportsReportAsNullValue() throws Exception {
+        accountReportReader.listReports(ROOT_ACCOUNT_ID, null);
+    }
 }
