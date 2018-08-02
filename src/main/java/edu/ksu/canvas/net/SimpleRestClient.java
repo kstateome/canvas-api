@@ -1,5 +1,6 @@
 package edu.ksu.canvas.net;
 
+import com.google.gson.Gson;
 import edu.ksu.canvas.exception.CanvasException;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.exception.ObjectNotFoundException;
@@ -9,7 +10,6 @@ import edu.ksu.canvas.impl.GsonResponseParser;
 import edu.ksu.canvas.model.status.CanvasErrorResponse;
 import edu.ksu.canvas.model.status.CanvasErrorResponse.ErrorMessage;
 import edu.ksu.canvas.oauth.OauthToken;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpHeaders;
@@ -32,10 +32,7 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
-import com.google.gson.Gson;
-
 import javax.validation.constraints.NotNull;
-
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
@@ -269,6 +266,9 @@ public class SimpleRestClient implements RestClient {
                 if(errors != null) {
                     //I have only ever seen a single error message but it is an array so presumably there could be more.
                     return errors.stream().map(e -> e.getMessage()).collect(Collectors.joining(", "));
+                }
+                else{
+                    return responseBody;
                 }
             } catch (Exception e) {
                 //Returned JSON was not in expected format. Fall back to returning the whole response body, if any
