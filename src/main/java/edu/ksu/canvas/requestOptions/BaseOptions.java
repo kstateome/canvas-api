@@ -1,5 +1,6 @@
 package edu.ksu.canvas.requestOptions;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -29,5 +30,9 @@ public abstract class BaseOptions {
 
     protected void addNumberList(String key, List<? extends Number> list) {
         optionsMap.put(key, list.stream().map(i->i.toString()).collect(Collectors.toList()));
+    }
+
+    protected void addStringList(String key, List<String> list) {
+        optionsMap.put(key, new ArrayList<String>(list));
     }
 }

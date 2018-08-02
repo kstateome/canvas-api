@@ -13,8 +13,8 @@ public class ListAccountAdminsOptions extends BaseOptions {
         return accountId;
     }
 
-    public ListAccountAdminsOptions includes(List<Integer> userIds) {
-        addNumberList("user_id[]", userIds);
+    public ListAccountAdminsOptions includes(List<String> userIds) {
+        addStringList("user_id[]", userIds);
         return this;
     }
 }
