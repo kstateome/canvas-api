@@ -51,6 +51,7 @@ public class Course extends BaseCanvasModel implements Serializable {
     private String syllabusBody;
     private String courseFormat;
     private Boolean enableSisReactivation;
+    private Boolean blueprint;
 
     private List<Section> sections;
     private List<Enrollment> enrollments;
@@ -398,5 +399,13 @@ public class Course extends BaseCanvasModel implements Serializable {
 
     public void setEnableSisReactivation(Boolean enableSisReactivation) {
         this.enableSisReactivation = enableSisReactivation;
+    }
+
+    public Boolean getBlueprint() {
+        return blueprint;
+    }
+
+    public void setBlueprint(Boolean blueprint) {
+        this.blueprint = blueprint;
     }
 }
