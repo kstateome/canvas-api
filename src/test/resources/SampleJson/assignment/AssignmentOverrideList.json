@@ -19,7 +19,7 @@
         "all_day_date": null,
         "unlock_at": null,
         "lock_at": null,
-        "course_section_id": 38
+        "course_section_id": 39
     },
     {
         "id": 6,
@@ -30,6 +30,6 @@
         "all_day_date": null,
         "unlock_at": null,
         "lock_at": null,
-        "course_section_id": 38
+        "course_section_id": 40
     }
 ]
