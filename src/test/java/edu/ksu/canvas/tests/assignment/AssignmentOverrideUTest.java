@@ -40,7 +40,7 @@ public class AssignmentOverrideUTest extends CanvasTestBase {
     @Test(expected = JsonSyntaxException.class)
     public void testListAssignments_responseInvalid() throws Exception {
         String someCourseId = "14";
-        String someAssignmentId = "80";
+        Integer someAssignmentId = 80;
         Response erroredResponse = new Response();
         erroredResponse.setResponseCode(401);
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments/" + someAssignmentId + "/overrides";
@@ -54,8 +54,8 @@ public class AssignmentOverrideUTest extends CanvasTestBase {
         AssignmentOverride assignmentOverride1 = new AssignmentOverride();
         assignmentOverride1.setId(4);
         String someCourseId = "14";
-        String someAssignmentId = "80";
-        String someAssignmentOverrideId = "4";
+        Integer someAssignmentId = 80;
+        Integer someAssignmentOverrideId = 4;
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments/" + someAssignmentId + "/overrides/" + someAssignmentOverrideId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/AssignmentOverride.json");
         Optional<AssignmentOverride> assignmentOverride = assignmentOverrideReader.getAssignmentOverride(someCourseId, someAssignmentId, someAssignmentOverrideId);
@@ -69,7 +69,7 @@ public class AssignmentOverrideUTest extends CanvasTestBase {
         AssignmentOverride assignmentOverride = new AssignmentOverride();
         assignmentOverride.setId(4);
         String someCourseId = "14";
-        String someAssignmentId = "80";
+        Integer someAssignmentId = 80;
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments/" + someAssignmentId + "/overrides";
         fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/AssignmentOverrideList.json");
         List<AssignmentOverride> assignmentOverrides = assignmentOverrideReader.listAssignmentOverrides(someCourseId, someAssignmentId);

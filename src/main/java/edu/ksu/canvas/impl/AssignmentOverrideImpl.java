@@ -28,14 +28,14 @@ public class AssignmentOverrideImpl extends BaseImpl<AssignmentOverride, Assignm
     }
     
     @Override
-    public List<AssignmentOverride> listAssignmentOverrides(String courseId, String assignmentId) throws IOException {
+    public List<AssignmentOverride> listAssignmentOverrides(String courseId, Integer assignmentId) throws IOException {
         LOG.debug("Retrieving a list of assignment overrides in course " + courseId + " for assignment " + assignmentId);
         String url = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentId + "/overrides", Collections.emptyMap());
         return getListFromCanvas(url);
     }
 
     @Override
-    public Optional<AssignmentOverride> getAssignmentOverride(String courseId, String assignmentId, String id) throws IOException {
+    public Optional<AssignmentOverride> getAssignmentOverride(String courseId, Integer assignmentId, Integer id) throws IOException {
         LOG.debug("Retrieving an assignment overrides in course " + courseId + " for assignment " + assignmentId);
         String url = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentId + "/overrides/" + id, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
