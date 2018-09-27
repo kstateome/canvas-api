@@ -4,10 +4,12 @@ import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.CourseReader;
 import edu.ksu.canvas.interfaces.CourseWriter;
 import edu.ksu.canvas.model.Course;
+import edu.ksu.canvas.model.status.Conclude;
 import edu.ksu.canvas.model.status.Delete;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
+import edu.ksu.canvas.requestOptions.DeleteCourseOptions;
 import edu.ksu.canvas.requestOptions.GetSingleCourseOptions;
 import edu.ksu.canvas.requestOptions.ListActiveCoursesInAccountOptions;
 import edu.ksu.canvas.requestOptions.ListCurrentUserCoursesOptions;
@@ -92,6 +94,28 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
         Optional<Delete> responseParsed = responseParser.parseToObject(Delete.class, response);
 
         return responseParsed.map(r -> r.getDelete()).orElse(false);
+    }
+
+    @Override
+    public Boolean deleteCourse(DeleteCourseOptions options) throws IOException {
+        String url = buildCanvasUrl("courses/" + options.getCourseId(), Collections.emptyMap());
+        Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, options.getOptionsMap());
+        LOG.debug("response " + response.toString());
+        if (response.getErrorHappened() || response.getResponseCode() != 200) {
+            LOG.debug("Failed to delete course, error message: " + response.toString());
+            return false;
+        }
+
+        // The response from Canvas depends on the value of the event parameter.
+        if (options.getEventType() == DeleteCourseOptions.EventType.DELETE) {
+            Optional<Delete> responseParsed = responseParser.parseToObject(Delete.class, response);
+            return responseParsed.map(Delete::getDelete).orElse(false);
+        } else if (options.getEventType() == DeleteCourseOptions.EventType.CONCLUDE) {
+            Optional<Conclude> responseParsed = responseParser.parseToObject(Conclude.class, response);
+            return responseParsed.map(Conclude::getConclude).orElse(false);
+        } else {
+            throw new IllegalArgumentException("Unknown Canvas response: " + response.getContent());
+        }
     }
 
     @Override
