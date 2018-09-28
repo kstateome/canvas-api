@@ -13,7 +13,8 @@ import edu.ksu.canvas.requestOptions.ListCourseAssignmentsOptions;
 import edu.ksu.canvas.requestOptions.ListUserAssignmentOptions;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -24,7 +25,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, AssignmentWriter> implements AssignmentReader, AssignmentWriter{
-    private static final Logger LOG = Logger.getLogger(AssignmentReader.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AssignmentReader.class);
 
     public AssignmentImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
                           int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {

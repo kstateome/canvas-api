@@ -8,14 +8,15 @@ import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.ListRolesOptions;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
 public class RoleImpl extends BaseImpl<Role, RoleReader, RoleWriter> implements RoleReader, RoleWriter {
-    private static final Logger LOG = Logger.getLogger(RoleImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RoleImpl.class);
 
     public RoleImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
                     int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {

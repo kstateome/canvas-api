@@ -4,7 +4,8 @@ import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.util.JsonTestUtil;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 public class FakeRestClient implements RestClient {
-    private static final Logger LOG = Logger.getLogger(FakeRestClient.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FakeRestClient.class);
     public static int NO_TIMEOUT = 1000;
     private Map<String, Response> responseMap = new HashMap<>();
 

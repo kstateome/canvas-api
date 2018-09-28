@@ -13,11 +13,12 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.Optional;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ProgressImpl extends BaseImpl<Progress, ProgressReader, ProgressWriter> implements ProgressReader, ProgressWriter {
 
-    private static final Logger LOG = Logger.getLogger(ProgressImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ProgressImpl.class);
 
     public ProgressImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
                                 int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {

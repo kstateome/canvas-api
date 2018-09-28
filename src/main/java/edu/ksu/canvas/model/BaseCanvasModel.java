@@ -3,7 +3,8 @@ package edu.ksu.canvas.model;
 import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
 import edu.ksu.canvas.impl.GsonResponseParser;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -17,7 +18,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public abstract class BaseCanvasModel {
-    private static final Logger LOG = Logger.getLogger(BaseCanvasModel.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BaseCanvasModel.class);
 
     /* Canvas has post parameter keys in non consistent formats. Occasionally they are 'class[field]' and other times
      * they are just 'field'. This method will create a map with the correct post keys and values based on the

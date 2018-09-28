@@ -1,12 +1,13 @@
 package edu.ksu.canvas.util;
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 
 public class JsonTestUtil {
-    private static final Logger LOG = Logger.getLogger(JsonTestUtil.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JsonTestUtil.class);
     public static String loadJson(String fileName, Class clazz) {
         try {
             InputStream stream = clazz.getResourceAsStream(fileName);

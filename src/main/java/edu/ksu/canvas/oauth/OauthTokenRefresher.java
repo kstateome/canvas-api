@@ -15,17 +15,18 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 
 import com.google.gson.Gson;
 
 import edu.ksu.canvas.impl.GsonResponseParser;
+import org.slf4j.LoggerFactory;
 
 
 public class OauthTokenRefresher implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private static final Logger LOG = Logger.getLogger(OauthTokenRefresher.class);
+    private static final Logger LOG = LoggerFactory.getLogger(OauthTokenRefresher.class);
 
     private static final int TIMEOUT_SECONDS = 10;
     private final String clientId;

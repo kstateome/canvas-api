@@ -10,10 +10,11 @@ import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.requestOptions.GetUsersInAccountOptions;
 import edu.ksu.canvas.requestOptions.GetUsersInCourseOptions;
 import edu.ksu.canvas.util.CanvasURLBuilder;
-import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collections;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserRetrieverUTest extends CanvasTestBase {
-    private static final Logger LOG = Logger.getLogger(UserRetrieverUTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserRetrieverUTest.class);
     @Autowired
     private FakeRestClient fakeRestClient;
     private UserReader userReader;

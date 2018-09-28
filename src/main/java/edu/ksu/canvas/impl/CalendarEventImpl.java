@@ -9,7 +9,8 @@ import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.DeleteCalendarEventOptions;
 import edu.ksu.canvas.requestOptions.ListCalendarEventsOptions;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -21,7 +22,7 @@ import java.util.Optional;
 
 public class CalendarEventImpl extends BaseImpl<CalendarEvent, CalendarReader, CalendarWriter> implements CalendarReader, CalendarWriter {
 
-    private static  final Logger LOG = Logger.getLogger(CalendarEventImpl.class);
+    private static  final Logger LOG = LoggerFactory.getLogger(CalendarEventImpl.class);
 
     /**
      * Construct a new CanvasApi class with an OAuth token

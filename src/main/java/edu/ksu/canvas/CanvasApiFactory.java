@@ -5,8 +5,8 @@ import edu.ksu.canvas.interfaces.*;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.net.RefreshingRestClient;
 import edu.ksu.canvas.oauth.OauthToken;
-
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -23,7 +23,7 @@ import java.util.Map;
 public class CanvasApiFactory {
 
     public static final Integer CANVAS_API_VERSION = 1;
-    private static final Logger LOG = Logger.getLogger(CanvasApiFactory.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CanvasApiFactory.class);
     private static final int DEFAULT_CONNECT_TIMEOUT_MS = 5000;
     private static final int DEFAULT_READ_TIMEOUT_MS = 120000;
     Map<Class<? extends CanvasReader>, Class<? extends BaseImpl>> readerMap;

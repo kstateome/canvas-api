@@ -31,10 +31,11 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GsonResponseParser implements ResponseParser {
-    private static final Logger LOG = Logger.getLogger(GsonResponseParser.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GsonResponseParser.class);
 
     @Override
     public <T> List<T> parseToList(Type type, Response response) {
