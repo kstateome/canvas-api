@@ -127,6 +127,7 @@ public class User extends BaseCanvasModel implements Serializable {
         this.enrollments = enrollments;
     }
 
+    @CanvasField(postKey = "locale")
     public String getLocale() {
         return locale;
     }
