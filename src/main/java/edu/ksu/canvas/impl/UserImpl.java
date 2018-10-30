@@ -45,17 +45,13 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
 
     @Override
     public Optional<User> updateUser(User user) throws InvalidOauthTokenException, IOException {
-        Map<String, List<String>> postParameters = new HashMap<>();
-        postParameters.put("name", Collections.singletonList(user.getName()));
-        postParameters.put("pseudonym[unique_id]", Collections.singletonList(user.getLoginId()));
-        String createdUrl = buildCanvasUrl("accounts/" + String.valueOf(user.getId()) + "/users", Collections.emptyMap());
-        LOG.debug("create URl for user creation : " + createdUrl);
-        Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, postParameters);
-        if (response.getErrorHappened() || ( response.getResponseCode() != 200)) {
-            LOG.debug("Failed to create user, error message: " + response.toString());
-            return Optional.empty();
+        if(user == null || user.getId() == 0) {
+            throw new IllegalArgumentException("User to update must not be null and have a Canvas ID assigned");
         }
-        return responseParser.parseToObject(User.class,response);
+        LOG.debug("updating user in Canvas: " + user.getId());
+        String url = buildCanvasUrl("users/" + String.valueOf(user.getId()), Collections.emptyMap());
+        Response response = canvasMessenger.putToCanvas(oauthToken, url, user.toPostMap());
+        return responseParser.parseToObject(User.class, response);
     }
 
     @Override
