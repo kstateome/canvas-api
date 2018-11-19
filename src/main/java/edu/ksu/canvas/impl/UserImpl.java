@@ -35,7 +35,7 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
     public Optional<User> createUser(User user) throws InvalidOauthTokenException, IOException {
         String createdUrl = buildCanvasUrl( "accounts/" + CanvasConstants.ACCOUNT_ID + "/users", Collections.emptyMap());
         LOG.debug("create URl for user creation : "+ createdUrl);
-        Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, user.toPostMap());
+        Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, user.toPostMap(serializeNulls));
         if (response.getErrorHappened() || ( response.getResponseCode() != 200)) {
             LOG.debug("Failed to create user, error message: " + response.toString());
             return Optional.empty();
@@ -50,7 +50,12 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
         }
         LOG.debug("updating user in Canvas: " + user.getId());
         String url = buildCanvasUrl("users/" + String.valueOf(user.getId()), Collections.emptyMap());
-        Response response = canvasMessenger.putToCanvas(oauthToken, url, user.toPostMap());
+
+        //I tried to use the JSON POST method but Canvas throws odd permission errors when trying to serialize the user
+        //object, even for an admin user. I suspect some field within the User object can't be updated and instead of
+        //ignoring it like most calls, the user call throws a permission error. So I had to fall back to sending a form POST
+        //since it only serializes fields with a @CanvasField annotation
+        Response response = canvasMessenger.putToCanvas(oauthToken, url, user.toPostMap(serializeNulls));
         return responseParser.parseToObject(User.class, response);
     }
 
