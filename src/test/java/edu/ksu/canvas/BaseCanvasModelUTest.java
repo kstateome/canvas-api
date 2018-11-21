@@ -33,7 +33,7 @@ public class BaseCanvasModelUTest {
         TestCanvasModel canvasModel = new TestCanvasModel();
         canvasModel.setField1(FIELD1_VALUE);
 
-        Map<String, List<String>> postMap = canvasModel.toPostMap();
+        Map<String, List<String>> postMap = canvasModel.toPostMap(false);
 
         Assert.assertTrue("PostKey from canvasModel.toPostMap() did not have expected key for field1", postMap.containsKey(expectedKey));
         Assert.assertArrayEquals("Field1Value from canvasModel.toPostMap() did not have expected value for field1", new String[] { FIELD1_VALUE }, postMap.get(expectedKey).toArray());
@@ -46,7 +46,7 @@ public class BaseCanvasModelUTest {
         TestCanvasModel canvasModel = new TestCanvasModel();
         canvasModel.setField2(FIELD2_VALUE);
 
-        Map<String, List<String>> postMap = canvasModel.toPostMap();
+        Map<String, List<String>> postMap = canvasModel.toPostMap(false);
 
         Assert.assertTrue("PostKey from canvasModel.toPostMap() did not have expected key for field2", postMap.containsKey(expectedKey));
         Assert.assertArrayEquals("Field2Value from canvasModel.toPostMap() did not have expected value for field2", new String[] { FIELD2_VALUE }, postMap.get(expectedKey).toArray());
@@ -59,7 +59,7 @@ public class BaseCanvasModelUTest {
         final TestCanvasModel canvasModel = new TestCanvasModel();
         canvasModel.setField3(FIELD3_VALUE);
 
-        final Map<String, List<String>> postMap = canvasModel.toPostMap();
+        final Map<String, List<String>> postMap = canvasModel.toPostMap(false);
 
         Assert.assertTrue("PostKey from canvasModel.toPostMap() did not have expected key for field3", postMap.containsKey(expectedKey));
         Assert.assertArrayEquals("Field3Value from canvasModel.toPostMap() did not have expected value for field3", new String[] { FIELD3_VALUE }, postMap.get(expectedKey).toArray());
@@ -71,7 +71,7 @@ public class BaseCanvasModelUTest {
         final TestCanvasModel canvasModel = new TestCanvasModel();
         canvasModel.setField4(FIELD4_VALUE);
 
-        final Map<String, List<String>> postMap = canvasModel.toPostMap();
+        final Map<String, List<String>> postMap = canvasModel.toPostMap(false);
 
         Assert.assertTrue("PostKey from canvasModel.toPostMap() did not have expected key for field4", postMap.containsKey(expectedKey));
         Assert.assertArrayEquals("Field3Value from canvasModel.toPostMap() did not have expected value for field4", new String[] { String.valueOf(FIELD4_VALUE) }, postMap.get(expectedKey).toArray());
@@ -83,7 +83,7 @@ public class BaseCanvasModelUTest {
         final TestCanvasModel canvasModel = new TestCanvasModel();
         canvasModel.setField5(FIELD5_VALUE);
 
-        final Map<String, List<String>> postMap = canvasModel.toPostMap();
+        final Map<String, List<String>> postMap = canvasModel.toPostMap(false);
         final String[] expectedValue = FIELD5_VALUE.stream().map(String::valueOf).collect(Collectors.toList()).toArray(new String[] {});
 
         Assert.assertTrue("PostKey from canvasModel.toPostMap() did not have expected key for field5", postMap.containsKey(expectedKey));
@@ -93,7 +93,7 @@ public class BaseCanvasModelUTest {
     @Test
     public void postKeysAsArraysContainsNoNullValues() throws Exception {
         final TestCanvasModel canvasModel = new TestCanvasModel();
-        final Map<String, List<String>> postMap = canvasModel.toPostMap();
+        final Map<String, List<String>> postMap = canvasModel.toPostMap(false);
         Assert.assertTrue("Result of canvasModel.toPostMap() is not empty as expected", postMap.isEmpty());
     }
 
