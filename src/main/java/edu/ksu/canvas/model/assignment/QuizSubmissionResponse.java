@@ -15,7 +15,7 @@ public class QuizSubmissionResponse {
 
     public QuizSubmissionResponse(final List<QuizSubmission> quizSubmissions, final List<User> users) {
         this.quizSubmissions = ImmutableList.copyOf(quizSubmissions);
-        this.users = users.stream().collect(Collectors.toMap(User::getId, Function.identity()));
+        this.users = users.stream().distinct().collect(Collectors.toMap(User::getId, Function.identity()));
     }
 
     public List<QuizSubmission> getQuizSubmissions() {
