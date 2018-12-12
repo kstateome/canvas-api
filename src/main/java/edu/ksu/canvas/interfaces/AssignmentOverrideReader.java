@@ -20,9 +20,9 @@ public interface AssignmentOverrideReader extends CanvasReader<AssignmentOverrid
      * Returns details of the the override with the given id.
      * @param courseId Canvas course ID or "sis_course_id:1234" for SIS course ID
      * @param assignmentId Canvas assignment ID
-     * @param id Canvas ID of the specific assignment override to query for
+     * @param overrideId Canvas ID of the specific assignment override to query for
      * @return The requested assigment override object
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<AssignmentOverride> getAssignmentOverride(String courseId, Integer assignmentId, Integer id) throws IOException;
+    Optional<AssignmentOverride> getAssignmentOverride(String courseId, Integer assignmentId, Integer overrideId) throws IOException;
 }

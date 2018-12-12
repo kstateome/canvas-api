@@ -35,9 +35,9 @@ public class AssignmentOverrideImpl extends BaseImpl<AssignmentOverride, Assignm
     }
 
     @Override
-    public Optional<AssignmentOverride> getAssignmentOverride(String courseId, Integer assignmentId, Integer id) throws IOException {
-        LOG.debug("Retrieving an assignment overrides in course " + courseId + " for assignment " + assignmentId);
-        String url = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentId + "/overrides/" + id, Collections.emptyMap());
+    public Optional<AssignmentOverride> getAssignmentOverride(String courseId, Integer assignmentId, Integer overrideId) throws IOException {
+        LOG.debug("Retrieving an assignment override in course " + courseId + " for assignment " + assignmentId);
+        String url = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentId + "/overrides/" + overrideId, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(AssignmentOverride.class, response);
     }
