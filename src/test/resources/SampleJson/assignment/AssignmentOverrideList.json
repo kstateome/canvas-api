@@ -1,0 +1,35 @@
+[
+    {
+        "id": 4,
+        "assignment_id": 80,
+        "title": "Sec1",
+        "due_at": null,
+        "all_day": false,
+        "all_day_date": null,
+        "unlock_at": null,
+        "lock_at": null,
+        "course_section_id": 38
+    },
+    {
+        "id": 5,
+        "assignment_id": 81,
+        "title": "Sec2",
+        "due_at": null,
+        "all_day": false,
+        "all_day_date": null,
+        "unlock_at": null,
+        "lock_at": null,
+        "course_section_id": 39
+    },
+    {
+        "id": 6,
+        "assignment_id": 82,
+        "title": "Sec3",
+        "due_at": null,
+        "all_day": false,
+        "all_day_date": null,
+        "unlock_at": null,
+        "lock_at": null,
+        "course_section_id": 40
+    }
+]
