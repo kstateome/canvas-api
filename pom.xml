@@ -23,6 +23,9 @@
     <name>Kansas State University, Office of Mediated Education</name>
     <url>http://ome.ksu.edu/</url>
   </organization>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
 
   <developers>
     <developer>
