@@ -16,7 +16,7 @@ import java.util.List;
 public class Assignment extends BaseCanvasModel implements Serializable{
 
     private static final long serialVersionUID = 1L;
-    private String id;
+    private Integer id;
     private String name;
     private String description;
     private Date createdAt;
@@ -58,11 +58,11 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     private Boolean notifyOfUpdate;
 
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
