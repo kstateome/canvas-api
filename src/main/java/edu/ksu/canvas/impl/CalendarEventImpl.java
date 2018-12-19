@@ -68,9 +68,9 @@ public class CalendarEventImpl extends BaseImpl<CalendarEvent, CalendarReader, C
     }
 
     @Override
-    public Optional<CalendarEvent> deleteCalendarEvent(Integer id, DeleteCalendarEventOptions options) throws IOException {
-        LOG.info("Deleting calendar event: "+ id);
-        String url = buildCanvasUrl("/calendar_events/"+ id, Collections.emptyMap());
+    public Optional<CalendarEvent> deleteCalendarEvent(DeleteCalendarEventOptions options) throws IOException {
+        LOG.info("Deleting calendar event: "+ options.getId());
+        String url = buildCanvasUrl("/calendar_events/"+ options.getId(), Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, options.getOptionsMap());
         LOG.debug("response " + response.toString());
         if(response.getErrorHappened() || response.getResponseCode() != 200){
