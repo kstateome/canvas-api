@@ -57,7 +57,7 @@ public class CalendarEvent extends BaseCanvasModel implements Serializable {
     private String url;
     private String htmlUrl;
     private LocalDate allDayDate;
-    private Boolean allDay = true;
+    private Boolean allDay;
     private Instant createdAt;
     private Instant updatedAt;
     private String appointmentGroupId;
