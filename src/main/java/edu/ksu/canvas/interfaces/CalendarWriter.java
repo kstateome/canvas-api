@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface CalendarWriter extends CanvasWriter<CalendarEvent, CalendarWriter> {
 
-    Optional<CalendarEvent> deleteCalendarEvent(String id, DeleteCalendarEventOptions options) throws IOException;
+    Optional<CalendarEvent> deleteCalendarEvent(Integer id, DeleteCalendarEventOptions options) throws IOException;
 
     Optional<CalendarEvent> createCalendarEvent(CalendarEvent calendarEvent) throws IOException;
 

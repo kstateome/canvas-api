@@ -58,7 +58,7 @@ public class CalendarWriterUTest extends CanvasTestBase {
         String url = baseUrl + "/api/v1/calendar_events/1";
         fakeRestClient.addSuccessResponse(url, "SampleJson/calendar/DeleteCalendarEvent.json");
         Optional <CalendarEvent> deleteEventOpt =
-            calendarWriter.deleteCalendarEvent("1", new DeleteCalendarEventOptions().cancelReason("Some reason"));
+            calendarWriter.deleteCalendarEvent(1, new DeleteCalendarEventOptions().cancelReason("Some reason"));
         CalendarEvent deleteEvent = deleteEventOpt.orElseThrow(AssertionFailedError::new);
         Assert.assertEquals("Delete Event", deleteEvent.getTitle());
     }
