@@ -36,9 +36,20 @@ public class CalendarWriterUTest extends CanvasTestBase {
         event.setLocationName("Somewhere");
         event.setStartAt(Instant.parse("2018-01-26T12:00:00Z"));
         event.setEndAt(Instant.parse("2018-01-26T13:00:00Z"));
+        event.setContextCode("user_1");
         Optional<CalendarEvent> calendarEvent = calendarWriter.createCalendarEvent(event);
         CalendarEvent returnedEvent = calendarEvent.orElseThrow(AssertionFailedError::new);
         Assert.assertEquals(Integer.valueOf(1), returnedEvent.getId());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testAddCalendarEventNoContext() throws IOException {
+        CalendarEvent event = new CalendarEvent();
+        event.setTitle("New Event");
+        event.setLocationName("Somewhere");
+        event.setStartAt(Instant.parse("2018-01-26T12:00:00Z"));
+        event.setEndAt(Instant.parse("2018-01-26T13:00:00Z"));
+        calendarWriter.createCalendarEvent(event);
     }
 
     @Test

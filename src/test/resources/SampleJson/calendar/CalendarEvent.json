@@ -14,12 +14,12 @@
   "type": "event",
   "description": "<p>Testing Description.</p>",
   "child_events_count": 0,
-  "all_context_codes": "user_73",
-  "context_code": "user_73",
+  "all_context_codes": "user_1",
+  "context_code": "user_1",
   "parent_event_id": null,
   "hidden": false,
   "child_events": [],
   "url": "https://institution.instructure.com/api/v1/calendar_events/95",
-  "html_url": "https://institution.instructure.com/calendar?event_id=95&include_contexts=user_73",
+  "html_url": "https://institution.instructure.com/calendar?event_id=95&include_contexts=user_1",
   "duplicates": []
 }

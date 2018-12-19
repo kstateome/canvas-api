@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class CalendarEventImpl extends BaseImpl<CalendarEvent, CalendarReader, CalendarWriter> implements CalendarReader, CalendarWriter {
@@ -84,6 +85,7 @@ public class CalendarEventImpl extends BaseImpl<CalendarEvent, CalendarReader, C
     public Optional<CalendarEvent> createCalendarEvent(CalendarEvent calendarEvent) throws IOException {
         LOG.info("Creating calendar event.");
         String url = buildCanvasUrl("calendar_events", Collections.emptyMap());
+        Objects.requireNonNull(calendarEvent.getContextCode(), "contextCode must be set to create a calendar event.");
         Response response = canvasMessenger.sendToCanvas(oauthToken, url, calendarEvent.toPostMap());
         return responseParser.parseToObject(CalendarEvent.class, response);
     }
