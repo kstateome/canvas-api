@@ -107,7 +107,7 @@ public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentReader, Enrol
             createdUrl = buildCanvasUrl("courses/" + enrollment.getCourseId() + "/enrollments", Collections.emptyMap());
         }
         LOG.debug("create URl for course enrollments: "+ createdUrl);
-        Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, enrollment.toPostMap());
+        Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, enrollment.toPostMap(serializeNulls));
         if (response.getErrorHappened() ||  response.getResponseCode() != 200) {
             LOG.error("Failed to enroll in course, error message: " + response.toString());
             return Optional.empty();

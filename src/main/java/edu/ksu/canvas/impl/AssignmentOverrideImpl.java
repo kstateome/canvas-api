@@ -26,6 +26,21 @@ public class AssignmentOverrideImpl extends BaseImpl<AssignmentOverride, Assignm
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout,
                 paginationPageSize, serializeNulls);
     }
+    
+    @Override
+    public List<AssignmentOverride> listAssignmentOverrides(String courseId, Integer assignmentId) throws IOException {
+        LOG.debug("Retrieving a list of assignment overrides in course " + courseId + " for assignment " + assignmentId);
+        String url = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentId + "/overrides", Collections.emptyMap());
+        return getListFromCanvas(url);
+    }
+
+    @Override
+    public Optional<AssignmentOverride> getAssignmentOverride(String courseId, Integer assignmentId, Integer overrideId) throws IOException {
+        LOG.debug("Retrieving an assignment override in course " + courseId + " for assignment " + assignmentId);
+        String url = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentId + "/overrides/" + overrideId, Collections.emptyMap());
+        Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
+        return responseParser.parseToObject(AssignmentOverride.class, response);
+    }
 
     @Override
     public Optional<AssignmentOverride> createAssignmentOverride(String courseId, AssignmentOverride assignmentOverride) throws IOException {
