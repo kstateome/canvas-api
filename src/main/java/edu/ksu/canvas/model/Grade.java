@@ -18,6 +18,8 @@ public class Grade implements Serializable {
     private String finalGrade;
     private String unpostedCurrentGrade;
     private String unpostedFinalGrade;
+    private String overrideGrade;
+    private String overrideScore;
 
     public String getHtmlUrl() {
         return htmlUrl;
@@ -59,6 +61,14 @@ public class Grade implements Serializable {
         this.unpostedFinalScore = unpostedFinalScore;
     }
 
+    public String getOverrideScore() {
+        return overrideScore;
+    }
+
+    public void setOverrideScore(String overrideScore) {
+        this.overrideScore = overrideScore;
+    }
+
     public String getCurrentGrade() {
         return currentGrade;
     }
@@ -89,5 +99,13 @@ public class Grade implements Serializable {
 
     public void setUnpostedFinalGrade(String unpostedFinalGrade) {
         this.unpostedFinalGrade = unpostedFinalGrade;
+    }
+
+    public String getOverrideGrade() {
+        return overrideGrade;
+    }
+
+    public void setOverrideGrade(String overrideGrade) {
+        this.overrideGrade = overrideGrade;
     }
 }
