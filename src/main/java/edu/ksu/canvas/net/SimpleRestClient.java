@@ -303,9 +303,13 @@ public class SimpleRestClient implements RestClient {
 
         for (final Map.Entry<String, List<String>> param : parameterMap.entrySet()) {
             final String key = param.getKey();
+            if(param.getValue() == null || param.getValue().isEmpty()) {
+                params.add(new BasicNameValuePair(key, null));
+                LOG.debug("key: " + key + "\tempty value");
+            }
             for (final String value : param.getValue()) {
                 params.add(new BasicNameValuePair(key, value));
-                LOG.debug("key "+ key +"\t value : " + value);
+                LOG.debug("key: "+ key +"\tvalue: " + value);
             }
         }
         return params;

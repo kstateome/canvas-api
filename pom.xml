@@ -23,16 +23,14 @@
     <name>Kansas State University, Office of Mediated Education</name>
     <url>http://ome.ksu.edu/</url>
   </organization>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
 
   <developers>
     <developer>
       <name>Toby Murray</name>
       <email>toby@ksu.edu</email>
-      <organization>Kansas State University, Office of Mediated Education</organization>
-    </developer>
-    <developer>
-      <name>Killian Stone</name>
-      <email>killsto@ksu.edu</email>
       <organization>Kansas State University, Office of Mediated Education</organization>
     </developer>
   </developers>

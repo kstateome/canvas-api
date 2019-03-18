@@ -5,6 +5,7 @@ import edu.ksu.canvas.impl.CourseImpl;
 import edu.ksu.canvas.interfaces.CourseWriter;
 import edu.ksu.canvas.model.Course;
 import edu.ksu.canvas.net.FakeRestClient;
+import edu.ksu.canvas.requestOptions.DeleteCourseOptions;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -60,6 +61,26 @@ public class CourseManagerUTest extends CanvasTestBase {
         fakeRestClient.addSuccessResponse(url, "SampleJson/course/DeleteCourseSuccess.json");
         Boolean deleted = courseWriter.deleteCourse(ARBITRARY_COURSE_ID);
         Assert.assertTrue("course deletion did not return treu", deleted);
+    }
+
+    @Test
+    public void testCourseDeletion_withOptions() throws IOException {
+        String url = baseUrl + "/api/v1/courses/" + ARBITRARY_COURSE_ID;
+        fakeRestClient.addSuccessResponse(url, "SampleJson/course/DeleteCourseSuccess.json");
+        DeleteCourseOptions options = new DeleteCourseOptions(ARBITRARY_COURSE_ID,
+                DeleteCourseOptions.EventType.DELETE);
+        Boolean deleted = courseWriter.deleteCourse(options);
+        Assert.assertTrue("course deletion (with event=delete) did not return true", deleted);
+    }
+
+    @Test
+    public void testCourseConclusion() throws IOException {
+        String url = baseUrl + "/api/v1/courses/" + ARBITRARY_COURSE_ID;
+        fakeRestClient.addSuccessResponse(url, "SampleJson/course/DeleteConcludeCourseSuccess.json");
+        DeleteCourseOptions options = new DeleteCourseOptions(ARBITRARY_COURSE_ID,
+                DeleteCourseOptions.EventType.CONCLUDE);
+        Boolean deleted = courseWriter.deleteCourse(options);
+        Assert.assertTrue("course deletion (with event=conclude) did not return true", deleted);
     }
 
     @Test
