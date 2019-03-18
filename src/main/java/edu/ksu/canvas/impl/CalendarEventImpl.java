@@ -62,9 +62,9 @@ public class CalendarEventImpl extends BaseImpl<CalendarEvent, CalendarReader, C
     }
 
     @Override
-    public Optional<CalendarEvent> getCalendarEvent(String id) throws IOException {
+    public Optional<CalendarEvent> getCalendarEvent(Integer id) throws IOException {
         LOG.info("Getting calendar event: "+ id);
-        String url = buildCanvasUrl("/calendar_events/"+ id, Collections.emptyMap());
+        String url = buildCanvasUrl("/calendar_events/"+ id.toString(), Collections.emptyMap());
         return getFromCanvas(url);
     }
 
@@ -86,14 +86,14 @@ public class CalendarEventImpl extends BaseImpl<CalendarEvent, CalendarReader, C
         LOG.info("Creating calendar event.");
         String url = buildCanvasUrl("calendar_events", Collections.emptyMap());
         Objects.requireNonNull(calendarEvent.getContextCode(), "contextCode must be set to create a calendar event.");
-        Response response = canvasMessenger.sendToCanvas(oauthToken, url, calendarEvent.toPostMap());
+        Response response = canvasMessenger.sendToCanvas(oauthToken, url, calendarEvent.toPostMap(false));
         return responseParser.parseToObject(CalendarEvent.class, response);
     }
 
     @Override
     public Optional<CalendarEvent> editCalendarEvent(CalendarEvent calendarEvent) throws IOException {
         String url = buildCanvasUrl("calendar_events/"+ calendarEvent.getId(), Collections.emptyMap());
-        Response response = canvasMessenger.putToCanvas(oauthToken, url, calendarEvent.toPostMap());
+        Response response = canvasMessenger.putToCanvas(oauthToken, url, calendarEvent.toPostMap(false));
         return responseParser.parseToObject(CalendarEvent.class, response);
     }
 }

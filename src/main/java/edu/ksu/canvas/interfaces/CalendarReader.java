@@ -13,6 +13,6 @@ public interface CalendarReader extends CanvasReader<CalendarEvent, CalendarRead
 
     List<CalendarEvent> listCalendarEvents(String userId, ListCalendarEventsOptions options) throws  IOException;
 
-    Optional<CalendarEvent> getCalendarEvent(String id) throws IOException;
+    Optional<CalendarEvent> getCalendarEvent(Integer id) throws IOException;
 
 }

@@ -66,7 +66,7 @@ public class CalendarReaderUTest extends CanvasTestBase {
     public void testGetCalendarEvent() throws IOException {
         String url = baseUrl + "/api/v1/calendar_events/95";
         fakeRestClient.addSuccessResponse(url, "SampleJson/calendar/CalendarEvent.json");
-        Optional<CalendarEvent> calendarEvent = calendarReader.getCalendarEvent("95");
+        Optional<CalendarEvent> calendarEvent = calendarReader.getCalendarEvent(95);
         Assert.assertTrue(calendarEvent.isPresent());
         CalendarEvent event = calendarEvent.get();
         Assert.assertEquals(Integer.valueOf(95), event.getId());
@@ -78,7 +78,7 @@ public class CalendarReaderUTest extends CanvasTestBase {
         // an expected situation. If the API has optionals I would have expected the optional to be empty.
         String url = baseUrl + "/api/v1/calendar_events/1";
         fakeRestClient.add404Response(url, "SampleJson/calendar/CalendarNotFound.json");
-        calendarReader.getCalendarEvent("1");
+        calendarReader.getCalendarEvent(1);
     }
 
 }
