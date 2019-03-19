@@ -85,6 +85,14 @@ If this code is run on a course with 325 users it would print the following:
     Got a page of users back: 25
     Total users in course: 325
 
+## Integration tests
+
+To run the integration tests copy the file `integration-example.properties` to `integration.properties` and update the values to make sense for the copy of Canvas you are testing again. Be aware this does manipulate the Canvas instance so it's best used against a test/beta instance.
+
+To run the integration tests use:
+
+    mvn -Pfailsafe test
+
 ## Notes
 
 Currently this library is hand coded, however there is a machine readable API specification at

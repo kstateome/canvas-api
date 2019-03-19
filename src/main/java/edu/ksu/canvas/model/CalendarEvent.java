@@ -9,6 +9,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Class to represent Canvas calendar event.
@@ -37,6 +38,52 @@ public class CalendarEvent extends BaseCanvasModel implements Serializable {
         USER;
     }
 
+    public enum Frequency {
+        @SerializedName("daily")
+        DAILY,
+        @SerializedName("weekly")
+        WEEKLY,
+        @SerializedName("monthly")
+        MONTHLY;
+    }
+
+    @CanvasObject(postKey = "")
+    public static class ChildEvent extends BaseCanvasModel implements Serializable {
+
+        public static final long serialVersionUID = 1L;
+
+        private Instant startAt;
+        private Instant endAt;
+        private String contextCode;
+
+        @CanvasField(postKey = "start_at")
+        public Instant getStartAt() {
+            return startAt;
+        }
+
+        public void setStartAt(Instant startAt) {
+            this.startAt = startAt;
+        }
+
+        @CanvasField(postKey = "end_at")
+        public Instant getEndAt() {
+            return endAt;
+        }
+
+        public void setEndAt(Instant endAt) {
+            this.endAt = endAt;
+        }
+
+        @CanvasField(postKey = "context_code")
+        public String getContextCode() {
+            return contextCode;
+        }
+
+        public void setContextCode(String contextCode) {
+            this.contextCode = contextCode;
+        }
+    }
+
     private Integer id;
     private String title;
     // These are both considered to be in UTC.
@@ -54,6 +101,7 @@ public class CalendarEvent extends BaseCanvasModel implements Serializable {
     private String parentEventId;
     private Integer childEventsCount;
     private List<CalendarEvent> childEvents;
+    private List<ChildEvent> childEventsData;
     private String url;
     private String htmlUrl;
     private LocalDate allDayDate;
@@ -67,6 +115,11 @@ public class CalendarEvent extends BaseCanvasModel implements Serializable {
     private Integer participantsPerAppointment;
     private Integer availableSlots;
     private User user;
+
+    private Integer duplicateCount;
+    private Integer duplicateInterval;
+    private Frequency duplicateFrequency;
+    private Boolean duplicateAppend;
     // TODO Group models aren't yet done.
     // private Group group;
 
@@ -335,82 +388,92 @@ public class CalendarEvent extends BaseCanvasModel implements Serializable {
         this.user = user;
     }
 
+    @CanvasField(postKey = "count", overrideObjectKey = "calendar_event[duplicate]")
+    public Integer getDuplicateCount() {
+        return duplicateCount;
+    }
+
+    public void setDuplicateCount(Integer duplicateCount) {
+        this.duplicateCount = duplicateCount;
+    }
+
+    @CanvasField(postKey = "interval", overrideObjectKey = "calendar_event[duplicate]")
+    public Integer getDuplicateInterval() {
+        return duplicateInterval;
+    }
+
+    public void setDuplicateInterval(Integer duplicateInterval) {
+        this.duplicateInterval = duplicateInterval;
+    }
+
+    @CanvasField(postKey = "frequency", overrideObjectKey = "calendar_event[duplicate]")
+    public Frequency getDuplicateFrequency() {
+        return duplicateFrequency;
+    }
+
+    public void setDuplicateFrequency(Frequency duplicateFrequency) {
+        this.duplicateFrequency = duplicateFrequency;
+    }
+
+    @CanvasField(postKey = "append_iterator", overrideObjectKey = "calendar_event[duplicate]")
+    public Boolean getDuplicateAppend() {
+        return duplicateAppend;
+    }
+
+    public void setDuplicateAppend(Boolean duplicateAppend) {
+        this.duplicateAppend = duplicateAppend;
+    }
+
+    public List<ChildEvent> getChildEventsData() {
+        return childEventsData;
+    }
+
+    public void setChildEventsData(List<ChildEvent> childEventsData) {
+        this.childEventsData = childEventsData;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         CalendarEvent that = (CalendarEvent) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
-        if (startAt != null ? !startAt.equals(that.startAt) : that.startAt != null) return false;
-        if (endAt != null ? !endAt.equals(that.endAt) : that.endAt != null) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (locationName != null ? !locationName.equals(that.locationName) : that.locationName != null) return false;
-        if (locationAddress != null ? !locationAddress.equals(that.locationAddress) : that.locationAddress != null)
-            return false;
-        if (contextCode != null ? !contextCode.equals(that.contextCode) : that.contextCode != null) return false;
-        if (effectiveContextCode != null ? !effectiveContextCode.equals(that.effectiveContextCode) : that.effectiveContextCode != null)
-            return false;
-        if (allContextCodes != null ? !allContextCodes.equals(that.allContextCodes) : that.allContextCodes != null)
-            return false;
-        if (workflowState != that.workflowState) return false;
-        if (hidden != null ? !hidden.equals(that.hidden) : that.hidden != null) return false;
-        if (parentEventId != null ? !parentEventId.equals(that.parentEventId) : that.parentEventId != null)
-            return false;
-        if (childEventsCount != null ? !childEventsCount.equals(that.childEventsCount) : that.childEventsCount != null)
-            return false;
-        if (childEvents != null ? !childEvents.equals(that.childEvents) : that.childEvents != null) return false;
-        if (url != null ? !url.equals(that.url) : that.url != null) return false;
-        if (htmlUrl != null ? !htmlUrl.equals(that.htmlUrl) : that.htmlUrl != null) return false;
-        if (allDayDate != null ? !allDayDate.equals(that.allDayDate) : that.allDayDate != null) return false;
-        if (allDay != null ? !allDay.equals(that.allDay) : that.allDay != null) return false;
-        if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
-        if (updatedAt != null ? !updatedAt.equals(that.updatedAt) : that.updatedAt != null) return false;
-        if (appointmentGroupId != null ? !appointmentGroupId.equals(that.appointmentGroupId) : that.appointmentGroupId != null)
-            return false;
-        if (appointmentGroupUrl != null ? !appointmentGroupUrl.equals(that.appointmentGroupUrl) : that.appointmentGroupUrl != null)
-            return false;
-        if (reservation != null ? !reservation.equals(that.reservation) : that.reservation != null) return false;
-        if (participantType != that.participantType) return false;
-        if (participantsPerAppointment != null ? !participantsPerAppointment.equals(that.participantsPerAppointment) : that.participantsPerAppointment != null)
-            return false;
-        if (availableSlots != null ? !availableSlots.equals(that.availableSlots) : that.availableSlots != null)
-            return false;
-        return user != null ? user.equals(that.user) : that.user == null;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(title, that.title) &&
+                Objects.equals(startAt, that.startAt) &&
+                Objects.equals(endAt, that.endAt) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(locationName, that.locationName) &&
+                Objects.equals(locationAddress, that.locationAddress) &&
+                Objects.equals(contextCode, that.contextCode) &&
+                Objects.equals(effectiveContextCode, that.effectiveContextCode) &&
+                Objects.equals(allContextCodes, that.allContextCodes) &&
+                workflowState == that.workflowState &&
+                Objects.equals(hidden, that.hidden) &&
+                Objects.equals(parentEventId, that.parentEventId) &&
+                Objects.equals(childEventsCount, that.childEventsCount) &&
+                Objects.equals(childEvents, that.childEvents) &&
+                Objects.equals(childEventsData, that.childEventsData) &&
+                Objects.equals(url, that.url) &&
+                Objects.equals(htmlUrl, that.htmlUrl) &&
+                Objects.equals(allDayDate, that.allDayDate) &&
+                Objects.equals(allDay, that.allDay) &&
+                Objects.equals(createdAt, that.createdAt) &&
+                Objects.equals(updatedAt, that.updatedAt) &&
+                Objects.equals(appointmentGroupId, that.appointmentGroupId) &&
+                Objects.equals(appointmentGroupUrl, that.appointmentGroupUrl) &&
+                Objects.equals(reservation, that.reservation) &&
+                participantType == that.participantType &&
+                Objects.equals(participantsPerAppointment, that.participantsPerAppointment) &&
+                Objects.equals(availableSlots, that.availableSlots) &&
+                Objects.equals(user, that.user) &&
+                Objects.equals(duplicateCount, that.duplicateCount) &&
+                Objects.equals(duplicateInterval, that.duplicateInterval) &&
+                duplicateFrequency == that.duplicateFrequency &&
+                Objects.equals(duplicateAppend, that.duplicateAppend);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (startAt != null ? startAt.hashCode() : 0);
-        result = 31 * result + (endAt != null ? endAt.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (locationName != null ? locationName.hashCode() : 0);
-        result = 31 * result + (locationAddress != null ? locationAddress.hashCode() : 0);
-        result = 31 * result + (contextCode != null ? contextCode.hashCode() : 0);
-        result = 31 * result + (effectiveContextCode != null ? effectiveContextCode.hashCode() : 0);
-        result = 31 * result + (allContextCodes != null ? allContextCodes.hashCode() : 0);
-        result = 31 * result + (workflowState != null ? workflowState.hashCode() : 0);
-        result = 31 * result + (hidden != null ? hidden.hashCode() : 0);
-        result = 31 * result + (parentEventId != null ? parentEventId.hashCode() : 0);
-        result = 31 * result + (childEventsCount != null ? childEventsCount.hashCode() : 0);
-        result = 31 * result + (childEvents != null ? childEvents.hashCode() : 0);
-        result = 31 * result + (url != null ? url.hashCode() : 0);
-        result = 31 * result + (htmlUrl != null ? htmlUrl.hashCode() : 0);
-        result = 31 * result + (allDayDate != null ? allDayDate.hashCode() : 0);
-        result = 31 * result + (allDay != null ? allDay.hashCode() : 0);
-        result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
-        result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
-        result = 31 * result + (appointmentGroupId != null ? appointmentGroupId.hashCode() : 0);
-        result = 31 * result + (appointmentGroupUrl != null ? appointmentGroupUrl.hashCode() : 0);
-        result = 31 * result + (reservation != null ? reservation.hashCode() : 0);
-        result = 31 * result + (participantType != null ? participantType.hashCode() : 0);
-        result = 31 * result + (participantsPerAppointment != null ? participantsPerAppointment.hashCode() : 0);
-        result = 31 * result + (availableSlots != null ? availableSlots.hashCode() : 0);
-        result = 31 * result + (user != null ? user.hashCode() : 0);
-        return result;
+        return Objects.hash(id, title, startAt, endAt, description, locationName, locationAddress, contextCode, effectiveContextCode, allContextCodes, workflowState, hidden, parentEventId, childEventsCount, childEvents, childEventsData, url, htmlUrl, allDayDate, allDay, createdAt, updatedAt, appointmentGroupId, appointmentGroupUrl, reservation, participantType, participantsPerAppointment, availableSlots, user, duplicateCount, duplicateInterval, duplicateFrequency, duplicateAppend);
     }
 }

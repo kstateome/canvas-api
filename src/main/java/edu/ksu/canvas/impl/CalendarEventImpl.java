@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -86,14 +87,34 @@ public class CalendarEventImpl extends BaseImpl<CalendarEvent, CalendarReader, C
         LOG.info("Creating calendar event.");
         String url = buildCanvasUrl("calendar_events", Collections.emptyMap());
         Objects.requireNonNull(calendarEvent.getContextCode(), "contextCode must be set to create a calendar event.");
-        Response response = canvasMessenger.sendToCanvas(oauthToken, url, calendarEvent.toPostMap(false));
+        Map<String, List<String>> parameters = calendarEvent.toPostMap(false);
+        addChildData(calendarEvent, parameters);
+        Response response = canvasMessenger.sendToCanvas(oauthToken, url, parameters);
         return responseParser.parseToObject(CalendarEvent.class, response);
     }
+
 
     @Override
     public Optional<CalendarEvent> editCalendarEvent(CalendarEvent calendarEvent) throws IOException {
         String url = buildCanvasUrl("calendar_events/"+ calendarEvent.getId(), Collections.emptyMap());
-        Response response = canvasMessenger.putToCanvas(oauthToken, url, calendarEvent.toPostMap(false));
+        Map<String, List<String>> parameters = calendarEvent.toPostMap(false);
+        addChildData(calendarEvent, parameters);
+        Response response = canvasMessenger.putToCanvas(oauthToken, url, parameters);
         return responseParser.parseToObject(CalendarEvent.class, response);
+    }
+
+
+    private void addChildData(CalendarEvent calendarEvent, Map<String, List<String>> parameters) {
+        // This adds in the child events
+        List<CalendarEvent.ChildEvent> childEventsData = calendarEvent.getChildEventsData();
+        if (childEventsData == null) {
+            return;
+        }
+        for(int i = 0; i < childEventsData.size(); i++) {
+            CalendarEvent.ChildEvent childEvent = childEventsData.get(i);
+            Map<String, List<String>> additional  = childEvent.toPostMap(false);
+            String newKey = "calendar_event[child_event_data]["+ i+ "]";
+            additional.forEach((key, value) -> parameters.putIfAbsent(newKey+key, value));
+        }
     }
 }
