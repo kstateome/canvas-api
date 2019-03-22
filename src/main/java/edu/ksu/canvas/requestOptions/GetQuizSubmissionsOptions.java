@@ -19,6 +19,11 @@ public class GetQuizSubmissionsOptions extends BaseOptions {
         }
     }
 
+    /**
+     * Optionally include more information with the returned Quiz Submission objects.
+     * @param includes List of optional includes
+     * @return This object to allow adding more options
+     */
     public GetQuizSubmissionsOptions includes(final List<Include> includes) {
         addEnumList("include[]", includes);
         return this;
