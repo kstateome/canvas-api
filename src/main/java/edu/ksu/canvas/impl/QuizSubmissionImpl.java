@@ -40,7 +40,7 @@ public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionR
         final String url = buildCanvasUrl("courses/" + options.getCourseId() + "/quizzes/" + options.getQuizId() + "/submissions", options.getOptionsMap());
         final List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url);
         final QuizSubmissionWrapper wrapper = parseQuizSubmissionResponses(responses);
-        return new QuizSubmissionResponse(wrapper.getQuizSubmissions(), wrapper.getUsers());
+        return new QuizSubmissionResponse(wrapper.getQuizSubmissions(), wrapper.getUsers(), wrapper.getQuizzes());
     }
 
     @Override
@@ -74,6 +74,7 @@ public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionR
     private static void accumulateQuizSubmissions(final QuizSubmissionWrapper result, final QuizSubmissionWrapper element) {
         result.getQuizSubmissions().addAll(element.getQuizSubmissions());
         result.getUsers().addAll(element.getUsers());
+        result.getQuizzes().addAll(element.getQuizzes());
     }
 
     @Override

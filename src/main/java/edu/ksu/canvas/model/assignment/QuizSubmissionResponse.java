@@ -12,10 +12,12 @@ import java.util.stream.Collectors;
 public class QuizSubmissionResponse {
     private final List<QuizSubmission> quizSubmissions;
     private final Map<Integer, User> users;
+    private final List<Quiz> quizzes;
 
-    public QuizSubmissionResponse(final List<QuizSubmission> quizSubmissions, final List<User> users) {
+    public QuizSubmissionResponse(final List<QuizSubmission> quizSubmissions, final List<User> users, final List<Quiz> quizzes) {
         this.quizSubmissions = ImmutableList.copyOf(quizSubmissions);
         this.users = users.stream().distinct().collect(Collectors.toMap(User::getId, Function.identity()));
+        this.quizzes = quizzes;
     }
 
     public List<QuizSubmission> getQuizSubmissions() {
@@ -30,4 +32,7 @@ public class QuizSubmissionResponse {
         return Optional.ofNullable(users.get(id));
     }
 
+    public List<Quiz> getQuizzes() {
+        return quizzes;
+    }
 }

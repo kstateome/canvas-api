@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.ksu.canvas.model.User;
+import edu.ksu.canvas.model.assignment.Quiz;
 import edu.ksu.canvas.model.assignment.QuizQuestion;
 import edu.ksu.canvas.model.assignment.QuizSubmission;
 
@@ -14,6 +15,7 @@ import edu.ksu.canvas.model.assignment.QuizSubmission;
 public class QuizSubmissionWrapper {
     private List<QuizSubmission> quizSubmissions = new ArrayList<>();
     private List<User> users = new ArrayList<>();
+    private List<Quiz> quizzes = new ArrayList<>();
 
     public List<QuizSubmission> getQuizSubmissions() {
         return quizSubmissions;
@@ -29,5 +31,13 @@ public class QuizSubmissionWrapper {
 
     public void setUsers(final List<User> users) {
         this.users = users;
+    }
+
+    public List<Quiz> getQuizzes() {
+        return quizzes;
+    }
+
+    public void setQuizzes(List<Quiz> quizzes) {
+        this.quizzes = quizzes;
     }
 }
