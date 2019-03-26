@@ -91,6 +91,21 @@ public class CalendarEvent extends BaseCanvasModel implements Serializable {
         public void setContextCode(String contextCode) {
             this.contextCode = contextCode;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            ChildEvent that = (ChildEvent) o;
+            return Objects.equals(startAt, that.startAt) &&
+                    Objects.equals(endAt, that.endAt) &&
+                    Objects.equals(contextCode, that.contextCode);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(startAt, endAt, contextCode);
+        }
     }
 
     private Integer id;
@@ -144,25 +159,35 @@ public class CalendarEvent extends BaseCanvasModel implements Serializable {
         this.locationName = other.locationName;
         this.locationAddress = other.locationAddress;
         this.contextCode = other.contextCode;
-        // The non-modifiable properties.
+        if (other.childEventsData != null) {
+            this.childEventsData = new ArrayList<>();
+            for (ChildEvent child : other.childEventsData) {
+                this.childEventsData.add(new ChildEvent(child));
+            }
+        }
+        this.allDay = other.allDay;
+        // Just valid on creation
+        this.duplicateCount = other.duplicateCount;
+        this.duplicateInterval = other.duplicateInterval;
+        this.duplicateFrequency = other.duplicateFrequency;
+        this.duplicateAppend = other.duplicateAppend;
+
+        // The non-modifiable properties (just read back from canvas).
         this.effectiveContextCode = other.effectiveContextCode;
         this.allContextCodes = other.allContextCodes;
         this.workflowState = other.workflowState;
         this.hidden = other.hidden;
         this.parentEventId = other.parentEventId;
         this.childEventsCount = other.childEventsCount;
-        this.childEvents = new ArrayList<>();
-        for(CalendarEvent child: other.childEvents) {
-            this.childEvents.add(new CalendarEvent(child));
-        }
-        this.childEventsData = new ArrayList<>();
-        for (ChildEvent child: other.childEventsData) {
-            this.childEventsData.add(new ChildEvent(child));
+        if (other.childEvents != null) {
+            this.childEvents = new ArrayList<>();
+            for (CalendarEvent child : other.childEvents) {
+                this.childEvents.add(new CalendarEvent(child));
+            }
         }
         this.url = other.url;
         this.htmlUrl = other.htmlUrl;
         this.allDayDate = other.allDayDate;
-        this.allDay = other.allDay;
         this.createdAt = other.createdAt;
         this.updatedAt = other.updatedAt;
         this.appointmentGroupId = other.appointmentGroupId;
@@ -171,12 +196,9 @@ public class CalendarEvent extends BaseCanvasModel implements Serializable {
         this.participantsPerAppointment = other.participantsPerAppointment;
         this.participantType = other.participantType;
         this.availableSlots = other.availableSlots;
-        this.user = new User(other.user);
-        this.duplicateCount = other.duplicateCount;
-        this.duplicateInterval = other.duplicateInterval;
-        this.duplicateFrequency = other.duplicateFrequency;
-        this.duplicateAppend = other.duplicateAppend;
-
+        if (other.user != null) {
+            this.user = new User(other.user);
+        }
     }
 
     public static long getSerialVersionUID() {
