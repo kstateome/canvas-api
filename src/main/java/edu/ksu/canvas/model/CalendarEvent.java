@@ -56,6 +56,15 @@ public class CalendarEvent extends BaseCanvasModel implements Serializable {
         private Instant endAt;
         private String contextCode;
 
+        public ChildEvent() {
+        }
+
+        public ChildEvent(ChildEvent other) {
+            this.startAt = other.startAt;
+            this.endAt = other.endAt;
+            this.contextCode = other.contextCode;
+        }
+
         @CanvasField(postKey = "start_at")
         public Instant getStartAt() {
             return startAt;
@@ -146,6 +155,10 @@ public class CalendarEvent extends BaseCanvasModel implements Serializable {
         for(CalendarEvent child: other.childEvents) {
             this.childEvents.add(new CalendarEvent(child));
         }
+        this.childEventsData = new ArrayList<>();
+        for (ChildEvent child: other.childEventsData) {
+            this.childEventsData.add(new ChildEvent(child));
+        }
         this.url = other.url;
         this.htmlUrl = other.htmlUrl;
         this.allDayDate = other.allDayDate;
@@ -155,9 +168,15 @@ public class CalendarEvent extends BaseCanvasModel implements Serializable {
         this.appointmentGroupId = other.appointmentGroupId;
         this.appointmentGroupUrl = other.appointmentGroupUrl;
         this.reservation = other.reservation;
+        this.participantsPerAppointment = other.participantsPerAppointment;
         this.participantType = other.participantType;
         this.availableSlots = other.availableSlots;
         this.user = new User(other.user);
+        this.duplicateCount = other.duplicateCount;
+        this.duplicateInterval = other.duplicateInterval;
+        this.duplicateFrequency = other.duplicateFrequency;
+        this.duplicateAppend = other.duplicateAppend;
+
     }
 
     public static long getSerialVersionUID() {
