@@ -91,7 +91,7 @@ To run the integration tests copy the file `integration-example.properties` to `
 
 To run the integration tests use:
 
-    mvn -Pfailsafe test
+    mvn -Pfailsafe verify
 
 ## Notes
 
