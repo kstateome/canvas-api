@@ -1,5 +1,6 @@
 target/
 .settings
+integration.properties
 rebel.xml
 rebel-remote.xml
 *.iml
