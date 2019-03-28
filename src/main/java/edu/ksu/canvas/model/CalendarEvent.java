@@ -3,6 +3,7 @@ package edu.ksu.canvas.model;
 import com.google.gson.annotations.SerializedName;
 import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
+import org.apache.commons.lang3.text.WordUtils;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -29,6 +30,9 @@ public class CalendarEvent extends BaseCanvasModel implements Serializable {
         LOCKED,
         @SerializedName("deleted")
         DELETED;
+
+        @Override
+        public String toString() { return name().toLowerCase(); }
     }
 
     public enum ParticipantType {
@@ -36,6 +40,9 @@ public class CalendarEvent extends BaseCanvasModel implements Serializable {
         GROUP,
         @SerializedName("User")
         USER;
+
+        @Override
+        public String toString() { return WordUtils.capitalizeFully(name()); }
     }
 
     public enum Frequency {
@@ -45,6 +52,9 @@ public class CalendarEvent extends BaseCanvasModel implements Serializable {
         WEEKLY,
         @SerializedName("monthly")
         MONTHLY;
+
+        @Override
+        public String toString() { return name().toLowerCase(); }
     }
 
     @CanvasObject(postKey = "")

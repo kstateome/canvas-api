@@ -33,6 +33,7 @@ public class CalendarEventImpl extends BaseImpl<CalendarEvent, CalendarReader, C
      * @param connectTimeout     Timeout in seconds to use when connecting
      * @param readTimeout        Timeout in seconds to use when waiting for data to come back from an open connection
      * @param paginationPageSize How many objects to request per page on paginated requests
+     * @param serializeNulls     Whether to serialize null values out to Canvas, blanking them out
      */
     public CalendarEventImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize, serializeNulls);
@@ -50,7 +51,7 @@ public class CalendarEventImpl extends BaseImpl<CalendarEvent, CalendarReader, C
 
     @Override
     public List<CalendarEvent> listCurrentUserCalendarEvents(ListCalendarEventsOptions options) throws IOException {
-        LOG.debug("List calendar events for current user");
+        LOG.info("List calendar events for current user");
         String url = buildCanvasUrl("calendar_events", options.getOptionsMap());
         return getListFromCanvas(url);
     }
@@ -96,6 +97,7 @@ public class CalendarEventImpl extends BaseImpl<CalendarEvent, CalendarReader, C
 
     @Override
     public Optional<CalendarEvent> editCalendarEvent(CalendarEvent calendarEvent) throws IOException {
+        LOG.info("Modify calendar event " + calendarEvent.getId());
         String url = buildCanvasUrl("calendar_events/"+ calendarEvent.getId(), Collections.emptyMap());
         Map<String, List<String>> parameters = calendarEvent.toPostMap(false);
         addChildData(calendarEvent, parameters);
