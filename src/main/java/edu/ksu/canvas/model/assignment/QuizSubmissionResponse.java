@@ -22,12 +22,12 @@ import java.util.stream.Collectors;
 public class QuizSubmissionResponse {
     private final List<QuizSubmission> quizSubmissions;
     private final Map<Integer, User> users;
-    private final List<Quiz> quizzes;
+    private final Map<Integer, Quiz> quizzes;
 
     public QuizSubmissionResponse(final List<QuizSubmission> quizSubmissions, final List<User> users, final List<Quiz> quizzes) {
         this.quizSubmissions = ImmutableList.copyOf(quizSubmissions);
         this.users = users.stream().distinct().collect(Collectors.toMap(User::getId, Function.identity()));
-        this.quizzes = ImmutableList.copyOf(quizzes);
+        this.quizzes = quizzes.stream().distinct().collect(Collectors.toMap(Quiz::getId, Function.identity()));
     }
 
     /**
@@ -48,7 +48,7 @@ public class QuizSubmissionResponse {
     }
 
     /**
-     * Find a user associated with the queried quiz submissions if users were requested via GetQuizSubmissionsOptions.
+     * Find a user associated with the queried quiz submissions (if users were requested via GetQuizSubmissionsOptions)
      * @param userId Canvas user ID
      * @return Canvas user record if found
      */
@@ -57,13 +57,23 @@ public class QuizSubmissionResponse {
     }
 
     /**
-     * Get the quiz associated with the queried quiz submissions if quiz was requested via GetQuizSubmissionsOptions.
+     * Get a quiz ID to Quiz map of quizzes returned by the quiz submission query.
      *
+     * Only populated if quizzes were requested in the original query via GetQuizSubmissionsOptions.
      * While this comes from Canvas as a list, I THINK there should only ever be one element given that quiz submissions
      * are queried by specific quiz ID.
      * @return Quiz associated with these submissions
      */
-    public List<Quiz> getQuizzes() {
+    public Map<Integer, Quiz> getQuizzes() {
         return quizzes;
+    }
+
+    /**
+     * Find a quiz associated with the queried quiz submissions (if quizzes were requested via GetQuizSubmissionsOptions)
+     * @param quizId Canvas ID of the quiz
+     * @return The requested Quiz object if found
+     */
+    public Optional<Quiz> getQuiz(final int quizId) {
+        return Optional.ofNullable(quizzes.get(quizId));
     }
 }
