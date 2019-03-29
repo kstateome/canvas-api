@@ -75,6 +75,8 @@ public class EnrollmentUTest extends CanvasTestBase {
         Assert.assertEquals("Expected finalScore to match finalScore in json", "30.24", grade.getFinalScore());
         Assert.assertEquals("Expected currentGrade to match currentGrade in json", "F", grade.getCurrentGrade());
         Assert.assertEquals("Expected finalGrade to match finalGrade in json", "A", grade.getFinalGrade());
+        Assert.assertEquals("Expected overrideGrade to match overrideGrade in json", "B", grade.getOverrideGrade());
+        Assert.assertEquals("Expected overrideScore to match overrideScore in json", "83", grade.getOverrideScore());
     }
 
     @Test

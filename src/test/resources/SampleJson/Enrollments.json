@@ -29,7 +29,9 @@
       "current_score": 45,
       "final_score": 30.24,
       "current_grade": "F",
-      "final_grade": "A"
+      "final_grade": "A",
+      "override_grade": "B",
+      "override_score": 83
     },
     "user": {
       "id": 38,
