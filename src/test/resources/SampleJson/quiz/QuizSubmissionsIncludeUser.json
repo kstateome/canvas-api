@@ -1,0 +1,87 @@
+{
+  "quiz_submissions": [
+    {
+      "id": 508566,
+      "quiz_id": 61279,
+      "quiz_version": 5,
+      "user_id": 218824,
+      "submission_id": 7251043,
+      "score": 1,
+      "kept_score": 1,
+      "started_at": "2018-07-20T20:11:11Z",
+      "end_at": null,
+      "finished_at": "2018-07-20T20:11:18Z",
+      "attempt": 1,
+      "workflow_state": "complete",
+      "fudge_points": null,
+      "quiz_points_possible": 2,
+      "extra_attempts": null,
+      "extra_time": null,
+      "manually_unlocked": null,
+      "validation_token": "token508566",
+      "score_before_regrade": null,
+      "has_seen_results": false,
+      "time_spent": 7,
+      "attempts_left": -1,
+      "overdue_and_needs_submission": false,
+      "excused?": false,
+      "html_url": "https://instance.test.instructure.com/courses/25132/quizzes/61279/submissions/508566",
+      "result_url": "https://instance.test.instructure.com/courses/25132/quizzes/61279/history?quiz_submission_id=508566&version=1"
+    },
+    {
+      "id": 508565,
+      "quiz_id": 61279,
+      "quiz_version": 5,
+      "user_id": 218826,
+      "submission_id": 7251042,
+      "score": 0,
+      "kept_score": 0,
+      "started_at": "2018-07-20T18:50:34Z",
+      "end_at": null,
+      "finished_at": "2018-07-20T18:50:41Z",
+      "attempt": 1,
+      "workflow_state": "complete",
+      "fudge_points": null,
+      "quiz_points_possible": 2,
+      "extra_attempts": null,
+      "extra_time": null,
+      "manually_unlocked": null,
+      "validation_token": "token508565",
+      "score_before_regrade": null,
+      "has_seen_results": false,
+      "time_spent": 7,
+      "attempts_left": -1,
+      "overdue_and_needs_submission": false,
+      "excused?": false,
+      "html_url": "https://instance.test.instructure.com/courses/25132/quizzes/61279/submissions/508565",
+      "result_url": "https://instance.test.instructure.com/courses/25132/quizzes/61279/history?quiz_submission_id=508565&version=1"
+    }
+  ],
+  "users": [
+    {
+      "id": 218824,
+      "name": "User 218824",
+      "sortable_name": "User 218824",
+      "short_name": "User 218824",
+      "sis_user_id": null,
+      "integration_id": "integration218824",
+      "sis_import_id": null,
+      "login_id": "login218824",
+      "avatar_url": "https://instance.test.instructure.com/images/messages/avatar-50.png"
+    },
+    {
+      "id": 218826,
+      "name": "User 218826",
+      "sortable_name": "User 218826",
+      "short_name": "User 218826",
+      "sis_user_id": null,
+      "integration_id": "integration218826",
+      "sis_import_id": null,
+      "login_id": "login218826",
+      "avatar_url": "https://instance.test.instructure.com/images/messages/avatar-50.png"
+    }
+  ],
+  "meta": {
+    "primaryCollection": "quiz_submissions"
+  }
+}

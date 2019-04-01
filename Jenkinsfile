@@ -1,16 +1,12 @@
+@Library('jenkins-shared-libs')
+import edu.ksu.jenkins.*
+
 pipeline {
     agent any
     environment {
         testDeploy = "${BRANCH_NAME}"
 
         regexIgnore = ".*maven-release-plugin.*;.*skipJenkins.*"
-
-        testDeployPromptChannel = "javajavajava"
-        releaseConfirmChannel = "javajavajava"
-        buildFailureNotificationChannel = "javabuilds"
-        releaseBuiltNotificationChannel = "javajavajava"
-
-        JENKINS_AVATAR_URL = "https://jenkins.ome.ksu.edu/static/ce7853c9/images/headshot.png"
     }
 
     tools {
@@ -49,15 +45,15 @@ pipeline {
                     junit '**/target/surefire-reports/*.xml'
                 }
                 failure {
-                    rocketSend avatar: "$JENKINS_AVATAR_URL", message: "${env.JOB_NAME} had unit test failures on branch ${env.BRANCH_NAME} \nRecent Changes - ${getChangeString(10)}\nBuild: ${BUILD_URL}", rawMessage: true
+                    itsChat Constants.DEFAULT_CHANNEL, "${env.JOB_NAME} had unit test failures on branch ${env.BRANCH_NAME} \nRecent Changes - ${getChangeString(10)}\nBuild: ${BUILD_URL}"
                 }
                 unstable {
-                    rocketSend avatar: "$JENKINS_AVATAR_URL", message: "${env.JOB_NAME} had unit test failures on branch ${env.BRANCH_NAME} \nRecent Changes - ${getChangeString(10)}\nBuild: ${BUILD_URL}", rawMessage: true
+                    itsChat Constants.DEFAULT_CHANNEL, "${env.JOB_NAME} had unit test failures on branch ${env.BRANCH_NAME} \nRecent Changes - ${getChangeString(10)}\nBuild: ${BUILD_URL}"
                 }
                 changed {
                     script {
                         if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
-                            rocketSend avatar: "$JENKINS_AVATAR_URL", message: "${env.JOB_NAME} now has passing unit tests on branch ${env.BRANCH_NAME} \nRecent Changes - ${getChangeString(10)}\nBuild: ${BUILD_URL}", rawMessage: true
+                            itsChat Constants.DEFAULT_CHANNEL, "${env.JOB_NAME} now has passing unit tests on branch ${env.BRANCH_NAME} \nRecent Changes - ${getChangeString(10)}\nBuild: ${BUILD_URL}"
                         }
                     }
                 }
@@ -81,7 +77,7 @@ pipeline {
             }
             post {
                 success {
-                    rocketSend avatar: "$JENKINS_AVATAR_URL", channel: 'javabuilds', message: "Successfully generated Maven site documentation for canvas-api: https://jenkins.ome.ksu.edu/maven-site/canvas-api/", rawMessage: true
+                    itsChat 'javabuilds', "Successfully generated Maven site documentation for canvas-api: https://jenkins.ome.ksu.edu/maven-site/canvas-api/"
                 }
             }
         }

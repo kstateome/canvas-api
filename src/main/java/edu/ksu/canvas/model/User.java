@@ -4,6 +4,7 @@ import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,6 +32,31 @@ public class User extends BaseCanvasModel implements Serializable {
     private String timeZone;
     private String bio;
 
+    public User() {
+    }
+
+    public User(User other) {
+        this.id = other.id;
+        this.name = other.name;
+        this.sortableName = other.sortableName;
+        this.shortName = other.shortName;
+        this.sisUserId = other.sisUserId;
+        this.sisImportId = other.sisImportId;
+        this.loginId = other.loginId;
+        this.integrationId = other.integrationId;
+        this.avatarUrl = other.avatarUrl;
+        this.enrollments = new ArrayList<>();
+        for (Enrollment enrollment: other.enrollments) {
+            // TODO
+            //this.enrollments.add( new Enrollment(enrollment));
+        }
+        this.email = other.email;
+        this.locale = other.locale;
+        this.lastLogin = other.lastLogin;
+        this.timeZone = other.timeZone;
+        this.bio = other.bio;
+
+    }
 
     public int getId() {
         return id;
@@ -127,6 +153,7 @@ public class User extends BaseCanvasModel implements Serializable {
         this.enrollments = enrollments;
     }
 
+    @CanvasField(postKey = "locale")
     public String getLocale() {
         return locale;
     }

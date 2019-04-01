@@ -62,7 +62,7 @@ public class AssignmentGroupImpl extends BaseImpl<AssignmentGroup, AssignmentGro
         }
         LOG.debug("Creating new assignment group in course " + courseId + ", group name: " + assignmentGroup.getName());
         String url = buildCanvasUrl("courses/" + courseId + "/assignment_groups", Collections.emptyMap());
-        Response response = canvasMessenger.sendToCanvas(oauthToken, url, assignmentGroup.toPostMap());
+        Response response = canvasMessenger.sendToCanvas(oauthToken, url, assignmentGroup.toPostMap(serializeNulls));
         return responseParser.parseToObject(AssignmentGroup.class, response);
     }
 
@@ -73,7 +73,7 @@ public class AssignmentGroupImpl extends BaseImpl<AssignmentGroup, AssignmentGro
         }
         LOG.debug("Modifying assignment group " + assignmentGroup.getId() + " in course " + courseId);
         String url = buildCanvasUrl("courses/" + courseId + "/assignment_groups/" + assignmentGroup.getId(), Collections.emptyMap());
-        Response response = canvasMessenger.putToCanvas(oauthToken, url, assignmentGroup.toPostMap());
+        Response response = canvasMessenger.putToCanvas(oauthToken, url, assignmentGroup.toPostMap(serializeNulls));
         return responseParser.parseToObject(AssignmentGroup.class, response);
     }
 

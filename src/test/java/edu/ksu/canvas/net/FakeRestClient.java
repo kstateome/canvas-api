@@ -103,4 +103,18 @@ public class FakeRestClient implements RestClient {
         responseMap.put(url, response);
         return response;
     }
+
+    public Response add404Response(String url, String fileName) {
+        return add404Response(url, null, fileName);
+    }
+
+    public Response add404Response(String url, String nextUrl, String fileName) {
+        Response response = new Response();
+        response.setContent(JsonTestUtil.loadJson("/" + fileName, FakeRestClient.class));
+        response.setResponseCode(404);
+        response.setErrorHappened(true);
+        response.setNextLink(nextUrl);
+        responseMap.put(url, response);
+        return response;
+    }
 }
