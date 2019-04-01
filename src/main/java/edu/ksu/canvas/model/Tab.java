@@ -63,6 +63,10 @@ public class Tab extends BaseCanvasModel implements Serializable {
         this.hidden = hidden;
     }
 
+    // TODO: consider creating an enum for the visibility property.  Currently,
+    // visibility cannot be changed through the API, so it seems premature to
+    // do this.
+
     public String getVisibility() {
         return visibility;
     }

@@ -7,13 +7,11 @@ import java.util.List;
 import java.util.Optional;
 
 import com.google.gson.reflect.TypeToken;
-import edu.ksu.canvas.CanvasApiFactory;
 import edu.ksu.canvas.interfaces.TabReader;
 import edu.ksu.canvas.interfaces.TabWriter;
 import edu.ksu.canvas.model.Tab;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
-import edu.ksu.canvas.oauth.NonRefreshableOauthToken;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.UpdateCourseTabOptions;
 import org.apache.log4j.Logger;
@@ -52,28 +50,5 @@ public class TabImpl extends BaseImpl<Tab, TabReader, TabWriter> implements TabR
     @Override
     protected Type listType() {
         return new TypeToken<List<Tab>>(){}.getType();
-    }
-
-    public static void main(String... args) throws Exception {
-        if (args.length != 1) {
-            System.err.println("Usage: TabImpl <canvas_oauth_token>");
-            System.exit(1);
-        }
-
-        CanvasApiFactory apiFactory = new CanvasApiFactory("https://cuboulder.beta.instructure.com");
-        OauthToken token = new NonRefreshableOauthToken(args[0]);
-/*
-        TabReader tabReader = apiFactory.getReader(TabReader.class, token);
-        List<Tab> tabs = tabReader.listAvailableCourseTabs("sis_course_id:109573-01-2187-B-100", false);
-        for (Tab tab : tabs) {
-            System.out.println(tab);
-            System.out.println();
-        }
-*/
-        TabWriter tabWriter = apiFactory.getWriter(TabWriter.class, token);
-        UpdateCourseTabOptions options = new UpdateCourseTabOptions("sis_course_id:109748-01-2187-B-901", "files");
-        options.hidden(true);
-        Tab tab = tabWriter.updateCourseTab(options).get();
-        System.err.println(tab.isHidden());
     }
 }
