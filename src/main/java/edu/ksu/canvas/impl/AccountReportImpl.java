@@ -21,8 +21,9 @@ import java.util.Optional;
 public class AccountReportImpl extends BaseImpl<AccountReport, AccountReportReader, AccountReportWriter> implements AccountReportReader, AccountReportWriter {
     private static final Logger LOG = Logger.getLogger(AccountReport.class);
 
-    public AccountReportImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize) {
-        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize, true);
+    public AccountReportImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
+                             int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {
+        super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, paginationPageSize, serializeNulls);
     }
 
     @Override

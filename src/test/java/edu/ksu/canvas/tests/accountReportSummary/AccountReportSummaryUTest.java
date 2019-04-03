@@ -25,7 +25,7 @@ public class AccountReportSummaryUTest extends CanvasTestBase {
 
     @Before
     public void setupReader() {
-        accountReportSummaryReader = new AccountReportSummaryImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE);
+        accountReportSummaryReader = new AccountReportSummaryImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE, false);
     }
 
     @Test
