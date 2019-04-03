@@ -11,7 +11,6 @@ import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.GetUsersInAccountOptions;
 import edu.ksu.canvas.requestOptions.GetUsersInCourseOptions;
-import edu.ksu.canvas.requestOptions.UpdateUserOptions;
 
 import org.apache.log4j.Logger;
 
@@ -19,9 +18,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -84,14 +81,6 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
         String url = buildCanvasUrl("accounts/" + options.getAccountId() + "/users", options.getOptionsMap());
         List<Response> response = canvasMessenger.getFromCanvas(oauthToken, url);
         return parseUserList(response);
-    }
-
-    @Override
-    public Optional<User> updateUser(UpdateUserOptions options) throws InvalidOauthTokenException, IOException {
-        LOG.debug("Updating basic user account information for Canvas user ID " + options.getInternalUserId());
-        String url = buildCanvasUrl("users/" + options.getInternalUserId(), Collections.emptyMap());
-        Response response = canvasMessenger.putToCanvas(oauthToken, url, options.getOptionsMap());
-        return responseParser.parseToObject(User.class, response);
     }
 
     @Override
