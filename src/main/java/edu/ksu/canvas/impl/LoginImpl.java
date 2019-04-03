@@ -10,7 +10,7 @@ import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 
-import edu.ksu.canvas.requestOptions.UpdateLoginOptions;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -30,16 +30,32 @@ public class LoginImpl extends BaseImpl<Login, LoginReader, LoginWriter> impleme
     @Override
     public List<Login> getLoginForUser(String userId) throws IOException {
         LOG.debug("Retrieving logins for user id " + userId);
-        String url = buildCanvasUrl("users/" + userId + "/logins", emptyMap());
+        String url = buildCanvasUrl(String.format("users/%s/logins", userId), emptyMap());
 
         return getListFromCanvas(url);
     }
 
     @Override
-    public Optional<Login> updateLogin(UpdateLoginOptions options) throws IOException {
-        LOG.debug("Updating login belonging to account ID " + options.getAccountId() + " for user associated with login " + options.getLoginId());
-        String url = buildCanvasUrl("accounts/" + options.getAccountId() + "/logins/" + options.getLoginId(), emptyMap());
-        Response response = canvasMessenger.putToCanvas(oauthToken, url, options.getOptionsMap());
+    public Optional<Login> updateLogin(Login login) throws IOException {
+        LOG.debug(String.format("Updating login %s on account %s", login.getId(), login.getAccountId()));
+        if(StringUtils.isAnyBlank(login.getAccountId(), login.getId())) {
+            throw new IllegalArgumentException("Account ID and Login ID are required to update a login");
+        }
+
+        String url = buildCanvasUrl(String.format("accounts/%s/logins/%s", login.getAccountId(), login.getId()), emptyMap());
+        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, login.toJsonObject(serializeNulls));
+        return responseParser.parseToObject(Login.class, response);
+    }
+
+    @Override
+    public Optional<Login> deleteLogin(Login login) throws IOException {
+        LOG.debug(String.format("Deleting login %s for user %s", login.getId(), login.getUserId()));
+        if(StringUtils.isAnyBlank(login.getUserId(), login.getId())) {
+            throw new IllegalArgumentException("User ID and Login ID are required to delete a login");
+        }
+
+        String url = buildCanvasUrl(String.format("users/%s/logins/%s", login.getUserId(), login.getId()), emptyMap());
+        Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, emptyMap());
         return responseParser.parseToObject(Login.class, response);
     }
 
