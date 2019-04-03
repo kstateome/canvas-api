@@ -1,0 +1,10 @@
+{
+  "id": "files",
+  "html_url": "/courses/1234/files",
+  "full_url": "https://cuboulder.test.instructure.com/courses/1234/files",
+  "position": 8,
+  "hidden": true,
+  "visibility": "admins",
+  "label": "Files",
+  "type": "internal"
+}
