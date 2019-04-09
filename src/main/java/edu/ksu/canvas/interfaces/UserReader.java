@@ -42,5 +42,5 @@ public interface UserReader extends CanvasReader<User, UserReader> {
      *  </ul>
      * @return List of users in an account
      */
-     List<User> getAllUsers(GetUsersInAccountOptions options) throws IOException;
+     List<User> getUsersInAccount(GetUsersInAccountOptions options) throws IOException;
 }

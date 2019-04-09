@@ -76,7 +76,7 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
     }
 
     @Override
-    public List<User> getAllUsers(GetUsersInAccountOptions options) throws IOException {
+    public List<User> getUsersInAccount(GetUsersInAccountOptions options) throws IOException {
         LOG.debug("Retrieving users for account " + options.getAccountId());
         String url = buildCanvasUrl("accounts/" + options.getAccountId() + "/users", options.getOptionsMap());
         return getListFromCanvas(url);
