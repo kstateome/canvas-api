@@ -79,8 +79,7 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
     public List<User> getAllUsers(GetUsersInAccountOptions options) throws IOException {
         LOG.debug("Retrieving users for account " + options.getAccountId());
         String url = buildCanvasUrl("accounts/" + options.getAccountId() + "/users", options.getOptionsMap());
-        List<Response> response = canvasMessenger.getFromCanvas(oauthToken, url);
-        return parseUserList(response);
+        return getListFromCanvas(url);
     }
 
     @Override
@@ -92,18 +91,5 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
     @Override
     protected Class<User> objectType() {
         return User.class;
-    }
-
-    private List<User> parseUserList(final List<Response> response) {
-        return response.stream()
-                       .map(this::parseUserResponse)
-                       .flatMap(Collection::stream)
-                       .collect(Collectors.toList());
-    }
-
-    private List<User> parseUserResponse(final Response response) {
-        Type listType = new TypeToken<List<User>>() {
-        }.getType();
-        return GsonResponseParser.getDefaultGsonParser(true).fromJson(response.getContent(), listType);
     }
 }
