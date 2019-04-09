@@ -57,11 +57,6 @@ public class GetUsersInAccountOptions extends BaseOptions {
         return this;
     }
 
-    public GetUsersInAccountOptions perPage(final String amountPerPage) {
-        addSingleItem("per_page", amountPerPage);
-        return this;
-    }
-
     public GetUsersInAccountOptions include(List<Include> includes) {
         addEnumList("include[]", includes);
         return this;
