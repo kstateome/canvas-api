@@ -12,15 +12,10 @@ import java.util.List;
  *     <li>The overall ordering cardinality of the data brought back</li>
  * </ul>
  * <p>
- * Two commonplace query parameters are also added for querying convenience:
- * <ul>
- *     <li><code>per_page</code> - useful to indicate how many records you want to return back.  Globally defaults to 10,
- *     but may be overridden here.
- *     </li>
- *     <li><code>include[]</code> - useful to include extra values that you are not seeing in the data objects.
- *      Acceptable values are avatar_url, email, last_login and time_zone.
- *     </li>
- * </ul>
+ * A commonplace query parameter is also added for querying convenience:
+ * <br>
+ * <code>include[]</code> - useful to include extra values that are not included in the data objects by default.
+ * Acceptable values are avatar_url, email, last_login and time_zone.
  * <p>
  * The values which are supported with this are found
  * <a href="https://canvas.instructure.com/doc/api/users.html#method.users.index">on the "List users in account"</a> portion of the Canvas API.
@@ -31,13 +26,13 @@ public class GetUsersInAccountOptions extends BaseOptions {
         avatar_url, email, last_login, time_zone
     }
 
-    private int accountId;
+    private String accountId;
 
-    public GetUsersInAccountOptions(final int accountId) {
+    public GetUsersInAccountOptions(final String accountId) {
         this.accountId = accountId;
     }
 
-    public int getAccountId() {
+    public String getAccountId() {
         return accountId;
     }
 
