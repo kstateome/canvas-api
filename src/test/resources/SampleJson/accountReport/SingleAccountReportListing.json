@@ -1,0 +1,17 @@
+{
+  "id": 2,
+  "progress": 50,
+  "parameters": {
+    "enrollment_term_id": "",
+    "enrollments": "1",
+    "extra_text": "Term: All Terms; Reports: enrollments "
+  },
+  "current_line": 25000,
+  "status": "running",
+  "report": "sis_export_csv",
+  "created_at": "2018-05-11T08:30:39-06:00",
+  "started_at": "2018-05-11T08:30:40-06:00",
+  "ended_at": null,
+  "file_url": "https://canvas.example.com/accounts/1/files/0/download",
+  "attachment": null
+}
