@@ -125,23 +125,23 @@ public class UserRetrieverUTest extends CanvasTestBase {
 
     @Test
     public void testGetAllUsersFromAccount() throws Exception {
-        int accountId = 1;
+        String accountId = "1";
         String url = baseUrl + "/api/v1/accounts/" + accountId + "/users";
         fakeRestClient.addSuccessResponse(url, "SampleJson/user/LargeUserList.json");
 
         GetUsersInAccountOptions options = new GetUsersInAccountOptions(accountId);
-        List<User> result = userReader.getAllUsers(options);
+        List<User> result = userReader.getUsersInAccount(options);
         Assert.assertEquals(100, result.size());
     }
 
     @Test
     public void testGetAllUsersBySearchTermFromAccount() throws Exception {
-        int accountId = 1;
+        String accountId = "1";
         String url = baseUrl + "/api/v1/accounts/" + accountId + "/users?search_term=test user47";
         fakeRestClient.addSuccessResponse(url, "SampleJson/user/IndividualUserList.json");
 
         GetUsersInAccountOptions options = new GetUsersInAccountOptions(accountId).searchTerm("test user47");
-        List<User> result = userReader.getAllUsers(options);
+        List<User> result = userReader.getUsersInAccount(options);
         Assert.assertEquals(1, result.size());
     }
 }
