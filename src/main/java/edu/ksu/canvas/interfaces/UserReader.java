@@ -1,6 +1,7 @@
 package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.User;
+import edu.ksu.canvas.requestOptions.GetUsersInAccountOptions;
 import edu.ksu.canvas.requestOptions.GetUsersInCourseOptions;
 
 import java.io.IOException;
@@ -27,4 +28,20 @@ public interface UserReader extends CanvasReader<User, UserReader> {
      * @throws IOException When there is an error communicating with Canvas
      */
      Optional<User> showUserDetails(String userIdentifier) throws IOException;
+
+    /**
+     * Retrieve a list of all users for an account.
+     * @param options API options for this call.  Acceptable options are:
+     *  <ul>
+     *    <li><code>search_term</code> - what is being used to search for users</li>
+     *    <li><code>sort</code> - what order the users are coming back in;
+     *                acceptable values here are <code>username</code>, <code>email</code>, <code>sis_id</code> and
+     *                <code>last_login</code></li>
+     *    <li><code>order</code> - what order the users are coming back in;
+     *                acceptable values here are <code>asc</code> and <code>desc</code></li>
+     *  </ul>
+     * @return List of users in an account
+     * @throws IOException When there is an error communicating with Canvas
+     */
+     List<User> getUsersInAccount(GetUsersInAccountOptions options) throws IOException;
 }

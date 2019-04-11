@@ -6,8 +6,10 @@ import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.impl.QuizSubmissionImpl;
 import edu.ksu.canvas.interfaces.QuizSubmissionReader;
 import edu.ksu.canvas.model.assignment.QuizSubmission;
+import edu.ksu.canvas.model.assignment.QuizSubmissionResponse;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.net.Response;
+import edu.ksu.canvas.requestOptions.GetQuizSubmissionsOptions;
 import edu.ksu.canvas.util.CanvasURLBuilder;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -59,7 +61,28 @@ public class QuizSubmissionRetrieverUTest extends CanvasTestBase {
 
         Assert.assertTrue(quizSubmissionReader.getQuizSubmissions(someCourseId, someQuizId).isEmpty());
     }
-    
+
+    @Test
+    public void testQuizSubmissions_includeUsers() throws Exception {
+        final String someCourseId = "25132";
+        final String someQuizId = "61279";
+        final Response notErroredResponse = new Response();
+        notErroredResponse.setErrorHappened(false);
+        notErroredResponse.setResponseCode(200);
+        final String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQuizId + "/submissions?include[]=user";
+        fakeRestClient.addSuccessResponse(url, "SampleJson/quiz/QuizSubmissionsIncludeUser.json");
+        final GetQuizSubmissionsOptions options = new GetQuizSubmissionsOptions(someCourseId, someQuizId, GetQuizSubmissionsOptions.Include.USER);
+        final QuizSubmissionResponse response = quizSubmissionReader.getQuizSubmissions(options);
+
+        Assert.assertNotNull(response);
+        Assert.assertNotNull(response.getQuizSubmissions());
+        Assert.assertNotNull(response.getUsers());
+        Assert.assertEquals(2, response.getQuizSubmissions().size());
+        Assert.assertEquals(2, response.getUsers().size());
+        Assert.assertEquals((Integer) 508566, response.getQuizSubmissions().get(0).getId());
+        Assert.assertEquals("User 218826", response.getUser(218826).get().getName());
+    }
+
     @Test
     public void testSisUserMasqueradeRetrieveQuizSubmissions() throws Exception{
         String someUserId = "8991123123";

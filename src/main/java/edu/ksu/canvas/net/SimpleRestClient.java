@@ -16,7 +16,9 @@ import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -25,7 +27,9 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.params.HttpParams;
@@ -47,36 +51,40 @@ public class SimpleRestClient implements RestClient {
     @Override
     public Response sendApiGet(@NotNull OauthToken token, @NotNull String url,
                                int connectTimeout, int readTimeout) throws IOException {
+
         LOG.debug("Sending GET request to URL: " + url);
         Long beginTime = System.currentTimeMillis();
         Response response = new Response();
-        HttpClient httpClient = createHttpClient(connectTimeout, readTimeout);
-        HttpGet httpGet = new HttpGet(url);
-        httpGet.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
+        try (CloseableHttpClient httpClient = createHttpClient(connectTimeout, readTimeout)) {
+            HttpGet httpGet = new HttpGet(url);
+            httpGet.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
 
-        HttpResponse httpResponse = httpClient.execute(httpGet);
-        checkHeaders(httpResponse, httpGet);
+            try (CloseableHttpResponse httpResponse = httpClient.execute(httpGet)) {
+                checkHeaders(httpResponse, httpGet);
 
-        //deal with the actual content
-        response.setContent(handleResponse(httpResponse, httpGet));
-        response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
-        Long endTime = System.currentTimeMillis();
-        LOG.debug("GET call took: " + (endTime - beginTime) + "ms");
+                //deal with the actual content
+                response.setContent(handleResponse(httpResponse, httpGet));
+                response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
+                Long endTime = System.currentTimeMillis();
+                LOG.debug("GET call took: " + (endTime - beginTime) + "ms");
 
-        //deal with pagination
-        Header linkHeader = httpResponse.getFirstHeader("Link");
-        String linkHeaderValue = linkHeader == null ? null : httpResponse.getFirstHeader("Link").getValue();
-        if(linkHeaderValue == null) {
-            return response;
-        }
-        List<String> links = Arrays.asList(linkHeaderValue.split(","));
-        for (String link : links) {
-            if(link.contains("rel=\"next\"")) {
-                LOG.debug("response has more pages");
-                String nextLink = link.substring(1, link.indexOf(';')-1); //format is <http://.....>; rel="next"
-                response.setNextLink(nextLink);
+                //deal with pagination
+                Header linkHeader = httpResponse.getFirstHeader("Link");
+                String linkHeaderValue = linkHeader == null ? null : httpResponse.getFirstHeader("Link").getValue();
+                if (linkHeaderValue == null) {
+                    return response;
+                }
+                List<String> links = Arrays.asList(linkHeaderValue.split(","));
+                for (String link : links) {
+                    if (link.contains("rel=\"next\"")) {
+                        LOG.debug("response has more pages");
+                        String nextLink = link.substring(1, link.indexOf(';') - 1); //format is <http://.....>; rel="next"
+                        response.setNextLink(nextLink);
+                    }
+                }
             }
         }
+
         return response;
     }
 
@@ -110,14 +118,18 @@ public class SimpleRestClient implements RestClient {
 
         StringEntity requestBody = new StringEntity(json, ContentType.APPLICATION_JSON);
         action.setEntity(requestBody);
-        HttpResponse httpResponse = httpClient.execute(action);
+        try {
+            HttpResponse httpResponse = httpClient.execute(action);
 
-        String content = handleResponse(httpResponse, action);
+            String content = handleResponse(httpResponse, action);
 
-        response.setContent(content);
-        response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
-        Long endTime = System.currentTimeMillis();
-        LOG.debug("POST call took: " + (endTime - beginTime) + "ms");
+            response.setContent(content);
+            response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
+            Long endTime = System.currentTimeMillis();
+            LOG.debug("POST call took: " + (endTime - beginTime) + "ms");
+        } finally {
+            action.releaseConnection();
+        }
 
         return response;
     }
@@ -242,6 +254,7 @@ public class SimpleRestClient implements RestClient {
             LOG.error("HTTP status " + statusCode + " returned from " + request.getURI());
             throw new CanvasException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
         }
+        //TODO Handling of 422 when the entity is malformed.
     }
 
     /**
@@ -285,12 +298,14 @@ public class SimpleRestClient implements RestClient {
         return new BasicResponseHandler().handleResponse(httpResponse);
     }
 
-    private HttpClient createHttpClient(int connectTimeout, int readTimeout) {
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpParams params = httpClient.getParams();
-        params.setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, connectTimeout);
-        params.setParameter(CoreConnectionPNames.SO_TIMEOUT, readTimeout);
-        return httpClient;
+    private CloseableHttpClient createHttpClient(int connectTimeout, int readTimeout) {
+        RequestConfig config = RequestConfig.custom()
+                .setConnectTimeout(connectTimeout)
+                .setSocketTimeout(readTimeout)
+                .build();
+        return HttpClientBuilder.create()
+                .setDefaultRequestConfig(config)
+                .build();
     }
 
     private static List<NameValuePair> convertParameters(final Map<String, List<String>> parameterMap) {

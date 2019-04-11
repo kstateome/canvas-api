@@ -154,6 +154,7 @@ public class CanvasApiFactory {
         readerMap.put(AssignmentReader.class, AssignmentImpl.class);
         readerMap.put(ConversationReader.class, ConversationImpl.class);
         readerMap.put(CourseReader.class, CourseImpl.class);
+        readerMap.put(TabReader.class, TabImpl.class);
         readerMap.put(EnrollmentReader.class, EnrollmentImpl.class);
         readerMap.put(QuizQuestionReader.class, QuizQuestionImpl.class);
         readerMap.put(QuizReader.class, QuizImpl.class);
@@ -168,12 +169,16 @@ public class CanvasApiFactory {
         readerMap.put(RoleReader.class, RoleImpl.class);
         readerMap.put(ExternalToolReader.class, ExternalToolImpl.class);
         readerMap.put(LoginReader.class, LoginImpl.class);
+        readerMap.put(CalendarReader.class, CalendarEventImpl.class);
+        readerMap.put(AccountReportSummaryReader.class, AccountReportSummaryImpl.class);
+        readerMap.put(AccountReportReader.class, AccountReportImpl.class);
 
         writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImpl.class);
         writerMap.put(AdminWriter.class, AdminImpl.class);
         writerMap.put(AssignmentWriter.class, AssignmentImpl.class);
         writerMap.put(ConversationWriter.class, ConversationImpl.class);
         writerMap.put(CourseWriter.class, CourseImpl.class);
+        writerMap.put(TabWriter.class, TabImpl.class);
         writerMap.put(EnrollmentWriter.class, EnrollmentImpl.class);
         writerMap.put(QuizQuestionWriter.class, QuizQuestionImpl.class);
         writerMap.put(QuizWriter.class, QuizImpl.class);
@@ -188,5 +193,8 @@ public class CanvasApiFactory {
         writerMap.put(RoleWriter.class, RoleImpl.class);
         writerMap.put(ExternalToolWriter.class, ExternalToolImpl.class);
         writerMap.put(LoginWriter.class, LoginImpl.class);
+        writerMap.put(CalendarWriter.class, CalendarEventImpl.class);
+        writerMap.put(AccountReportSummaryWriter.class, AccountReportSummaryImpl.class);
+        writerMap.put(AccountReportWriter.class, AccountReportImpl.class);
     }
 }
