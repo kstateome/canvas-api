@@ -41,6 +41,7 @@ public interface UserReader extends CanvasReader<User, UserReader> {
      *                acceptable values here are <code>asc</code> and <code>desc</code></li>
      *  </ul>
      * @return List of users in an account
+     * @throws IOException When there is an error communicating with Canvas
      */
      List<User> getUsersInAccount(GetUsersInAccountOptions options) throws IOException;
 }

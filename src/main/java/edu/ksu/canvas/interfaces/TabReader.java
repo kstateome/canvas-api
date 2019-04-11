@@ -20,7 +20,7 @@ public interface TabReader extends CanvasReader<Tab, TabReader> {
      * @param courseId identifies the course
      * @param includeExternalTools includes external tool tabs in the results
      * @return list of available tabs
-     * @throws IOException
+     * @throws IOException When there is an error communicating with Canvas
      */
     List<Tab> listAvailableCourseTabs(String courseId, boolean includeExternalTools) throws IOException;
 }
