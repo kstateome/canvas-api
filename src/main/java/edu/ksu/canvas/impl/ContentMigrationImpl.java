@@ -8,7 +8,7 @@ import edu.ksu.canvas.model.ContentMigration;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
-import edu.ksu.canvas.requestOptions.CreateContentMigrationOptions;
+import edu.ksu.canvas.requestOptions.CreateCourseContentMigrationOptions;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -36,8 +36,8 @@ public class ContentMigrationImpl extends BaseImpl<ContentMigration, ContentMigr
     }
 
     @Override
-    public Optional<ContentMigration> createContentMigration(CreateContentMigrationOptions options, ContentMigration contentMigration) throws IOException {
-        LOG.debug("creating content migration");
+    public Optional<ContentMigration> createCourseContentMigration(CreateCourseContentMigrationOptions options) throws IOException {
+        LOG.debug("creating course content migration");
         String url = buildCanvasUrl("courses/" + options.getDestinationCourseId() + "/content_migrations", Collections.emptyMap());
         Response response = canvasMessenger.sendToCanvas(oauthToken, url, options.getOptionsMap());
         return responseParser.parseToObject(ContentMigration.class, response);

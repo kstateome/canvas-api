@@ -1,6 +1,6 @@
 package edu.ksu.canvas.requestOptions;
 
-public class CreateContentMigrationOptions extends BaseOptions {
+public class CreateCourseContentMigrationOptions extends BaseOptions {
 
     public enum MigrationType {
         course_copy_importer;
@@ -19,7 +19,7 @@ public class CreateContentMigrationOptions extends BaseOptions {
 
     private final MigrationType migrationType;
     
-    public CreateContentMigrationOptions(String destinationCourseId, String sourceCourseId, MigrationType migrationType) {
+    public CreateCourseContentMigrationOptions(String destinationCourseId, String sourceCourseId, MigrationType migrationType) {
         this.destinationCourseId = destinationCourseId;
         this.sourceCourseId = sourceCourseId;
         this.migrationType = migrationType;
