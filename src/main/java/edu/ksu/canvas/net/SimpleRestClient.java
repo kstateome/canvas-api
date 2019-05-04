@@ -60,7 +60,6 @@ public class SimpleRestClient implements RestClient {
             httpGet.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
 
             try (CloseableHttpResponse httpResponse = httpClient.execute(httpGet)) {
-                checkHeaders(httpResponse, httpGet);
 
                 //deal with the actual content
                 response.setContent(handleResponse(httpResponse, httpGet));
