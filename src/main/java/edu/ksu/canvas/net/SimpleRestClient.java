@@ -1,6 +1,8 @@
 package edu.ksu.canvas.net;
 
 import com.google.gson.Gson;
+import edu.ksu.canvas.errors.ErrorHandler;
+import edu.ksu.canvas.errors.UserErrorHandler;
 import edu.ksu.canvas.exception.CanvasException;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.exception.ObjectNotFoundException;
@@ -47,6 +49,13 @@ import java.util.stream.Collectors;
 
 public class SimpleRestClient implements RestClient {
     private static final Logger LOG = Logger.getLogger(SimpleRestClient.class);
+
+    private List<ErrorHandler> errorHandlers;
+
+    public SimpleRestClient() {
+        errorHandlers = new ArrayList<>();
+        errorHandlers.add(new UserErrorHandler());
+    }
 
     @Override
     public Response sendApiGet(@NotNull OauthToken token, @NotNull String url,
@@ -252,9 +261,19 @@ public class SimpleRestClient implements RestClient {
         // If we receive a 5xx exception, we should not wrap it in an unchecked exception for upstream clients to deal with.
         if(statusCode < 200 || (statusCode > 299 && statusCode <= 499)) {
             LOG.error("HTTP status " + statusCode + " returned from " + request.getURI());
-            throw new CanvasException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
+            handleError(request, httpResponse);
         }
         //TODO Handling of 422 when the entity is malformed.
+    }
+
+    private void handleError(HttpRequestBase httpRequest, HttpResponse httpResponse) {
+        for (ErrorHandler handler : errorHandlers) {
+            if (handler.shouldHandle(httpRequest, httpResponse)) {
+                handler.handle(httpRequest, httpResponse);
+            }
+        }
+        String canvasErrorString = extractErrorMessageFromResponse(httpResponse);
+        throw new CanvasException(canvasErrorString, String.valueOf(httpRequest.getURI()));
     }
 
     /**
@@ -268,6 +287,7 @@ public class SimpleRestClient implements RestClient {
      */
     private String extractErrorMessageFromResponse(HttpResponse response) {
         String contentType = response.getEntity().getContentType().getValue();
+        String message = null;
         if(contentType.contains("application/json")) {
             Gson gson = GsonResponseParser.getDefaultGsonParser(false);
             String responseBody = null;
@@ -278,19 +298,19 @@ public class SimpleRestClient implements RestClient {
                 List<ErrorMessage> errors = errorResponse.getErrors();
                 if(errors != null) {
                     //I have only ever seen a single error message but it is an array so presumably there could be more.
-                    return errors.stream().map(e -> e.getMessage()).collect(Collectors.joining(", "));
+                    message = errors.stream().map(ErrorMessage::getMessage).collect(Collectors.joining(", "));
                 }
                 else{
-                    return responseBody;
+                    message = responseBody;
                 }
             } catch (Exception e) {
                 //Returned JSON was not in expected format. Fall back to returning the whole response body, if any
                 if(StringUtils.isNotBlank(responseBody)) {
-                    return responseBody;
+                    message = responseBody;
                 }
             }
         }
-        return null;
+        return message;
     }
 
     private String handleResponse(HttpResponse httpResponse, HttpRequestBase request) throws IOException {
