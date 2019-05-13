@@ -9,6 +9,7 @@ import edu.ksu.canvas.model.User;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
+import edu.ksu.canvas.requestOptions.CreateUserOptions;
 import edu.ksu.canvas.requestOptions.GetUsersInAccountOptions;
 import edu.ksu.canvas.requestOptions.GetUsersInCourseOptions;
 
@@ -19,6 +20,7 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -33,9 +35,16 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
 
     @Override
     public Optional<User> createUser(User user) throws InvalidOauthTokenException, IOException {
+        return createUser(user, new CreateUserOptions());
+    }
+
+    @Override
+    public Optional<User> createUser(User user, CreateUserOptions options) throws InvalidOauthTokenException, IOException {
         String createdUrl = buildCanvasUrl("accounts/" + CanvasConstants.ACCOUNT_ID + "/users", Collections.emptyMap());
         LOG.debug("create URl for user creation : " + createdUrl);
-        Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, user.toPostMap(serializeNulls));
+        Map<String, List<String>> parameterMap = options.getOptionsMap();
+        parameterMap.putAll(user.toPostMap(serializeNulls));
+        Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, parameterMap);
         if (response.getErrorHappened() || (response.getResponseCode() != 200)) {
             LOG.debug("Failed to create user, error message: " + response.toString());
             return Optional.empty();
