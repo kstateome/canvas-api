@@ -12,16 +12,29 @@ public class CanvasException extends RuntimeException {
 
     private final String canvasErrorMessage;
     private final String requestUrl;
+    private final Object error;
 
     public CanvasException() {
         canvasErrorMessage = null;
         requestUrl = null;
+        error = null;
     }
 
     public CanvasException(String canvasErrorString, String url) {
         super(String.format("Error from URL %s : %s", url, canvasErrorString));
         canvasErrorMessage = canvasErrorString;
         requestUrl = url;
+        error = null;
+    }
+
+    public CanvasException(String canvasErrorString, String url, Object error) {
+        canvasErrorMessage = canvasErrorString;
+        requestUrl = url;
+        this.error = error;
+    }
+
+    public Object getError() {
+        return error;
     }
 
     public String getCanvasErrorMessage() {
