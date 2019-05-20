@@ -172,6 +172,7 @@ public class CanvasApiFactory {
         readerMap.put(CalendarReader.class, CalendarEventImpl.class);
         readerMap.put(AccountReportSummaryReader.class, AccountReportSummaryImpl.class);
         readerMap.put(AccountReportReader.class, AccountReportImpl.class);
+        readerMap.put(ContentMigrationReader.class, ContentMigrationImpl.class);
 
         writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImpl.class);
         writerMap.put(AdminWriter.class, AdminImpl.class);
@@ -196,5 +197,6 @@ public class CanvasApiFactory {
         writerMap.put(CalendarWriter.class, CalendarEventImpl.class);
         writerMap.put(AccountReportSummaryWriter.class, AccountReportSummaryImpl.class);
         writerMap.put(AccountReportWriter.class, AccountReportImpl.class);
+        writerMap.put(ContentMigrationWriter.class, ContentMigrationImpl.class);
     }
 }
