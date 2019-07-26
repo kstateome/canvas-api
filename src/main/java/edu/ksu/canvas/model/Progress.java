@@ -27,7 +27,7 @@ public class Progress implements Serializable {
     private String contextType;
     private Integer userId;
     private String tag;
-    private Integer completion;
+    private Double completion;
     private String workflowState;
     private Date createdAt;
     private Date updatedAt;
@@ -74,11 +74,11 @@ public class Progress implements Serializable {
         this.tag = tag;
     }
 
-    public Integer getCompletion() {
+    public Double getCompletion() {
         return completion;
     }
 
-    public void setCompletion(Integer completion) {
+    public void setCompletion(Double completion) {
         this.completion = completion;
     }
 
