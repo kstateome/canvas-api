@@ -19,7 +19,7 @@ public class CourseSettings  extends BaseCanvasModel implements Serializable {
     private Boolean allowStudentDiscussionEditing;
     private Boolean filterSpeedGraderByStudentGroup;
     private Boolean gradingStandardEnabled;
-    private Boolean gradingStandardId;
+    private Long gradingStandardId;
     private Boolean allowStudentOrganizedGroups;
     private Boolean hideFinalGrades;
     private Boolean hideDistributionGraphs;
@@ -84,11 +84,11 @@ public class CourseSettings  extends BaseCanvasModel implements Serializable {
         this.gradingStandardEnabled = gradingStandardEnabled;
     }
 
-    public Boolean getGradingStandardId() {
+    public Long getGradingStandardId() {
         return gradingStandardId;
     }
 
-    public void setGradingStandardId(Boolean gradingStandardId) {
+    public void setGradingStandardId(Long gradingStandardId) {
         this.gradingStandardId = gradingStandardId;
     }
 
