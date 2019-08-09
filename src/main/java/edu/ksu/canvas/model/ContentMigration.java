@@ -11,6 +11,7 @@ public class ContentMigration extends BaseCanvasModel implements Serializable {
     private String type;
     private String migrationType;
     private String name;
+    private String progressUrl;
     private String worksflowState;
 
     @CanvasField(postKey = "id")
@@ -47,6 +48,15 @@ public class ContentMigration extends BaseCanvasModel implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @CanvasField(postKey = "progress_url")
+    public String getProgressUrl() {
+        return progressUrl;
+    }
+
+    public void setProgressUrl(String progressUrl) {
+        this.progressUrl = progressUrl;
     }
 
     @CanvasField(postKey = "workflow_state")
