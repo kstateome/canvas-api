@@ -11,6 +11,7 @@ import edu.ksu.canvas.oauth.OauthToken;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Collections;
 import java.util.Optional;
 import org.apache.log4j.Logger;
 
@@ -26,9 +27,16 @@ public class ProgressImpl extends BaseImpl<Progress, ProgressReader, ProgressWri
 
     @Override
     public Optional<Progress> getProgress(String url) throws IOException {
-        LOG.info("getting the progress of an asynchronous API operation with url " + url);
+        LOG.debug("getting the progress of an asynchronous API operation with url " + url);
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(Progress.class, response);
+    }
+
+    @Override
+    public Optional<Progress> getProgress(Integer progressId) throws IOException {
+        LOG.debug("getting the progress of an asynchronous operation by ID: " + progressId);
+        String url = buildCanvasUrl(String.format("progress/%d", progressId), Collections.emptyMap());
+        return responseParser.parseToObject(Progress.class, canvasMessenger.getSingleResponseFromCanvas(oauthToken, url));
     }
 
     @Override
