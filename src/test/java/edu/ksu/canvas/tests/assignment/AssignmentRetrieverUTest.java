@@ -13,15 +13,12 @@ import edu.ksu.canvas.requestOptions.ListCourseAssignmentsOptions;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
 
 public class AssignmentRetrieverUTest extends CanvasTestBase {
-    private static final Logger LOG = LoggerFactory.getLogger(AssignmentRetrieverUTest.class);
     @Autowired
     private FakeRestClient fakeRestClient;
     private AssignmentReader assignmentReader;
