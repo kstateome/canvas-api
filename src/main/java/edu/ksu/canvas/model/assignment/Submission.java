@@ -6,6 +6,7 @@ import edu.ksu.canvas.model.BaseCanvasModel;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @CanvasObject(postKey = "submission")
 public class Submission extends BaseCanvasModel implements Serializable {
@@ -22,7 +23,7 @@ public class Submission extends BaseCanvasModel implements Serializable {
     private String htmlUrl;
     private String previewUrl;
     private Double score;
-    private String submissionComments;
+    private List<SubmissionComment> submissionComments;
     private String submissionType;
     private Date submittedAt;
     private String url;
@@ -123,11 +124,11 @@ public class Submission extends BaseCanvasModel implements Serializable {
         this.score = score;
     }
 
-    public String getSubmissionComments() {
+    public List<SubmissionComment> getSubmissionComments() {
         return submissionComments;
     }
 
-    public void setSubmissionComments(String submissionComments) {
+    public void setSubmissionComments(List<SubmissionComment> submissionComments) {
         this.submissionComments = submissionComments;
     }
 

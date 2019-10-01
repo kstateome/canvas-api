@@ -11,6 +11,7 @@ import edu.ksu.canvas.model.assignment.Submission;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
+import edu.ksu.canvas.requestOptions.ListCourseAssignmentSubmissionsOptions;
 import edu.ksu.canvas.requestOptions.MultipleSubmissionsOptions;
 import org.apache.log4j.Logger;
 
@@ -38,6 +39,21 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
                           int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout,
                 paginationPageSize, serializeNulls);
+    }
+
+    @Override
+    public List<Submission> listCourseAssignmentSubmissions(ListCourseAssignmentSubmissionsOptions options) throws IOException {
+        LOG.debug(String.format("Listing assignment submissions for assignment/%s and course %s.", options.getAssignmentId(), options.getCourseId()));
+        String url = buildCanvasUrl(String.format("courses/%s/assignments/%s/submissions", options.getCourseId(), options.getAssignmentId()), options.getOptionsMap());
+        return getListFromCanvas(url);
+    }
+    
+    @Override
+    public Optional<Submission> getSingleSubmission(ListCourseAssignmentSubmissionsOptions options) throws IOException {
+        LOG.debug("Get a single submission for the assignment/" + options.getAssignmentId() + " and user/" + options.getUserId());
+        String url = buildCanvasUrl(String.format("courses/%s/assignments/%s/submissions/%s", options.getCourseId(), options.getAssignmentId(), options.getUserId()), options.getOptionsMap());
+        Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
+        return responseParser.parseToObject(Submission.class, response);
     }
 
     @Override
