@@ -9,9 +9,7 @@ public class GetSubmissionsOptions extends BaseOptions {
     private String assignmentId;
 
     public enum Include {
-        // The canvas API gives a 3rd option here with a value of "submissions" but does not document what is
-        // returned so I am not including it as an option until we can determine exactly what it is.
-        USER, QUIZ;
+        USER, ASSIGNMENT, COURSE, GROUP, VISIBILITY, SUBMISSION_COMMENTS;
 
         public String toString() {
             return name().toLowerCase();
