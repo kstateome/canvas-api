@@ -8,9 +8,12 @@ import edu.ksu.canvas.interfaces.SubmissionReader;
 import edu.ksu.canvas.interfaces.SubmissionWriter;
 import edu.ksu.canvas.model.Progress;
 import edu.ksu.canvas.model.assignment.Submission;
+import edu.ksu.canvas.model.assignment.SubmissionResponse;
+import edu.ksu.canvas.model.wrapper.SubmissionWrapper;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
+import edu.ksu.canvas.requestOptions.GetSubmissionsOptions;
 import edu.ksu.canvas.requestOptions.MultipleSubmissionsOptions;
 import org.apache.log4j.Logger;
 
@@ -41,6 +44,14 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
     }
 
     @Override
+    public SubmissionResponse getSubmissions(final GetSubmissionsOptions options) throws IOException {
+        final String url = buildCanvasUrl("courses/" + options.getCourseId() + "/assignments/" + options.getAssignmentId() + "/submissions", options.getOptionsMap());
+        final List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url);
+        final SubmissionWrapper wrapper = parseSubmissionResponses(responses);
+        return new SubmissionResponse(wrapper.getSubmissions(), wrapper.getUsers(), wrapper.getAssignments());
+    }
+
+    @Override
     public Optional<Progress> gradeMultipleSubmissionsBySection(MultipleSubmissionsOptions options) throws IOException {
 
         LOG.debug("assignment submission for section/" + options.getObjectId());
@@ -65,14 +76,30 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
 
         Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, jsonObject);
 
-        Progress progress = parseSubmissionResponse(response);
+        Progress progress = parseProgressResponse(response);
         LOG.debug("ProgressId from assignment section submission response: " + progress.getId());
 
         return Optional.of(progress);
     }
 
-    private Progress parseSubmissionResponse(final Response response) {
+    private SubmissionWrapper parseSubmissionResponses(final List<Response> responses) {
+        return responses.stream()
+                .map(this::parseSubmissionResponse)
+                .collect(SubmissionWrapper::new, SubmissionImpl::accumulateSubmissions, SubmissionImpl::accumulateSubmissions);
+    }
+
+    private SubmissionWrapper parseSubmissionResponse(final Response response) {
+        return GsonResponseParser.getDefaultGsonParser(serializeNulls).fromJson(response.getContent(), SubmissionWrapper.class);
+    }
+
+    private Progress parseProgressResponse(final Response response) {
         return GsonResponseParser.getDefaultGsonParser(serializeNulls).fromJson(response.getContent(), Progress.class);
+    }
+
+    private static void accumulateSubmissions(final SubmissionWrapper result, final SubmissionWrapper element) {
+        result.getSubmissions().addAll(element.getSubmissions());
+        result.getUsers().addAll(element.getUsers());
+        result.getAssignments().addAll(element.getAssignments());
     }
 
     @Override

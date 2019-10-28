@@ -48,7 +48,7 @@ public class GetSubmissionsOptions extends BaseOptions {
         return assignmentId;
     }
 
-    public void setAssignmentId(final String quizId) {
+    public void setAssignmentId(final String assignmentId) {
         this.assignmentId = assignmentId;
     }
 }
