@@ -8,7 +8,6 @@ import edu.ksu.canvas.interfaces.SubmissionReader;
 import edu.ksu.canvas.interfaces.SubmissionWriter;
 import edu.ksu.canvas.model.Progress;
 import edu.ksu.canvas.model.assignment.Submission;
-import edu.ksu.canvas.model.assignment.SubmissionResponse;
 import edu.ksu.canvas.model.wrapper.SubmissionWrapper;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
@@ -44,11 +43,10 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
     }
 
     @Override
-    public SubmissionResponse getSubmissions(final GetSubmissionsOptions options) throws IOException {
+    public List<Submission> getSubmissions(final GetSubmissionsOptions options) throws IOException {
         final String url = buildCanvasUrl("courses/" + options.getCourseId() + "/assignments/" + options.getAssignmentId() + "/submissions", options.getOptionsMap());
-        final List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url);
-        final SubmissionWrapper wrapper = parseSubmissionResponses(responses);
-        return new SubmissionResponse(wrapper.getSubmissions(), wrapper.getUsers(), wrapper.getAssignments());
+        LOG.debug("assignment submissions for assignment/" + options.getAssignmentId());
+        return getListFromCanvas(url);
     }
 
     @Override

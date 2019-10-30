@@ -9,7 +9,7 @@ public class GetSubmissionsOptions extends BaseOptions {
     private String assignmentId;
 
     public enum Include {
-        USER, ASSIGNMENT, COURSE, GROUP, VISIBILITY, SUBMISSION_COMMENTS;
+        VISIBILITY, SUBMISSION_COMMENTS;
 
         public String toString() {
             return name().toLowerCase();
