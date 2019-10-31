@@ -8,7 +8,6 @@ public class SubmissionComment extends BaseCanvasModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer id;
-    private Integer submissionId;
     private Integer authorId;
     private String author_name;
     private String comment;
@@ -22,14 +21,6 @@ public class SubmissionComment extends BaseCanvasModel implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getSubmissionId() {
-        return submissionId;
-    }
-
-    public void setSubmissionId(Integer submissionId) {
-        this.submissionId = submissionId;
     }
 
     public Integer getAuthorId() {
