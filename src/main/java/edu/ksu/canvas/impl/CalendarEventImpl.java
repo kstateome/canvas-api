@@ -51,28 +51,28 @@ public class CalendarEventImpl extends BaseImpl<CalendarEvent, CalendarReader, C
 
     @Override
     public List<CalendarEvent> listCurrentUserCalendarEvents(ListCalendarEventsOptions options) throws IOException {
-        LOG.info("List calendar events for current user");
+        LOG.debug("List calendar events for current user");
         String url = buildCanvasUrl("calendar_events", options.getOptionsMap());
         return getListFromCanvas(url);
     }
 
     @Override
     public List<CalendarEvent> listCalendarEvents(String userId, ListCalendarEventsOptions options) throws  IOException {
-        LOG.info("List calendar events for "+ userId);
+        LOG.debug("List calendar events for "+ userId);
         String url = buildCanvasUrl("users/" + userId + "/calendar_events", options.getOptionsMap());
         return getListFromCanvas(url);
     }
 
     @Override
     public Optional<CalendarEvent> getCalendarEvent(Integer id) throws IOException {
-        LOG.info("Getting calendar event: "+ id);
+        LOG.debug("Getting calendar event: "+ id);
         String url = buildCanvasUrl("/calendar_events/"+ id.toString(), Collections.emptyMap());
         return getFromCanvas(url);
     }
 
     @Override
     public Optional<CalendarEvent> deleteCalendarEvent(DeleteCalendarEventOptions options) throws IOException {
-        LOG.info("Deleting calendar event: "+ options.getId());
+        LOG.debug("Deleting calendar event: "+ options.getId());
         String url = buildCanvasUrl("/calendar_events/"+ options.getId(), Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, options.getOptionsMap());
         LOG.debug("response " + response.toString());
@@ -85,7 +85,7 @@ public class CalendarEventImpl extends BaseImpl<CalendarEvent, CalendarReader, C
 
     @Override
     public Optional<CalendarEvent> createCalendarEvent(CalendarEvent calendarEvent) throws IOException {
-        LOG.info("Creating calendar event.");
+        LOG.debug("Creating calendar event.");
         String url = buildCanvasUrl("calendar_events", Collections.emptyMap());
         Objects.requireNonNull(calendarEvent.getContextCode(), "contextCode must be set to create a calendar event.");
         Map<String, List<String>> parameters = calendarEvent.toPostMap(false);
@@ -97,7 +97,7 @@ public class CalendarEventImpl extends BaseImpl<CalendarEvent, CalendarReader, C
 
     @Override
     public Optional<CalendarEvent> editCalendarEvent(CalendarEvent calendarEvent) throws IOException {
-        LOG.info("Modify calendar event " + calendarEvent.getId());
+        LOG.debug("Modify calendar event " + calendarEvent.getId());
         String url = buildCanvasUrl("calendar_events/"+ calendarEvent.getId(), Collections.emptyMap());
         Map<String, List<String>> parameters = calendarEvent.toPostMap(false);
         addChildData(calendarEvent, parameters);
