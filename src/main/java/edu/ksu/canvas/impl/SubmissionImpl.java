@@ -8,7 +8,6 @@ import edu.ksu.canvas.interfaces.SubmissionReader;
 import edu.ksu.canvas.interfaces.SubmissionWriter;
 import edu.ksu.canvas.model.Progress;
 import edu.ksu.canvas.model.assignment.Submission;
-import edu.ksu.canvas.model.wrapper.SubmissionWrapper;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
@@ -80,24 +79,8 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
         return Optional.of(progress);
     }
 
-    private SubmissionWrapper parseSubmissionResponses(final List<Response> responses) {
-        return responses.stream()
-                .map(this::parseSubmissionResponse)
-                .collect(SubmissionWrapper::new, SubmissionImpl::accumulateSubmissions, SubmissionImpl::accumulateSubmissions);
-    }
-
-    private SubmissionWrapper parseSubmissionResponse(final Response response) {
-        return GsonResponseParser.getDefaultGsonParser(serializeNulls).fromJson(response.getContent(), SubmissionWrapper.class);
-    }
-
     private Progress parseProgressResponse(final Response response) {
         return GsonResponseParser.getDefaultGsonParser(serializeNulls).fromJson(response.getContent(), Progress.class);
-    }
-
-    private static void accumulateSubmissions(final SubmissionWrapper result, final SubmissionWrapper element) {
-        result.getSubmissions().addAll(element.getSubmissions());
-        result.getUsers().addAll(element.getUsers());
-        result.getAssignments().addAll(element.getAssignments());
     }
 
     @Override
