@@ -42,8 +42,15 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
     }
 
     @Override
-    public List<Submission> getSubmissions(final GetSubmissionsOptions options) throws IOException {
-        final String url = buildCanvasUrl("courses/" + options.getCourseId() + "/assignments/" + options.getAssignmentId() + "/submissions", options.getOptionsMap());
+    public List<Submission> getCourseSubmissions(final GetSubmissionsOptions options) throws IOException {
+        final String url = buildCanvasUrl("courses/" + options.getId() + "/assignments/" + options.getAssignmentId() + "/submissions", options.getOptionsMap());
+        LOG.debug("assignment submissions for assignment/" + options.getAssignmentId());
+        return getListFromCanvas(url);
+    }
+
+    @Override
+    public List<Submission> getSectionSubmissions(final GetSubmissionsOptions options) throws IOException {
+        final String url = buildCanvasUrl("section/" + options.getId() + "/assignments/" + options.getAssignmentId() + "/submissions", options.getOptionsMap());
         LOG.debug("assignment submissions for assignment/" + options.getAssignmentId());
         return getListFromCanvas(url);
     }

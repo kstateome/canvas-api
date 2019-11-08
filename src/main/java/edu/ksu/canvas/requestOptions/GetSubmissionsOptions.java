@@ -26,15 +26,15 @@ public class GetSubmissionsOptions extends BaseOptions {
         return this;
     }
 
-    public GetSubmissionsOptions(final String courseId, final String assignmentId, final Include... includes) {
-        this.courseId = courseId;
+    public GetSubmissionsOptions(final String id, final String assignmentId, final Include... includes) {
+        this.courseId = id;
         this.assignmentId = assignmentId;
         if (includes.length > 0) {
             includes(ImmutableList.copyOf(includes));
         }
     }
 
-    public String getCourseId() {
+    public String getId() {
         return courseId;
     }
 
