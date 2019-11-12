@@ -1,12 +1,10 @@
 package edu.ksu.canvas.requestOptions;
 
-import com.google.common.collect.ImmutableList;
-
 import java.util.List;
 
 public class GetSubmissionsOptions extends BaseOptions {
-    private String courseId;
-    private String assignmentId;
+    private String canvasId;
+    private Integer assignmentId;
 
     public enum Include {
         //Submissions can optionally have sub-objects returned with them. The commented out ones are not implemented yet
@@ -19,6 +17,16 @@ public class GetSubmissionsOptions extends BaseOptions {
     }
 
     /**
+     * Construct options class with required parameters to retrieve Submissions from courses or sections
+     * @param canvasId The Course or Section ID, depending on which API is being targeted. May also be an SIS ID with appropriate prefix
+     * @param assignmentId The Canvas ID of the assignment to query for submissions
+     */
+    public GetSubmissionsOptions(final String canvasId, final Integer assignmentId) {
+        this.canvasId = canvasId;
+        this.assignmentId = assignmentId;
+    }
+
+    /**
      * Optionally include more information with the returned Quiz Submission objects.
      * @param includes List of optional includes
      * @return This object to allow adding more options
@@ -28,27 +36,19 @@ public class GetSubmissionsOptions extends BaseOptions {
         return this;
     }
 
-    public GetSubmissionsOptions(final String id, final String assignmentId, final Include... includes) {
-        this.courseId = id;
-        this.assignmentId = assignmentId;
-        if (includes.length > 0) {
-            includes(ImmutableList.copyOf(includes));
-        }
+    public String getCanvasId() {
+        return canvasId;
     }
 
-    public String getId() {
-        return courseId;
+    public void setCanvasId(final String canvasId) {
+        this.canvasId = canvasId;
     }
 
-    public void setCourseId(final String courseId) {
-        this.courseId = courseId;
-    }
-
-    public String getAssignmentId() {
+    public Integer getAssignmentId() {
         return assignmentId;
     }
 
-    public void setAssignmentId(final String assignmentId) {
+    public void setAssignmentId(final Integer assignmentId) {
         this.assignmentId = assignmentId;
     }
 }
