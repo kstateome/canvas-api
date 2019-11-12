@@ -8,7 +8,8 @@ import edu.ksu.canvas.model.CourseSettings;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class CourseSettingsImpl extends BaseImpl<CourseSettings, CourseSettingsReader, CourseSettingsWriter> implements CourseSettingsReader, CourseSettingsWriter {
-    private static final Logger LOG = Logger.getLogger(CourseReader.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CourseReader.class);
 
     public CourseSettingsImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
                       int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {
