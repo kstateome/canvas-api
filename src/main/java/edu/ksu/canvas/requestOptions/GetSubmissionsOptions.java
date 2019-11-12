@@ -3,6 +3,7 @@ package edu.ksu.canvas.requestOptions;
 import java.util.List;
 
 public class GetSubmissionsOptions extends BaseOptions {
+
     private String canvasId;
     private Integer assignmentId;
 
@@ -33,6 +34,17 @@ public class GetSubmissionsOptions extends BaseOptions {
      */
     public GetSubmissionsOptions includes(final List<Include> includes) {
         addEnumList("include[]", includes);
+        return this;
+    }
+
+    /**
+     * When set to true, response will be grouped by student groups.
+     * Only valid for Submission lists, not individual submission queries.
+     * @param grouped Whether to group submissions by student group
+     * @return This object to allow adding more options
+     */
+    public GetSubmissionsOptions grouped(Boolean grouped) {
+        addSingleItem("grouped", Boolean.toString(grouped));
         return this;
     }
 
