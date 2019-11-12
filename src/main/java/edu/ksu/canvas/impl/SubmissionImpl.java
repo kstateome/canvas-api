@@ -13,6 +13,7 @@ import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.GetSubmissionsOptions;
 import edu.ksu.canvas.requestOptions.MultipleSubmissionsOptions;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -43,16 +44,42 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
 
     @Override
     public List<Submission> getCourseSubmissions(final GetSubmissionsOptions options) throws IOException {
-        final String url = buildCanvasUrl("courses/" + options.getCanvasId() + "/assignments/" + options.getAssignmentId() + "/submissions", options.getOptionsMap());
-        LOG.debug("assignment submissions for assignment/" + options.getAssignmentId());
+        if(StringUtils.isBlank(options.getCanvasId()) || options.getAssignmentId() == null) {
+            throw new IllegalArgumentException("Course and assignment IDs are required for this API call");
+        }
+        LOG.debug(String.format("Listing assignment submissions for course %s, assignment %d", options.getCanvasId(), options.getAssignmentId()));
+        final String url = buildCanvasUrl(String.format("courses/%s/assignments/%d/submissions", options.getCanvasId(), options.getAssignmentId()), options.getOptionsMap());
         return getListFromCanvas(url);
     }
 
     @Override
     public List<Submission> getSectionSubmissions(final GetSubmissionsOptions options) throws IOException {
-        final String url = buildCanvasUrl("section/" + options.getCanvasId() + "/assignments/" + options.getAssignmentId() + "/submissions", options.getOptionsMap());
-        LOG.debug("assignment submissions for assignment/" + options.getAssignmentId());
+        if(StringUtils.isBlank(options.getCanvasId()) || options.getAssignmentId() == null) {
+            throw new IllegalArgumentException("Section and assignment IDs are required for this API call");
+        }
+        LOG.debug(String.format("Listing assignment submissions for section %s, assignment %d", options.getCanvasId(), options.getAssignmentId()));
+        final String url = buildCanvasUrl(String.format("sections/%s/assignments/%d/submissions", options.getCanvasId(), options.getAssignmentId()), options.getOptionsMap());
         return getListFromCanvas(url);
+    }
+
+    @Override
+    public Optional<Submission> getSingleCourseSubmission(final GetSubmissionsOptions options) throws IOException {
+        if(StringUtils.isAnyBlank(options.getCanvasId(), options.getUserId()) || options.getAssignmentId() == null) {
+            throw new IllegalArgumentException("Course, assignment and user ID are all required for this API call");
+        }
+        LOG.debug(String.format("Getting submission for course %s, assignment %d, user %s", options.getCanvasId(), options.getAssignmentId(), options.getUserId()));
+        final String url = buildCanvasUrl(String.format("courses/%s/assignments/%d/submissions/%s", options.getCanvasId(), options.getAssignmentId(), options.getUserId()), options.getOptionsMap());
+        return getFromCanvas(url);
+    }
+
+    @Override
+    public Optional<Submission> getSingleSectionSubmission(final GetSubmissionsOptions options) throws IOException {
+        if(StringUtils.isAnyBlank(options.getCanvasId(), options.getUserId()) || options.getAssignmentId() == null) {
+            throw new IllegalArgumentException("Section, assignment and user ID are all required for this API call");
+        }
+        LOG.debug(String.format("Getting submission for section %s, assignment %d, user %s", options.getCanvasId(), options.getAssignmentId(), options.getUserId()));
+        final String url = buildCanvasUrl(String.format("sections/%s/assignments/%d/submissions/%s", options.getCanvasId(), options.getAssignmentId(), options.getUserId()), options.getOptionsMap());
+        return getFromCanvas(url);
     }
 
     @Override

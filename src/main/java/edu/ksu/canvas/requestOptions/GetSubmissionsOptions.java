@@ -6,6 +6,7 @@ public class GetSubmissionsOptions extends BaseOptions {
 
     private String canvasId;
     private Integer assignmentId;
+    private String userId;
 
     public enum Include {
         //Submissions can optionally have sub-objects returned with them. The commented out ones are not implemented yet
@@ -18,13 +19,25 @@ public class GetSubmissionsOptions extends BaseOptions {
     }
 
     /**
-     * Construct options class with required parameters to retrieve Submissions from courses or sections
+     * Construct options class with required parameters to retrieve a list of Submissions from courses or sections
      * @param canvasId The Course or Section ID, depending on which API is being targeted. May also be an SIS ID with appropriate prefix
      * @param assignmentId The Canvas ID of the assignment to query for submissions
      */
     public GetSubmissionsOptions(final String canvasId, final Integer assignmentId) {
         this.canvasId = canvasId;
         this.assignmentId = assignmentId;
+    }
+
+    /**
+     * Construct options class with required parameters to retrieve a single user's Submission from a course or section
+     * @param canvasId The Course or Section ID, depending on which API is being targeted. May also be an SIS ID with appropriate prefix
+     * @param assignmentId The Canvas ID of the assignment to query for submissions
+     * @param userId The Canvas ID of the user to query (or SIS user ID with the appropriate prefix)
+     */
+    public GetSubmissionsOptions(final String canvasId, final Integer assignmentId, String userId) {
+        this.canvasId = canvasId;
+        this.assignmentId = assignmentId;
+        this.userId = userId;
     }
 
     /**
@@ -62,5 +75,13 @@ public class GetSubmissionsOptions extends BaseOptions {
 
     public void setAssignmentId(final Integer assignmentId) {
         this.assignmentId = assignmentId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }
