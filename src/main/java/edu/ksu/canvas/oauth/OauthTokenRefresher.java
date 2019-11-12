@@ -1,31 +1,24 @@
 package edu.ksu.canvas.oauth;
 
-import java.io.IOException;
-import java.io.Serializable;
-
+import com.google.gson.Gson;
+import edu.ksu.canvas.impl.GsonResponseParser;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.google.gson.Gson;
-
-import edu.ksu.canvas.impl.GsonResponseParser;
-
+import java.io.IOException;
+import java.io.Serializable;
 
 public class OauthTokenRefresher implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private static final Logger LOG = Logger.getLogger(OauthTokenRefresher.class);
+    private static final Logger LOG = LoggerFactory.getLogger(OauthTokenRefresher.class);
 
     private static final int TIMEOUT_SECONDS = 10;
     private final String clientId;

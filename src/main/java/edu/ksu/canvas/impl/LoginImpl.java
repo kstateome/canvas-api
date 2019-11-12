@@ -11,7 +11,8 @@ import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class LoginImpl extends BaseImpl<Login, LoginReader, LoginWriter> implements LoginReader, LoginWriter {
-    private static final Logger LOG = Logger.getLogger(LoginImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(LoginImpl.class);
 
     public LoginImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
                      int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {

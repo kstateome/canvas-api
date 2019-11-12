@@ -14,7 +14,8 @@ import edu.ksu.canvas.requestOptions.GetSingleCourseOptions;
 import edu.ksu.canvas.requestOptions.ListActiveCoursesInAccountOptions;
 import edu.ksu.canvas.requestOptions.ListCurrentUserCoursesOptions;
 import edu.ksu.canvas.requestOptions.ListUserCoursesOptions;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -26,7 +27,7 @@ import java.util.Optional;
 
 
 public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> implements CourseReader, CourseWriter {
-    private static final Logger LOG = Logger.getLogger(CourseReader.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CourseReader.class);
 
     public CourseImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
                       int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {
@@ -36,13 +37,13 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
 
     @Override
     public List<Course> listCurrentUserCourses(ListCurrentUserCoursesOptions options) throws IOException {
-        LOG.info("listing courses for user");
+        LOG.debug("listing courses for user");
         String url = buildCanvasUrl("courses/", options.getOptionsMap());
         return getListFromCanvas(url);
     }
 
     public List<Course> listUserCourses(ListUserCoursesOptions options) throws  IOException {
-        LOG.info("listing course for user");
+        LOG.debug("listing course for user");
         String url = buildCanvasUrl("users/" + options.getUserId() + "/courses", options.getOptionsMap());
         return getListFromCanvas(url);
     }

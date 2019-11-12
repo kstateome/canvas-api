@@ -14,7 +14,8 @@ import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.util.CanvasURLBuilder;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -31,9 +32,9 @@ import java.util.stream.Collectors;
  * Base class for accessing the Canvas API
  */
 
-
+@SuppressWarnings("unchecked")
 public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE extends CanvasWriter> implements CanvasReader<T, READERTYPE>, CanvasWriter<T,WRITERTYPE>{
-    private static final Logger LOG = Logger.getLogger(BaseImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BaseImpl.class);
 
     protected String canvasBaseUrl;
     protected Integer apiVersion;

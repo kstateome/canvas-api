@@ -7,7 +7,8 @@ import edu.ksu.canvas.model.report.AccountReportSummary;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -15,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class AccountReportSummaryImpl extends BaseImpl<AccountReportSummary, AccountReportSummaryReader, AccountReportSummaryWriter> implements AccountReportSummaryReader, AccountReportSummaryWriter {
-    private static final Logger LOG = Logger.getLogger(AccountReportSummaryImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AccountReportSummaryImpl.class);
 
     public AccountReportSummaryImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
                                     int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {

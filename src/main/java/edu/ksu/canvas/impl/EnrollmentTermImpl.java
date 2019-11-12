@@ -10,7 +10,8 @@ import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.GetEnrollmentTermOptions;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class EnrollmentTermImpl extends BaseImpl<EnrollmentTerm, EnrollmentTermReader, EnrollmentTermWriter> implements EnrollmentTermReader, EnrollmentTermWriter {
-    private static final Logger LOG = Logger.getLogger(EnrollmentTermReader.class);
+    private static final Logger LOG = LoggerFactory.getLogger(EnrollmentTermReader.class);
 
     public EnrollmentTermImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
                               int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {

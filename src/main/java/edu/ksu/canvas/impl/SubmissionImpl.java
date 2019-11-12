@@ -14,7 +14,8 @@ import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.GetSubmissionsOptions;
 import edu.ksu.canvas.requestOptions.MultipleSubmissionsOptions;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -22,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, SubmissionWriter> implements SubmissionReader, SubmissionWriter{
-    private static final Logger LOG = Logger.getLogger(SubmissionImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SubmissionImpl.class);
 
     /**
      * Construct a new CanvasApi class with an OAuth token

@@ -30,13 +30,13 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.CoreConnectionPNames;
-import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+
+import com.google.gson.Gson;
+import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
@@ -48,7 +48,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class SimpleRestClient implements RestClient {
-    private static final Logger LOG = Logger.getLogger(SimpleRestClient.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SimpleRestClient.class);
 
     private List<ErrorHandler> errorHandlers;
 

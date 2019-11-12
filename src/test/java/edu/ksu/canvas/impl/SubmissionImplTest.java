@@ -4,10 +4,11 @@ import edu.ksu.canvas.CanvasTestBase;
 import edu.ksu.canvas.interfaces.SubmissionWriter;
 import edu.ksu.canvas.model.Progress;
 import edu.ksu.canvas.requestOptions.MultipleSubmissionsOptions;
-import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -15,7 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class SubmissionImplTest extends CanvasTestBase {
-    private static final Logger LOG = Logger.getLogger(SubmissionImplTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SubmissionImplTest.class);
     public static final String COURSE_ID = "37836";
     public static final String SECTION_ID = "41478";
     public static final int ASSIGNEMNET_ID = 409522;
