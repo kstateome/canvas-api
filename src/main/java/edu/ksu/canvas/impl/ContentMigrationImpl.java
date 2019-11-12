@@ -29,7 +29,7 @@ public class ContentMigrationImpl extends BaseImpl<ContentMigration, ContentMigr
 
     @Override
     public  Optional<ContentMigration> getCourseContentMigration(String courseId, Integer id) throws IOException {
-        LOG.info("listing a content migration for the course");
+        LOG.debug("listing a content migration for the course");
         String url = buildCanvasUrl("courses/" + courseId + "/content_migrations/" + id.toString(), Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(ContentMigration.class, response);
