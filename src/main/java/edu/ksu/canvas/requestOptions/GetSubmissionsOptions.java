@@ -28,7 +28,7 @@ public class GetSubmissionsOptions extends BaseOptions {
     }
 
     /**
-     * Optionally include more information with the returned Quiz Submission objects.
+     * Optionally include more information with the returned assignment Submission objects.
      * @param includes List of optional includes
      * @return This object to allow adding more options
      */
