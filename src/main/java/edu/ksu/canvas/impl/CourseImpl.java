@@ -37,13 +37,13 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
 
     @Override
     public List<Course> listCurrentUserCourses(ListCurrentUserCoursesOptions options) throws IOException {
-        LOG.info("listing courses for user");
+        LOG.debug("listing courses for user");
         String url = buildCanvasUrl("courses/", options.getOptionsMap());
         return getListFromCanvas(url);
     }
 
     public List<Course> listUserCourses(ListUserCoursesOptions options) throws  IOException {
-        LOG.info("listing course for user");
+        LOG.debug("listing course for user");
         String url = buildCanvasUrl("users/" + options.getUserId() + "/courses", options.getOptionsMap());
         return getListFromCanvas(url);
     }

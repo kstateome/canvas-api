@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  * Base class for accessing the Canvas API
  */
 
-
+@SuppressWarnings("unchecked")
 public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE extends CanvasWriter> implements CanvasReader<T, READERTYPE>, CanvasWriter<T,WRITERTYPE>{
     private static final Logger LOG = LoggerFactory.getLogger(BaseImpl.class);
 
