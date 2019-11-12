@@ -1,19 +1,25 @@
 package edu.ksu.canvas.model.assignment;
 
+import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.model.BaseCanvasModel;
+import edu.ksu.canvas.model.UserDisplay;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class SubmissionComment extends BaseCanvasModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer id;
-    private Integer authorId;
-    private String author_name;
     private String comment;
-    private String createdAt;
-    private String editedAt;
-    private String mediaComment;
+    private Date createdAt;
+    private Date editedAt;
+    private Integer authorId;
+    private String authorName;
+    private UserDisplay author;
+    private MediaComment mediaComment;
+    private Assignment assignment;
+    private Boolean assignmentVisible;
 
     public Integer getId() {
         return id;
@@ -21,22 +27,6 @@ public class SubmissionComment extends BaseCanvasModel implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(Integer authorId) {
-        this.authorId = authorId;
-    }
-
-    public String getAuthor_name() {
-        return author_name;
-    }
-
-    public void setAuthor_name(String author_name) {
-        this.author_name = author_name;
     }
 
     public String getComment() {
@@ -47,27 +37,71 @@ public class SubmissionComment extends BaseCanvasModel implements Serializable {
         this.comment = comment;
     }
 
-    public String getCreatedAt() {
+    @CanvasField(postKey = "created_at", array = false)
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getEditedAt() {
+    @CanvasField(postKey = "edited_at", array = false)
+    public Date getEditedAt() {
         return editedAt;
     }
 
-    public void setEditedAt(String editedAt) {
+    public void setEditedAt(Date editedAt) {
         this.editedAt = editedAt;
     }
 
-    public String getMediaComment() {
+    @CanvasField(postKey = "author_id", array = false)
+    public Integer getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(Integer authorId) {
+        this.authorId = authorId;
+    }
+
+    @CanvasField(postKey = "author_name", array = false)
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public UserDisplay getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(UserDisplay author) {
+        this.author = author;
+    }
+
+    public MediaComment getMediaComment() {
         return mediaComment;
     }
 
-    public void setMediaComment(String mediaComment) {
+    public void setMediaComment(MediaComment mediaComment) {
         this.mediaComment = mediaComment;
+    }
+
+    public Assignment getAssignment() {
+        return assignment;
+    }
+
+    public void setAssignment(Assignment assignment) {
+        this.assignment = assignment;
+    }
+
+    public Boolean getAssignmentVisible() {
+        return assignmentVisible;
+    }
+
+    public void setAssignmentVisible(Boolean assignmentVisible) {
+        this.assignmentVisible = assignmentVisible;
     }
 }
