@@ -9,7 +9,9 @@ public class GetSubmissionsOptions extends BaseOptions {
     private String assignmentId;
 
     public enum Include {
-        VISIBILITY, SUBMISSION_COMMENTS;
+        //Submissions can optionally have sub-objects returned with them. The commented out ones are not implemented yet
+        //SUBMISSION_HISTORY, RUBRIC_ASSESSMENT, GROUP
+        ASSIGNMENT, COURSE, SUBMISSION_COMMENTS, USER, VISIBILITY;
 
         public String toString() {
             return name().toLowerCase();
