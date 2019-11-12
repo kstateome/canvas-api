@@ -9,7 +9,6 @@ import edu.ksu.canvas.model.assignment.Quiz;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.util.CanvasURLBuilder;
-import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +19,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class QuizRetrieverUTest extends CanvasTestBase {
-    private static final Logger LOG = Logger.getLogger(QuizRetrieverUTest.class);
     @Autowired
     private FakeRestClient fakeRestClient;
     private QuizReader quizReader;

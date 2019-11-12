@@ -12,7 +12,8 @@ import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.GetSubAccountsOptions;
 import edu.ksu.canvas.requestOptions.ListAccountOptions;
 import edu.ksu.canvas.util.CanvasURLBuilder;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class AccountImpl extends BaseImpl<Account, AccountReader, CanvasWriter> implements AccountReader {
-    private static final Logger LOG = Logger.getLogger(AccountImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AccountImpl.class);
 
     public AccountImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
                        int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {

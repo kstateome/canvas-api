@@ -13,7 +13,8 @@ import edu.ksu.canvas.model.assignment.AssignmentOverride;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.net.Response;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class AssignmentOverrideUTest extends CanvasTestBase {
-    private static final Logger LOG = Logger.getLogger(AssignmentRetrieverUTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AssignmentRetrieverUTest.class);
     @Autowired
     private FakeRestClient fakeRestClient;
     private AssignmentOverrideReader assignmentOverrideReader;

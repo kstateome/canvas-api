@@ -1,18 +1,17 @@
 package edu.ksu.canvas;
 
-import java.io.IOException;
-import java.util.List;
-
-import org.apache.log4j.Logger;
-
 import edu.ksu.canvas.interfaces.AccountReader;
 import edu.ksu.canvas.interfaces.CourseReader;
 import edu.ksu.canvas.model.Account;
 import edu.ksu.canvas.model.Course;
 import edu.ksu.canvas.oauth.NonRefreshableOauthToken;
 import edu.ksu.canvas.oauth.OauthToken;
-
 import edu.ksu.canvas.requestOptions.ListCurrentUserCoursesOptions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * A class with a main method that executes a couple of simple read-only requests
@@ -25,7 +24,7 @@ import edu.ksu.canvas.requestOptions.ListCurrentUserCoursesOptions;
  */
 public class TestLauncher {
 
-    private static final Logger LOG = Logger.getLogger(TestLauncher.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TestLauncher.class);
 
     private String canvasUrl;
     private OauthToken oauthToken;

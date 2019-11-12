@@ -10,7 +10,8 @@ import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
@@ -24,7 +25,7 @@ import java.util.function.Consumer;
  * This class uses the canvas rest api to communicate with canvas
  */
 public class RestCanvasMessenger implements CanvasMessenger {
-    private static final Logger LOG = Logger.getLogger(RestCanvasMessenger.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RestCanvasMessenger.class);
     private RestClient restClient;
     private int connectTimeout;
     private int readTimeout;

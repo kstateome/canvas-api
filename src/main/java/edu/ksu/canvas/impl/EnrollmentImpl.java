@@ -13,7 +13,8 @@ import edu.ksu.canvas.requestOptions.GetEnrollmentOptions;
 
 import edu.ksu.canvas.requestOptions.UnEnrollOptions;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -24,7 +25,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentReader, EnrollmentWriter> implements EnrollmentReader,EnrollmentWriter {
-    private static final Logger LOG = Logger.getLogger(CourseReader.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CourseReader.class);
 
     public EnrollmentImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
                           int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {

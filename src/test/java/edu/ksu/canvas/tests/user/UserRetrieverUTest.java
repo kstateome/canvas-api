@@ -10,7 +10,6 @@ import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.requestOptions.GetUsersInAccountOptions;
 import edu.ksu.canvas.requestOptions.GetUsersInCourseOptions;
 import edu.ksu.canvas.util.CanvasURLBuilder;
-import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +20,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserRetrieverUTest extends CanvasTestBase {
-    private static final Logger LOG = Logger.getLogger(UserRetrieverUTest.class);
     @Autowired
     private FakeRestClient fakeRestClient;
     private UserReader userReader;

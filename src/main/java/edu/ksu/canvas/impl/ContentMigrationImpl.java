@@ -9,7 +9,8 @@ import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.CreateCourseContentMigrationOptions;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -19,7 +20,7 @@ import java.util.Optional;
 
 public class ContentMigrationImpl extends BaseImpl<ContentMigration, ContentMigrationReader, ContentMigrationWriter> implements ContentMigrationReader, ContentMigrationWriter {
 
-    private static final Logger LOG = Logger.getLogger(ContentMigrationWriter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ContentMigrationWriter.class);
 
     public ContentMigrationImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
                       int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {

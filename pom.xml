@@ -286,9 +286,16 @@
       <version>18.0</version>
     </dependency>
     <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.16</version>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.27</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>1.7.27</version>
+      <!-- This is so that TestLauncher has an implementation but projects using this library don't get it -->
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
@@ -332,6 +339,12 @@
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <version>1.10.19</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.7.27</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
