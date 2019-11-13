@@ -6,7 +6,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /*
  * This class transforms a map into a parameter string
@@ -15,7 +16,7 @@ import org.apache.log4j.Logger;
  * ?array[]=a&array[]=b&item=c
  */
 public class HttpParameterBuilder {
-    private static final Logger LOG = Logger.getLogger(HttpParameterBuilder.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HttpParameterBuilder.class);
 
     public static String buildParameters(Map<String, List<String>> parameters) {
         return parameters.entrySet().stream()

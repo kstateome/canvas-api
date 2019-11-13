@@ -13,7 +13,8 @@ import edu.ksu.canvas.requestOptions.CreateUserOptions;
 import edu.ksu.canvas.requestOptions.GetUsersInAccountOptions;
 import edu.ksu.canvas.requestOptions.GetUsersInCourseOptions;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -25,7 +26,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements UserReader, UserWriter{
-    private static final Logger LOG = Logger.getLogger(UserImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserImpl.class);
 
     public UserImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
                     int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {

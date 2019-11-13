@@ -11,7 +11,6 @@ import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.requestOptions.GetQuizSubmissionsOptions;
 import edu.ksu.canvas.util.CanvasURLBuilder;
-import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +20,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class QuizSubmissionRetrieverUTest extends CanvasTestBase {
-    private static final Logger LOG = Logger.getLogger(QuizSubmissionRetrieverUTest.class);
     @Autowired
     private FakeRestClient fakeRestClient;
     private QuizSubmissionReader quizSubmissionReader;
@@ -45,8 +43,8 @@ public class QuizSubmissionRetrieverUTest extends CanvasTestBase {
 
         List<QuizSubmission> submissions = quizSubmissionReader.getQuizSubmissions(someCourseId, someQuizId);
         Assert.assertEquals(2, submissions.size());
-        Assert.assertTrue(submissions.stream().map(QuizSubmission::getId).filter(new Integer(1)::equals).findFirst().isPresent());
-        Assert.assertTrue(submissions.stream().map(QuizSubmission::getId).filter(new Integer(2)::equals).findFirst().isPresent());
+        Assert.assertTrue(submissions.stream().map(QuizSubmission::getId).filter(Integer.valueOf(1)::equals).findFirst().isPresent());
+        Assert.assertTrue(submissions.stream().map(QuizSubmission::getId).filter(Integer.valueOf(2)::equals).findFirst().isPresent());
     }
 
     @Test(expected = JsonSyntaxException.class)
@@ -128,8 +126,8 @@ public class QuizSubmissionRetrieverUTest extends CanvasTestBase {
 
         List<QuizSubmission> submissions = quizSubmissionReader.readAsCanvasUser(someUserId).getQuizSubmissions(someCourseId, someQuizId);
         Assert.assertEquals(2, submissions.size());
-        Assert.assertTrue(submissions.stream().map(QuizSubmission::getId).filter(new Integer(1)::equals).findFirst().isPresent());
-        Assert.assertTrue(submissions.stream().map(QuizSubmission::getId).filter(new Integer(2)::equals).findFirst().isPresent());
+        Assert.assertTrue(submissions.stream().map(QuizSubmission::getId).filter(Integer.valueOf(1)::equals).findFirst().isPresent());
+        Assert.assertTrue(submissions.stream().map(QuizSubmission::getId).filter(Integer.valueOf(2)::equals).findFirst().isPresent());
     }
 
     @Test(expected = JsonSyntaxException.class)

@@ -12,7 +12,8 @@ import edu.ksu.canvas.requestOptions.GetAssignmentGroupOptions;
 import edu.ksu.canvas.requestOptions.ListAssignmentGroupOptions;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -39,7 +40,7 @@ public class AssignmentGroupImpl extends BaseImpl<AssignmentGroup, AssignmentGro
                 paginationPageSize, serializeNulls);
     }
 
-    private static final Logger LOG = Logger.getLogger(AssignmentGroupImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AssignmentGroupImpl.class);
 
     @Override
     public Optional<AssignmentGroup> getAssignmentGroup(GetAssignmentGroupOptions options) throws IOException {

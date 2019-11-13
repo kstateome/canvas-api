@@ -1,19 +1,8 @@
 package edu.ksu.canvas.impl;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-
 import edu.ksu.canvas.interfaces.ExternalToolReader;
 import edu.ksu.canvas.interfaces.ExternalToolWriter;
 import edu.ksu.canvas.model.ExternalTool;
@@ -21,9 +10,19 @@ import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.ListExternalToolsOptions;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class ExternalToolImpl extends BaseImpl<ExternalTool, ExternalToolReader, ExternalToolWriter> implements ExternalToolReader, ExternalToolWriter {
-    private static final Logger LOG = Logger.getLogger(ExternalToolImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ExternalToolImpl.class);
 
     public ExternalToolImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
                             int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {

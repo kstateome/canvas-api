@@ -1,12 +1,14 @@
 package edu.ksu.canvas.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Map;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 
 public class CanvasURLBuilder {
-    private static final Logger LOG = Logger.getLogger(CanvasURLBuilder.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CanvasURLBuilder.class);
 
     /* Builds parameters in form of ?param[]=value1&param[]=value2&otherParam=someValue*/
     public static String buildCanvasUrl(String canvasBaseUrl, int canvasAPIVersion, String canvasMethod, Map<String, List<String>> parameters) {

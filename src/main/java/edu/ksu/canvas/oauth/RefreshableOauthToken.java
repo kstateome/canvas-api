@@ -1,7 +1,8 @@
 package edu.ksu.canvas.oauth;
 
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Date;
@@ -9,7 +10,7 @@ import java.util.Date;
 public class RefreshableOauthToken implements OauthToken {
     private static final long serialVersionUID = 1L;
 
-    private static final Logger LOG = Logger.getLogger(RefreshableOauthToken.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RefreshableOauthToken.class);
 
     private OauthTokenRefresher tokenRefresher;
     private String refreshToken;

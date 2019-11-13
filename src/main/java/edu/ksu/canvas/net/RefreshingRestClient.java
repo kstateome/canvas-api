@@ -2,7 +2,8 @@ package edu.ksu.canvas.net;
 
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.oauth.OauthToken;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
@@ -17,7 +18,7 @@ import java.util.Map;
  * still fails, the error is thrown up to the caller.
  */
 public class RefreshingRestClient implements RestClient {
-    private static final Logger LOG = Logger.getLogger(RefreshingRestClient.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RefreshingRestClient.class);
     private RestClient restClient = new SimpleRestClient();
 
     @Override
