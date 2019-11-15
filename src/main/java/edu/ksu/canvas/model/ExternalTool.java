@@ -175,6 +175,11 @@ public class ExternalTool extends BaseCanvasModel implements Serializable {
         this.configUrl = configUrl;
     }
 
+    /**
+     * The LTI version that this tool uses. Example values: 1.1, 1.3
+     * This field is not documented in the Canvas API docs
+     * @return LTI version used by this tool
+     */
     public String getVersion() {
         return version;
     }
