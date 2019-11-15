@@ -9,6 +9,7 @@ public interface ContentMigrationReader extends CanvasReader<ContentMigration, C
     /**
      * Returns a content migration.
      * @param courseId The course ID for this API call
+     * @param id The Canvas ID of the content migration to query
      * @return A ContentMigration object
      * @throws IOException When there is an error communicating with Canvas
      */
