@@ -56,7 +56,7 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     private LockInfo lockInfo;
     private String lockExplanation;
     private Boolean notifyOfUpdate;
-
+    private Boolean omitFromFinalGrade;
 
     public Integer getId() {
         return id;
@@ -396,6 +396,15 @@ public class Assignment extends BaseCanvasModel implements Serializable{
 
     public void setNotifyOfUpdate(Boolean notifyOfUpdate) {
         this.notifyOfUpdate = notifyOfUpdate;
+    }
+
+    @CanvasField(postKey = "omit_from_final_grade")
+    public Boolean isOmitFromFinalGrade() {
+        return omitFromFinalGrade;
+    }
+
+    public void setOmitFromFinalGrade(Boolean omitFromFinalGrade) {
+        this.omitFromFinalGrade = omitFromFinalGrade;
     }
 
     public class ExternalToolTagAttribute implements Serializable {

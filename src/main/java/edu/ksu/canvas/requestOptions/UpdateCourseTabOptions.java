@@ -26,6 +26,8 @@ public class UpdateCourseTabOptions extends BaseOptions {
 
     /**
      * Sets the position (1-based).
+     * @param position The new position of the tab (1-based)
+     * @return This object to continue adding options
      */
     public UpdateCourseTabOptions position(int position) {
         addSingleItem("position", Integer.toString(position));

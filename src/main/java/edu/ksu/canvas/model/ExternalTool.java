@@ -24,6 +24,8 @@ public class ExternalTool extends BaseCanvasModel implements Serializable {
     private String configType;
     private String configXml;
     private String configUrl;
+    // The LTI version eg, 1.1 or 1.3
+    private String version;
     private Map<String, String> customFields;
     //These navigation settings are problematic. The possible values in these maps are documented
     //at https://canvas.instructure.com/doc/api/external_tools.html#method.external_tools.create
@@ -171,6 +173,19 @@ public class ExternalTool extends BaseCanvasModel implements Serializable {
 
     public void setConfigUrl(String configUrl) {
         this.configUrl = configUrl;
+    }
+
+    /**
+     * The LTI version that this tool uses. Example values: 1.1, 1.3
+     * This field is not documented in the Canvas API docs
+     * @return LTI version used by this tool
+     */
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 
     /**
