@@ -58,7 +58,7 @@
       "points_possible": 12
     },
     "rubric": "",
-    "assignment_visibility": "[137,381,572]",
+    "assignment_visibility": ["137","381","572"],
     "overrides": ""
   },
   {
@@ -120,7 +120,7 @@
       "points_possible": 12
     },
     "rubric": "",
-    "assignment_visibility": "[137,381,572]",
+    "assignment_visibility": ["137","381","572"],
     "overrides": ""
   }
 ]
