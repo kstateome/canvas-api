@@ -36,6 +36,7 @@ public class Submission extends BaseCanvasModel implements Serializable {
     private Boolean assigmentVisible;
     private Boolean excused;
     private String workflowState;
+    private List<Submission> submissionHistory;
 
     public Integer getId() {
         return id;
@@ -212,6 +213,15 @@ public class Submission extends BaseCanvasModel implements Serializable {
 
     public void setWorkflowState(String workflowState) {
         this.workflowState = workflowState;
+    }
+
+    @CanvasField(postKey = "submission_history")
+    public List<Submission> getSubmissionHistory(){
+        return this.submissionHistory;
+    }
+
+    public void setSubmissionHistory(List<Submission> submissionHistory) {
+        this.submissionHistory = submissionHistory;
     }
 
 }
