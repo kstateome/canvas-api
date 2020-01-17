@@ -57,6 +57,14 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
         return retrieveCourseFromCanvas(oauthToken, url);
     }
 
+    @Override
+    public Optional<Course> getSingleCourse(String accountId, GetSingleCourseOptions options) throws IOException {
+        LOG.debug("getting course " + options.getCourseId() + " in account "+ accountId);
+        String url = buildCanvasUrl("accounts/"+ accountId+ "/courses/"+ options.getCourseId(), options.getOptionsMap());
+        LOG.debug("Final URL of API call: " + url);
+        return retrieveCourseFromCanvas(oauthToken, url);
+    }
+
     private Optional<Course> retrieveCourseFromCanvas(OauthToken oauthToken, String url) throws IOException {
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         if (response.getErrorHappened() || response.getResponseCode() != 200) {
