@@ -39,6 +39,13 @@ public interface CourseReader extends CanvasReader<Course, CourseReader> {
      */
      Optional<Course> getSingleCourse(GetSingleCourseOptions options) throws IOException;
 
+    /**
+     * Retrieve a specific course from a Canvas account by its Canvas ID number
+     * @param accountId The account to look for the course in.
+     * @param options The object holding options for this API call
+     * @return The course returned by Canvas or an empty Optional
+     * @throws IOException When there is an error communicating with Canvas
+     */
     Optional<Course> getSingleCourse(String accountId, GetSingleCourseOptions options) throws IOException;
 
     /**
