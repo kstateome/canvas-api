@@ -2,6 +2,7 @@ package edu.ksu.canvas;
 
 import edu.ksu.canvas.impl.*;
 import edu.ksu.canvas.interfaces.*;
+import edu.ksu.canvas.model.FeatureFlag;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.net.RefreshingRestClient;
 import edu.ksu.canvas.oauth.OauthToken;
@@ -176,6 +177,7 @@ public class CanvasApiFactory {
         readerMap.put(ProgressReader.class, ProgressImpl.class);
         readerMap.put(CourseSettingsReader.class, CourseSettingsImpl.class);
         readerMap.put(GradingStandardReader.class, GradingStandardImpl.class);
+        readerMap.put(FeatureReader.class, FeatureImpl.class);
 
         writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImpl.class);
         writerMap.put(AdminWriter.class, AdminImpl.class);
@@ -203,5 +205,6 @@ public class CanvasApiFactory {
         writerMap.put(ProgressWriter.class, ProgressImpl.class);
         writerMap.put(CourseSettingsWriter.class, CourseSettingsImpl.class);
         writerMap.put(GradingStandardWriter.class, GradingStandardImpl.class);
+        writerMap.put(FeatureFlagWriter.class, FeatureFlagImpl.class);
     }
 }
