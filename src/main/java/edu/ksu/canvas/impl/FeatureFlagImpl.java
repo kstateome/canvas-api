@@ -2,6 +2,7 @@ package edu.ksu.canvas.impl;
 
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.CanvasReader;
+import edu.ksu.canvas.interfaces.FeatureFlagReader;
 import edu.ksu.canvas.interfaces.FeatureFlagWriter;
 import edu.ksu.canvas.model.FeatureFlag;
 import edu.ksu.canvas.net.Response;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class FeatureFlagImpl extends BaseImpl<FeatureFlag, CanvasReader, FeatureFlagWriter> implements FeatureFlagWriter {
+public class FeatureFlagImpl extends BaseImpl<FeatureFlag, FeatureFlagReader, FeatureFlagWriter> implements FeatureFlagWriter, FeatureFlagReader {
 
     /**
      * Construct a new CanvasApi class with an OAuth token
@@ -35,26 +36,25 @@ public class FeatureFlagImpl extends BaseImpl<FeatureFlag, CanvasReader, Feature
 
     @Override
     public Optional<FeatureFlag> updateCourseFeatureFlag(String courseId, String feature, FeatureFlag.State state) throws IOException {
-        String url = buildCanvasUrl("courses/" + courseId + "/features/" + feature, Collections.emptyMap());
+        String url = buildCanvasUrl("courses/" + courseId + "/features/flags/" + feature, Collections.emptyMap());
         return updateFeatureFlag(url, state);
     }
 
     @Override
     public Optional<FeatureFlag> updateAccountFeatureFlag(String accountId, String feature, FeatureFlag.State state) throws IOException {
-        String url = buildCanvasUrl("accounts/" + accountId + "/features/" + feature, Collections.emptyMap());
+        String url = buildCanvasUrl("accounts/" + accountId + "/features/flags/" + feature, Collections.emptyMap());
         return updateFeatureFlag(url, state);
     }
 
     @Override
     public Optional<FeatureFlag> updateUserFeatureFlag(String userId, String feature, FeatureFlag.State state) throws IOException {
-        String url = buildCanvasUrl("users/" + userId + "/features/" + feature, Collections.emptyMap());
+        String url = buildCanvasUrl("users/" + userId + "/features/flags/" + feature, Collections.emptyMap());
         return updateFeatureFlag(url, state);
     }
 
     private Optional<FeatureFlag> updateFeatureFlag(String url, FeatureFlag.State state) throws IOException {
         Map<String, List<String>> params = Collections.singletonMap("state", Collections.singletonList(state.name()));
-        Response response = canvasMessenger.putToCanvas(oauthToken, url, params);
-        return responseParser.parseToObject(FeatureFlag.class, response);
+        return getFeatureFlag(canvasMessenger.putToCanvas(oauthToken, url, params));
     }
 
     @Override
@@ -66,4 +66,28 @@ public class FeatureFlagImpl extends BaseImpl<FeatureFlag, CanvasReader, Feature
     protected Class<FeatureFlag> objectType() {
         return FeatureFlag.class;
     }
+
+    @Override
+    public Optional<FeatureFlag> getCourseFeatureFlag(String courseId, String feature) throws IOException {
+        String url = buildCanvasUrl("courses/"+ courseId+ "/features/flags/"+ feature, Collections.emptyMap());
+        return getFeatureFlag(canvasMessenger.getSingleResponseFromCanvas(oauthToken, url));
+    }
+
+    @Override
+    public Optional<FeatureFlag> getAccountFeatureFlag(String accountId, String feature) throws IOException {
+        String url = buildCanvasUrl("accounts/"+ accountId+ "/features/flags/"+ feature, Collections.emptyMap());
+        return getFeatureFlag(canvasMessenger.getSingleResponseFromCanvas(oauthToken, url));
+    }
+
+    @Override
+    public Optional<FeatureFlag> getUserFeatureFlag(String userId, String feature) throws IOException {
+        String url = buildCanvasUrl("users/"+ userId+ "/features/flags/"+ feature, Collections.emptyMap());
+        return getFeatureFlag(canvasMessenger.getSingleResponseFromCanvas(oauthToken, url));
+    }
+
+    private Optional<FeatureFlag> getFeatureFlag(Response singleResponseFromCanvas) {
+        Response response = singleResponseFromCanvas;
+        return responseParser.parseToObject(FeatureFlag.class, response);
+    }
+
 }
