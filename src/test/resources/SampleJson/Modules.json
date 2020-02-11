@@ -1,0 +1,30 @@
+[
+    {
+        "id": 41188,
+        "name": "Module One",
+        "position": 1,
+        "unlock_at": null,
+        "require_sequential_progress": false,
+        "publish_final_grade": false,
+        "prerequisite_module_ids": [],
+        "state": "completed",
+        "completed_at": "2020-02-11T00:00:27Z",
+        "published": true,
+        "items_count": 1,
+        "items_url": "https://canvas.example.edu/api/v1/courses/1092/modules/41188/items"
+    },
+    {
+        "id": 239752,
+        "name": "Module Two",
+        "position": 2,
+        "unlock_at": null,
+        "require_sequential_progress": false,
+        "publish_final_grade": false,
+        "prerequisite_module_ids": [],
+        "state": "unlocked",
+        "completed_at": null,
+        "published": true,
+        "items_count": 1,
+        "items_url": "https://canvas.example.edu/api/v1/courses/1092/modules/239752/items"
+    }
+]
