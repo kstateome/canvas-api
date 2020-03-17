@@ -51,7 +51,14 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
     @Override
     public Optional<Course> getSingleCourse(GetSingleCourseOptions options) throws IOException {
         LOG.debug("getting course " + options.getCourseId());
-        String url = buildCanvasUrl("courses/" + options.getCourseId(), options.getOptionsMap());
+        String path = "";
+        String accountId = options.getAccount();
+        if (accountId != null) {
+            path += "accounts/"+accountId+ "/courses/";
+        } else {
+            path = "courses/";
+        }
+        String url = buildCanvasUrl(path + options.getCourseId(), options.getOptionsMap());
         LOG.debug("Final URL of API call: " + url);
 
         return retrieveCourseFromCanvas(oauthToken, url);
@@ -107,7 +114,14 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
 
     @Override
     public Boolean deleteCourse(DeleteCourseOptions options) throws IOException {
-        String url = buildCanvasUrl("courses/" + options.getCourseId(), Collections.emptyMap());
+        String path = "";
+        String accountId = options.getAccountId();
+        if (accountId != null) {
+            path += "accounts/"+accountId+ "/courses/";
+        } else {
+            path = "courses/";
+        }
+        String url = buildCanvasUrl(path + options.getCourseId(), Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, options.getOptionsMap());
         LOG.debug("response " + response.toString());
         if (response.getErrorHappened() || response.getResponseCode() != 200) {

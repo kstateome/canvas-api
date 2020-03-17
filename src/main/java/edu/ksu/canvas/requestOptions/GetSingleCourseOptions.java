@@ -5,6 +5,7 @@ import java.util.List;
 public class GetSingleCourseOptions extends BaseOptions {
 
     private String courseId;
+    private String accountId;
 
     public enum Include {
         //same include options as list courses call
@@ -38,5 +39,14 @@ public class GetSingleCourseOptions extends BaseOptions {
     public GetSingleCourseOptions includes(List<Include> includes) {
         addEnumList("include[]", includes);
         return this;
+    }
+
+    public GetSingleCourseOptions account(String accountId) {
+        this.accountId = accountId;
+        return this;
+    }
+
+    public String getAccount() {
+        return accountId;
     }
 }
