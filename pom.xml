@@ -9,7 +9,7 @@
 
   <name>Canvas API Library</name>
   <description>A native Java library to talk to the Canvas REST API</description>
-  <url>https://github.com/ox-it/canvas-api</url>
+  <url>https://github.com/oxctl/canvas-api</url>
 
    <licenses>
     <license>
@@ -36,9 +36,9 @@
   </developers>
 
   <scm>
-    <connection>scm:git:ssh://git@github.com/ox-it/canvas-api.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com/ox-it/canvas-api.git</developerConnection>
-    <url>https://github.com/ox-it/canvas-api</url>
+    <connection>scm:git:ssh://git@github.com/oxctl/canvas-api.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/oxctl/canvas-api.git</developerConnection>
+    <url>https://github.com/oxctl/canvas-api</url>
     <tag>HEAD</tag>
   </scm>
 
