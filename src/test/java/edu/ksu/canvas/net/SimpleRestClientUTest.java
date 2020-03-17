@@ -1,6 +1,7 @@
 package edu.ksu.canvas.net;
 
 import edu.ksu.canvas.LocalServerTestBase;
+import edu.ksu.canvas.errors.UserErrorResponse;
 import edu.ksu.canvas.exception.CanvasException;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.exception.UnauthorizedException;
@@ -17,8 +18,9 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-
+import static org.junit.Assert.assertTrue;
 
 
 @RunWith(JUnit4.class)
@@ -95,4 +97,32 @@ public class SimpleRestClientUTest extends LocalServerTestBase {
         restClient.sendApiGet(emptyAdminToken, baseUrl + url, 100, 100);
     }
 
+    @Test
+    public void userCreationError() throws Exception {
+        // This test can't easily be in the user part as we need too much control over the response
+        String url = "/api/v1/accounts/1/users";
+        registerUrlResponse(url, "/SampleJson/user/UserCreateFailedDuplicateId.json", 400, Collections.singletonMap("Content-Type", "application/json"));
+        try {
+            restClient.sendApiPost(emptyAdminToken, baseUrl + url, Collections.emptyMap(), 100, 100);
+        } catch (CanvasException e) {
+            Object o = e.getError();
+            assertNotNull(o);
+            // Validate that we did correctly parse the response
+            assertTrue(o instanceof UserErrorResponse);
+        }
+    }
+
+    @Test
+    public void userCreationErrorNormalError() throws Exception {
+        // This test can't easily be in the user part as we need too much control over the response
+        String url = "/api/v1/accounts/1/users";
+        registerUrlResponse(url, "/SampleJson/sampleErrorMessageWithoutErrorArray.json", 400, Collections.singletonMap("Content-Type", "application/json"));
+        try {
+            restClient.sendApiPost(emptyAdminToken, baseUrl + url, Collections.emptyMap(), 100, 100);
+        } catch (CanvasException e) {
+            Object o = e.getError();
+            // We shouldn't have helpful error object as this is a generic error.
+            assertNull(o);
+        }
+    }
 }

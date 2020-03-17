@@ -3,18 +3,21 @@ package edu.ksu.canvas.model.assignment;
 import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
 import edu.ksu.canvas.model.BaseCanvasModel;
+import edu.ksu.canvas.model.Course;
+import edu.ksu.canvas.model.User;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @CanvasObject(postKey = "submission")
 public class Submission extends BaseCanvasModel implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     private Integer id;
     private Integer assignmentId;
-    private String assignment;
-    private String course;
+    private Assignment assignment;
+    private Course course;
     private Integer attempt;
     private String body;
     private String grade;
@@ -22,13 +25,13 @@ public class Submission extends BaseCanvasModel implements Serializable {
     private String htmlUrl;
     private String previewUrl;
     private Double score;
-    private String submissionComments;
+    private List<SubmissionComment> submissionComments;
     private String submissionType;
     private Date submittedAt;
     private String url;
     private Integer userId;
     private Integer gradeId;
-    private String user;
+    private User user;
     private Boolean late;
     private Boolean assigmentVisible;
     private Boolean excused;
@@ -50,19 +53,19 @@ public class Submission extends BaseCanvasModel implements Serializable {
         this.assignmentId = assignmentId;
     }
 
-    public String getAssignment() {
+    public Assignment getAssignment() {
         return assignment;
     }
 
-    public void setAssignment(String assignment) {
+    public void setAssignment(Assignment assignment) {
         this.assignment = assignment;
     }
 
-    public String getCourse() {
+    public Course getCourse() {
         return course;
     }
 
-    public void setCourse(String course) {
+    public void setCourse(Course course) {
         this.course = course;
     }
 
@@ -123,11 +126,11 @@ public class Submission extends BaseCanvasModel implements Serializable {
         this.score = score;
     }
 
-    public String getSubmissionComments() {
+    public List<SubmissionComment> getSubmissionComments() {
         return submissionComments;
     }
 
-    public void setSubmissionComments(String submissionComments) {
+    public void setSubmissionComments(List<SubmissionComment> submissionComments) {
         this.submissionComments = submissionComments;
     }
 
@@ -171,11 +174,11 @@ public class Submission extends BaseCanvasModel implements Serializable {
         this.gradeId = gradeId;
     }
 
-    public String getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(String user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

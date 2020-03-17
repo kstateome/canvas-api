@@ -22,7 +22,8 @@ import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.AnswerQuizQuestionOptions;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -30,7 +31,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class QuizSubmissionQuestionImpl extends BaseImpl<QuizSubmissionQuestion, QuizSubmissionQuestionReader, QuizSubmissionQuestionWriter> implements QuizSubmissionQuestionReader, QuizSubmissionQuestionWriter {
-    private static final Logger LOG = Logger.getLogger(QuizSubmissionQuestionImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(QuizSubmissionQuestionImpl.class);
 
     public QuizSubmissionQuestionImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
                                       int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {

@@ -19,7 +19,7 @@ public interface TabWriter extends CanvasWriter<Tab, TabWriter> {
      *
      * @param options options specifying the course, tab, and what to modify
      * @return modified tab object
-     * @throws IOException
+     * @throws IOException When there is an error communicating with Canvas
      */
     Optional<Tab> updateCourseTab(UpdateCourseTabOptions options) throws IOException;
 }

@@ -7,7 +7,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -20,7 +21,7 @@ import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 
 public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements PageReader, PageWriter {
-    private static final Logger LOG = Logger.getLogger(PageImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PageImpl.class);
 
     public PageImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
                     int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {

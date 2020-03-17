@@ -14,11 +14,12 @@ import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.UpdateCourseTabOptions;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TabImpl extends BaseImpl<Tab, TabReader, TabWriter> implements TabReader, TabWriter {
 
-    private static final Logger LOG = Logger.getLogger(TabImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TabImpl.class);
 
     public TabImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
             int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {

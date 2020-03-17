@@ -10,8 +10,6 @@ import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.requestOptions.GetSingleAssignmentOptions;
 import edu.ksu.canvas.requestOptions.ListCourseAssignmentsOptions;
-
-import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +19,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class AssignmentRetrieverUTest extends CanvasTestBase {
-    private static final Logger LOG = Logger.getLogger(AssignmentRetrieverUTest.class);
     @Autowired
     private FakeRestClient fakeRestClient;
     private AssignmentReader assignmentReader;
