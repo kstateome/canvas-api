@@ -4,7 +4,7 @@
 
   <groupId>uk.ac.ox.it.canvas</groupId>
   <artifactId>canvas-api</artifactId>
-  <version>1.1.0</version>
+  <version>1.1.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>Canvas API Library</name>
@@ -39,7 +39,7 @@
     <connection>scm:git:ssh://git@github.com/ox-it/canvas-api.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/ox-it/canvas-api.git</developerConnection>
     <url>https://github.com/ox-it/canvas-api</url>
-    <tag>1.1.0</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <build>
