@@ -11,7 +11,7 @@ Some specific features include:
 
 ## Build ##
 
-[![Build Status](https://travis-ci.org/ox-it/canvas-api.svg?branch=master)](https://travis-ci.org/ox-it/canvas-api)
+[![Build Status](https://travis-ci.org/oxctl/canvas-api.svg?branch=master)](https://travis-ci.org/oxctl/canvas-api)
 
 ## Requirements
 To use this library, you must be using Java 8. We are making extensive use of [Java Streams](https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html) as well as the [Optional](https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html) class.
