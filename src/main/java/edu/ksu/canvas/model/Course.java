@@ -44,7 +44,7 @@ public class Course extends BaseCanvasModel implements Serializable {
     private Boolean allowStudentForumAttachments;
     private Boolean openEnrollment;
     private Boolean selfEnrollment;
-    private Boolean termId;
+    private String termId;
     private String timeZone;
     private Boolean offer;
     private Boolean enrollMe;
@@ -341,11 +341,11 @@ public class Course extends BaseCanvasModel implements Serializable {
     }
 
     @CanvasField(postKey = "term_id")
-    public Boolean getTermId() {
+    public String getTermId() {
         return termId;
     }
 
-    public void setTermId(Boolean termId) {
+    public void setTermId(String termId) {
         this.termId = termId;
     }
 
