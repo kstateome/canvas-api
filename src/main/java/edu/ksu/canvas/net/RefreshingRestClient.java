@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
+import java.io.InputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +63,17 @@ public class RefreshingRestClient implements RestClient {
             LOG.debug("Caught invalidOauthToken from " + url);
             token.refresh();
             return restClient.sendApiPost(token, url, postParameters, connectTimeout, readTimeout);
+        }
+    }
+
+    @Override
+    public Response sendApiPostFile(@NotNull OauthToken token, @NotNull String url, Map<String, List<String>> postParameters, String fileParameter, String filePath, InputStream is, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+        try {
+            return restClient.sendApiPostFile(token, url, postParameters, fileParameter, filePath, is, connectTimeout, readTimeout);
+        } catch (InvalidOauthTokenException e) {
+            LOG.debug("Caught invalidOauthToken from " + url);
+            token.refresh();
+            return restClient.sendApiPostFile(token, url, postParameters, fileParameter, filePath, is, connectTimeout, readTimeout);
         }
     }
 
