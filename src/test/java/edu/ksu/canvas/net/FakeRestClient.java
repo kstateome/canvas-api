@@ -48,6 +48,13 @@ public class FakeRestClient implements RestClient {
     }
 
     @Override
+    public Response sendApiPostFile(OauthToken token, String url, Map<String, List<String>> postParameters, String fileParameter, String filePath, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+        LOG.debug("Sending fake POST to " + url);
+        checkForTimeout(connectTimeout, readTimeout);
+        return response(url);
+    }
+
+    @Override
     public Response sendApiDelete(@NotNull OauthToken token, @NotNull String url, Map<String, List<String>> deleteParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending fake DEL to " + url);
         checkForTimeout(connectTimeout, readTimeout);

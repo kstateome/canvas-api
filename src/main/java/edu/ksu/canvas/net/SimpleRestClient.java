@@ -28,6 +28,9 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -39,6 +42,7 @@ import com.google.gson.Gson;
 import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
@@ -161,6 +165,36 @@ public class SimpleRestClient implements RestClient {
         response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
         Long endTime = System.currentTimeMillis();
         LOG.debug("POST call took: " + (endTime - beginTime) + "ms");
+        return response;
+    }
+
+    @Override
+    public Response sendApiPostFile(OauthToken token, String url, Map<String, List<String>> postParameters, String fileParameter, String filePath,
+                                int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+        LOG.debug("Sending API POST file request to URL: " + url);
+        Response response = new Response();
+        HttpClient httpClient = createHttpClient(connectTimeout, readTimeout);
+        Long beginTime = System.currentTimeMillis();
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
+        List<NameValuePair> params = convertParameters(postParameters);
+
+        MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
+        entityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+        FileBody fileBody = new FileBody(new File(filePath));
+        entityBuilder.addPart(fileParameter, fileBody);
+        for(NameValuePair param : params) {
+            entityBuilder.addTextBody(param.getName(), param.getValue());
+        }
+		
+        httpPost.setEntity(entityBuilder.build());
+        HttpResponse httpResponse =  httpClient.execute(httpPost);
+        String content = handleResponse(httpResponse, httpPost);
+
+        response.setContent(content);
+        response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
+        Long endTime = System.currentTimeMillis();
+        LOG.debug("POST file call took: " + (endTime - beginTime) + "ms");
         return response;
     }
 

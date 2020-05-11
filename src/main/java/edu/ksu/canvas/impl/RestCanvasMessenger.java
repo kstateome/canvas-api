@@ -61,7 +61,12 @@ public class RestCanvasMessenger implements CanvasMessenger {
     @Override
     public Response sendToCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String, List<String>> parameters) throws InvalidOauthTokenException, IOException {
         return restClient.sendApiPost(oauthToken, url, parameters, connectTimeout, readTimeout);
-   }
+    }
+
+    @Override
+    public Response sendFileToCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String, List<String>> parameters, String fileParameter, String filePath) throws InvalidOauthTokenException, IOException {
+        return restClient.sendApiPostFile(oauthToken, url, parameters, fileParameter, filePath, connectTimeout, readTimeout);
+    }
 
     @Override
     public Response sendJsonPostToCanvas(OauthToken oauthToken, String url, JsonObject requestBody) throws InvalidOauthTokenException, IOException {
