@@ -18,6 +18,16 @@ public interface SubmissionReader  extends CanvasReader<Submission, SubmissionRe
     List<Submission> getCourseSubmissions(GetSubmissionsOptions options) throws IOException;
 
     /**
+     * Return a list of all assignment submissions for a course (either for a single user,
+     *         or all users).
+     *
+     * @param options Options class containing required and optional parameters for this API call
+     * @return List of assignment submissions in the course with the course ID
+     * @throws IOException When there is an error communicating with Canvas
+     */
+    List<Submission> getAllCourseSubmissions(GetSubmissionsOptions options) throws IOException;
+
+    /**
      * Retrieve a list of assignment submissions from a section
      *
      * @param options Options class containing required and optional parameters for this API call
