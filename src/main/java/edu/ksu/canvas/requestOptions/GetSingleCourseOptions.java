@@ -11,7 +11,7 @@ public class GetSingleCourseOptions extends BaseOptions {
         //same include options as list courses call
         NEEDS_GRADING_COUNT, SYLLABUS_BODY, TOTAL_SCORES, TERM, COURSE_PROGRESS,
         SECTIONS, STORAGE_QUOTA_USED_MB, TOTAL_STUDENTS, FAVORITES, TEACHERS,
-        OBSERVED_USERS, CURRENT_GRADING_PERIOD_SCORES,
+        OBSERVED_USERS, CURRENT_GRADING_PERIOD_SCORES, ACCOUNT,
         //options specific to get single course call
         ALL_COURSES, PERMISSIONS, LICENSE;
 

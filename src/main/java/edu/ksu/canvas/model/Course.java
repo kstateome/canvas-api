@@ -51,6 +51,7 @@ public class Course extends BaseCanvasModel implements Serializable {
     private String syllabusBody;
     private String courseFormat;
     private Boolean enableSisReactivation;
+    private Account account;
 
     private List<Section> sections;
     private List<Enrollment> enrollments;
@@ -398,5 +399,13 @@ public class Course extends BaseCanvasModel implements Serializable {
 
     public void setEnableSisReactivation(Boolean enableSisReactivation) {
         this.enableSisReactivation = enableSisReactivation;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }
