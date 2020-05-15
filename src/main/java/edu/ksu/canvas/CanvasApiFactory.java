@@ -178,6 +178,7 @@ public class CanvasApiFactory {
         readerMap.put(GradingStandardReader.class, GradingStandardImpl.class);
         readerMap.put(SisImportReader.class, SisImportImpl.class);
 
+        writerMap.put(AccountWriter.class, AccountImpl.class);
         writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImpl.class);
         writerMap.put(AdminWriter.class, AdminImpl.class);
         writerMap.put(AssignmentWriter.class, AssignmentImpl.class);
