@@ -14,7 +14,7 @@ import com.google.gson.annotations.SerializedName;
 public class AccountReportAttachment implements Serializable {
     private Long id;
     private String uuid;
-    private Integer folderId;
+    private Long folderId;
     private String displayName;
     private String filename;
     @SerializedName("content-type")
@@ -50,11 +50,11 @@ public class AccountReportAttachment implements Serializable {
         this.uuid = uuid;
     }
 
-    public Integer getFolderId() {
+    public Long getFolderId() {
         return folderId;
     }
 
-    public void setFolderId(Integer folderId) {
+    public void setFolderId(Long folderId) {
         this.folderId = folderId;
     }
 

@@ -10,22 +10,22 @@ import java.util.Date;
 public class SubmissionComment extends BaseCanvasModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
+    private Long id;
     private String comment;
     private Date createdAt;
     private Date editedAt;
-    private Integer authorId;
+    private Long authorId;
     private String authorName;
     private UserDisplay author;
     private MediaComment mediaComment;
     private Assignment assignment;
     private Boolean assignmentVisible;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -56,11 +56,11 @@ public class SubmissionComment extends BaseCanvasModel implements Serializable {
     }
 
     @CanvasField(postKey = "author_id", array = false)
-    public Integer getAuthorId() {
+    public Long getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(Integer authorId) {
+    public void setAuthorId(Long authorId) {
         this.authorId = authorId;
     }
 

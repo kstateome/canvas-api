@@ -92,7 +92,7 @@ public class AccountReportUTest extends CanvasTestBase {
     public void testReportStatus() throws Exception {
         String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion, "accounts/" + ROOT_ACCOUNT_ID + "/reports/sis_export_csv/2", Collections.emptyMap());
         fakeRestClient.addSuccessResponse(url, "SampleJson/accountReport/SingleAccountReportListing.json");
-        Optional<AccountReport> accountReport = accountReportReader.reportStatus(ROOT_ACCOUNT_ID, "sis_export_csv", 2);
+        Optional<AccountReport> accountReport = accountReportReader.reportStatus(ROOT_ACCOUNT_ID, "sis_export_csv", 2L);
 
         Assert.assertTrue(accountReport.isPresent());
     }

@@ -10,13 +10,13 @@ public class GetSingleConversationOptions extends BaseOptions {
         public String toString() { return name().toLowerCase(); }
     }
 
-    private Integer conversationId;
+    private Long conversationId;
 
-    public GetSingleConversationOptions(Integer conversationId) {
+    public GetSingleConversationOptions(Long conversationId) {
         this.conversationId = conversationId;
     }
 
-    public Integer getConversationId() {
+    public Long getConversationId() {
         return conversationId;
     }
 

@@ -50,7 +50,7 @@ public interface ExternalToolWriter extends CanvasWriter<ExternalTool, ExternalT
      * @return The deleted tool. Should have a workflow state of "deleted"
      * @throws IOException if there is an error communicating with Canvas
      */
-    public Optional<ExternalTool> deleteExternalToolInCourse(String courseId, Integer toolId) throws IOException;
+    public Optional<ExternalTool> deleteExternalToolInCourse(String courseId, Long toolId) throws IOException;
 
     /**
      * Delete an external tool from an account.
@@ -59,5 +59,5 @@ public interface ExternalToolWriter extends CanvasWriter<ExternalTool, ExternalT
      * @return The deleted tool. Should have a workflow state of "deleted"
      * @throws IOException if there is an error communicating with Canvas
      */
-    public Optional<ExternalTool> deleteExternalToolInAccount(String accountId, Integer toolId) throws IOException;
+    public Optional<ExternalTool> deleteExternalToolInAccount(String accountId, Long toolId) throws IOException;
 }

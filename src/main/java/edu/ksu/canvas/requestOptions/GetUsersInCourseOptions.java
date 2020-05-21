@@ -61,7 +61,7 @@ public class GetUsersInCourseOptions extends BaseOptions {
      * @param roleId ID of the role to filter users by
      * @return This object to allow adding more options
      */
-    public GetUsersInCourseOptions enrollmentRoleId(Integer roleId) {
+    public GetUsersInCourseOptions enrollmentRoleId(Long roleId) {
         addSingleItem("enrollment_role_id", roleId.toString());
         return this;
     }

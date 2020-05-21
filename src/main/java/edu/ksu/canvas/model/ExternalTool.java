@@ -7,7 +7,7 @@ import java.util.Map;
 public class ExternalTool extends BaseCanvasModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
+    private Long id;
     private String name;
     private String description;
     private String url;
@@ -39,11 +39,11 @@ public class ExternalTool extends BaseCanvasModel implements Serializable {
     private Map<String, Object> editorButton;
     private Map<String, Object> resourceSelection;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

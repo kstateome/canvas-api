@@ -80,7 +80,7 @@ public class UserRetrieverUTest extends CanvasTestBase {
 
     @Test
     public void testShowUserDetailsByUserId() throws Exception {
-        int userId = 20;
+        long userId = 20;
         String url = baseUrl + "/api/v1/users/" + String.valueOf(userId);
         fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserById.json");
         Optional<User> result = userReader.showUserDetails(String.valueOf(userId));
@@ -90,7 +90,7 @@ public class UserRetrieverUTest extends CanvasTestBase {
 
     @Test
     public void testShowUserDetailsBySisUserId() throws Exception {
-        int userId = 31;
+        long userId = 31;
         String sisUserId = "sis_user_id:ABC123";
         String url = baseUrl + "/api/v1/users/" + sisUserId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserBySisUserId.json");
@@ -101,7 +101,7 @@ public class UserRetrieverUTest extends CanvasTestBase {
 
     @Test
     public void testShowUserDetailsBySelfIdentifier() throws Exception {
-        int userId = 32;
+        long userId = 32;
         String selfIdentifier = "self";
         String url = baseUrl + "/api/v1/users/" + selfIdentifier;
         fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserBySelfIdentifier.json");
@@ -112,7 +112,7 @@ public class UserRetrieverUTest extends CanvasTestBase {
 
     @Test
     public void testShowUserDetailsBySisIntegrationId() throws Exception {
-        int userId = 33;
+        long userId = 33;
         String sisIntegrationUserId = "sis_integration_id:ABC123";
         String url = baseUrl + "/api/v1/users/" + sisIntegrationUserId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserBySisIntegrationId.json");

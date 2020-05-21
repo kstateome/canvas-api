@@ -3,14 +3,14 @@ package edu.ksu.canvas.requestOptions;
 public class StartQuizSubmissionOptions extends BaseOptions {
 
     private String courseId;
-    private Integer quizId;
+    private Long quizId;
 
     /**
      * Create API options wrapper for the "create quiz submission" API call with required parameters
      * @param courseId Course ID of the course the quiz is in
      * @param quizId Quiz ID of the quiz that is being taken
      */
-    public StartQuizSubmissionOptions(String courseId, Integer quizId) {
+    public StartQuizSubmissionOptions(String courseId, Long quizId) {
         this.courseId = courseId;
         this.quizId = quizId;
     }
@@ -19,7 +19,7 @@ public class StartQuizSubmissionOptions extends BaseOptions {
         return courseId;
     }
 
-    public Integer getQuizId() {
+    public Long getQuizId() {
         return quizId;
     }
 

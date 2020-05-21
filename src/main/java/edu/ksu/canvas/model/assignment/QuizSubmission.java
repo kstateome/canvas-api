@@ -15,18 +15,18 @@ import edu.ksu.canvas.model.BaseCanvasModel;
 public class QuizSubmission extends BaseCanvasModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
-    private Integer quizId;
-    private Integer userId;
-    private Integer submissionId;
+    private Long id;
+    private Long quizId;
+    private Long userId;
+    private Long submissionId;
     private String startedAt;
     private String finishedAt;
     private String endAt;
-    private Integer attempt;
-    private Integer extraAttempts;
-    private Integer extraTime;
+    private Long attempt;
+    private Long extraAttempts;
+    private Long extraTime;
     private Boolean manuallyUnlocked;
-    private Integer timeSpent;
+    private Long timeSpent;
     private Double score;
     private Double scoreBeforeRegrade;
     private Double keptScore;
@@ -36,31 +36,31 @@ public class QuizSubmission extends BaseCanvasModel implements Serializable {
     private Boolean overdueAndNeedsSubmission;
     private String validationToken;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public Integer getQuizId() {
+    public Long getQuizId() {
         return quizId;
     }
 
-    public void setQuizId(Integer quizId) {
+    public void setQuizId(Long quizId) {
         this.quizId = quizId;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public Integer getSubmissionId() {
+    public Long getSubmissionId() {
         return submissionId;
     }
 
-    public void setSubmissionId(Integer submissionId) {
+    public void setSubmissionId(Long submissionId) {
         this.submissionId = submissionId;
     }
 
@@ -89,27 +89,27 @@ public class QuizSubmission extends BaseCanvasModel implements Serializable {
     }
 
     @CanvasField(postKey = "attempt", array = false)
-    public Integer getAttempt() {
+    public Long getAttempt() {
         return attempt;
     }
 
-    public void setAttempt(Integer attempt) {
+    public void setAttempt(Long attempt) {
         this.attempt = attempt;
     }
 
-    public Integer getExtraAttempts() {
+    public Long getExtraAttempts() {
         return extraAttempts;
     }
 
-    public void setExtraAttempts(Integer extraAttempts) {
+    public void setExtraAttempts(Long extraAttempts) {
         this.extraAttempts = extraAttempts;
     }
 
-    public Integer getExtraTime() {
+    public Long getExtraTime() {
         return extraTime;
     }
 
-    public void setExtraTime(Integer extraTime) {
+    public void setExtraTime(Long extraTime) {
         this.extraTime = extraTime;
     }
 
@@ -121,11 +121,11 @@ public class QuizSubmission extends BaseCanvasModel implements Serializable {
         this.manuallyUnlocked = manuallyUnlocked;
     }
 
-    public Integer getTimeSpent() {
+    public Long getTimeSpent() {
         return timeSpent;
     }
 
-    public void setTimeSpent(Integer timeSpent) {
+    public void setTimeSpent(Long timeSpent) {
         this.timeSpent = timeSpent;
     }
 

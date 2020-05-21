@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @CanvasObject(postKey = "content_migration")
 public class ContentMigration extends BaseCanvasModel implements Serializable {
-    private Integer id;
+    private Long id;
     private String type;
     private String migrationType;
     private String name;
@@ -15,11 +15,11 @@ public class ContentMigration extends BaseCanvasModel implements Serializable {
     private String worksflowState;
 
     @CanvasField(postKey = "id")
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

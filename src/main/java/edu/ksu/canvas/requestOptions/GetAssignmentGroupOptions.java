@@ -17,9 +17,9 @@ public class GetAssignmentGroupOptions extends BaseOptions {
     }
 
     private String courseId;
-    private Integer assignmentGroupId;
+    private Long assignmentGroupId;
 
-    public GetAssignmentGroupOptions(String courseId, Integer assignmentGroupId) {
+    public GetAssignmentGroupOptions(String courseId, Long assignmentGroupId) {
         if(StringUtils.isBlank(courseId) || assignmentGroupId == null || assignmentGroupId == 0) {
             throw new IllegalArgumentException("Must supply a course ID and assignment group ID");
         }
@@ -31,7 +31,7 @@ public class GetAssignmentGroupOptions extends BaseOptions {
         return courseId;
     }
 
-    public Integer getAssignmentGroupId() {
+    public Long getAssignmentGroupId() {
         return assignmentGroupId;
     }
 
@@ -66,7 +66,7 @@ public class GetAssignmentGroupOptions extends BaseOptions {
      * @param periodId The ID of the grading period
      * @return this object to continue building options
      */
-    public GetAssignmentGroupOptions gradingPeriodId (Integer periodId){
+    public GetAssignmentGroupOptions gradingPeriodId (Long periodId){
         addSingleItem("grading_period_id", periodId.toString());
         return this;
     }

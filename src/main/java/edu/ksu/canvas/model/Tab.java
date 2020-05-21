@@ -20,7 +20,7 @@ public class Tab extends BaseCanvasModel implements Serializable {
     private String type;
     private boolean hidden;
     private String visibility;
-    private int postion;
+    private long postion;
 
     @CanvasField(postKey = "html_url")
     public String getHtmlUrl() {
@@ -75,11 +75,11 @@ public class Tab extends BaseCanvasModel implements Serializable {
         this.visibility = visibility;
     }
 
-    public int getPostion() {
+    public long getPostion() {
         return postion;
     }
 
-    public void setPostion(int postion) {
+    public void setPostion(long postion) {
         this.postion = postion;
     }
 }

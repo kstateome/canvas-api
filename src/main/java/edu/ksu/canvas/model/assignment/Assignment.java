@@ -16,7 +16,7 @@ import java.util.List;
 public class Assignment extends BaseCanvasModel implements Serializable{
 
     private static final long serialVersionUID = 1L;
-    private Integer id;
+    private Long id;
     private String name;
     private String description;
     private Date createdAt;
@@ -38,7 +38,7 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     private String peerReviewCount;
     private Date peerReviewsAssignAt;
     private String groupCategoryId;
-    private Integer needsGradingCount;
+    private Long needsGradingCount;
     private NeedsGradingCount needsGradingCountBySection;
     private String position;
     private Boolean postToSis;
@@ -59,11 +59,11 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     private Boolean omitFromFinalGrade;
     private List<String> assignmentVisibility;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -245,11 +245,11 @@ public class Assignment extends BaseCanvasModel implements Serializable{
         this.groupCategoryId = groupCategoryId;
     }
 
-    public Integer getNeedsGradingCount() {
+    public Long getNeedsGradingCount() {
         return needsGradingCount;
     }
 
-    public void setNeedsGradingCount(Integer needsGradingCount) {
+    public void setNeedsGradingCount(Long needsGradingCount) {
         this.needsGradingCount = needsGradingCount;
     }
 
@@ -531,7 +531,7 @@ public class Assignment extends BaseCanvasModel implements Serializable{
         private static final long serialVersionUID = 1L;
 
         private String sectionId;
-        private Integer needsGradingCount;
+        private Long needsGradingCount;
 
         public String getSectionId() {
             return sectionId;
@@ -541,11 +541,11 @@ public class Assignment extends BaseCanvasModel implements Serializable{
             this.sectionId = sectionId;
         }
 
-        public Integer getNeedsGradingCount() {
+        public Long getNeedsGradingCount() {
             return needsGradingCount;
         }
 
-        public void setNeedsGradingCount(Integer needsGradingCount) {
+        public void setNeedsGradingCount(Long needsGradingCount) {
             this.needsGradingCount = needsGradingCount;
         }
     }

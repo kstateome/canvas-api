@@ -9,7 +9,7 @@ public class UpdateCourseTabOptions extends BaseOptions {
 
     private String tabId;
 
-    private int position;
+    private long position;
 
     private boolean hidden;
 
@@ -29,8 +29,8 @@ public class UpdateCourseTabOptions extends BaseOptions {
      * @param position The new position of the tab (1-based)
      * @return This object to continue adding options
      */
-    public UpdateCourseTabOptions position(int position) {
-        addSingleItem("position", Integer.toString(position));
+    public UpdateCourseTabOptions position(long position) {
+        addSingleItem("position", Long.toString(position));
         return this;
     }
 

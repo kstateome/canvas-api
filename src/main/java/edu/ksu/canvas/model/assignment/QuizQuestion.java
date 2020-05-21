@@ -16,9 +16,9 @@ import java.util.List;
 public class QuizQuestion extends BaseCanvasModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
-    private Integer quizId;
-    private Integer position;
+    private Long id;
+    private Long quizId;
+    private Long position;
     private String questionName;
     private String questionType;
     private String questionText;
@@ -29,29 +29,29 @@ public class QuizQuestion extends BaseCanvasModel implements Serializable {
     private List<QuizAnswer> answers;
 
     @CanvasField(postKey = "id", array = false)
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     @CanvasField(postKey = "quiz_id", array = false)
-    public Integer getQuizId() {
+    public Long getQuizId() {
         return quizId;
     }
 
-    public void setQuizId(Integer quizId) {
+    public void setQuizId(Long quizId) {
         this.quizId = quizId;
     }
 
     @CanvasField(postKey = "position")
-    public Integer getPosition() {
+    public Long getPosition() {
         return position;
     }
 
-    public void setPosition(Integer position) {
+    public void setPosition(Long position) {
         this.position = position;
     }
 

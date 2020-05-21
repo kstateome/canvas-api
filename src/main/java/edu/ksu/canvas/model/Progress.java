@@ -22,10 +22,10 @@ import java.util.Date;
 public class Progress implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
-    private Integer contextId;
+    private Long id;
+    private Long contextId;
     private String contextType;
-    private Integer userId;
+    private Long userId;
     private String tag;
     private Double completion;
     private String workflowState;
@@ -34,19 +34,19 @@ public class Progress implements Serializable {
     private String message;
     private String url;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getContextId() {
+    public Long getContextId() {
         return contextId;
     }
 
-    public void setContextId(Integer contextId) {
+    public void setContextId(Long contextId) {
         this.contextId = contextId;
     }
 
@@ -58,11 +58,11 @@ public class Progress implements Serializable {
         this.contextType = contextType;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

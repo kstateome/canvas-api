@@ -35,7 +35,7 @@ public class QuizQuestionImpl extends BaseImpl<QuizQuestion, QuizQuestionReader,
     }
 
     @Override
-    public boolean deleteQuizQuestion(String courseId, Integer quizId, Integer questionId) throws IOException {
+    public boolean deleteQuizQuestion(String courseId, Long quizId, Long questionId) throws IOException {
         LOG.debug("Deleting quiz question in course " + courseId + ", quiz " + quizId + ", question " + questionId);
         String url = buildCanvasUrl("courses/" + courseId + "/quizzes/" + quizId + "/questions/" + questionId, Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, Collections.emptyMap());

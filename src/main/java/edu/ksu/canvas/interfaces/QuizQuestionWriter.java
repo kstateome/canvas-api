@@ -14,5 +14,5 @@ public interface QuizQuestionWriter extends CanvasWriter<QuizQuestion, QuizQuest
      * @return true if deletion was successful (API returned HTTP 204), false otherwise
      * @throws IOException if there is an error communicating with Canvas
      */
-    public boolean deleteQuizQuestion(String courseId, Integer quizId, Integer questionId) throws IOException;
+    public boolean deleteQuizQuestion(String courseId, Long quizId, Long questionId) throws IOException;
 }

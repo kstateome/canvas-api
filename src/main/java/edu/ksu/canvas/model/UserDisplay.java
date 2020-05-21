@@ -9,16 +9,16 @@ import java.io.Serializable;
 public class UserDisplay implements Serializable {
     public static final long serialVersionUID = 1L;
 
-    private int id;
+    private long id;
     private String displayName;
     private String avatarImageUrl;
     private String htmlUrl;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

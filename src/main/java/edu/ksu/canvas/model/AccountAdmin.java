@@ -9,17 +9,17 @@ import edu.ksu.canvas.annotation.CanvasField;
 public class AccountAdmin {
     public static final long serialVersionUID = 1L;
 
-    private Integer id;
+    private Long id;
     private String role;
-    private Integer roleId;
+    private Long roleId;
     private User user;
     private String workflowState;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -31,11 +31,11 @@ public class AccountAdmin {
         this.role = role;
     }
 
-    public Integer getRoleId() {
+    public Long getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Integer roleId) {
+    public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }
 

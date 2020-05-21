@@ -11,11 +11,11 @@ import edu.ksu.canvas.model.BaseCanvasModel;
 public class AssignmentOverride extends BaseCanvasModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
-    private Integer assignmentId;
-    private List<Integer> studentIds;
-    private Integer groupId;
-    private Integer courseSectionId;
+    private Long id;
+    private Long assignmentId;
+    private List<Long> studentIds;
+    private Long groupId;
+    private Long courseSectionId;
     private String title;
     private Date dueAt;
     private Boolean allDay;
@@ -23,43 +23,43 @@ public class AssignmentOverride extends BaseCanvasModel implements Serializable 
     private Date unlockAt;
     private Date lockAt;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getAssignmentId() {
+    public Long getAssignmentId() {
         return assignmentId;
     }
 
-    public void setAssignmentId(Integer assignmentId) {
+    public void setAssignmentId(Long assignmentId) {
         this.assignmentId = assignmentId;
     }
 
-    public List<Integer> getStudentIds() {
+    public List<Long> getStudentIds() {
         return studentIds;
     }
 
-    public void setStudentIds(List<Integer> studentIds) {
+    public void setStudentIds(List<Long> studentIds) {
         this.studentIds = studentIds;
     }
 
-    public Integer getGroupId() {
+    public Long getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(Integer groupId) {
+    public void setGroupId(Long groupId) {
         this.groupId = groupId;
     }
 
-    public Integer getCourseSectionId() {
+    public Long getCourseSectionId() {
         return courseSectionId;
     }
 
-    public void setCourseSectionId(Integer courseSectionId) {
+    public void setCourseSectionId(Long courseSectionId) {
         this.courseSectionId = courseSectionId;
     }
 

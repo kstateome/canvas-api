@@ -12,20 +12,20 @@ import edu.ksu.canvas.annotation.CanvasObject;
 public class Conversation extends BaseCanvasModel implements Serializable {
     public static final long serialVersionUID = 1L;
 
-    private Integer id;
+    private Long id;
     private String subject;
     private ConversationMessageState workflowState;
     private String lastMessage;
     private Date lastMessageAt;
     private String lastAuthoredMessage;
     private Date lastAuthoredMessageAt;
-    private Integer messageCount;
+    private Long messageCount;
     private Boolean subscribed;
     @SerializedName("private") //can't name a variable "private" in java
     private Boolean isPrivate;
     private Boolean starred;
     private List<ConversationFlags> properties;
-    private List<Integer> audience;
+    private List<Long> audience;
     private Object audienceContexts; //TODO: Refine this object type
     private String avatarUrl;
     private List<MessageParticipant> participants;
@@ -38,29 +38,29 @@ public class Conversation extends BaseCanvasModel implements Serializable {
     public enum ConversationFlags { last_author, attachments, media_objects }
 
     public class Message {
-        private Integer id;
-        private Integer authorId;
+        private Long id;
+        private Long authorId;
         private Date createdAt;
         private Boolean generated;
         private String body;
         private List<Object> forwardedMessages;
         private List<String> attachments;
         private Object mediaComment;
-        private List<Integer> participatingUserIds;
+        private List<Long> participatingUserIds;
 
-        public Integer getId() {
+        public Long getId() {
             return id;
         }
 
-        public void setId(Integer id) {
+        public void setId(Long id) {
             this.id = id;
         }
 
-        public Integer getAuthorId() {
+        public Long getAuthorId() {
             return authorId;
         }
 
-        public void setAuthorId(Integer authorId) {
+        public void setAuthorId(Long authorId) {
             this.authorId = authorId;
         }
 
@@ -112,11 +112,11 @@ public class Conversation extends BaseCanvasModel implements Serializable {
             this.mediaComment = mediaComment;
         }
 
-        public List<Integer> getParticipatingUserIds() {
+        public List<Long> getParticipatingUserIds() {
             return participatingUserIds;
         }
 
-        public void setParticipatingUserIds(List<Integer> participatingUserIds) {
+        public void setParticipatingUserIds(List<Long> participatingUserIds) {
             this.participatingUserIds = participatingUserIds;
         }
     }
@@ -124,17 +124,17 @@ public class Conversation extends BaseCanvasModel implements Serializable {
     public class MessageParticipant implements Serializable {
         private static final long serialVersionUID = 1L;
 
-        private Integer id;
+        private Long id;
         private String name;
         private Object commonCourses; //TODO: Refine this object type
         private Object commonGroups; //TODO: Refine this object type
         private String avatarUrl;
 
-        public Integer getId() {
+        public Long getId() {
             return id;
         }
 
-        public void setId(Integer id) {
+        public void setId(Long id) {
             this.id = id;
         }
 
@@ -171,11 +171,11 @@ public class Conversation extends BaseCanvasModel implements Serializable {
         }
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -227,11 +227,11 @@ public class Conversation extends BaseCanvasModel implements Serializable {
         this.lastAuthoredMessageAt = lastAuthoredMessageAt;
     }
 
-    public Integer getMessageCount() {
+    public Long getMessageCount() {
         return messageCount;
     }
 
-    public void setMessageCount(Integer messageCount) {
+    public void setMessageCount(Long messageCount) {
         this.messageCount = messageCount;
     }
 
@@ -267,11 +267,11 @@ public class Conversation extends BaseCanvasModel implements Serializable {
         this.properties = properties;
     }
 
-    public List<Integer> getAudience() {
+    public List<Long> getAudience() {
         return audience;
     }
 
-    public void setAudience(List<Integer> audience) {
+    public void setAudience(List<Long> audience) {
         this.audience = audience;
     }
 

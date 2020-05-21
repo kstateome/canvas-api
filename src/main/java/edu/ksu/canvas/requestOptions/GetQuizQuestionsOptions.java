@@ -3,9 +3,9 @@ package edu.ksu.canvas.requestOptions;
 public class GetQuizQuestionsOptions extends BaseOptions {
 
     private String courseId;
-    private Integer quizId;
+    private Long quizId;
 
-    public GetQuizQuestionsOptions(String courseId, Integer quizId) {
+    public GetQuizQuestionsOptions(String courseId, Long quizId) {
         this.courseId = courseId;
         this.quizId = quizId;
     }
@@ -14,7 +14,7 @@ public class GetQuizQuestionsOptions extends BaseOptions {
         return courseId;
     }
 
-    public Integer getQuizId() {
+    public Long getQuizId() {
         return quizId;
     }
 
@@ -25,7 +25,7 @@ public class GetQuizQuestionsOptions extends BaseOptions {
      * @param submissionId Quiz Submission ID to get questions for
      * @return This object to allow adding more options
      */
-    public GetQuizQuestionsOptions quizSubmissionId(Integer submissionId) {
+    public GetQuizQuestionsOptions quizSubmissionId(Long submissionId) {
         addSingleItem("quiz_submission_id", submissionId.toString());
         return this;
     }
@@ -35,7 +35,7 @@ public class GetQuizQuestionsOptions extends BaseOptions {
      * @param submissionAttempt The ID of the submission attempt
      * @return This object to allow adding more options
      */
-    public GetQuizQuestionsOptions quizSubmissionAttempt(Integer submissionAttempt) {
+    public GetQuizQuestionsOptions quizSubmissionAttempt(Long submissionAttempt) {
         addSingleItem("quiz_submission_attempt", submissionAttempt.toString());
         return this;
     }

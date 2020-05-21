@@ -13,5 +13,5 @@ public interface ContentMigrationReader extends CanvasReader<ContentMigration, C
      * @return A ContentMigration object
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<ContentMigration> getCourseContentMigration(String courseId, Integer id) throws IOException;
+    Optional<ContentMigration> getCourseContentMigration(String courseId, Long id) throws IOException;
 }

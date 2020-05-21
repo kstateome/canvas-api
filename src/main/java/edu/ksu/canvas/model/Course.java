@@ -16,21 +16,21 @@ import java.util.List;
 public class Course extends BaseCanvasModel implements Serializable {
     public static final long serialVersionUID = 1L;
 
-    private Integer accountId;
+    private Long accountId;
     private String courseCode;
     private String defaultView;
-    private Integer id;
+    private Long id;
     private String name;
     private Date startAt;
     private Date endAt;
     private Boolean publicSyllabus;
-    private Integer storageQuotaMb;
+    private Long storageQuotaMb;
     private Boolean hideFinalGrades;
     private Boolean applyAssignmentGroupWeights;
     private String sisCourseId;
     private String integrationId;
     private String workflowState;
-    private Integer totalStudents;
+    private Long totalStudents;
     private Long enrollmentTermId;
     private Boolean restrictEnrollmentsToCourseDates;
     private Long gradingStandardId;
@@ -68,11 +68,11 @@ public class Course extends BaseCanvasModel implements Serializable {
     }
 
     @CanvasField(postKey = "account_id")
-    public Integer getAccountId() {
+    public Long getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(Integer accountId) {
+    public void setAccountId(Long accountId) {
         this.accountId = accountId;
     }
 
@@ -93,11 +93,11 @@ public class Course extends BaseCanvasModel implements Serializable {
         this.defaultView = defaultView;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -137,11 +137,11 @@ public class Course extends BaseCanvasModel implements Serializable {
         this.publicSyllabus = publicSyllabus;
     }
 
-    public Integer getStorageQuotaMb() {
+    public Long getStorageQuotaMb() {
         return storageQuotaMb;
     }
 
-    public void setStorageQuotaMb(Integer storageQuotaMb) {
+    public void setStorageQuotaMb(Long storageQuotaMb) {
         this.storageQuotaMb = storageQuotaMb;
     }
 
@@ -189,11 +189,11 @@ public class Course extends BaseCanvasModel implements Serializable {
         this.workflowState = workflowState;
     }
 
-    public Integer getTotalStudents() {
+    public Long getTotalStudents() {
         return totalStudents;
     }
 
-    public void setTotalStudents(Integer totalStudents) {
+    public void setTotalStudents(Long totalStudents) {
         this.totalStudents = totalStudents;
     }
 

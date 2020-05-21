@@ -43,8 +43,8 @@ public class QuizSubmissionRetrieverUTest extends CanvasTestBase {
 
         List<QuizSubmission> submissions = quizSubmissionReader.getQuizSubmissions(someCourseId, someQuizId);
         Assert.assertEquals(2, submissions.size());
-        Assert.assertTrue(submissions.stream().map(QuizSubmission::getId).filter(Integer.valueOf(1)::equals).findFirst().isPresent());
-        Assert.assertTrue(submissions.stream().map(QuizSubmission::getId).filter(Integer.valueOf(2)::equals).findFirst().isPresent());
+        Assert.assertTrue(submissions.stream().map(QuizSubmission::getId).filter(Long.valueOf(1)::equals).findFirst().isPresent());
+        Assert.assertTrue(submissions.stream().map(QuizSubmission::getId).filter(Long.valueOf(2)::equals).findFirst().isPresent());
     }
 
     @Test(expected = JsonSyntaxException.class)
@@ -77,7 +77,7 @@ public class QuizSubmissionRetrieverUTest extends CanvasTestBase {
         Assert.assertNotNull(response.getUsers());
         Assert.assertEquals(2, response.getQuizSubmissions().size());
         Assert.assertEquals(2, response.getUsers().size());
-        Assert.assertEquals((Integer) 508566, response.getQuizSubmissions().get(0).getId());
+        Assert.assertEquals((Long) 508566L, response.getQuizSubmissions().get(0).getId());
         Assert.assertEquals("User 218826", response.getUser(218826).get().getName());
     }
 
@@ -95,8 +95,8 @@ public class QuizSubmissionRetrieverUTest extends CanvasTestBase {
 
         List<QuizSubmission> submissions = quizSubmissionReader.readAsSisUser(someUserId).getQuizSubmissions(someCourseId, someQuizId);
         Assert.assertEquals(2, submissions.size());
-        Assert.assertTrue(submissions.stream().map(QuizSubmission::getId).filter(new Integer(1)::equals).findFirst().isPresent());
-        Assert.assertTrue(submissions.stream().map(QuizSubmission::getId).filter(new Integer(2)::equals).findFirst().isPresent());
+        Assert.assertTrue(submissions.stream().map(QuizSubmission::getId).filter(new Long(1)::equals).findFirst().isPresent());
+        Assert.assertTrue(submissions.stream().map(QuizSubmission::getId).filter(new Long(2)::equals).findFirst().isPresent());
     }
 
     @Test(expected = JsonSyntaxException.class)
@@ -126,8 +126,8 @@ public class QuizSubmissionRetrieverUTest extends CanvasTestBase {
 
         List<QuizSubmission> submissions = quizSubmissionReader.readAsCanvasUser(someUserId).getQuizSubmissions(someCourseId, someQuizId);
         Assert.assertEquals(2, submissions.size());
-        Assert.assertTrue(submissions.stream().map(QuizSubmission::getId).filter(Integer.valueOf(1)::equals).findFirst().isPresent());
-        Assert.assertTrue(submissions.stream().map(QuizSubmission::getId).filter(Integer.valueOf(2)::equals).findFirst().isPresent());
+        Assert.assertTrue(submissions.stream().map(QuizSubmission::getId).filter(Long.valueOf(1)::equals).findFirst().isPresent());
+        Assert.assertTrue(submissions.stream().map(QuizSubmission::getId).filter(Long.valueOf(2)::equals).findFirst().isPresent());
     }
 
     @Test(expected = JsonSyntaxException.class)

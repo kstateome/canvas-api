@@ -15,8 +15,8 @@ public class TestCanvasModel extends BaseCanvasModel {
     private String field1;
     private String field2;
     private String field3;
-    private Integer field4;
-    private List<Integer> field5;
+    private Long field4;
+    private List<Long> field5;
 
     @CanvasField(postKey = BaseCanvasModelUTest.FIELD1_POST_KEY)
     public String getField1() {
@@ -46,20 +46,20 @@ public class TestCanvasModel extends BaseCanvasModel {
     }
 
     @CanvasField(postKey = BaseCanvasModelUTest.FIELD4_POST_KEY)
-    public Integer getField4() {
+    public Long getField4() {
         return field4;
     }
 
-    public void setField4(final Integer field4) {
+    public void setField4(final Long field4) {
         this.field4 = field4;
     }
 
     @CanvasField(postKey = BaseCanvasModelUTest.FIELD5_POST_KEY)
-    public List<Integer> getField5() {
+    public List<Long> getField5() {
         return field5;
     }
 
-    public void setField5(final List<Integer> field5) {
+    public void setField5(final List<Long> field5) {
         this.field5 = field5;
     }
 }

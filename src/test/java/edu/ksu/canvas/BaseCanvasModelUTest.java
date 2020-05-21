@@ -23,8 +23,8 @@ public class BaseCanvasModelUTest {
     public static final String FIELD1_VALUE = "field1Value";
     public static final String FIELD2_VALUE = "field2Value";
     public static final String FIELD3_VALUE = "field3Value";
-    public static final Integer FIELD4_VALUE = 6789;
-    public static final List<Integer> FIELD5_VALUE = ImmutableList.of(1354, 9823, 5387);
+    public static final Long FIELD4_VALUE = 6789L;
+    public static final List<Long> FIELD5_VALUE = ImmutableList.of(1354L, 9823L, 5387L);
 
     /* Make sure canvasFields with arrays = true are of form object[field] */
     @Test

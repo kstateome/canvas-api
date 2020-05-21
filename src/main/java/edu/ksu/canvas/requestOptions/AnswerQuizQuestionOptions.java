@@ -2,7 +2,7 @@ package edu.ksu.canvas.requestOptions;
 
 public class AnswerQuizQuestionOptions extends BaseOptions {
 
-    private Integer quizSubmissionId;
+    private Long quizSubmissionId;
 
     /**
      * Create required API options for answering quiz questions
@@ -10,13 +10,13 @@ public class AnswerQuizQuestionOptions extends BaseOptions {
      * @param attemptNumber Attempt number. Must be the latest attempt index since earlier ones can not be modified
      * @param validationToken Validation token returned by Canvas when the quiz submission was created
      */
-    public AnswerQuizQuestionOptions(Integer quizSubmissionId, Integer attemptNumber, String validationToken) {
+    public AnswerQuizQuestionOptions(Long quizSubmissionId, Long attemptNumber, String validationToken) {
         this.quizSubmissionId = quizSubmissionId;
         addSingleItem("attempt", attemptNumber.toString());
         addSingleItem("validation_token", validationToken);
     }
 
-    public Integer getQuizSubmissionid() {
+    public Long getQuizSubmissionid() {
         return quizSubmissionId;
     }
 

@@ -39,7 +39,7 @@ public class CalendarWriterUTest extends CanvasTestBase {
         event.setContextCode("user_1");
         Optional<CalendarEvent> calendarEvent = calendarWriter.createCalendarEvent(event);
         CalendarEvent returnedEvent = calendarEvent.orElseThrow(AssertionFailedError::new);
-        Assert.assertEquals(Integer.valueOf(1), returnedEvent.getId());
+        Assert.assertEquals(Long.valueOf(1), returnedEvent.getId());
     }
 
     @Test(expected = NullPointerException.class)
@@ -58,7 +58,7 @@ public class CalendarWriterUTest extends CanvasTestBase {
         fakeRestClient.addSuccessResponse(url, "SampleJson/calendar/EditCalendarEvent.json");
         CalendarEvent event = new CalendarEvent();
         event.setTitle("Edit Event");
-        event.setId(1);
+        event.setId(1L);
         Optional<CalendarEvent> editedEventOpt = calendarWriter.editCalendarEvent(event);
         CalendarEvent editedEvent = editedEventOpt.orElseThrow(AssertionFailedError::new);
         Assert.assertEquals("Edit Event", editedEvent.getTitle());
@@ -69,7 +69,7 @@ public class CalendarWriterUTest extends CanvasTestBase {
         String url = baseUrl + "/api/v1/calendar_events/1";
         fakeRestClient.addSuccessResponse(url, "SampleJson/calendar/DeleteCalendarEvent.json");
         Optional <CalendarEvent> deleteEventOpt =
-            calendarWriter.deleteCalendarEvent(new DeleteCalendarEventOptions(1).cancelReason("Some reason"));
+            calendarWriter.deleteCalendarEvent(new DeleteCalendarEventOptions(1L).cancelReason("Some reason"));
         CalendarEvent deleteEvent = deleteEventOpt.orElseThrow(AssertionFailedError::new);
         Assert.assertEquals("Delete Event", deleteEvent.getTitle());
     }

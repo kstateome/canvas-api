@@ -13,10 +13,10 @@ import java.util.Map;
  * class to generate any form parameters.
  */
 public class AccountReport implements Serializable {
-    private Integer id;
-    private Integer progress;
+    private Long id;
+    private Long progress;
     private Map<String, Object> parameters;
-    private Integer currentLine;
+    private Long currentLine;
     private String status;
     private Date createdAt;
     private Date startedAt;
@@ -24,19 +24,19 @@ public class AccountReport implements Serializable {
     private URI fileUrl;
     private AccountReportAttachment attachment;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getProgress() {
+    public Long getProgress() {
         return progress;
     }
 
-    public void setProgress(Integer progress) {
+    public void setProgress(Long progress) {
         this.progress = progress;
     }
 
@@ -48,11 +48,11 @@ public class AccountReport implements Serializable {
         this.parameters = parameters;
     }
 
-    public Integer getCurrentLine() {
+    public Long getCurrentLine() {
         return currentLine;
     }
 
-    public void setCurrentLine(Integer currentLine) {
+    public void setCurrentLine(Long currentLine) {
         this.currentLine = currentLine;
     }
 

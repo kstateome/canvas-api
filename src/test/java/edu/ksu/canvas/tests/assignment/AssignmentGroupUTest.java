@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 
 public class AssignmentGroupUTest extends CanvasTestBase {
     private final static String courseId = "123456";
-    private final static Integer assignmentGroupId = 123;
+    private final static Long assignmentGroupId = 123L;
 
     @Autowired
     private FakeRestClient fakeRestClient;
@@ -52,12 +52,12 @@ public class AssignmentGroupUTest extends CanvasTestBase {
 
         assertTrue("Assignment group must be present in result", assignmentGroupResult.isPresent());
         assertEquals("Assignments", assignmentGroupResult.get().getName());
-        assertEquals(new Integer(123), assignmentGroupResult.get().getId());
+        assertEquals(new Long(123), assignmentGroupResult.get().getId());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void invalidGetAssignmentGroupIncludes() throws Exception {
-        new GetAssignmentGroupOptions(courseId, 123).includes(Arrays.asList(GetAssignmentGroupOptions.Include.ASSIGNMENT_VISIBILITY));
+        new GetAssignmentGroupOptions(courseId, 123L).includes(Arrays.asList(GetAssignmentGroupOptions.Include.ASSIGNMENT_VISIBILITY));
     }
 
     @Test

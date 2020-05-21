@@ -34,7 +34,7 @@ public class ProgressImpl extends BaseImpl<Progress, ProgressReader, ProgressWri
     }
 
     @Override
-    public Optional<Progress> getProgress(Integer progressId) throws IOException {
+    public Optional<Progress> getProgress(Long progressId) throws IOException {
         LOG.debug("getting the progress of an asynchronous operation by ID: " + progressId);
         String url = buildCanvasUrl(String.format("progress/%d", progressId), Collections.emptyMap());
         return responseParser.parseToObject(Progress.class, canvasMessenger.getSingleResponseFromCanvas(oauthToken, url));
