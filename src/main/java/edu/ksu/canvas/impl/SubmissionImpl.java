@@ -52,7 +52,16 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
         final String url = buildCanvasUrl(String.format("courses/%s/assignments/%d/submissions", options.getCanvasId(), options.getAssignmentId()), options.getOptionsMap());
         return getListFromCanvas(url);
     }
-
+    
+    @Override
+    public List<Submission> listCourseSubmissionsForMultipleAssignments(final GetSubmissionsOptions options) throws IOException {
+        if(StringUtils.isBlank(options.getCanvasId())) {
+            throw new IllegalArgumentException("Course is required for this API call");
+        }
+        final String url = buildCanvasUrl(String.format("courses/%s/students/submissions", options.getCanvasId()), options.getOptionsMap());
+        return getListFromCanvas(url);
+    }
+    
     @Override
     public List<Submission> getSectionSubmissions(final GetSubmissionsOptions options) throws IOException {
         if(StringUtils.isBlank(options.getCanvasId()) || options.getAssignmentId() == null) {

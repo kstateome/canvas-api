@@ -16,7 +16,13 @@ public interface SubmissionReader  extends CanvasReader<Submission, SubmissionRe
      * @throws IOException When there is an error communicating with Canvas
      */
     List<Submission> getCourseSubmissions(GetSubmissionsOptions options) throws IOException;
-
+    /**
+     * Retrieve a list of all existing submissions for a given set of students and assignments. Students enrollments can be inactive.
+     * @param options Options class containing required and optional parameters for this API call
+     * @return The requested List of Submission objects given the course
+     * @throws IOException When there is an error communicating with Canvas
+     */
+    List<Submission> listCourseSubmissionsForMultipleAssignments(GetSubmissionsOptions options) throws IOException;
     /**
      * Retrieve a list of assignment submissions from a section
      *

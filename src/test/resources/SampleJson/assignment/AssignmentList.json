@@ -57,7 +57,30 @@
     "rubric_settings": {
       "points_possible": 12
     },
-    "rubric": "",
+    "rubric": [
+      {
+        "id": "rubric1",
+        "points": 10,
+        "description": "rubric description",
+        "long_description": null,
+        "ignore_for_scoring": null,
+        "criterion_use_range": false,
+        "ratings": [
+          {
+            "id": "blank",
+            "points": 10,
+            "description": "rating1 descripton",
+            "long_description": "rating1 long descripton"
+          },
+          {
+            "id": "ratings1",
+            "points": 8,
+            "description": "rating2 descripton",
+            "long_description": "rating2 long descripton"
+          }
+        ]
+      }
+    ],
     "assignment_visibility": ["137","381","572"],
     "overrides": ""
   },
@@ -119,7 +142,30 @@
     "rubric_settings": {
       "points_possible": 12
     },
-    "rubric": "",
+    "rubric": [
+      {
+        "id": "rubric1",
+        "points": 10,
+        "description": "rubric description",
+        "long_description": null,
+        "ignore_for_scoring": null,
+        "criterion_use_range": false,
+        "ratings": [
+          {
+            "id": "blank",
+            "points": 10,
+            "description": "rating1 descripton",
+            "long_description": "rating1 long descripton"
+          },
+          {
+            "id": "ratings1",
+            "points": 8,
+            "description": "rating2 descripton",
+            "long_description": "rating2 long descripton"
+          }
+        ]
+      }
+    ],
     "assignment_visibility": ["137","381","572"],
     "overrides": ""
   }

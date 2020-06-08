@@ -58,6 +58,8 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     private Boolean notifyOfUpdate;
     private Boolean omitFromFinalGrade;
     private List<String> assignmentVisibility;
+    private List<Rubric> rubric;
+    private RubricSettings rubricSettings;
 
     public Integer getId() {
         return id;
@@ -416,6 +418,22 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     public void setAssignmentVisibility(List<String> assignmentVisibility) {
         this.assignmentVisibility = assignmentVisibility;
     }
+    
+    public List<Rubric> getRubric() {
+		return rubric;
+	}
+
+	public void setRubric(List<Rubric> rubric) {
+		this.rubric = rubric;
+	}
+	
+    public RubricSettings getRubricSettings() {
+		return rubricSettings;
+	}
+
+	public void setRubricSettings(RubricSettings rubricSettings) {
+		this.rubricSettings = rubricSettings;
+	}
 
     public class ExternalToolTagAttribute implements Serializable {
         private static final long serialVersionUID = 1L;
@@ -549,4 +567,147 @@ public class Assignment extends BaseCanvasModel implements Serializable{
             this.needsGradingCount = needsGradingCount;
         }
     }
+    
+	public class Rubric implements Serializable {
+		private static final long serialVersionUID = 1L;
+		
+		private String id;
+		private Integer points;
+		private String description;
+		private String longDescription;
+		private String ignoreForScoring;
+		private Boolean criterionUseRange;
+		private List<Rating> rating;
+
+		public String getId() {
+			return id;
+		}
+
+		public void setId(String id) {
+			this.id = id;
+		}
+
+		public Integer getPoints() {
+			return points;
+		}
+
+		public void setPoints(Integer points) {
+			this.points = points;
+		}
+
+		public String getDescription() {
+			return description;
+		}
+
+		public void setDescription(String description) {
+			this.description = description;
+		}
+		
+		public String getLongDescription() {
+			return longDescription;
+		}
+
+		public void setLongDescription(String longDescription) {
+			this.longDescription = longDescription;
+		}
+
+		public String getIgnoreForScoring() {
+			return ignoreForScoring;
+		}
+
+		public void setIgnoreForScoring(String ignoreForScoring) {
+			this.ignoreForScoring = ignoreForScoring;
+		}
+
+		public Boolean getCriterionUseRange() {
+			return criterionUseRange;
+		}
+
+		public void setCriterionUseRange(Boolean criterionUseRange) {
+			this.criterionUseRange = criterionUseRange;
+		}
+		
+		public List<Rating> getRating() {
+			return rating;
+		}
+
+		public void setRating(List<Rating> rating) {
+			this.rating = rating;
+		}
+
+		public class Rating implements Serializable {
+
+			private static final long serialVersionUID = 1L;
+
+			private String id;
+			private Integer points;
+			private String description;
+			private String longDescription;
+
+			public String getId() {
+				return id;
+			}
+
+			public void setId(String id) {
+				this.id = id;
+			}
+
+			public Integer getPoints() {
+				return points;
+			}
+
+			public void setPoints(Integer points) {
+				this.points = points;
+			}
+
+			public String getDescription() {
+				return description;
+			}
+
+			public void setDescription(String description) {
+				this.description = description;
+			}
+			
+			public String getLongDescription() {
+				return longDescription;
+			}
+			public void setLongDescription(String longDescription) {
+				this.longDescription = longDescription;
+			}
+		}
+	} 
+	
+	public class RubricSettings implements Serializable {
+		private static final long serialVersionUID = 1L;
+		
+		private Integer id;
+        private Integer pointsPossible;
+        private String title;
+		private Boolean freeFormCriterionComments;
+		
+		public Integer getId() {
+			return id;
+		}
+		public void setId(Integer id) {
+			this.id = id;
+		}
+		public Integer getPointsPossible() {
+			return pointsPossible;
+		}
+		public void setPointsPossible(Integer pointsPossible) {
+			this.pointsPossible = pointsPossible;
+		}
+		public String getTitle() {
+			return title;
+		}
+		public void setTitle(String title) {
+			this.title = title;
+		}
+		public Boolean getFreeFormCriterionComments() {
+			return freeFormCriterionComments;
+		}
+		public void setFreeFormCriterionComments(Boolean freeFormCriterionComments) {
+			this.freeFormCriterionComments = freeFormCriterionComments;
+		}		
+	}
 }

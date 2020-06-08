@@ -9,6 +9,7 @@ import edu.ksu.canvas.model.User;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @CanvasObject(postKey = "submission")
 public class Submission extends BaseCanvasModel implements Serializable {
@@ -36,6 +37,7 @@ public class Submission extends BaseCanvasModel implements Serializable {
     private Boolean assigmentVisible;
     private Boolean excused;
     private String workflowState;
+    private Map<String, RubricAssessment> rubricAssessment;
 
     public Integer getId() {
         return id;
@@ -213,5 +215,44 @@ public class Submission extends BaseCanvasModel implements Serializable {
     public void setWorkflowState(String workflowState) {
         this.workflowState = workflowState;
     }
+    
+    public Map<String, RubricAssessment> getRubricAssessment() {
+		return rubricAssessment;
+	}
 
+	public void setRubricAssessment(Map<String, RubricAssessment> rubricAssessment) {
+		this.rubricAssessment = rubricAssessment;
+	}
+	
+	public class RubricAssessment implements Serializable {
+	    private static final long serialVersionUID = 1L;
+
+	    private String ratingId;
+	    private String comments;
+	    private Integer points;
+	    
+	    public String getRatingId() {
+	        return ratingId;
+	    }
+
+	    public void setRatingId(String ratingId) {
+	        this.ratingId = ratingId;
+	    }
+
+	    public String getComments() {
+	        return comments;
+	    }
+
+	    public void setComments(String comments) {
+	        this.comments = comments;
+	    }
+	    
+	    public Integer getPoints() {
+	 		return points;
+	 	}
+
+	 	public void setPoints(Integer points) {
+	 		this.points = points;
+	 	}
+	}
 }
