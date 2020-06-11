@@ -98,4 +98,9 @@ public class RefreshingRestClient implements RestClient {
             return restClient.sendApiPut(token, url, putParameters, connectTimeout, readTimeout);
         }
     }
+
+    @Override
+    public String sendUpload(String uploadUrl, Map<String, List<String>> params, InputStream in, String filename, int connectTimeout, int readTimeout) throws IOException {
+        return restClient.sendUpload(uploadUrl, params, in, filename, connectTimeout, readTimeout);
+    }
 }

@@ -4,16 +4,13 @@ import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.CourseReader;
 import edu.ksu.canvas.interfaces.CourseWriter;
 import edu.ksu.canvas.model.Course;
+import edu.ksu.canvas.model.Deposit;
 import edu.ksu.canvas.model.status.Conclude;
 import edu.ksu.canvas.model.status.Delete;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
-import edu.ksu.canvas.requestOptions.DeleteCourseOptions;
-import edu.ksu.canvas.requestOptions.GetSingleCourseOptions;
-import edu.ksu.canvas.requestOptions.ListActiveCoursesInAccountOptions;
-import edu.ksu.canvas.requestOptions.ListCurrentUserCoursesOptions;
-import edu.ksu.canvas.requestOptions.ListUserCoursesOptions;
+import edu.ksu.canvas.requestOptions.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -145,6 +142,13 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
     public List<Course> listActiveCoursesInAccount(ListActiveCoursesInAccountOptions options) throws IOException {
         String url = buildCanvasUrl("accounts/" + options.getAccountId() + "/courses", options.getOptionsMap());
         return getListFromCanvas(url);
+    }
+
+    @Override
+    public Optional<Deposit> uploadFile(String courseId, UploadOptions uploadOptions) throws IOException {
+        String url = buildCanvasUrl("courses/"+ courseId+ "/files", Collections.emptyMap());
+        Response response = canvasMessenger.sendToCanvas(oauthToken, url, uploadOptions.getOptionsMap());
+        return responseParser.parseToObject(Deposit.class, response);
     }
 
     @Override

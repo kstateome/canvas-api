@@ -95,4 +95,9 @@ public class RestCanvasMessenger implements CanvasMessenger {
         return restClient.sendApiGet(oauthToken, url, connectTimeout, readTimeout);
     }
 
+    @Override
+    public String sendUpload(String uploadUrl, Map<String, List<String>> params, InputStream in, String filename) throws IOException {
+        return restClient.sendUpload(uploadUrl, params, in, filename, connectTimeout, readTimeout);
+    }
+
 }

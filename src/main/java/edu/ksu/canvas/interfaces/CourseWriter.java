@@ -1,7 +1,9 @@
 package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.Course;
+import edu.ksu.canvas.model.Deposit;
 import edu.ksu.canvas.requestOptions.DeleteCourseOptions;
+import edu.ksu.canvas.requestOptions.UploadOptions;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -39,4 +41,13 @@ public interface CourseWriter extends CanvasWriter<Course, CourseWriter> {
      * @throws IOException When there is an error communicating with Canvas
      */
      Boolean deleteCourse(DeleteCourseOptions options) throws IOException;
+
+    /**
+     * Start a file upload to a course.
+     *
+     * @param options
+     * @throws IOException
+     * @return
+     */
+     Optional<Deposit> uploadFile(String courseId, UploadOptions options) throws IOException;
 }
