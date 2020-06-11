@@ -52,6 +52,11 @@ public class Course extends BaseCanvasModel implements Serializable {
     private String courseFormat;
     private Boolean enableSisReactivation;
     private Account account;
+    // Only used when asking for the course image
+    private String imageDownloadUrl;
+    // Only used when setting course image
+    private Integer imageId;
+    private String imageUrl;
 
     private List<Section> sections;
     private List<Enrollment> enrollments;
@@ -407,5 +412,37 @@ public class Course extends BaseCanvasModel implements Serializable {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    @CanvasField(postKey = "image_id")
+    public Integer getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(Integer imageId) {
+        this.imageId = imageId;
+    }
+
+    @CanvasField(postKey = "image_url")
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    /**
+     * Get the URL to download the course image, this is optional data and you need to request that Canvas
+     * include it.
+     * @see edu.ksu.canvas.requestOptions.GetSingleCourseOptions.Include#COURSE_IMAGE
+     * @return The public URL to download the course image.
+     */
+    public String getImageDownloadUrl() {
+        return imageDownloadUrl;
+    }
+
+    public void setImageDownloadUrl(String imageDownloadUrl) {
+        this.imageDownloadUrl = imageDownloadUrl;
     }
 }
