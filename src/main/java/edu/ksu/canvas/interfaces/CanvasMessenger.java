@@ -23,4 +23,6 @@ public interface CanvasMessenger {
     Response deleteFromCanvas(OauthToken oauthToken, String url, Map<String, List<String>> parameters) throws InvalidOauthTokenException, IOException;
     Response getSingleResponseFromCanvas(OauthToken oauthToken, String url) throws InvalidOauthTokenException, IOException;
     Response putToCanvas(OauthToken oauthToken, String url, Map<String, List<String>> parameters) throws InvalidOauthTokenException, IOException;
+
+    String sendUpload(String uploadUrl, Map<String, List<String>> params, InputStream in, String filename) throws IOException;
 }

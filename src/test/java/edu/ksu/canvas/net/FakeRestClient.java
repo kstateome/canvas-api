@@ -69,6 +69,13 @@ public class FakeRestClient implements RestClient {
         return response(url);
     }
 
+    @Override
+    public String sendUpload(String uploadUrl, Map<String, List<String>> params, InputStream in, String filename, int connectTimeout, int readTimeout) throws IOException {
+        LOG.debug("Sending fake PUT to " + uploadUrl);
+        checkForTimeout(connectTimeout, readTimeout);
+        return response(uploadUrl).getContent();
+    }
+
     private void checkForTimeout(int connectTimeout, int readTimeout) throws IOException {
         if (connectTimeout > NO_TIMEOUT) {
             throw new IOException("Connect timeout exceeded");

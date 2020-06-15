@@ -28,6 +28,7 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.content.ContentBody;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.InputStreamBody;
 import org.apache.http.entity.mime.HttpMultipartMode;
@@ -192,7 +193,7 @@ public class SimpleRestClient implements RestClient {
         for(NameValuePair param : params) {
             entityBuilder.addTextBody(param.getName(), param.getValue());
         }
-		
+
         httpPost.setEntity(entityBuilder.build());
         HttpResponse httpResponse =  httpClient.execute(httpPost);
         String content = handleResponse(httpResponse, httpPost);
@@ -262,7 +263,41 @@ public class SimpleRestClient implements RestClient {
         return response;
     }
 
-    private void checkHeaders(HttpResponse httpResponse, HttpRequestBase request) {
+    @Override
+    public String sendUpload(String uploadUrl, Map<String, List<String>> params, InputStream in, String filename, int connectTimeout, int readTimeout) throws IOException {
+
+        HttpClient client = buildHttpClient(connectTimeout, readTimeout)
+                .disableRedirectHandling() // We need to handle redirects ourselves
+                .build();
+
+        HttpPost httpPost = new HttpPost(uploadUrl);
+        MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
+        for (Map.Entry<String, List<String>> entry : params.entrySet()) {
+            for (String value : entry.getValue()) {
+                entityBuilder.addTextBody(entry.getKey(), value);
+            }
+        }
+        ContentBody fileBody = new InputStreamBody(in, filename);
+        entityBuilder.addPart("file", fileBody);
+        httpPost.setEntity(entityBuilder.build());
+
+        HttpResponse httpResponse = client.execute(httpPost);
+        checkHeaders(httpResponse, httpPost, true);
+        int httpStatus = httpResponse.getStatusLine().getStatusCode();
+        if (httpStatus == 201 || (300 <= httpStatus && httpStatus <= 399)) {
+            Header location = httpResponse.getFirstHeader("Location");
+            if (location != null) {
+                return location.getValue();
+            } else {
+                throw new CanvasException("No location to redirect to when uploading file: " + httpStatus, uploadUrl);
+            }
+        } else {
+            throw new CanvasException("Bad status when uploading file: "+ httpStatus, uploadUrl);
+        }
+
+    }
+
+    private void checkHeaders(HttpResponse httpResponse, HttpRequestBase request, boolean allowRedirect) {
         int statusCode = httpResponse.getStatusLine().getStatusCode();
         double rateLimitThreshold = 0.1;
         double xRateCost = 0;
@@ -298,7 +333,7 @@ public class SimpleRestClient implements RestClient {
             throw new ObjectNotFoundException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
         }
         // If we receive a 5xx exception, we should not wrap it in an unchecked exception for upstream clients to deal with.
-        if(statusCode < 200 || (statusCode > 299 && statusCode <= 499)) {
+        if(statusCode < 200 || (statusCode > (allowRedirect?399:299) && statusCode <= 499)) {
             LOG.error("HTTP status " + statusCode + " returned from " + request.getURI());
             handleError(request, httpResponse);
         }
@@ -353,18 +388,21 @@ public class SimpleRestClient implements RestClient {
     }
 
     private String handleResponse(HttpResponse httpResponse, HttpRequestBase request) throws IOException {
-        checkHeaders(httpResponse, request);
+        checkHeaders(httpResponse, request, false);
         return new BasicResponseHandler().handleResponse(httpResponse);
     }
 
     private CloseableHttpClient createHttpClient(int connectTimeout, int readTimeout) {
+        return buildHttpClient(connectTimeout, readTimeout).build();
+    }
+
+    private HttpClientBuilder buildHttpClient(int connectTimeout, int readTimeout) {
         RequestConfig config = RequestConfig.custom()
                 .setConnectTimeout(connectTimeout)
                 .setSocketTimeout(readTimeout)
                 .build();
         return HttpClientBuilder.create()
-                .setDefaultRequestConfig(config)
-                .build();
+                .setDefaultRequestConfig(config);
     }
 
     private static List<NameValuePair> convertParameters(final Map<String, List<String>> parameterMap) {
