@@ -61,6 +61,7 @@ public class CourseGetUTest extends CanvasTestBase {
         assertEquals("c89b1859-0da0-403c-a29f-db34f917459c", course.getIntegrationId());
         assertEquals("unpublished", course.getWorkflowState());
         assertFalse(course.getRestrictEnrollmentsToCourseDates());
+        assertFalse(course.getBlueprint());
     }
 
 }

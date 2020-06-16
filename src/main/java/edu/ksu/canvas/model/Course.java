@@ -44,6 +44,7 @@ public class Course extends BaseCanvasModel implements Serializable {
     private Boolean allowStudentForumAttachments;
     private Boolean openEnrollment;
     private Boolean selfEnrollment;
+    private Boolean blueprint;
     private String termId;
     private String timeZone;
     private Boolean offer;
@@ -444,5 +445,14 @@ public class Course extends BaseCanvasModel implements Serializable {
 
     public void setImageDownloadUrl(String imageDownloadUrl) {
         this.imageDownloadUrl = imageDownloadUrl;
+    }
+
+    @CanvasField(postKey = "blueprint")
+    public Boolean getBlueprint() {
+        return blueprint;
+    }
+
+    public void setBlueprint(Boolean blueprint) {
+        this.blueprint = blueprint;
     }
 }
