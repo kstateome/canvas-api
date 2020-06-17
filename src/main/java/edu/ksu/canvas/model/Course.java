@@ -58,6 +58,7 @@ public class Course extends BaseCanvasModel implements Serializable {
     // Only used when setting course image
     private Integer imageId;
     private String imageUrl;
+    private String publicDescription;
 
     private List<Section> sections;
     private List<Enrollment> enrollments;
@@ -454,5 +455,14 @@ public class Course extends BaseCanvasModel implements Serializable {
 
     public void setBlueprint(Boolean blueprint) {
         this.blueprint = blueprint;
+    }
+
+    @CanvasField(postKey = "public_description")
+    public String getPublicDescription() {
+        return publicDescription;
+    }
+
+    public void setPublicDescription(String publicDescription) {
+        this.publicDescription = publicDescription;
     }
 }
