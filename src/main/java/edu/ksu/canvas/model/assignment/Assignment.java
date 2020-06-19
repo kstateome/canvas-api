@@ -572,12 +572,12 @@ public class Assignment extends BaseCanvasModel implements Serializable{
 		private static final long serialVersionUID = 1L;
 		
 		private String id;
-		private Integer points;
+		private Double points;
 		private String description;
 		private String longDescription;
 		private String ignoreForScoring;
 		private Boolean criterionUseRange;
-		private List<Rating> rating;
+		private List<Ratings> ratings;
 
 		public String getId() {
 			return id;
@@ -587,11 +587,11 @@ public class Assignment extends BaseCanvasModel implements Serializable{
 			this.id = id;
 		}
 
-		public Integer getPoints() {
+		public Double getPoints() {
 			return points;
 		}
 
-		public void setPoints(Integer points) {
+		public void setPoints(Double points) {
 			this.points = points;
 		}
 
@@ -627,20 +627,20 @@ public class Assignment extends BaseCanvasModel implements Serializable{
 			this.criterionUseRange = criterionUseRange;
 		}
 		
-		public List<Rating> getRating() {
-			return rating;
+		public List<Ratings> getRatings() {
+			return ratings;
 		}
 
-		public void setRating(List<Rating> rating) {
-			this.rating = rating;
+		public void setRatings(List<Ratings> ratings) {
+			this.ratings = ratings;
 		}
 
-		public class Rating implements Serializable {
+		public class Ratings implements Serializable {
 
 			private static final long serialVersionUID = 1L;
 
 			private String id;
-			private Integer points;
+			private Double points;
 			private String description;
 			private String longDescription;
 
@@ -652,11 +652,11 @@ public class Assignment extends BaseCanvasModel implements Serializable{
 				this.id = id;
 			}
 
-			public Integer getPoints() {
+			public Double getPoints() {
 				return points;
 			}
 
-			public void setPoints(Integer points) {
+			public void setPoints(Double points) {
 				this.points = points;
 			}
 
@@ -681,9 +681,11 @@ public class Assignment extends BaseCanvasModel implements Serializable{
 		private static final long serialVersionUID = 1L;
 		
 		private Integer id;
-        private Integer pointsPossible;
+        private Double pointsPossible;
         private String title;
 		private Boolean freeFormCriterionComments;
+		private Boolean hideScoreTotal;
+		private Boolean hidePoints;
 		
 		public Integer getId() {
 			return id;
@@ -691,10 +693,10 @@ public class Assignment extends BaseCanvasModel implements Serializable{
 		public void setId(Integer id) {
 			this.id = id;
 		}
-		public Integer getPointsPossible() {
+		public Double getPointsPossible() {
 			return pointsPossible;
 		}
-		public void setPointsPossible(Integer pointsPossible) {
+		public void setPointsPossible(Double pointsPossible) {
 			this.pointsPossible = pointsPossible;
 		}
 		public String getTitle() {
@@ -708,6 +710,19 @@ public class Assignment extends BaseCanvasModel implements Serializable{
 		}
 		public void setFreeFormCriterionComments(Boolean freeFormCriterionComments) {
 			this.freeFormCriterionComments = freeFormCriterionComments;
-		}		
+		}
+		public Boolean getHideScoreTotal() {
+			return hideScoreTotal;
+		}
+		public void setHideScoreTotal(Boolean hideScoreTotal) {
+			this.hideScoreTotal = hideScoreTotal;
+		}
+		public Boolean getHidePoints() {
+			return hidePoints;
+		}
+		public void setHidePoints(Boolean hidePoints) {
+			this.hidePoints = hidePoints;
+		}
+
 	}
 }

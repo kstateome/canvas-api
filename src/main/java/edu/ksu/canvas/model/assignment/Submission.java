@@ -229,7 +229,7 @@ public class Submission extends BaseCanvasModel implements Serializable {
 
 	    private String ratingId;
 	    private String comments;
-	    private Integer points;
+	    private Double points;
 	    
 	    public String getRatingId() {
 	        return ratingId;
@@ -247,11 +247,11 @@ public class Submission extends BaseCanvasModel implements Serializable {
 	        this.comments = comments;
 	    }
 	    
-	    public Integer getPoints() {
+	    public Double getPoints() {
 	 		return points;
 	 	}
 
-	 	public void setPoints(Integer points) {
+	 	public void setPoints(Double points) {
 	 		this.points = points;
 	 	}
 	}
