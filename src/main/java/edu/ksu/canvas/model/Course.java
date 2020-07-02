@@ -21,6 +21,7 @@ public class Course extends BaseCanvasModel implements Serializable {
     private String defaultView;
     private Integer id;
     private String name;
+    private Date createdAt;
     private Date startAt;
     private Date endAt;
     private Boolean publicSyllabus;
@@ -116,6 +117,14 @@ public class Course extends BaseCanvasModel implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     @CanvasField(postKey = "start_at")
