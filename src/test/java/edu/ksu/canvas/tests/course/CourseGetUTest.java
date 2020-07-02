@@ -14,7 +14,9 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
+import java.time.ZonedDateTime;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,6 +64,8 @@ public class CourseGetUTest extends CanvasTestBase {
         assertEquals("unpublished", course.getWorkflowState());
         assertFalse(course.getRestrictEnrollmentsToCourseDates());
         assertFalse(course.getBlueprint());
+        ZonedDateTime zdt = ZonedDateTime.parse("2020-05-22T12:24:09Z");
+        assertEquals(course.getCreatedAt(), Date.from(zdt.toInstant()));
     }
 
 }
