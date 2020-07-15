@@ -2,6 +2,7 @@ package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.Course;
 import edu.ksu.canvas.requestOptions.DeleteCourseOptions;
+import edu.ksu.canvas.requestOptions.UpdateCourseOptions;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -23,6 +24,14 @@ public interface CourseWriter extends CanvasWriter<Course, CourseWriter> {
       * @throws IOException When there is an error communicating with Canvas
       */
       Optional<Course> updateCourse(Course course) throws IOException;
+      
+      /**
+       * Update a course in Canvas
+       * @param options (specifying the ID and other parameters)
+       * @return The newly updated course
+       * @throws IOException When there is an error communicating with Canvas
+       */
+      Optional<Course> updateCourse(UpdateCourseOptions updateCourseOptions) throws IOException;
 
     /**
      * @param courseId The ID of the course you wish to delete

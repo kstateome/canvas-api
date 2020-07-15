@@ -12,7 +12,8 @@ public class ContentMigration extends BaseCanvasModel implements Serializable {
     private String migrationType;
     private String name;
     private String progressUrl;
-    private String worksflowState;
+    private String workflowState;
+    private Integer migrationIssuesCount;
 
     @CanvasField(postKey = "id")
     public Integer getId() {
@@ -60,11 +61,20 @@ public class ContentMigration extends BaseCanvasModel implements Serializable {
     }
 
     @CanvasField(postKey = "workflow_state")
-    public String getWorksflowState() {
-        return worksflowState;
+    public String getWorkflowState() {
+        return workflowState;
     }
 
-    public void setWorksflowState(String worksflowState) {
-        this.worksflowState = worksflowState;
+    public void setWorkflowState(String workflowState) {
+        this.workflowState = workflowState;
     }
+    
+    public Integer getMigrationIssuesCount() {
+		return migrationIssuesCount;
+	}
+
+	public void setMigrationIssuesCount(Integer migrationIssuesCount) {
+		this.migrationIssuesCount = migrationIssuesCount;
+	}
+
 }

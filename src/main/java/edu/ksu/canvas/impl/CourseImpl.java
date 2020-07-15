@@ -14,6 +14,7 @@ import edu.ksu.canvas.requestOptions.GetSingleCourseOptions;
 import edu.ksu.canvas.requestOptions.ListActiveCoursesInAccountOptions;
 import edu.ksu.canvas.requestOptions.ListCurrentUserCoursesOptions;
 import edu.ksu.canvas.requestOptions.ListUserCoursesOptions;
+import edu.ksu.canvas.requestOptions.UpdateCourseOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -80,6 +81,14 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
         Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, course.toJsonObject(serializeNulls));
         return responseParser.parseToObject(Course.class, response);
     }
+    
+	@Override
+	public Optional<Course> updateCourse(UpdateCourseOptions options) throws IOException {
+		LOG.debug("updating course  " + options.getCourseId());
+		String url = buildCanvasUrl("courses/" + options.getCourseId(), Collections.emptyMap());
+        Response response = canvasMessenger.putToCanvas(oauthToken, url, options.getOptionsMap());
+        return responseParser.parseToObject(Course.class, response);
+	}
 
     @Override
     public Boolean deleteCourse(String courseId) throws IOException {
