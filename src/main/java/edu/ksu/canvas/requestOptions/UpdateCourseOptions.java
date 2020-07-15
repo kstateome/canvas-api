@@ -1,7 +1,7 @@
 package edu.ksu.canvas.requestOptions;
 
 /**
- * Options for updating a tab for a given course.
+ * Options for updating a course.
  */
 public class UpdateCourseOptions extends BaseOptions {
 	
