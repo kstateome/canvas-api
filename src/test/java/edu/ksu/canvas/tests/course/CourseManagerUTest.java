@@ -61,9 +61,9 @@ public class CourseManagerUTest extends CanvasTestBase {
         newCourse.setId(new Integer(ARBITRARY_COURSE_ID));
         newCourse.setCourseCode("UpdatedSeleniumTestCourseCode");
         newCourse.setName("UpdatedSeleniumTestName");
-        String url = baseUrl + "/api/v1/courses/" + "course_sis_id:sis-id-1";
+        String url = baseUrl + "/api/v1/courses/" + "sis_course_id:sis-id-1";
         fakeRestClient.addSuccessResponse(url, "SampleJson/course/UpdateCourseSuccess.json");
-        Optional<Course> response = courseWriter.updateCourse("course_sis_id:sis-id-1", newCourse);
+        Optional<Course> response = courseWriter.updateCourse("sis_course_id:sis-id-1", newCourse);
         Assert.assertNotNull(response.get().getName());
         Assert.assertEquals(newCourse.getCourseCode(), response.get().getCourseCode());
     }
