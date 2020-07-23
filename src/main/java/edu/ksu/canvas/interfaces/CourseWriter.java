@@ -27,6 +27,17 @@ public interface CourseWriter extends CanvasWriter<Course, CourseWriter> {
       Optional<Course> updateCourse(Course course) throws IOException;
 
     /**
+     * Update a course in Canvas
+     * @param id The ID of the course to update, this is useful when you want to update a course
+     *           by it's SIS ID, for example with "sis_course_id:id-123"
+     * @param course A course object containing the information needed to update a course in Canvas
+     * @return The newly updated course
+     * @throws IOException When there is an error communicating with Canvas
+     */
+    Optional<Course> updateCourse(String id, Course course) throws IOException;
+
+
+    /**
      * @param courseId The ID of the course you wish to delete
      * @return true if the course was deleted
      * @throws IOException When there is an error communicating with Canvas

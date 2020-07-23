@@ -94,6 +94,14 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
     }
 
     @Override
+    public Optional<Course> updateCourse(String id, Course course) throws IOException {
+        LOG.debug("updating course");
+        String url = buildCanvasUrl("courses/" + id, Collections.emptyMap());
+        Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, course.toJsonObject(serializeNulls));
+        return responseParser.parseToObject(Course.class, response);
+    }
+
+    @Override
     public Boolean deleteCourse(String courseId) throws IOException {
         Map<String, List<String>> postParams = new HashMap<>();
         postParams.put("event", Collections.singletonList("delete"));
