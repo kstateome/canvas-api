@@ -96,7 +96,8 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
     @Override
     public Optional<Course> updateCourse(String id, Course course) throws IOException {
         LOG.debug("updating course");
-        String url = buildCanvasUrl("courses/" + id, Collections.emptyMap());
+        // TODO At some point we need to sort this out better throughout the library
+        String url = buildCanvasUrl("courses/" + encode(id), Collections.emptyMap());
         Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, course.toJsonObject(serializeNulls));
         return responseParser.parseToObject(Course.class, response);
     }

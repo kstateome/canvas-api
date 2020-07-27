@@ -18,7 +18,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -124,6 +127,15 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
         this.masqueradeAs = masqueradeAs;
         this.masqueradeType = masqueradeType;
         return (WRITERTYPE) this;
+    }
+
+    protected String encode(String value) {
+        try {
+            // TODO On Java 10+ drop the toString() and try/catch
+            return URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("Failed to encode as UTF-8", e);
+        }
     }
 
     protected String buildCanvasUrl(String canvasMethod, Map<String, List<String>> parameters) {
