@@ -18,6 +18,7 @@ import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -400,6 +401,7 @@ public class SimpleRestClient implements RestClient {
         RequestConfig config = RequestConfig.custom()
                 .setConnectTimeout(connectTimeout)
                 .setSocketTimeout(readTimeout)
+                .setCookieSpec(CookieSpecs.STANDARD)
                 .build();
         return HttpClientBuilder.create()
                 .setDefaultRequestConfig(config);
