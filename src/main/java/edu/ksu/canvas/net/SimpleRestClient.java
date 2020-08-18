@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import edu.ksu.canvas.errors.ErrorHandler;
 import edu.ksu.canvas.errors.UserErrorHandler;
 import edu.ksu.canvas.exception.CanvasException;
+import edu.ksu.canvas.exception.CanvasThrottlingException;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.exception.ObjectNotFoundException;
 import edu.ksu.canvas.exception.RateLimitException;
@@ -252,6 +253,11 @@ public class SimpleRestClient implements RestClient {
             }
             LOG.error("User is not authorized to perform this action");
             throw new UnauthorizedException();
+        }
+        // Canvas returns 403 when throttling as documented at https://canvas.instructure.com/doc/api/file.throttling.html
+        if(statusCode == 403) {
+            LOG.error("Canvas is likely throttling. Requested URL: " + request.getURI());
+            throw new CanvasThrottlingException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
         }
         if(statusCode == 404) {
             LOG.error("Object not found in Canvas. Requested URL: " + request.getURI());
