@@ -1,7 +1,6 @@
 package edu.ksu.canvas.impl;
 
 import edu.ksu.canvas.CanvasTestBase;
-import edu.ksu.canvas.interfaces.SubmissionWriter;
 import edu.ksu.canvas.model.Progress;
 import edu.ksu.canvas.model.assignment.Submission;
 import edu.ksu.canvas.requestOptions.GetSubmissionsOptions;
@@ -62,12 +61,12 @@ public class SubmissionImplTest extends CanvasTestBase {
     }
 
     @Test
-    public void testGetAllCourseSubmissions() throws IOException {
+    public void testListCourseSubmissionsForMultipleAssignments() throws IOException {
         String url = baseUrl + "/api/v1/courses/1234/students/submissions?student_ids[]=12345";
         fakeRestClient.addSuccessResponse(url, "SampleJson/submission/submissionResponse.json");
         GetSubmissionsOptions options = new GetSubmissionsOptions("1234");
         options.userIds(Collections.singletonList("12345"));
-        List<Submission> submissions = submissionImpl.getAllCourseSubmissions(options);
+        List<Submission> submissions = submissionImpl.listCourseSubmissionsForMultipleAssignments(options);
 
         assertEquals(2, submissions.size());
         assertEquals("46399308", submissions.get(0).getId().toString());

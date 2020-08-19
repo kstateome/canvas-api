@@ -54,7 +54,8 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
     }
 
     @Override
-    public List<Submission> getAllCourseSubmissions(GetSubmissionsOptions options) throws IOException {
+    public List<Submission> listCourseSubmissionsForMultipleAssignments(GetSubmissionsOptions options)
+            throws IOException {
         if (StringUtils.isBlank(options.getCanvasId())) {
             throw new IllegalArgumentException("Course ID is required for this API call");
         }
