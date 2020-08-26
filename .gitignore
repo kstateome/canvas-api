@@ -5,3 +5,5 @@ rebel.xml
 rebel-remote.xml
 *.iml
 *.idea
+.classpath
+.project
