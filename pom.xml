@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>edu.ksu.canvas</groupId>
   <artifactId>canvas-api</artifactId>
   <version>1.1.0-LONG-SNAPSHOT</version>
   <packaging>jar</packaging>
-  
+
   <parent>
     <groupId>org.assistments</groupId>
     <artifactId>repoManagementParentPom</artifactId>
@@ -17,7 +19,7 @@
   <description>A native Java library to talk to the Canvas REST API</description>
   <url>https://github.com/kstateome/canvas-api</url>
 
-   <licenses>
+  <licenses>
     <license>
       <name>GNU Lesser General Public License (LGPL), Version 3</name>
       <url>http://www.fsf.org/licensing/licenses/lgpl.txt</url>
@@ -41,30 +43,21 @@
     </developer>
   </developers>
 
-  <scm>
-    <connection>scm:git:ssh://git@github.com/kstateome/canvas-api.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com/kstateome/canvas-api.git</developerConnection>
-    <url>https://github.com/kstateome/canvas-api</url>
-    <tag>HEAD</tag>
-  </scm>
-
-  <distributionManagement>
-    <repository>
-      <id>ome-appdev-release</id>
-      <url>https://artifactory.ome.k-state.edu/artifactory/ome-appdev-release</url>
-    </repository>
-    <snapshotRepository>
-      <id>ome-appdev-snapshot</id>
-      <url>https://artifactory.ome.k-state.edu/artifactory/ome-appdev-snapshot</url>
-    </snapshotRepository>
-    <site>
-      <id>canvas-api-site</id>
-      <url>file:///var/www/maven-site/canvas-api</url>
-    </site>
-  </distributionManagement>
-
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.0.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.owasp</groupId>
         <artifactId>dependency-check-maven</artifactId>
@@ -162,16 +155,6 @@
     </profile>
     <profile>
       <id>ossrh-deploy</id>
-      <distributionManagement>
-        <snapshotRepository>
-          <id>ossrh</id>
-          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-          <id>ossrh</id>
-          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-      </distributionManagement>
       <build>
         <plugins>
           <plugin>
@@ -184,19 +167,6 @@
                 <phase>verify</phase>
                 <goals>
                   <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-source-plugin</artifactId>
-            <version>3.0.1</version>
-            <executions>
-              <execution>
-                <id>attach-sources</id>
-                <goals>
-                  <goal>jar-no-fork</goal>
                 </goals>
               </execution>
             </executions>
@@ -304,7 +274,8 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <version>1.7.27</version>
-      <!-- This is so that TestLauncher has an implementation but projects using this library don't get it -->
+      <!-- This is so that TestLauncher has an implementation but projects 
+        using this library don't get it -->
       <optional>true</optional>
     </dependency>
     <dependency>
@@ -333,7 +304,7 @@
       <version>4.2.0.RELEASE</version>
       <scope>test</scope>
     </dependency>
-      <dependency>
+    <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
       <version>4.2.0.RELEASE</version>
