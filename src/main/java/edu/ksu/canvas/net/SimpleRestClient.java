@@ -8,6 +8,7 @@ import edu.ksu.canvas.exception.CanvasThrottlingException;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.exception.ObjectNotFoundException;
 import edu.ksu.canvas.exception.RateLimitException;
+import edu.ksu.canvas.exception.RetriableException;
 import edu.ksu.canvas.exception.UnauthorizedException;
 import edu.ksu.canvas.impl.GsonResponseParser;
 import edu.ksu.canvas.model.status.CanvasErrorResponse;
@@ -267,6 +268,10 @@ public class SimpleRestClient implements RestClient {
         if(statusCode < 200 || (statusCode > 299 && statusCode <= 499)) {
             LOG.error("HTTP status " + statusCode + " returned from " + request.getURI());
             handleError(request, httpResponse);
+        }
+        if(statusCode == 504) {
+            LOG.error("Gateway Time-out: " + request.getURI());
+            throw new RetriableException("status code: 504, reason phrase: Gateway Time-out", String.valueOf(request.getURI()));
         }
         //TODO Handling of 422 when the entity is malformed.
     }
