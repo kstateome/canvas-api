@@ -12,7 +12,7 @@ import edu.ksu.canvas.annotation.CanvasObject;
 public class Conversation extends BaseCanvasModel implements Serializable {
     public static final long serialVersionUID = 1L;
 
-    private Integer id;
+    private Long id;
     private String subject;
     private ConversationMessageState workflowState;
     private String lastMessage;
@@ -38,8 +38,8 @@ public class Conversation extends BaseCanvasModel implements Serializable {
     public enum ConversationFlags { last_author, attachments, media_objects }
 
     public class Message {
-        private Integer id;
-        private Integer authorId;
+        private Long id;
+        private Long authorId;
         private Date createdAt;
         private Boolean generated;
         private String body;
@@ -48,19 +48,19 @@ public class Conversation extends BaseCanvasModel implements Serializable {
         private Object mediaComment;
         private List<Integer> participatingUserIds;
 
-        public Integer getId() {
+        public Long getId() {
             return id;
         }
 
-        public void setId(Integer id) {
+        public void setId(Long id) {
             this.id = id;
         }
 
-        public Integer getAuthorId() {
+        public Long getAuthorId() {
             return authorId;
         }
 
-        public void setAuthorId(Integer authorId) {
+        public void setAuthorId(Long authorId) {
             this.authorId = authorId;
         }
 
@@ -124,17 +124,17 @@ public class Conversation extends BaseCanvasModel implements Serializable {
     public class MessageParticipant implements Serializable {
         private static final long serialVersionUID = 1L;
 
-        private Integer id;
+        private Long id;
         private String name;
         private Object commonCourses; //TODO: Refine this object type
         private Object commonGroups; //TODO: Refine this object type
         private String avatarUrl;
 
-        public Integer getId() {
+        public Long getId() {
             return id;
         }
 
-        public void setId(Integer id) {
+        public void setId(Long id) {
             this.id = id;
         }
 
@@ -171,11 +171,11 @@ public class Conversation extends BaseCanvasModel implements Serializable {
         }
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
