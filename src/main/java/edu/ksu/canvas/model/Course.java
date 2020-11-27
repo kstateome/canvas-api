@@ -46,6 +46,7 @@ public class Course extends BaseCanvasModel implements Serializable {
     private Boolean openEnrollment;
     private Boolean selfEnrollment;
     private Boolean blueprint;
+    private Boolean concluded;
     private String termId;
     private String timeZone;
     private Boolean offer;
@@ -464,6 +465,10 @@ public class Course extends BaseCanvasModel implements Serializable {
 
     public void setBlueprint(Boolean blueprint) {
         this.blueprint = blueprint;
+    }
+
+    public Boolean getConcluded() {
+        return concluded;
     }
 
     @CanvasField(postKey = "public_description")
