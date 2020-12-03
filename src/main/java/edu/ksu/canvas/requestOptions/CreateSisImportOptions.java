@@ -19,8 +19,12 @@ public class CreateSisImportOptions extends BaseOptions {
     private final String filePath;
     private final InputStream is;
     private final ImportType importType;
-    
+
     public CreateSisImportOptions(String accountId, String filePath, ImportType importType, String diffingDataSetIdentifier, InputStream is) {
+        this(accountId, filePath, importType, diffingDataSetIdentifier, is, false);
+    }
+
+    public CreateSisImportOptions(String accountId, String filePath, ImportType importType, String diffingDataSetIdentifier, InputStream is, boolean overrideSisStickiness) {
         this.accountId = accountId;
         this.importType = importType;
         this.filePath = filePath;
@@ -28,6 +32,9 @@ public class CreateSisImportOptions extends BaseOptions {
         addSingleItem("import_type", importType.toString().toLowerCase());
         if(diffingDataSetIdentifier != null) {
             addSingleItem("diffing_data_set_identifier", diffingDataSetIdentifier);
+        }
+        if (overrideSisStickiness) {
+            addSingleItem("override_sis_stickiness", Boolean.toString(overrideSisStickiness));
         }
     }
 
@@ -46,4 +53,5 @@ public class CreateSisImportOptions extends BaseOptions {
     public ImportType getImportType() {
         return importType;
     }
+
 }
