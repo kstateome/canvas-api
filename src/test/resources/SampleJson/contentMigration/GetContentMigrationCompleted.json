@@ -2,10 +2,10 @@
 	"id": 44,
 	"user_id": 899123456,
 	"workflow_state": "completed",
-	"started_at": "2020-06-09T09:26:30Z",
-	"finished_at": "2020-06-09T09:26:52Z",
+	"started_at": "2020-06-09T09:26:30-06:00",
+	"finished_at": "2020-06-09T09:26:52-06:00",
 	"migration_type": "course_copy_importer",
-	"created_at": "2020-06-09T09:26:30Z",
+	"created_at": "2020-06-09T09:26:30-06:00",
 	"migration_issues_url": "http://canvas.example.edu/api/v1/courses/20711/content_migrations/44/migration_issues",
 	"migration_issues_count": 0,
 	"settings": {

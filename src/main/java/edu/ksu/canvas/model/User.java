@@ -4,6 +4,7 @@ import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -31,6 +32,7 @@ public class User extends BaseCanvasModel implements Serializable {
     private String lastLogin;
     private String timeZone;
     private String bio;
+    private Instant createdAt;
 
     public User() {
     }
@@ -55,7 +57,7 @@ public class User extends BaseCanvasModel implements Serializable {
         this.lastLogin = other.lastLogin;
         this.timeZone = other.timeZone;
         this.bio = other.bio;
-
+        this.createdAt = other.createdAt;
     }
 
     public int getId() {
@@ -185,6 +187,14 @@ public class User extends BaseCanvasModel implements Serializable {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override
