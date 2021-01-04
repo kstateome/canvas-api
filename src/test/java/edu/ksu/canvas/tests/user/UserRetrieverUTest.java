@@ -90,6 +90,7 @@ public class UserRetrieverUTest extends CanvasTestBase {
 
     @Test
     public void testShowUserDetailsByUserIdLong() throws Exception {
+        // When users exist from multiple instances the IDs can become very long (larger than an int).
         long userId = 123450000000000020L;
         String url = baseUrl + "/api/v1/users/" + String.valueOf(userId);
         fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserByIdLong.json");
