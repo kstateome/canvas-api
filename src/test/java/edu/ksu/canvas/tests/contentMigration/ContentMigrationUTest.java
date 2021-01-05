@@ -91,9 +91,9 @@ public class ContentMigrationUTest extends CanvasTestBase {
         assertNotNull(cm.getMigrationIssuesUrl());
         assertNotNull(cm.getProgressUrl());
         assertEquals(ARBITRARY_USER_ID, cm.getUserId());
-        assertNotNull(cm.getCreatedAt());
-        assertNotNull(cm.getStartedAt());
-        assertNotNull(cm.getFinishedAt());
+        assertEquals("2020-06-09T15:26:30Z", cm.getStartedAt().toString());
+        assertEquals("2020-06-09T15:26:52Z", cm.getFinishedAt().toString());
+        assertEquals("2020-06-09T15:26:30Z", cm.getCreatedAt().toString());
     }
 
     @Test

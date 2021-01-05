@@ -86,6 +86,7 @@ public class UserRetrieverUTest extends CanvasTestBase {
         Optional<User> result = userReader.showUserDetails(String.valueOf(userId));
         User user = result.get();
         Assert.assertEquals(userId, user.getId());
+        Assert.assertEquals("2011-05-30T16:45:25Z", user.getCreatedAt().toString());
     }
 
     @Test
