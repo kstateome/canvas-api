@@ -96,6 +96,7 @@ public class GsonResponseParser implements ResponseParser {
                     return null;
                 }
                 try {
+                    // This format parses both 2020-02-20T01:02:03Z and 2020-02-20T01:02:03-04:00
                     return Instant.from(DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(json.getAsString()));
                 } catch (DateTimeParseException e) {
                     throw new JsonParseException(e);
