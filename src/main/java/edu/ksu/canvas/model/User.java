@@ -17,7 +17,7 @@ import java.util.Objects;
 public class User extends BaseCanvasModel implements Serializable {
     private static final long serialVersionUID = 2L;
 
-    private int id;
+    private long id;
     private String name;
     private String sortableName;
     private String shortName;
@@ -60,11 +60,11 @@ public class User extends BaseCanvasModel implements Serializable {
         this.createdAt = other.createdAt;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
