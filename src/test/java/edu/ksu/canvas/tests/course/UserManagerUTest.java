@@ -36,6 +36,7 @@ public class UserManagerUTest extends CanvasTestBase {
         System.out.println(response.toString());
         Assert.assertEquals("somestring4",response.get().getName());
         Assert.assertNotNull(response.get().getId());
+        Assert.assertEquals("https://instance.test.instructure.com/register/214b60f3e9c42873d323bd503f9afd4e", response.get().getConfirmationUrl());
     }
 
     @Test

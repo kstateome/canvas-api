@@ -4,5 +4,6 @@
   "sortable_name": "somestring4",
   "short_name": "somestring4",
   "login_id": "somestring4",
-  "locale": null
+  "locale": null,
+  "confirmation_url": "https://instance.test.instructure.com/register/214b60f3e9c42873d323bd503f9afd4e"
 }
