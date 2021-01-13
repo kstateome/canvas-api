@@ -33,6 +33,7 @@ public class User extends BaseCanvasModel implements Serializable {
     private String timeZone;
     private String bio;
     private Instant createdAt;
+    private String confirmationUrl;
 
     public User() {
     }
@@ -58,6 +59,7 @@ public class User extends BaseCanvasModel implements Serializable {
         this.timeZone = other.timeZone;
         this.bio = other.bio;
         this.createdAt = other.createdAt;
+        this.confirmationUrl = other.confirmationUrl;
     }
 
     public long getId() {
@@ -187,6 +189,14 @@ public class User extends BaseCanvasModel implements Serializable {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getConfirmationUrl() {
+        return confirmationUrl;
+    }
+
+    public void setConfirmationUrl(String confirmationUrl) {
+        this.confirmationUrl = confirmationUrl;
     }
 
     public Instant getCreatedAt() {
