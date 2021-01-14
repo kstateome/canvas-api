@@ -56,9 +56,10 @@ public interface CourseWriter extends CanvasWriter<Course, CourseWriter> {
     /**
      * Start a file upload to a course.
      *
-     * @param options
-     * @throws IOException
-     * @return
+     * @param courseId The id of the course where the file upload will be done
+     * @param options Upload file configuration
+     * @throws IOException When there is an error communicating with Canvas
+     * @return Deposit (This is part of the file upload workflow)
      */
      Optional<Deposit> uploadFile(String courseId, UploadOptions options) throws IOException;
 }

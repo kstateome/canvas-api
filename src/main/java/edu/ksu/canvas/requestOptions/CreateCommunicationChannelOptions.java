@@ -8,6 +8,7 @@ public class CreateCommunicationChannelOptions extends BaseOptions {
 
     /**
      * Constructs object to hold API options for creating a communication channel.
+     * @param userId The id of the related user
      */
     public CreateCommunicationChannelOptions(String userId) {
         this.userId = userId;

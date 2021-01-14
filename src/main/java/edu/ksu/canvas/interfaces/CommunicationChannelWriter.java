@@ -10,11 +10,11 @@ public interface CommunicationChannelWriter extends CanvasWriter<CommunicationCh
 
     /**
      * Adds a communication channel to a Canvas user.
-     * @param cc The communication channel to create. Must contain user ID and address.
+     * @param options The communication channel to create. Must contain user ID and address.
      * @return The created communication channel object if creation was successful
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<CommunicationChannel> createCommunicationChannel(CreateCommunicationChannelOptions ccco) throws IOException;
+    Optional<CommunicationChannel> createCommunicationChannel(CreateCommunicationChannelOptions options) throws IOException;
 
     /**
      * Delete a communication channel from Canvas

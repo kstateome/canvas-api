@@ -21,6 +21,8 @@ public class CreateContentMigrationOptions extends BaseOptions {
     /**
      * Constructs object to hold API options for the creating a content migration.
      * A course content migration has its own options class, see CreateCourseContentMigrationOptions.
+     * @param sourceCourseId The id of the source course 
+     * @param migrationType Migration type, see enum options
      */
     public CreateContentMigrationOptions(String sourceCourseId, MigrationType migrationType) {
         this.sourceCourseId = sourceCourseId;
