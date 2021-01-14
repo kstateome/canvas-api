@@ -29,3 +29,6 @@ jobs:
         java-version: 1.8
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    # This is part of the release task so we don't want to allow failures.
+    - name: Build JavaDoc with Maven
+      run: mvn -B javadoc:javadoc --file pom.xml
