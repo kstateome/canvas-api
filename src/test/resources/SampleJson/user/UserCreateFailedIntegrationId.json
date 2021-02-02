@@ -1,0 +1,24 @@
+{
+  "errors": {
+    "user": {
+      "pseudonyms": [
+        {
+          "attribute": "pseudonyms",
+          "type": "invalid",
+          "message": "invalid"
+        }
+      ]
+    },
+    "pseudonym": {
+      "integration_id": [
+        {
+          "attribute": "integration_id",
+          "type": "taken",
+          "message": "Integration ID already in use"
+        }
+      ]
+    },
+    "observee": {},
+    "pairing_code": {}
+  }
+}
