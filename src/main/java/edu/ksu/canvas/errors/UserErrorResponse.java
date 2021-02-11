@@ -51,7 +51,25 @@ public class UserErrorResponse {
         }
 
         public static class Pseudonym {
+            private List<Error> integrationId;
+            private List<Error> sisUserId;
             private List<Error> uniqueId;
+
+            public List<Error> getIntegrationId() {
+                return integrationId;
+            }
+
+            public void setIntegrationId(List<Error> integrationId) {
+                this.integrationId = integrationId;
+            }
+
+            public List<Error> getSisUserId() {
+                return sisUserId;
+            }
+
+            public void setSisUserId(List<Error> sisUserId) {
+                this.sisUserId = sisUserId;
+            }
 
             public List<Error> getUniqueId() {
                 return uniqueId;

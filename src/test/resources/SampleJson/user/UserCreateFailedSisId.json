@@ -1,0 +1,24 @@
+{
+  "errors": {
+    "user": {
+      "pseudonyms": [
+        {
+          "attribute": "pseudonyms",
+          "type": "invalid",
+          "message": "invalid"
+        }
+      ]
+    },
+    "pseudonym": {
+      "sis_user_id": [
+        {
+          "attribute": "sis_user_id",
+          "type": "taken",
+          "message": "SIS ID \"fakeemail@email.com\" is already in use"
+        }
+      ]
+    },
+    "observee": {},
+    "pairing_code": {}
+  }
+}
