@@ -2,6 +2,7 @@ package edu.ksu.canvas.net;
 
 import com.google.gson.Gson;
 import edu.ksu.canvas.errors.ErrorHandler;
+import edu.ksu.canvas.errors.GenericErrorHandler;
 import edu.ksu.canvas.errors.UserErrorHandler;
 import edu.ksu.canvas.exception.CanvasException;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
@@ -63,6 +64,7 @@ public class SimpleRestClient implements RestClient {
     public SimpleRestClient() {
         errorHandlers = new ArrayList<>();
         errorHandlers.add(new UserErrorHandler());
+        errorHandlers.add(new GenericErrorHandler());
     }
 
     @Override

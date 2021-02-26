@@ -1,0 +1,11 @@
+{
+  "errors": {
+    "conclude_at": [
+      {
+        "attribute": "conclude_at",
+        "type": "End date cannot be before start date",
+        "message": "End date cannot be before start date"
+      }
+    ]
+  }
+}
