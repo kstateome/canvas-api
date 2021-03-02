@@ -181,6 +181,7 @@ public class CanvasApiFactory {
         readerMap.put(SelectiveDataReader.class, SelectiveDataImpl.class);
         readerMap.put(MigrationIssueReader.class, MigrationIssueImpl.class);
         readerMap.put(CommunicationChannelReader.class, CommunicationChannelImpl.class);
+        readerMap.put(AuthenticationLogReader.class, AuthenticationLogImpl.class);
 		
         writerMap.put(AccountWriter.class, AccountImpl.class);
         writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImpl.class);

@@ -1,0 +1,46 @@
+{
+	"links": {
+		"events.login": null,
+		"events.account": "https://fakeurl.instructure.com/api/v1/accounts/{events.account}",
+		"events.user": null,
+		"events.page_view": null
+	},
+	"events": [{
+			"id": 154,
+			"created_at": "2021-02-24T13:05:36Z",
+			"event_type": "login",
+			"links": {
+				"login": 170,
+				"account": 1,
+				"user": 165,
+				"page_view": null
+			}
+		}, {
+			"id": 153,
+			"created_at": "2021-02-24T13:04:47Z",
+			"event_type": "logout",
+			"links": {
+				"login": 170,
+				"account": 1,
+				"user": 165,
+				"page_view": null
+			}
+		}, {
+			"id": 152,
+			"created_at": "2021-02-24T13:02:02Z",
+			"event_type": "login",
+			"links": {
+				"login": 170,
+				"account": 1,
+				"user": 165,
+				"page_view": null
+			}
+		}
+	],
+	"linked": {
+		"logins": [],
+		"accounts": [],
+		"users": [],
+		"page_views": []
+	}
+}
