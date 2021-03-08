@@ -1,6 +1,7 @@
 package edu.ksu.canvas.errors;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * The error object that is returned when the creation of a user fails because the data isn't good.
@@ -19,95 +20,23 @@ public class UserErrorResponse {
     }
 
     public static class Errors {
-        private User user;
-        private Pseudonym pseudonym;
+        private Map<String, List<ErrorDetails>>  user;
+        private Map<String, List<ErrorDetails>>  pseudonym;
 
-        public User getUser() {
+        public Map<String, List<ErrorDetails>>  getUser() {
             return user;
         }
 
-        public void setUser(User user) {
+        public void setUser(Map<String, List<ErrorDetails>>  user) {
             this.user = user;
         }
 
-        public Pseudonym getPseudonym() {
+        public Map<String, List<ErrorDetails>>  getPseudonym() {
             return pseudonym;
         }
 
-        public void setPseudonym(Pseudonym pseudonym) {
+        public void setPseudonym(Map<String, List<ErrorDetails>>  pseudonym) {
             this.pseudonym = pseudonym;
-        }
-
-        public static class User {
-            private List<Error> pseudonyms;
-
-            public List<Error> getPseudonyms() {
-                return pseudonyms;
-            }
-
-            public void setPseudonyms(List<Error> pseudonyms) {
-                this.pseudonyms = pseudonyms;
-            }
-        }
-
-        public static class Pseudonym {
-            private List<Error> integrationId;
-            private List<Error> sisUserId;
-            private List<Error> uniqueId;
-
-            public List<Error> getIntegrationId() {
-                return integrationId;
-            }
-
-            public void setIntegrationId(List<Error> integrationId) {
-                this.integrationId = integrationId;
-            }
-
-            public List<Error> getSisUserId() {
-                return sisUserId;
-            }
-
-            public void setSisUserId(List<Error> sisUserId) {
-                this.sisUserId = sisUserId;
-            }
-
-            public List<Error> getUniqueId() {
-                return uniqueId;
-            }
-
-            public void setUniqueId(List<Error> uniqueId) {
-                this.uniqueId = uniqueId;
-            }
-        }
-
-        public static class Error {
-            private String attribute;
-            private String type;
-            private String message;
-
-            public String getAttribute() {
-                return attribute;
-            }
-
-            public void setAttribute(String attribute) {
-                this.attribute = attribute;
-            }
-
-            public String getType() {
-                return type;
-            }
-
-            public void setType(String type) {
-                this.type = type;
-            }
-
-            public String getMessage() {
-                return message;
-            }
-
-            public void setMessage(String message) {
-                this.message = message;
-            }
         }
     }
 }

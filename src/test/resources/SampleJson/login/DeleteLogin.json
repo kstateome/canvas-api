@@ -1,0 +1,10 @@
+{
+	"id": 1235,
+	"user_id": 1111,
+	"account_id": 1,
+	"unique_id": "testUpdated@email.com",
+	"created_at": "2020-05-22T10:24:24Z",
+	"sis_user_id": "testUpdated@email.com",
+	"integration_id": "id",
+	"authentication_provider_id": null
+}

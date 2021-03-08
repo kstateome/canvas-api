@@ -20,12 +20,12 @@ public class ErrorsJsonTest {
         assertNotNull(response);
         assertNotNull(response.getErrors());
         assertNotNull(response.getErrors().getUser());
-        assertNotNull(response.getErrors().getUser().getPseudonyms());
-        assertEquals(1, response.getErrors().getUser().getPseudonyms().size());
-        assertEquals("pseudonyms", response.getErrors().getUser().getPseudonyms().get(0).getAttribute());
-        List<UserErrorResponse.Errors.Error> errors = response.getErrors().getPseudonym().getUniqueId();
+        assertNotNull(response.getErrors().getUser().get("pseudonyms"));
+        assertEquals(1, response.getErrors().getUser().get("pseudonyms").size());
+        assertEquals("pseudonyms", response.getErrors().getUser().get("pseudonyms").get(0).getAttribute());
+        List<ErrorDetails> errors = response.getErrors().getPseudonym().get("unique_id");
         assertNotNull(errors);
-        UserErrorResponse.Errors.Error error = errors.get(0);
+        ErrorDetails error = errors.get(0);
         assertEquals("unique_id", error.getAttribute());
         assertNotNull(error.getMessage());
         assertNotNull(error.getType());
@@ -39,12 +39,12 @@ public class ErrorsJsonTest {
         assertNotNull(response);
         assertNotNull(response.getErrors());
         assertNotNull(response.getErrors().getUser());
-        assertNotNull(response.getErrors().getUser().getPseudonyms());
-        assertEquals(1, response.getErrors().getUser().getPseudonyms().size());
-        assertEquals("pseudonyms", response.getErrors().getUser().getPseudonyms().get(0).getAttribute());
-        List<UserErrorResponse.Errors.Error> errors = response.getErrors().getPseudonym().getIntegrationId();
+        assertNotNull(response.getErrors().getUser().get("pseudonyms"));
+        assertEquals(1, response.getErrors().getUser().get("pseudonyms").size());
+        assertEquals("pseudonyms", response.getErrors().getUser().get("pseudonyms").get(0).getAttribute());
+        List<ErrorDetails> errors = response.getErrors().getPseudonym().get("integration_id");
         assertNotNull(errors);
-        UserErrorResponse.Errors.Error error = errors.get(0);
+        ErrorDetails error = errors.get(0);
         assertEquals("integration_id", error.getAttribute());
         assertNotNull(error.getMessage());
         assertNotNull(error.getType());
@@ -58,13 +58,47 @@ public class ErrorsJsonTest {
         assertNotNull(response);
         assertNotNull(response.getErrors());
         assertNotNull(response.getErrors().getUser());
-        assertNotNull(response.getErrors().getUser().getPseudonyms());
-        assertEquals(1, response.getErrors().getUser().getPseudonyms().size());
-        assertEquals("pseudonyms", response.getErrors().getUser().getPseudonyms().get(0).getAttribute());
-        List<UserErrorResponse.Errors.Error> errors = response.getErrors().getPseudonym().getSisUserId();
+        assertNotNull(response.getErrors().getUser().get("pseudonyms"));
+        assertEquals(1, response.getErrors().getUser().get("pseudonyms").size());
+        assertEquals("pseudonyms", response.getErrors().getUser().get("pseudonyms").get(0).getAttribute());
+        List<ErrorDetails> errors = response.getErrors().getPseudonym().get("sis_user_id");
         assertNotNull(errors);
-        UserErrorResponse.Errors.Error error = errors.get(0);
+        ErrorDetails error = errors.get(0);
         assertEquals("sis_user_id", error.getAttribute());
+        assertNotNull(error.getMessage());
+        assertNotNull(error.getType());
+    }
+
+    @Test
+    public void testFailedLoginUniqueId() {
+        InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream("/SampleJson/login/LoginUpdateFailedUniqueId.json"));
+        Gson gson = GsonResponseParser.getDefaultGsonParser(false);
+        GenericErrorResponse response = gson.fromJson(reader, GenericErrorResponse.class);
+        assertNotNull(response);
+        assertNotNull(response.getErrors());
+        assertNotNull(response.getErrors().get("unique_id"));
+        assertEquals(1, response.getErrors().get("unique_id").size());
+        List<ErrorDetails> errors = response.getErrors().get("unique_id");
+        assertNotNull(errors);
+        ErrorDetails error = errors.get(0);
+        assertEquals("unique_id", error.getAttribute());
+        assertNotNull(error.getMessage());
+        assertNotNull(error.getType());
+    }
+
+    @Test
+    public void testFailedCourseDateError() {
+        InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream("/SampleJson/course/CreateCourseDateError.json"));
+        Gson gson = GsonResponseParser.getDefaultGsonParser(false);
+        GenericErrorResponse response = gson.fromJson(reader, GenericErrorResponse.class);
+        assertNotNull(response);
+        assertNotNull(response.getErrors());
+        assertNotNull(response.getErrors().get("conclude_at"));
+        assertEquals(1, response.getErrors().get("conclude_at").size());
+        List<ErrorDetails> errors = response.getErrors().get("conclude_at");
+        assertNotNull(errors);
+        ErrorDetails error = errors.get(0);
+        assertEquals("conclude_at", error.getAttribute());
         assertNotNull(error.getMessage());
         assertNotNull(error.getType());
     }
