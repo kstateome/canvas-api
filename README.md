@@ -9,10 +9,6 @@ Some specific features include:
 * Masquerading as other users by Canvas user ID or SIS ID
 * Requesting items by Canvas ID or SIS ID
 
-## Build ##
-
-![Java CI with Maven](https://github.com/oxctl/canvas-api/workflows/Java%20CI%20with%20Maven/badge.svg)
-
 ## Requirements
 To use this library, you must be using Java 8. We are making extensive use of [Java Streams](https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html) as well as the [Optional](https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html) class.
 
