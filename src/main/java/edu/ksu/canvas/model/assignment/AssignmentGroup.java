@@ -15,6 +15,7 @@ public class AssignmentGroup extends BaseCanvasModel implements Serializable {
     Double groupWeight;
     String sisSourceId;
     List<Assignment> assignments;
+    GradingRules rules;
 
     public Integer getId() {
         return id;
@@ -70,4 +71,16 @@ public class AssignmentGroup extends BaseCanvasModel implements Serializable {
     public void setAssignments(List<Assignment> assignments) {
         this.assignments = assignments;
     }
+
+    /**
+     * @return the grading rules that this Assignment Group has
+     */
+    public GradingRules getGradingRules() {
+        return rules;
+    }
+
+    public void setGradingRules(GradingRules rules) {
+        this.rules = rules;
+    }
+
 }

@@ -90,17 +90,14 @@ public class GsonResponseParser implements ResponseParser {
                 return new JsonPrimitive(dateString);
             }
         }).registerTypeAdapter(Instant.class, new JsonDeserializer<Instant>() {
-            // This doesn't support the format showing in the Canvas API documentation of:
-            // 2012-07-19T15:00:00-06:00, however when you create a date using this format
-            // Canvas sends you back the response in the UTC so we don't need to parse it.
             @Override
             public Instant deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
                 if(json == null || StringUtils.isBlank(json.getAsString())) {
                     return null;
                 }
                 try {
-
-                    return Instant.from(DateTimeFormatter.ISO_INSTANT.parse(json.getAsString()));
+                    // This format parses both 2020-02-20T01:02:03Z and 2020-02-20T01:02:03-04:00
+                    return Instant.from(DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(json.getAsString()));
                 } catch (DateTimeParseException e) {
                     throw new JsonParseException(e);
                 }

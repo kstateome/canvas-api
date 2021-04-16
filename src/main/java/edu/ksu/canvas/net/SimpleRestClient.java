@@ -2,6 +2,7 @@ package edu.ksu.canvas.net;
 
 import com.google.gson.Gson;
 import edu.ksu.canvas.errors.ErrorHandler;
+import edu.ksu.canvas.errors.GenericErrorHandler;
 import edu.ksu.canvas.errors.UserErrorHandler;
 import edu.ksu.canvas.exception.CanvasException;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
@@ -18,6 +19,7 @@ import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -28,6 +30,11 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.content.ContentBody;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.InputStreamBody;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -39,6 +46,8 @@ import com.google.gson.Gson;
 import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
+import java.io.File;
+import java.io.InputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
@@ -55,6 +64,7 @@ public class SimpleRestClient implements RestClient {
     public SimpleRestClient() {
         errorHandlers = new ArrayList<>();
         errorHandlers.add(new UserErrorHandler());
+        errorHandlers.add(new GenericErrorHandler());
     }
 
     @Override
@@ -165,6 +175,40 @@ public class SimpleRestClient implements RestClient {
     }
 
     @Override
+    public Response sendApiPostFile(OauthToken token, String url, Map<String, List<String>> postParameters, String fileParameter, String filePath, InputStream is,
+                                int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+        LOG.debug("Sending API POST file request to URL: " + url);
+        Response response = new Response();
+        HttpClient httpClient = createHttpClient(connectTimeout, readTimeout);
+        Long beginTime = System.currentTimeMillis();
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
+        List<NameValuePair> params = convertParameters(postParameters);
+
+        MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
+        entityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+        if(is == null) {
+            FileBody fileBody = new FileBody(new File(filePath));
+            entityBuilder.addPart(fileParameter, fileBody);
+        } else {
+            entityBuilder.addPart(fileParameter, new InputStreamBody(is, filePath));
+        }
+        for(NameValuePair param : params) {
+            entityBuilder.addTextBody(param.getName(), param.getValue());
+        }
+
+        httpPost.setEntity(entityBuilder.build());
+        HttpResponse httpResponse =  httpClient.execute(httpPost);
+        String content = handleResponse(httpResponse, httpPost);
+
+        response.setContent(content);
+        response.setResponseCode(httpResponse.getStatusLine().getStatusCode());
+        Long endTime = System.currentTimeMillis();
+        LOG.debug("POST file call took: " + (endTime - beginTime) + "ms");
+        return response;
+    }
+
+    @Override
     public Response sendApiPut(OauthToken token, String url, Map<String, List<String>> putParameters,
                                int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending API PUT request to URL: " + url);
@@ -222,7 +266,41 @@ public class SimpleRestClient implements RestClient {
         return response;
     }
 
-    private void checkHeaders(HttpResponse httpResponse, HttpRequestBase request) {
+    @Override
+    public String sendUpload(String uploadUrl, Map<String, List<String>> params, InputStream in, String filename, int connectTimeout, int readTimeout) throws IOException {
+
+        HttpClient client = buildHttpClient(connectTimeout, readTimeout)
+                .disableRedirectHandling() // We need to handle redirects ourselves
+                .build();
+
+        HttpPost httpPost = new HttpPost(uploadUrl);
+        MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
+        for (Map.Entry<String, List<String>> entry : params.entrySet()) {
+            for (String value : entry.getValue()) {
+                entityBuilder.addTextBody(entry.getKey(), value);
+            }
+        }
+        ContentBody fileBody = new InputStreamBody(in, filename);
+        entityBuilder.addPart("file", fileBody);
+        httpPost.setEntity(entityBuilder.build());
+
+        HttpResponse httpResponse = client.execute(httpPost);
+        checkHeaders(httpResponse, httpPost, true);
+        int httpStatus = httpResponse.getStatusLine().getStatusCode();
+        if (httpStatus == 201 || (300 <= httpStatus && httpStatus <= 399)) {
+            Header location = httpResponse.getFirstHeader("Location");
+            if (location != null) {
+                return location.getValue();
+            } else {
+                throw new CanvasException("No location to redirect to when uploading file: " + httpStatus, uploadUrl);
+            }
+        } else {
+            throw new CanvasException("Bad status when uploading file: "+ httpStatus, uploadUrl);
+        }
+
+    }
+
+    private void checkHeaders(HttpResponse httpResponse, HttpRequestBase request, boolean allowRedirect) {
         int statusCode = httpResponse.getStatusLine().getStatusCode();
         double rateLimitThreshold = 0.1;
         double xRateCost = 0;
@@ -258,7 +336,7 @@ public class SimpleRestClient implements RestClient {
             throw new ObjectNotFoundException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
         }
         // If we receive a 5xx exception, we should not wrap it in an unchecked exception for upstream clients to deal with.
-        if(statusCode < 200 || (statusCode > 299 && statusCode <= 499)) {
+        if(statusCode < 200 || (statusCode > (allowRedirect?399:299) && statusCode <= 499)) {
             LOG.error("HTTP status " + statusCode + " returned from " + request.getURI());
             handleError(request, httpResponse);
         }
@@ -313,18 +391,22 @@ public class SimpleRestClient implements RestClient {
     }
 
     private String handleResponse(HttpResponse httpResponse, HttpRequestBase request) throws IOException {
-        checkHeaders(httpResponse, request);
+        checkHeaders(httpResponse, request, false);
         return new BasicResponseHandler().handleResponse(httpResponse);
     }
 
     private CloseableHttpClient createHttpClient(int connectTimeout, int readTimeout) {
+        return buildHttpClient(connectTimeout, readTimeout).build();
+    }
+
+    private HttpClientBuilder buildHttpClient(int connectTimeout, int readTimeout) {
         RequestConfig config = RequestConfig.custom()
                 .setConnectTimeout(connectTimeout)
                 .setSocketTimeout(readTimeout)
+                .setCookieSpec(CookieSpecs.STANDARD)
                 .build();
         return HttpClientBuilder.create()
-                .setDefaultRequestConfig(config)
-                .build();
+                .setDefaultRequestConfig(config);
     }
 
     private static List<NameValuePair> convertParameters(final Map<String, List<String>> parameterMap) {
