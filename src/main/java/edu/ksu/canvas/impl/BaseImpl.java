@@ -2,7 +2,7 @@ package edu.ksu.canvas.impl;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
-
+import com.google.common.net.UrlEscapers;
 import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.interfaces.CanvasMessenger;
 import edu.ksu.canvas.interfaces.CanvasReader;
@@ -19,12 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -124,6 +119,10 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
         this.masqueradeAs = masqueradeAs;
         this.masqueradeType = masqueradeType;
         return (WRITERTYPE) this;
+    }
+
+    protected String encode(String value) {
+        return UrlEscapers.urlPathSegmentEscaper().escape(value);
     }
 
     protected String buildCanvasUrl(String canvasMethod, Map<String, List<String>> parameters) {

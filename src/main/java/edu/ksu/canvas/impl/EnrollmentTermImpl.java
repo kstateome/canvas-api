@@ -16,7 +16,9 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class EnrollmentTermImpl extends BaseImpl<EnrollmentTerm, EnrollmentTermReader, EnrollmentTermWriter> implements EnrollmentTermReader, EnrollmentTermWriter {
@@ -36,6 +38,16 @@ public class EnrollmentTermImpl extends BaseImpl<EnrollmentTerm, EnrollmentTermR
         List<Response> response = canvasMessenger.getFromCanvas(oauthToken, url);
         return parseEnrollmentTermList(response);
     }
+
+    @Override
+    public Optional<EnrollmentTerm> getEnrollmentTerm(String accountId, String termId) throws IOException {
+        LOG.debug("getting enrollment term with account id " + accountId);
+        String url = buildCanvasUrl("accounts/" + accountId + "/terms/" +termId, Collections.emptyMap());
+        LOG.debug("Final URL of API call: " + url);
+        Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
+        return Optional.of(GsonResponseParser.getDefaultGsonParser(serializeNulls).fromJson(response.getContent(), EnrollmentTerm.class));
+    }
+
 
     //Unfortunately we can't use the generic list parse methods in BaseImpl because Canvas wraps enrollment terms in
     //a useless object at the top level of the response JSON for no reason at all.

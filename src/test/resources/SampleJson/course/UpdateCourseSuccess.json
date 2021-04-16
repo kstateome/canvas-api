@@ -20,7 +20,7 @@
         "ics": "https://sandbox.test.com/feeds/calendars/course_BW7Qv3BtXWpUX.ics"
     },
     "time_zone": "America/Los_Angeles",
-    "sis_course_id": null,
+    "sis_course_id": "sis-id-1",
     "integration_id": null,
     "enrollments": [],
     "workflow_state": "unpublished",

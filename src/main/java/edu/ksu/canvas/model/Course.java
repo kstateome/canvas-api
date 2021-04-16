@@ -21,6 +21,7 @@ public class Course extends BaseCanvasModel implements Serializable {
     private String defaultView;
     private Integer id;
     private String name;
+    private Date createdAt;
     private Date startAt;
     private Date endAt;
     private Boolean publicSyllabus;
@@ -44,13 +45,22 @@ public class Course extends BaseCanvasModel implements Serializable {
     private Boolean allowStudentForumAttachments;
     private Boolean openEnrollment;
     private Boolean selfEnrollment;
-    private Boolean termId;
+    private Boolean blueprint;
+    private Boolean concluded;
+    private String termId;
     private String timeZone;
     private Boolean offer;
     private Boolean enrollMe;
     private String syllabusBody;
     private String courseFormat;
     private Boolean enableSisReactivation;
+    private Account account;
+    // Only used when asking for the course image
+    private String imageDownloadUrl;
+    // Only used when setting course image
+    private Integer imageId;
+    private String imageUrl;
+    private String publicDescription;
 
     private List<Section> sections;
     private List<Enrollment> enrollments;
@@ -108,6 +118,14 @@ public class Course extends BaseCanvasModel implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     @CanvasField(postKey = "start_at")
@@ -341,11 +359,11 @@ public class Course extends BaseCanvasModel implements Serializable {
     }
 
     @CanvasField(postKey = "term_id")
-    public Boolean getTermId() {
+    public String getTermId() {
         return termId;
     }
 
-    public void setTermId(Boolean termId) {
+    public void setTermId(String termId) {
         this.termId = termId;
     }
 
@@ -398,5 +416,67 @@ public class Course extends BaseCanvasModel implements Serializable {
 
     public void setEnableSisReactivation(Boolean enableSisReactivation) {
         this.enableSisReactivation = enableSisReactivation;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    @CanvasField(postKey = "image_id")
+    public Integer getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(Integer imageId) {
+        this.imageId = imageId;
+    }
+
+    @CanvasField(postKey = "image_url")
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    /**
+     * Get the URL to download the course image, this is optional data and you need to request that Canvas
+     * include it.
+     * @see edu.ksu.canvas.requestOptions.GetSingleCourseOptions.Include#COURSE_IMAGE
+     * @return The public URL to download the course image.
+     */
+    public String getImageDownloadUrl() {
+        return imageDownloadUrl;
+    }
+
+    public void setImageDownloadUrl(String imageDownloadUrl) {
+        this.imageDownloadUrl = imageDownloadUrl;
+    }
+
+    @CanvasField(postKey = "blueprint")
+    public Boolean getBlueprint() {
+        return blueprint;
+    }
+
+    public void setBlueprint(Boolean blueprint) {
+        this.blueprint = blueprint;
+    }
+
+    public Boolean getConcluded() {
+        return concluded;
+    }
+
+    @CanvasField(postKey = "public_description")
+    public String getPublicDescription() {
+        return publicDescription;
+    }
+
+    public void setPublicDescription(String publicDescription) {
+        this.publicDescription = publicDescription;
     }
 }
