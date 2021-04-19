@@ -1,6 +1,7 @@
 package edu.ksu.canvas.net;
 
 import com.google.gson.Gson;
+import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.errors.ErrorHandler;
 import edu.ksu.canvas.errors.GenericErrorHandler;
 import edu.ksu.canvas.errors.UserErrorHandler;
@@ -163,7 +164,7 @@ public class SimpleRestClient implements RestClient {
         httpPost.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
         List<NameValuePair> params = convertParameters(postParameters);
 
-        httpPost.setEntity(new UrlEncodedFormEntity(params));
+        httpPost.setEntity(new UrlEncodedFormEntity(params, CanvasConstants.URLENCODING_TYPE));
         HttpResponse httpResponse =  httpClient.execute(httpPost);
         String content = handleResponse(httpResponse, httpPost);
 
@@ -219,7 +220,7 @@ public class SimpleRestClient implements RestClient {
         httpPut.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
         List<NameValuePair> params = convertParameters(putParameters);
 
-        httpPut.setEntity(new UrlEncodedFormEntity(params));
+        httpPut.setEntity(new UrlEncodedFormEntity(params, CanvasConstants.URLENCODING_TYPE));
         HttpResponse httpResponse =  httpClient.execute(httpPut);
         String content = handleResponse(httpResponse, httpPut);
 
@@ -254,7 +255,7 @@ public class SimpleRestClient implements RestClient {
         httpDelete.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
         List<NameValuePair> params = convertParameters(deleteParameters);
 
-        httpDelete.setEntity(new UrlEncodedFormEntity(params));
+        httpDelete.setEntity(new UrlEncodedFormEntity(params, CanvasConstants.URLENCODING_TYPE));
         HttpResponse httpResponse = httpClient.execute(httpDelete);
 
         String content = handleResponse(httpResponse, httpDelete);
