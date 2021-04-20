@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
+import java.io.InputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +67,17 @@ public class RefreshingRestClient implements RestClient {
     }
 
     @Override
+    public Response sendApiPostFile(@NotNull OauthToken token, @NotNull String url, Map<String, List<String>> postParameters, String fileParameter, String filePath, InputStream is, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+        try {
+            return restClient.sendApiPostFile(token, url, postParameters, fileParameter, filePath, is, connectTimeout, readTimeout);
+        } catch (InvalidOauthTokenException e) {
+            LOG.debug("Caught invalidOauthToken from " + url);
+            token.refresh();
+            return restClient.sendApiPostFile(token, url, postParameters, fileParameter, filePath, is, connectTimeout, readTimeout);
+        }
+    }
+
+    @Override
     public Response sendApiDelete(@NotNull OauthToken token, @NotNull String url, Map<String, List<String>> deleteParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         try {
             return restClient.sendApiDelete(token, url, deleteParameters, connectTimeout, readTimeout);
@@ -85,5 +97,10 @@ public class RefreshingRestClient implements RestClient {
             token.refresh();
             return restClient.sendApiPut(token, url, putParameters, connectTimeout, readTimeout);
         }
+    }
+
+    @Override
+    public String sendUpload(String uploadUrl, Map<String, List<String>> params, InputStream in, String filename, int connectTimeout, int readTimeout) throws IOException {
+        return restClient.sendUpload(uploadUrl, params, in, filename, connectTimeout, readTimeout);
     }
 }

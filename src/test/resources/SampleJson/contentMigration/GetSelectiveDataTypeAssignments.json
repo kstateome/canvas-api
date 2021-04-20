@@ -1,0 +1,16 @@
+[
+	{
+		"type": "assignment_groups",
+		"title": "Assignments",
+		"migration_id": "g8778aa4b2607341370644e77445222b6",
+		"property": "copy[assignment_groups][id_g8778aa4b2607341370644e77445222b6]",
+		"sub_items": [
+			{
+				"type": "assignments",
+				"title": "assig1",
+				"migration_id": "g3e2bd357bd4e3180a4ebb30301fe46fb",
+				"property": "copy[assignments][id_g3e2bd357bd4e3180a4ebb30301fe46fb]"
+			}
+		]
+	}
+]

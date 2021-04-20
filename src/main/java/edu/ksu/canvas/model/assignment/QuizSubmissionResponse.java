@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  */
 public class QuizSubmissionResponse {
     private final List<QuizSubmission> quizSubmissions;
-    private final Map<Integer, User> users;
+    private final Map<Long, User> users;
     private final Map<Integer, Quiz> quizzes;
 
     public QuizSubmissionResponse(final List<QuizSubmission> quizSubmissions, final List<User> users, final List<Quiz> quizzes) {
@@ -43,7 +43,7 @@ public class QuizSubmissionResponse {
      * if users were requested via GetQuizSubmissionsOptions
      * @return User map
      */
-    public Map<Integer, User> getUsers() {
+    public Map<Long, User> getUsers() {
         return users;
     }
 
@@ -52,7 +52,7 @@ public class QuizSubmissionResponse {
      * @param userId Canvas user ID
      * @return Canvas user record if found
      */
-    public Optional<User> getUser(final int userId) {
+    public Optional<User> getUser(final long userId) {
         return Optional.ofNullable(users.get(userId));
     }
 

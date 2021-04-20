@@ -1,0 +1,20 @@
+[{
+	"id": 1234,
+	"user_id": 1111,
+	"account_id": 1,
+	"unique_id": "test@email.com",
+	"created_at": "2020-05-22T10:23:55Z",
+	"sis_user_id": "test@email.com",
+	"integration_id": null,
+	"authentication_provider_id": 1,
+	"authentication_provider_type": "canvas"
+}, {
+	"id": 1235,
+	"user_id": 1111,
+	"account_id": 1,
+	"unique_id": "test2@email.com",
+	"created_at": "2020-05-22T10:24:24Z",
+	"sis_user_id": null,
+	"integration_id": "id",
+	"authentication_provider_id": null
+}]

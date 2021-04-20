@@ -5,6 +5,7 @@ import edu.ksu.canvas.annotation.CanvasObject;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Class to represent Canvas course sections.
@@ -27,6 +28,7 @@ public class Section extends BaseCanvasModel implements Serializable {
     private Integer nonxlistCourseId;
     private Integer totalStudents;
     private Boolean restrictEnrollmentsToSectionDates;
+    private List<User> students;
 
     public Long getId() {
         return id;
@@ -135,5 +137,13 @@ public class Section extends BaseCanvasModel implements Serializable {
 
     public void setEnrollmentRole(String enrollmentRole) {
         this.enrollmentRole = enrollmentRole;
+    }
+
+    public List<User> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<User> students) {
+        this.students = students;
     }
 }
