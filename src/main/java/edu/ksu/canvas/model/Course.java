@@ -19,13 +19,13 @@ public class Course extends BaseCanvasModel implements Serializable {
     private Integer accountId;
     private String courseCode;
     private String defaultView;
-    private Integer id;
+    private Long id;
     private String name;
     private Date createdAt;
     private Date startAt;
     private Date endAt;
     private Boolean publicSyllabus;
-    private Integer storageQuotaMb;
+    private Long storageQuotaMb;
     private Boolean hideFinalGrades;
     private Boolean applyAssignmentGroupWeights;
     private String sisCourseId;
@@ -103,11 +103,11 @@ public class Course extends BaseCanvasModel implements Serializable {
         this.defaultView = defaultView;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -155,11 +155,11 @@ public class Course extends BaseCanvasModel implements Serializable {
         this.publicSyllabus = publicSyllabus;
     }
 
-    public Integer getStorageQuotaMb() {
+    public Long getStorageQuotaMb() {
         return storageQuotaMb;
     }
 
-    public void setStorageQuotaMb(Integer storageQuotaMb) {
+    public void setStorageQuotaMb(Long storageQuotaMb) {
         this.storageQuotaMb = storageQuotaMb;
     }
 
