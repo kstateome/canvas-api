@@ -58,7 +58,7 @@ public class CourseManagerUTest extends CanvasTestBase {
     @Test
     public void testCourseUpdateWithId() throws IOException {
         Course newCourse = new Course();
-        newCourse.setId(new Integer(ARBITRARY_COURSE_ID));
+        newCourse.setId(new Long(ARBITRARY_COURSE_ID));
         newCourse.setCourseCode("UpdatedSeleniumTestCourseCode");
         newCourse.setName("UpdatedSeleniumTestName");
         String url = baseUrl + "/api/v1/courses/" + "sis_course_id:sis-id-1";
@@ -71,7 +71,7 @@ public class CourseManagerUTest extends CanvasTestBase {
     @Test
     public void testCourseUpdateWithBadCharacters() throws IOException {
         Course newCourse = new Course();
-        newCourse.setId(new Integer(ARBITRARY_COURSE_ID));
+        newCourse.setId(new Long(ARBITRARY_COURSE_ID));
         newCourse.setCourseCode("UpdatedSeleniumTestCourseCode");
         newCourse.setName("UpdatedSeleniumTestName");
         String url = baseUrl + "/api/v1/courses/" + "sis_course_id:sis id 1 ū";
