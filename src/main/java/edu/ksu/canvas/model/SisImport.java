@@ -37,7 +37,7 @@ public class SisImport extends BaseCanvasModel implements Serializable {
     private Boolean skipDeletes;
     private Integer changeThreshold;
     private Integer diffRowCountThreshold;
-	
+
     private List<List<String>> processingWarnings = null;
     private List<List<String>> processingErrors = null;
     private Object errorsAttachment;
