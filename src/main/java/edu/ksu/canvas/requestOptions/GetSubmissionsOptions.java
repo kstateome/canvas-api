@@ -18,6 +18,10 @@ public class GetSubmissionsOptions extends BaseOptions {
         }
     }
 
+    public GetSubmissionsOptions(final String canvasId) {
+        this.canvasId = canvasId;
+    }
+
     /**
      * Construct options class with required parameters to retrieve a list of Submissions from courses or sections
      * @param canvasId The Course or Section ID, depending on which API is being targeted. May also be an SIS ID with appropriate prefix
@@ -58,6 +62,11 @@ public class GetSubmissionsOptions extends BaseOptions {
      */
     public GetSubmissionsOptions grouped(Boolean grouped) {
         addSingleItem("grouped", Boolean.toString(grouped));
+        return this;
+    }
+
+    public GetSubmissionsOptions userIds(List<String> userIds) {
+        addStringList("student_ids[]", userIds);
         return this;
     }
 
