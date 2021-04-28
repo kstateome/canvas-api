@@ -59,6 +59,7 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
         if (StringUtils.isBlank(options.getCanvasId())) {
             throw new IllegalArgumentException("Course ID is required for this API call");
         }
+        LOG.debug(String.format("Listing submissions for multiple assignments in course %s", options.getCanvasId()));
         String url = buildCanvasUrl(String.format("courses/%s/students/submissions", options.getCanvasId()),
                 options.getOptionsMap());
         return getListFromCanvas(url);
