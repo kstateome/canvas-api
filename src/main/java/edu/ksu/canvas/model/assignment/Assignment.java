@@ -427,7 +427,7 @@ public class Assignment extends BaseCanvasModel implements Serializable{
         return rubricCriteria;
     }
 
-    public void setRubric(List<RubricCriterion> rubricCriteria) {
+    public void setRubricCriteria(List<RubricCriterion> rubricCriteria) {
         this.rubricCriteria = rubricCriteria;
     }
 

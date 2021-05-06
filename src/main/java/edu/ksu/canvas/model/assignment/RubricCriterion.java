@@ -13,6 +13,9 @@ public class RubricCriterion extends BaseCanvasModel implements Serializable {
     private String longDescription;
     private Double points;
     private Boolean criterionUseRange;
+    private Boolean ignoreForScoring;
+    private Double masteryPoints;
+    private Long learningOutcomeId;
     private List<RubricRating> ratings;
 
     public String getId() {
@@ -53,6 +56,30 @@ public class RubricCriterion extends BaseCanvasModel implements Serializable {
 
     public void setCriterionUseRange(Boolean criterionUseRange) {
         this.criterionUseRange = criterionUseRange;
+    }
+
+    public Boolean getIgnoreForScoring() {
+        return ignoreForScoring;
+    }
+
+    public void setIgnoreForScoring(Boolean ignoreForScoring) {
+        this.ignoreForScoring = ignoreForScoring;
+    }
+
+    public Double getMasteryPoints() {
+        return masteryPoints;
+    }
+
+    public void setMasteryPoints(Double masteryPoints) {
+        this.masteryPoints = masteryPoints;
+    }
+
+    public Long getLearningOutcomeId() {
+        return learningOutcomeId;
+    }
+
+    public void setLearningOutcomeId(Long learningOutcomeId) {
+        this.learningOutcomeId = learningOutcomeId;
     }
 
     public List<RubricRating> getRatings() {
