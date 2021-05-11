@@ -336,6 +336,10 @@ public class SimpleRestClient implements RestClient {
             LOG.error("Object not found in Canvas. Requested URL: " + request.getURI());
             throw new ObjectNotFoundException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
         }
+        if(statusCode == 504) {
+            LOG.error("504 Gateway Time-out while requesting: " + request.getURI());
+            throw new RetriableException("status code: 504, reason phrase: Gateway Time-out", String.valueOf(request.getURI()));
+        }
         // If we receive a 5xx exception, we should not wrap it in an unchecked exception for upstream clients to deal with.
         if(statusCode < 200 || (statusCode > (allowRedirect?399:299) && statusCode <= 499)) {
             LOG.error("HTTP status " + statusCode + " returned from " + request.getURI());
