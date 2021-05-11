@@ -5,17 +5,20 @@ import edu.ksu.canvas.interfaces.CourseReader;
 import edu.ksu.canvas.interfaces.CourseWriter;
 import edu.ksu.canvas.model.Course;
 import edu.ksu.canvas.model.Deposit;
+import edu.ksu.canvas.model.Progress;
 import edu.ksu.canvas.model.status.Conclude;
 import edu.ksu.canvas.model.status.Delete;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.*;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -158,6 +161,26 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
         String url = buildCanvasUrl("courses/"+ courseId+ "/files", Collections.emptyMap());
         Response response = canvasMessenger.sendToCanvas(oauthToken, url, uploadOptions.getOptionsMap());
         return responseParser.parseToObject(Deposit.class, response);
+    }
+
+    @Override
+    public Optional<Progress> batchUpdateCourseState(String accountId, Course.CourseEvent event, String... courseIds) throws IOException {
+        if(StringUtils.isBlank(accountId) || event == null || courseIds == null || courseIds.length == 0) {
+            throw new IllegalArgumentException("Must supply account, event, and list of courses");
+        }
+        if(Course.CourseEvent.claim == event) {
+            throw new IllegalArgumentException("This method can not be used to claim courses");
+        }
+        LOG.debug("Updating course workflow state for {} course(s)", courseIds.length);
+
+        Map<String, List<String>> requestParams = new HashMap<>();
+        requestParams.put("event", Collections.singletonList(event.toString()));
+        requestParams.put("course_ids[]", Arrays.asList(courseIds));
+
+        String url = buildCanvasUrl("accounts/" + accountId + "/courses", Collections.emptyMap());
+        Response response = canvasMessenger.putToCanvas(oauthToken, url, requestParams);
+
+        return responseParser.parseToObject(Progress.class, response);
     }
 
     @Override

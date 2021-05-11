@@ -2,6 +2,7 @@ package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.Course;
 import edu.ksu.canvas.model.Deposit;
+import edu.ksu.canvas.model.Progress;
 import edu.ksu.canvas.requestOptions.DeleteCourseOptions;
 import edu.ksu.canvas.requestOptions.UploadOptions;
 
@@ -62,4 +63,19 @@ public interface CourseWriter extends CanvasWriter<Course, CourseWriter> {
      * @return Deposit (This is part of the file upload workflow)
      */
      Optional<Deposit> uploadFile(String courseId, UploadOptions options) throws IOException;
+
+    /**
+     * Change the workflow state of multiple courses at once
+     *
+     * This operation happens asynchronously and returns a Progress object to monitor its execution.
+     * Valid events are: offer, conclude, delete and undelete. It is NOT possible to claim a course using this method.
+     * See: https://canvas.instructure.com/doc/api/courses.html#method.courses.batch_update
+     *
+     * @param accountId The ID of the account in which to perform this bulk operation
+     * @param event The course event type to push
+     * @param courseIds A list of course IDs to perform this operation on
+     * @return Progress object to monitor the state of the batch operation
+     * @throws IOException When there is an error communicating with Canvas
+     */
+     Optional<Progress> batchUpdateCourseState(String accountId, Course.CourseEvent event, String... courseIds) throws IOException;
 }
