@@ -5,11 +5,7 @@ import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.errors.ErrorHandler;
 import edu.ksu.canvas.errors.GenericErrorHandler;
 import edu.ksu.canvas.errors.UserErrorHandler;
-import edu.ksu.canvas.exception.CanvasException;
-import edu.ksu.canvas.exception.InvalidOauthTokenException;
-import edu.ksu.canvas.exception.ObjectNotFoundException;
-import edu.ksu.canvas.exception.RateLimitException;
-import edu.ksu.canvas.exception.UnauthorizedException;
+import edu.ksu.canvas.exception.*;
 import edu.ksu.canvas.impl.GsonResponseParser;
 import edu.ksu.canvas.model.status.CanvasErrorResponse;
 import edu.ksu.canvas.model.status.CanvasErrorResponse.ErrorMessage;
@@ -332,9 +328,17 @@ public class SimpleRestClient implements RestClient {
             LOG.error("User is not authorized to perform this action");
             throw new UnauthorizedException();
         }
+        if(statusCode == 403) {
+            LOG.error("Canvas has throttled this request. Requested URL: " + request.getURI());
+            throw new ThrottlingException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
+        }
         if(statusCode == 404) {
             LOG.error("Object not found in Canvas. Requested URL: " + request.getURI());
             throw new ObjectNotFoundException(extractErrorMessageFromResponse(httpResponse), String.valueOf(request.getURI()));
+        }
+        if(statusCode == 504) {
+            LOG.error("504 Gateway Time-out while requesting: " + request.getURI());
+            throw new RetriableException("status code: 504, reason phrase: Gateway Time-out", String.valueOf(request.getURI()));
         }
         // If we receive a 5xx exception, we should not wrap it in an unchecked exception for upstream clients to deal with.
         if(statusCode < 200 || (statusCode > (allowRedirect?399:299) && statusCode <= 499)) {

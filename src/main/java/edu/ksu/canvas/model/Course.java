@@ -61,6 +61,8 @@ public class Course extends BaseCanvasModel implements Serializable {
     private Integer imageId;
     private String imageUrl;
     private String publicDescription;
+    // Only used when pushing a course status change to Canvas
+    private CourseEvent event;
 
     private List<Section> sections;
     private List<Enrollment> enrollments;
@@ -68,6 +70,10 @@ public class Course extends BaseCanvasModel implements Serializable {
 
     @SerializedName("term")
     private EnrollmentTerm enrollmentTerm;
+
+    public enum CourseEvent {
+        claim, offer, conclude, delete, undelete;
+    }
 
     public long getEnrollmentTermId() {
         return enrollmentTermId;
@@ -478,5 +484,19 @@ public class Course extends BaseCanvasModel implements Serializable {
 
     public void setPublicDescription(String publicDescription) {
         this.publicDescription = publicDescription;
+    }
+
+    public CourseEvent getEvent() {
+        return event;
+    }
+
+    /**
+     * Cause a course status event when updating course in Canvas.
+     *
+     * See "event" parameter for details: https://canvas.instructure.com/doc/api/courses.html#method.courses.update
+     * @param event The event to trigger (publish, conclude, etc)
+     */
+    public void setEvent(CourseEvent event) {
+        this.event = event;
     }
 }
