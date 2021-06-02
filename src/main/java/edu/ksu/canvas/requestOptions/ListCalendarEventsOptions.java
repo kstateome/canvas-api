@@ -25,6 +25,10 @@ public class ListCalendarEventsOptions extends BaseOptions {
         public String toString() { return name().toLowerCase(); }
     }
 
+    public ListCalendarEventsOptions type(Type eventType) {
+        addSingleItem("type", eventType.toString());
+        return this;
+    }
     public ListCalendarEventsOptions startDate(LocalDate startDate) {
         addSingleItem("start_date", DateTimeFormatter.ISO_LOCAL_DATE.format(startDate));
         return this;
@@ -36,12 +40,12 @@ public class ListCalendarEventsOptions extends BaseOptions {
     }
 
     public ListCalendarEventsOptions endDate(LocalDate endDate) {
-        addSingleItem("start_date", DateTimeFormatter.ISO_LOCAL_DATE.format(endDate));
+        addSingleItem("end_date", DateTimeFormatter.ISO_LOCAL_DATE.format(endDate));
         return this;
     }
 
     public ListCalendarEventsOptions endDate(TemporalAccessor endDate) {
-        addSingleItem("start_date", DateTimeFormatter.ISO_INSTANT.format(endDate));
+        addSingleItem("end_date", DateTimeFormatter.ISO_INSTANT.format(endDate));
         return this;
     }
 
@@ -62,7 +66,7 @@ public class ListCalendarEventsOptions extends BaseOptions {
     }
 
     public ListCalendarEventsOptions excludes(List<Exclude> excludes) {
-        addEnumList("excludes", excludes);
+        addEnumList("excludes[]", excludes);
         return this;
     }
 

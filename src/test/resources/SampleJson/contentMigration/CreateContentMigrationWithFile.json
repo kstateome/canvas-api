@@ -1,0 +1,22 @@
+{
+	"id": 47,
+	"migration_type": "zip_file_importer",
+	"migration_type_title": "File import",
+	"migration_issues_url": "http://canvas.example.edu/api/v1/courses/20711/content_migrations/47/migration_issues",
+	"migration_issues_count": 0,
+	"progress_url": null,
+	"user_id": 899123456,
+	"workflow_state": "pre_processing",
+	"created_at": "2020-06-09T09:22:51Z",
+	"started_at": null,
+	"finished_at": "2020-06-09T09:22:51Z",
+	"pre_attachment": {
+		"file_param": "file",
+		"progress": null,
+		"upload_url": "https://tempurl.net/files?token=token",
+		"upload_params": {
+			"filename": "nameOfFile",
+			"content_type": null
+		}
+	}
+}

@@ -5,12 +5,14 @@ import java.util.List;
 public class GetSingleCourseOptions extends BaseOptions {
 
     private String courseId;
+    private String accountId;
 
     public enum Include {
         //same include options as list courses call
         NEEDS_GRADING_COUNT, SYLLABUS_BODY, TOTAL_SCORES, TERM, COURSE_PROGRESS,
         SECTIONS, STORAGE_QUOTA_USED_MB, TOTAL_STUDENTS, FAVORITES, TEACHERS,
-        OBSERVED_USERS, CURRENT_GRADING_PERIOD_SCORES,
+        OBSERVED_USERS, CURRENT_GRADING_PERIOD_SCORES, ACCOUNT, COURSE_IMAGE,
+        PUBLIC_DESCRIPTION, CONCLUDED,
         //options specific to get single course call
         ALL_COURSES, PERMISSIONS, LICENSE;
 
@@ -38,5 +40,14 @@ public class GetSingleCourseOptions extends BaseOptions {
     public GetSingleCourseOptions includes(List<Include> includes) {
         addEnumList("include[]", includes);
         return this;
+    }
+
+    public GetSingleCourseOptions account(String accountId) {
+        this.accountId = accountId;
+        return this;
+    }
+
+    public String getAccount() {
+        return accountId;
     }
 }

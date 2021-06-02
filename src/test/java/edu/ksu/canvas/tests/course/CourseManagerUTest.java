@@ -56,6 +56,32 @@ public class CourseManagerUTest extends CanvasTestBase {
     }
 
     @Test
+    public void testCourseUpdateWithId() throws IOException {
+        Course newCourse = new Course();
+        newCourse.setId(new Long(ARBITRARY_COURSE_ID));
+        newCourse.setCourseCode("UpdatedSeleniumTestCourseCode");
+        newCourse.setName("UpdatedSeleniumTestName");
+        String url = baseUrl + "/api/v1/courses/" + "sis_course_id:sis-id-1";
+        fakeRestClient.addSuccessResponse(url, "SampleJson/course/UpdateCourseSuccess.json");
+        Optional<Course> response = courseWriter.updateCourse("sis_course_id:sis-id-1", newCourse);
+        Assert.assertNotNull(response.get().getName());
+        Assert.assertEquals(newCourse.getCourseCode(), response.get().getCourseCode());
+    }
+
+    @Test
+    public void testCourseUpdateWithBadCharacters() throws IOException {
+        Course newCourse = new Course();
+        newCourse.setId(new Long(ARBITRARY_COURSE_ID));
+        newCourse.setCourseCode("UpdatedSeleniumTestCourseCode");
+        newCourse.setName("UpdatedSeleniumTestName");
+        String url = baseUrl + "/api/v1/courses/" + "sis_course_id:sis id 1 ū";
+        fakeRestClient.addSuccessResponse(url, "SampleJson/course/UpdateCourseSuccess.json");
+        Optional<Course> response = courseWriter.updateCourse("sis_course_id:sis id 1 ū", newCourse);
+        Assert.assertNotNull(response.get().getName());
+        Assert.assertEquals(newCourse.getCourseCode(), response.get().getCourseCode());
+    }
+
+    @Test
     public void testCourseDeletion() throws IOException {
         String url = baseUrl + "/api/v1/courses/" + ARBITRARY_COURSE_ID;
         fakeRestClient.addSuccessResponse(url, "SampleJson/course/DeleteCourseSuccess.json");

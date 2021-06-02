@@ -1,5 +1,6 @@
 package edu.ksu.canvas.model.assignment;
 
+import com.google.gson.annotations.SerializedName;
 import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
 import edu.ksu.canvas.model.BaseCanvasModel;
@@ -58,6 +59,11 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     private Boolean notifyOfUpdate;
     private Boolean omitFromFinalGrade;
     private List<String> assignmentVisibility;
+    // Canvas confusingly calls this field "rubric" even though it is only a list of rubric criteria, not a full rubric object
+    @SerializedName("rubric")
+    private List<RubricCriterion> rubricCriteria;
+    // ... and then it adds a truncated list of rubric attributes and calls it a "rubric setting"
+    private RubricSettings rubricSettings;
 
     public Long getId() {
         return id;
@@ -415,6 +421,22 @@ public class Assignment extends BaseCanvasModel implements Serializable{
 
     public void setAssignmentVisibility(List<String> assignmentVisibility) {
         this.assignmentVisibility = assignmentVisibility;
+    }
+
+    public List<RubricCriterion> getRubricCriteria() {
+        return rubricCriteria;
+    }
+
+    public void setRubricCriteria(List<RubricCriterion> rubricCriteria) {
+        this.rubricCriteria = rubricCriteria;
+    }
+
+    public RubricSettings getRubricSettings() {
+        return rubricSettings;
+    }
+
+    public void setRubricSettings(RubricSettings rubricSettings) {
+        this.rubricSettings = rubricSettings;
     }
 
     public class ExternalToolTagAttribute implements Serializable {

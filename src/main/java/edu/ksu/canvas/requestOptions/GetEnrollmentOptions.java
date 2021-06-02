@@ -12,6 +12,7 @@ public class GetEnrollmentOptions extends BaseOptions {
     //https://github.com/instructure/canvas-lms/issues/946
     public enum EnrollmentType {
         STUDENT("StudentEnrollment"),
+        STUDENTVIEW("StudentViewEnrollment"),
         TEACHER("TeacherEnrollment"),
         TA("TaEnrollment"),
         DESIGNER("DesignerEnrollment"),

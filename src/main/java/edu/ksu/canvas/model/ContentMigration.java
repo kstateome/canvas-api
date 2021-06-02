@@ -4,17 +4,37 @@ import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
 
 import java.io.Serializable;
+import java.time.Instant;
 
 @CanvasObject(postKey = "content_migration")
 public class ContentMigration extends BaseCanvasModel implements Serializable {
     private Long id;
-    private String type;
     private String migrationType;
-    private String name;
+    private String migrationTypeTitle;
+    private String migrationIssuesUrl;
+    private Integer migrationIssuesCount;
     private String progressUrl;
-    private String worksflowState;
+    private Integer userId;
 
-    @CanvasField(postKey = "id")
+    private Instant createdAt;
+    private Instant startedAt;
+    private Instant finishedAt;
+
+    public enum WorkflowState {
+        pre_processing, pre_processed, running, waiting_for_select, completed, failed;
+
+        @Override
+        public String toString() { return name().toLowerCase(); }
+
+    }
+
+    private WorkflowState workflowState;
+
+    /**
+     * This will need to be converted to FileUpload object
+     **/
+    private Object preAttachment;
+
     public Long getId() {
         return id;
     }
@@ -23,16 +43,6 @@ public class ContentMigration extends BaseCanvasModel implements Serializable {
         this.id = id;
     }
 
-    @CanvasField(postKey = "type")
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    @CanvasField(postKey = "migration_type")
     public String getMigrationType() {
         return migrationType;
     }
@@ -41,16 +51,30 @@ public class ContentMigration extends BaseCanvasModel implements Serializable {
         this.migrationType = migrationType;
     }
 
-    @CanvasField(postKey = "name")
-    public String getName() {
-        return name;
+    public String getMigrationTypeTitle() {
+        return migrationTypeTitle;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMigrationTypeTitle(String migrationTypeTitle) {
+        this.migrationTypeTitle = migrationTypeTitle;
     }
 
-    @CanvasField(postKey = "progress_url")
+    public String getMigrationIssuesUrl() {
+        return migrationIssuesUrl;
+    }
+
+    public void setMigrationIssuesUrl(String migrationIssuesUrl) {
+        this.migrationIssuesUrl = migrationIssuesUrl;
+    }
+
+    public Integer getMigrationIssuesCount() {
+        return migrationIssuesCount;
+    }
+
+    public void setMigrationIssuesCount(Integer migrationIssuesCount) {
+        this.migrationIssuesCount = migrationIssuesCount;
+    }
+
     public String getProgressUrl() {
         return progressUrl;
     }
@@ -59,12 +83,52 @@ public class ContentMigration extends BaseCanvasModel implements Serializable {
         this.progressUrl = progressUrl;
     }
 
-    @CanvasField(postKey = "workflow_state")
-    public String getWorksflowState() {
-        return worksflowState;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setWorksflowState(String worksflowState) {
-        this.worksflowState = worksflowState;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    @CanvasField(postKey = "workflow_state")
+    public WorkflowState getWorkflowState() {
+        return workflowState;
+    }
+
+    public void setWorkflowState(WorkflowState workflowState) {
+        this.workflowState = workflowState;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Instant getStartedAt() {
+        return startedAt;
+    }
+
+    public void setStartedAt(Instant startedAt) {
+        this.startedAt = startedAt;
+    }
+
+    public Instant getFinishedAt() {
+        return finishedAt;
+    }
+
+    public void setFinishedAt(Instant finishedAt) {
+        this.finishedAt = finishedAt;
+    }
+
+    public Object getPreAttachment() {
+        return preAttachment;
+    }
+
+    public void setPreAttachment(Object preAttachment) {
+        this.preAttachment = preAttachment;
     }
 }

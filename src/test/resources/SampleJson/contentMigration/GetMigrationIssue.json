@@ -1,0 +1,10 @@
+[{
+	"id": 13,
+	"description": "File required for content migration.",
+	"workflow_state": "active",
+	"fix_issue_html_url": null,
+	"issue_type": "error",
+	"created_at": "2020-06-04T12:11:14Z",
+	"updated_at": "2020-06-04T12:11:14Z",
+	"content_migration_url": "https://canvas.example.edu/api/v1/courses/20732/content_migrations/46"
+}]

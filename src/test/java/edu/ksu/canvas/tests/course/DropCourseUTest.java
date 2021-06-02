@@ -40,7 +40,7 @@ public class DropCourseUTest extends CanvasTestBase {
     }
 
     @Test
-    public void  testDropEnrolledUser() throws IOException {
+    public void testDropEnrolledUser() throws IOException {
         String url = baseUrl + "/api/v1/courses/25/enrollments/355047";
         fakeRestClient.addSuccessResponse(url, "SampleJson/EnrollmentDeleteResponse.json");
         Optional<Enrollment> dropResponse = enrollmentsWriter.dropUser("25", "355047");
@@ -63,7 +63,7 @@ public class DropCourseUTest extends CanvasTestBase {
     }
 
     @Test
-    public void  testSisUserMasqueradeDropEnrolledUser() throws IOException {
+    public void testSisUserMasqueradeDropEnrolledUser() throws IOException {
         String userId = "899123456";
         String url = baseUrl + "/api/v1/courses/25/enrollments/355047?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + userId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/EnrollmentDeleteResponse.json");
@@ -87,7 +87,7 @@ public class DropCourseUTest extends CanvasTestBase {
     }
 
     @Test
-    public void  testCanvasUserMasqueradeDropEnrolledUser() throws IOException {
+    public void testCanvasUserMasqueradeDropEnrolledUser() throws IOException {
         String userId = "899123456";
         String url = baseUrl + "/api/v1/courses/25/enrollments/355047?as_user_id=" + userId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/EnrollmentDeleteResponse.json");

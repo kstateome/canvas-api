@@ -87,6 +87,30 @@ public class ListActiveCoursesInAccountOptions extends BaseOptions {
     }
 
     /**
+     * If true, include only blueprint courses.
+     * If false, exclude blueprint courses.
+     * If not present, do not filter on blueprint status.
+     * @param blueprint Blueprint status to filter on
+     * @return This object to allow adding more options
+     */
+    public ListActiveCoursesInAccountOptions onlyBlueprint(Boolean blueprint) {
+        addSingleItem("blueprint", blueprint.toString());
+        return this;
+    }
+
+    /**
+     * If true, include only courses that inherit content from a blueprint course.
+     * If false, exclude them.
+     * If not present, do not filter on this basis.
+     * @param blueprintAssociated Blueprint association filter value
+     * @return This object to allow adding more options
+     */
+    public ListActiveCoursesInAccountOptions onlyBlueprintAssociated(Boolean blueprintAssociated) {
+        addSingleItem("blueprint_associated", blueprintAssociated.toString());
+        return this;
+    }
+
+    /**
      * If true, include only completed courses (these may be in state 'completed', or their enrollment term may have ended).
      * If false, exclude completed courses.
      * If not present, do not filter on completed status.

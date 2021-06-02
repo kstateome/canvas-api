@@ -30,6 +30,7 @@ public class Enrollment extends BaseCanvasModel implements Serializable {
     private String userId;
     private Long associatedUserId;
     private String role;
+    private Date createdAt;
     private Date updatedAt;
     private Date startAt;
     private Date endAt;
@@ -173,6 +174,14 @@ public class Enrollment extends BaseCanvasModel implements Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Date getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Date getUpdatedAt() {

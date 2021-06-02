@@ -10,12 +10,16 @@ public class GetSubmissionsOptions extends BaseOptions {
 
     public enum Include {
         //Submissions can optionally have sub-objects returned with them. The commented out ones are not implemented yet
-        //SUBMISSION_HISTORY, RUBRIC_ASSESSMENT, GROUP
-        ASSIGNMENT, COURSE, SUBMISSION_COMMENTS, USER, VISIBILITY;
+        // GROUP
+        ASSIGNMENT, COURSE, SUBMISSION_COMMENTS, USER, VISIBILITY, SUBMISSION_HISTORY, RUBRIC_ASSESSMENT, FULL_RUBRIC_ASSESSMENT;
 
         public String toString() {
             return name().toLowerCase();
         }
+    }
+
+    public GetSubmissionsOptions(final String canvasId) {
+        this.canvasId = canvasId;
     }
 
     /**
@@ -58,6 +62,11 @@ public class GetSubmissionsOptions extends BaseOptions {
      */
     public GetSubmissionsOptions grouped(Boolean grouped) {
         addSingleItem("grouped", Boolean.toString(grouped));
+        return this;
+    }
+
+    public GetSubmissionsOptions userIds(List<String> userIds) {
+        addStringList("student_ids[]", userIds);
         return this;
     }
 

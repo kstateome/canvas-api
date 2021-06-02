@@ -93,6 +93,18 @@ To run the integration tests use:
 
     mvn -Pfailsafe verify
 
+## Making a release
+
+This project is deployed to the central repository, once ready to release you can have the release plugin tag everything:
+
+    mvn -Prelease release:clean release:prepare
+    
+then if that completes successfully a release bundle can be pushed to the staging area of the Sonatype OSS repository with:
+
+    mvn -Prelease release:perform
+    
+We don't automatically close the staged artifacts so after checking that the files are ok you can login to the [repository](https://oss.sonatype.org/) and release it.
+
 ## Notes
 
 Currently this library is hand coded, however there is a machine readable API specification at

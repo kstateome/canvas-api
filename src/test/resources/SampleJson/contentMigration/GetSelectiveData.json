@@ -1,0 +1,40 @@
+[
+	{
+		"type": "course_settings",
+		"property": "copy[all_course_settings]",
+		"title": "Course settings"
+	},
+	{
+		"type": "syllabus_body",
+		"property": "copy[all_syllabus_body]",
+		"title": "Syllabus body"
+	},
+	{
+		"type": "assignments",
+		"property": "copy[all_assignments]",
+		"title": "Assignments",
+		"count": 1,
+		"sub_items_url": "http://canvas.example.edu/api/v1/courses/20712/content_migrations/45/selective_data?type=assignments"
+	},
+	{
+		"type": "discussion_topics",
+		"property": "copy[all_discussion_topics]",
+		"title": "Discussion topics",
+		"count": 1,
+		"sub_items_url": "http://canvas.example.edu/api/v1/courses/20712/content_migrations/45/selective_data?type=discussion_topics"
+	},
+	{
+		"type": "announcements",
+		"property": "copy[all_announcements]",
+		"title": "Announcements",
+		"count": 1,
+		"sub_items_url": "http://canvas.example.edu/api/v1/courses/20712/content_migrations/45/selective_data?type=announcements"
+	},
+	{
+		"type": "attachments",
+		"property": "copy[all_attachments]",
+		"title": "Files",
+		"count": 1,
+		"sub_items_url": "http://canvas.example.edu/api/v1/courses/20712/content_migrations/45/selective_data?type=attachments"
+	}
+]

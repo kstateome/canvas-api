@@ -24,6 +24,8 @@ public class DeleteCourseOptions extends BaseOptions {
 
     private final EventType eventType;
 
+    private String accountId;
+
     /**
      * Constructor.
      *
@@ -36,11 +38,20 @@ public class DeleteCourseOptions extends BaseOptions {
         addSingleItem("event", eventType.toString());
     }
 
+    public DeleteCourseOptions accountId(String accountId) {
+        this.accountId = accountId;
+        return this;
+    }
+
     public String getCourseId() {
         return courseId;
     }
 
     public EventType getEventType() {
         return eventType;
+    }
+
+    public String getAccountId() {
+        return accountId;
     }
 }

@@ -4,6 +4,7 @@ import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,6 +25,7 @@ public class User extends BaseCanvasModel implements Serializable {
     private String sisImportId;
     private String loginId;
     private String integrationId;
+    private String authenticationProviderId;
     private String avatarUrl;
     private List<Enrollment> enrollments;
     private String email;
@@ -31,6 +33,8 @@ public class User extends BaseCanvasModel implements Serializable {
     private String lastLogin;
     private String timeZone;
     private String bio;
+    private Instant createdAt;
+    private String confirmationUrl;
 
     public User() {
     }
@@ -44,6 +48,7 @@ public class User extends BaseCanvasModel implements Serializable {
         this.sisImportId = other.sisImportId;
         this.loginId = other.loginId;
         this.integrationId = other.integrationId;
+        this.authenticationProviderId = other.authenticationProviderId;
         this.avatarUrl = other.avatarUrl;
         this.enrollments = new ArrayList<>();
         for (Enrollment enrollment: other.enrollments) {
@@ -55,7 +60,8 @@ public class User extends BaseCanvasModel implements Serializable {
         this.lastLogin = other.lastLogin;
         this.timeZone = other.timeZone;
         this.bio = other.bio;
-
+        this.createdAt = other.createdAt;
+        this.confirmationUrl = other.confirmationUrl;
     }
 
     public long getId() {
@@ -127,6 +133,15 @@ public class User extends BaseCanvasModel implements Serializable {
         this.integrationId = integrationId;
     }
 
+    @CanvasField(overrideObjectKey = "pseudonym", postKey = "authentication_provider_id")
+    public String getAuthenticationProviderId() {
+        return authenticationProviderId;
+    }
+
+    public void setAuthenticationProviderId(final String authenticationProviderId) {
+        this.authenticationProviderId = authenticationProviderId;
+    }
+
     @CanvasField(postKey = "avatar][url")
     public String getAvatarUrl() {
         return avatarUrl;
@@ -185,6 +200,22 @@ public class User extends BaseCanvasModel implements Serializable {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getConfirmationUrl() {
+        return confirmationUrl;
+    }
+
+    public void setConfirmationUrl(String confirmationUrl) {
+        this.confirmationUrl = confirmationUrl;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override

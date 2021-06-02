@@ -98,6 +98,7 @@ public class Account extends BaseCanvasModel implements Serializable {
         this.defaultTimeZone = defaultTimeZone;
     }
 
+    @CanvasField(postKey = "sis_account_id")
     public String getSisAccountId() {
         return sisAccountId;
     }

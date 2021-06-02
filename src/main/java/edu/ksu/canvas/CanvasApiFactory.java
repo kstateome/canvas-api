@@ -168,6 +168,7 @@ public class CanvasApiFactory {
         readerMap.put(AssignmentGroupReader.class, AssignmentGroupImpl.class);
         readerMap.put(RoleReader.class, RoleImpl.class);
         readerMap.put(ExternalToolReader.class, ExternalToolImpl.class);
+        readerMap.put(FileReader.class, FileImpl.class);
         readerMap.put(LoginReader.class, LoginImpl.class);
         readerMap.put(CalendarReader.class, CalendarEventImpl.class);
         readerMap.put(AccountReportSummaryReader.class, AccountReportSummaryImpl.class);
@@ -176,13 +177,24 @@ public class CanvasApiFactory {
         readerMap.put(ProgressReader.class, ProgressImpl.class);
         readerMap.put(CourseSettingsReader.class, CourseSettingsImpl.class);
         readerMap.put(GradingStandardReader.class, GradingStandardImpl.class);
+        readerMap.put(ModuleReader.class, ModuleImpl.class);
+        readerMap.put(SisImportReader.class, SisImportImpl.class);
+        readerMap.put(SelectiveDataReader.class, SelectiveDataImpl.class);
+        readerMap.put(MigrationIssueReader.class, MigrationIssueImpl.class);
+        readerMap.put(CommunicationChannelReader.class, CommunicationChannelImpl.class);
+        readerMap.put(AuthenticationLogReader.class, AuthenticationLogImpl.class);
+        readerMap.put(FeatureReader.class, FeatureImpl.class);
+        readerMap.put(FeatureFlagReader.class, FeatureFlagImpl.class);
+        readerMap.put(RubricReader.class, RubricImpl.class);
 
+        writerMap.put(AccountWriter.class, AccountImpl.class);
         writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImpl.class);
         writerMap.put(AdminWriter.class, AdminImpl.class);
         writerMap.put(AssignmentWriter.class, AssignmentImpl.class);
         writerMap.put(ConversationWriter.class, ConversationImpl.class);
         writerMap.put(CourseWriter.class, CourseImpl.class);
         writerMap.put(TabWriter.class, TabImpl.class);
+        writerMap.put(FileWriter.class, FileImpl.class);
         writerMap.put(EnrollmentWriter.class, EnrollmentImpl.class);
         writerMap.put(QuizQuestionWriter.class, QuizQuestionImpl.class);
         writerMap.put(QuizWriter.class, QuizImpl.class);
@@ -203,5 +215,9 @@ public class CanvasApiFactory {
         writerMap.put(ProgressWriter.class, ProgressImpl.class);
         writerMap.put(CourseSettingsWriter.class, CourseSettingsImpl.class);
         writerMap.put(GradingStandardWriter.class, GradingStandardImpl.class);
+        writerMap.put(SisImportWriter.class, SisImportImpl.class);
+        writerMap.put(CommunicationChannelWriter.class, CommunicationChannelImpl.class);
+        writerMap.put(FeatureFlagWriter.class, FeatureFlagImpl.class);
+        writerMap.put(RubricWriter.class, RubricImpl.class);
     }
 }
