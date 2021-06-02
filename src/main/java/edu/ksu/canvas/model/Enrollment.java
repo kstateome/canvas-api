@@ -16,7 +16,7 @@ public class Enrollment extends BaseCanvasModel implements Serializable {
     private static final long serialVersionUID = 3L;
 
     private long id;
-    private Integer courseId;
+    private Long courseId;
     private String sisCourseId;
     private String courseIntegrationId;
     private String courseSectionId;
@@ -30,6 +30,7 @@ public class Enrollment extends BaseCanvasModel implements Serializable {
     private String userId;
     private Integer associatedUserId;
     private String role;
+    private Date createdAt;
     private Date updatedAt;
     private Date startAt;
     private Date endAt;
@@ -57,11 +58,11 @@ public class Enrollment extends BaseCanvasModel implements Serializable {
         this.roleId = roleId;
     }
 
-    public Integer getCourseId() {
+    public Long getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(Integer courseId) {
+    public void setCourseId(Long courseId) {
         this.courseId = courseId;
     }
 
@@ -173,6 +174,14 @@ public class Enrollment extends BaseCanvasModel implements Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Date getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Date getUpdatedAt() {

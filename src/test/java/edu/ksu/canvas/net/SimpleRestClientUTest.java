@@ -2,9 +2,7 @@ package edu.ksu.canvas.net;
 
 import edu.ksu.canvas.LocalServerTestBase;
 import edu.ksu.canvas.errors.UserErrorResponse;
-import edu.ksu.canvas.exception.CanvasException;
-import edu.ksu.canvas.exception.InvalidOauthTokenException;
-import edu.ksu.canvas.exception.UnauthorizedException;
+import edu.ksu.canvas.exception.*;
 import edu.ksu.canvas.oauth.NonRefreshableOauthToken;
 import edu.ksu.canvas.oauth.OauthToken;
 import org.apache.http.HttpHeaders;
@@ -41,6 +39,24 @@ public class SimpleRestClientUTest extends LocalServerTestBase {
     public void http401InvalidTokenThrowsException() throws Exception {
         String url = "/invalidAccessToken";
         registerUrlResponse(url, "/SampleJson/oauth/InvalidAccessTokenResponse.json", 401, Collections.singletonMap(HttpHeaders.WWW_AUTHENTICATE, ""));
+
+        restClient.sendApiGet(emptyAdminToken, baseUrl + url, 100, 100);
+    }
+
+    @Test(expected = ThrottlingException.class)
+    public void http403ThrottlingThrowsException() throws Exception {
+        String url = "/throttledUrl";
+        //Using blank JSON because I haven't been able to observe this error so I don't know what payload it returns
+        registerUrlResponse(url, "/SampleJson/BlankResponse.json", 403, Collections.emptyMap());
+
+        restClient.sendApiGet(emptyAdminToken, baseUrl + url, 100, 100);
+    }
+
+    @Test(expected = RetriableException.class)
+    public void http504GatewayTimeoutThrowsException() throws Exception {
+        String url = "/timeoutUrl";
+        //Using blank JSON because I haven't been able to observe this error so I don't know what payload it returns
+        registerUrlResponse(url, "/SampleJson/BlankResponse.json", 504, Collections.emptyMap());
 
         restClient.sendApiGet(emptyAdminToken, baseUrl + url, 100, 100);
     }

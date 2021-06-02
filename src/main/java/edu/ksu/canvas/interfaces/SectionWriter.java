@@ -36,7 +36,6 @@ public interface SectionWriter extends CanvasWriter<Section, SectionWriter> {
      * Delete an existing section in Canvas.
      *
      * @param sectionId identifies the section to delete
-     * @return true if the delete was successful
      * @return the section object that was deleted
      * @throws IOException When there is an error communicating with Canvas
      */

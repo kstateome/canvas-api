@@ -1,0 +1,8 @@
+{
+  "id": 1111,
+  "address": "address@example.com",
+  "type": "email",
+  "workflow_state": null,
+  "user_id": 123,
+  "position": null
+}

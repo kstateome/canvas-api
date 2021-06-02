@@ -17,9 +17,9 @@ public class Account extends BaseCanvasModel implements Serializable {
     private String name;
     private Integer parentAccountId; // The account's parent ID, or null if this is the root account
     private Integer rootAccountId; // The ID of the root account, or null if this is the root account
-    private Integer defaultStorageQuotaMb;
-    private Integer defaultUserStorageQuotaMb;
-    private Integer defaultGroupStorageQuotaMb;
+    private Long defaultStorageQuotaMb;
+    private Long defaultUserStorageQuotaMb;
+    private Long defaultGroupStorageQuotaMb;
     private String defaultTimeZone;
     private String sisAccountId;
     private String integrationId; // currently unused, expect it to be null
@@ -63,29 +63,29 @@ public class Account extends BaseCanvasModel implements Serializable {
     }
 
     @CanvasField(postKey = "default_storage_quota_mb")
-    public Integer getDefaultStorageQuotaMb() {
+    public Long getDefaultStorageQuotaMb() {
         return defaultStorageQuotaMb;
     }
 
-    public void setDefaultStorageQuotaMb(Integer defaultStorageQuotaMb) {
+    public void setDefaultStorageQuotaMb(Long defaultStorageQuotaMb) {
         this.defaultStorageQuotaMb = defaultStorageQuotaMb;
     }
 
     @CanvasField(postKey = "default_user_storage_quota_mb")
-    public Integer getDefaultUserStorageQuotaMb() {
+    public Long getDefaultUserStorageQuotaMb() {
         return defaultUserStorageQuotaMb;
     }
 
-    public void setDefaultUserStorageQuotaMb(Integer defaultUserStorageQuotaMb) {
+    public void setDefaultUserStorageQuotaMb(Long defaultUserStorageQuotaMb) {
         this.defaultUserStorageQuotaMb = defaultUserStorageQuotaMb;
     }
 
     @CanvasField(postKey = "default_group_storage_quota_mb")
-    public Integer getDefaultGroupStorageQuotaMb() {
+    public Long getDefaultGroupStorageQuotaMb() {
         return defaultGroupStorageQuotaMb;
     }
 
-    public void setDefaultGroupStorageQuotaMb(Integer defaultGroupStorageQuotaMb) {
+    public void setDefaultGroupStorageQuotaMb(Long defaultGroupStorageQuotaMb) {
         this.defaultGroupStorageQuotaMb = defaultGroupStorageQuotaMb;
     }
 
@@ -98,6 +98,7 @@ public class Account extends BaseCanvasModel implements Serializable {
         this.defaultTimeZone = defaultTimeZone;
     }
 
+    @CanvasField(postKey = "sis_account_id")
     public String getSisAccountId() {
         return sisAccountId;
     }

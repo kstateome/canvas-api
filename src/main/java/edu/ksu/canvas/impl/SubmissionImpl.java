@@ -54,6 +54,18 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
     }
 
     @Override
+    public List<Submission> listCourseSubmissionsForMultipleAssignments(GetSubmissionsOptions options)
+            throws IOException {
+        if (StringUtils.isBlank(options.getCanvasId())) {
+            throw new IllegalArgumentException("Course ID is required for this API call");
+        }
+        LOG.debug(String.format("Listing submissions for multiple assignments in course %s", options.getCanvasId()));
+        String url = buildCanvasUrl(String.format("courses/%s/students/submissions", options.getCanvasId()),
+                options.getOptionsMap());
+        return getListFromCanvas(url);
+    }
+
+    @Override
     public List<Submission> getSectionSubmissions(final GetSubmissionsOptions options) throws IOException {
         if(StringUtils.isBlank(options.getCanvasId()) || options.getAssignmentId() == null) {
             throw new IllegalArgumentException("Section and assignment IDs are required for this API call");

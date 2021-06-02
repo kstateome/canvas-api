@@ -78,7 +78,7 @@ public class QuizSubmissionRetrieverUTest extends CanvasTestBase {
         Assert.assertEquals(2, response.getQuizSubmissions().size());
         Assert.assertEquals(2, response.getUsers().size());
         Assert.assertEquals((Integer) 508566, response.getQuizSubmissions().get(0).getId());
-        Assert.assertEquals("User 218826", response.getUser(218826).get().getName());
+        Assert.assertEquals("User 218826", response.getUser(218826L).get().getName());
     }
 
     @Test

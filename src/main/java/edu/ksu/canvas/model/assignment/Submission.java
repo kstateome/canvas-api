@@ -9,6 +9,7 @@ import edu.ksu.canvas.model.User;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @CanvasObject(postKey = "submission")
 public class Submission extends BaseCanvasModel implements Serializable {
@@ -36,6 +37,9 @@ public class Submission extends BaseCanvasModel implements Serializable {
     private Boolean assigmentVisible;
     private Boolean excused;
     private String workflowState;
+    private List<Submission> submissionHistory;
+    private Map<String, SubmissionRubricAssessment> rubricAssessment;
+    private RubricAssessment fullRubricAssessment;
 
     public Integer getId() {
         return id;
@@ -214,4 +218,64 @@ public class Submission extends BaseCanvasModel implements Serializable {
         this.workflowState = workflowState;
     }
 
+    public List<Submission> getSubmissionHistory(){
+        return this.submissionHistory;
+    }
+
+    public void setSubmissionHistory(List<Submission> submissionHistory) {
+        this.submissionHistory = submissionHistory;
+    }
+
+    public Map<String, SubmissionRubricAssessment> getRubricAssessment() {
+        return rubricAssessment;
+    }
+
+    public void setRubricAssessment(Map<String, SubmissionRubricAssessment> rubricAssessment) {
+        this.rubricAssessment = rubricAssessment;
+    }
+
+    public RubricAssessment getFullRubricAssessment() {
+        return fullRubricAssessment;
+    }
+
+    public void setFullRubricAssessment(RubricAssessment fullRubricAssessment) {
+        this.fullRubricAssessment = fullRubricAssessment;
+    }
+
+    /**
+     * This is a model to represent what is returned in a Submission object if you request it with the "rubric_assessment"
+     * include option. I can't find any documentation on it and it is definitely different than what is already in the
+     * RubricAssessment object (which is documented and returned if you use the "full_rubric_assessment" include parameter)
+     */
+    public class SubmissionRubricAssessment extends BaseCanvasModel implements Serializable {
+        private static final long serialVersionUID = 1L;
+
+        private String ratingId;
+        private String comments;
+        private Double points;
+
+        public String getRatingId() {
+            return ratingId;
+        }
+
+        public void setRatingId(String ratingId) {
+            this.ratingId = ratingId;
+        }
+
+        public String getComments() {
+            return comments;
+        }
+
+        public void setComments(String comments) {
+            this.comments = comments;
+        }
+
+        public Double getPoints() {
+            return points;
+        }
+
+        public void setPoints(Double points) {
+            this.points = points;
+        }
+    }
 }

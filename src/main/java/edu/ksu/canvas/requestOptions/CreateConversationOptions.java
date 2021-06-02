@@ -48,6 +48,16 @@ public class CreateConversationOptions extends BaseOptions {
     }
 
     /**
+     * Forces a new message to be created, even if there is an existing private conversation.
+     * @param forceNew True if a new message should be created.
+     * @return This object to allow adding more options
+     */
+    public CreateConversationOptions forceNew(Boolean forceNew) {
+        addSingleItem("force_new", forceNew.toString());
+        return this;
+    }
+
+    /**
      * If specifying multiple recipients, setting this to true will turn this into a group
      * message instead of multiple individual conversations. Defaults to false.
      * @param groupConversation Whether or not this is a group conversation.

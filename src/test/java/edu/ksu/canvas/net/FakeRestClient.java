@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
+import java.io.InputStream;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.HashMap;
@@ -48,6 +49,13 @@ public class FakeRestClient implements RestClient {
     }
 
     @Override
+    public Response sendApiPostFile(OauthToken token, String url, Map<String, List<String>> postParameters, String fileParameter, String filePath, InputStream is, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
+        LOG.debug("Sending fake POST to " + url);
+        checkForTimeout(connectTimeout, readTimeout);
+        return response(url);
+    }
+
+    @Override
     public Response sendApiDelete(@NotNull OauthToken token, @NotNull String url, Map<String, List<String>> deleteParameters, int connectTimeout, int readTimeout) throws InvalidOauthTokenException, IOException {
         LOG.debug("Sending fake DEL to " + url);
         checkForTimeout(connectTimeout, readTimeout);
@@ -59,6 +67,13 @@ public class FakeRestClient implements RestClient {
         LOG.debug("Sending fake PUT to " + url);
         checkForTimeout(connectTimeout, readTimeout);
         return response(url);
+    }
+
+    @Override
+    public String sendUpload(String uploadUrl, Map<String, List<String>> params, InputStream in, String filename, int connectTimeout, int readTimeout) throws IOException {
+        LOG.debug("Sending fake PUT to " + uploadUrl);
+        checkForTimeout(connectTimeout, readTimeout);
+        return response(uploadUrl).getContent();
     }
 
     private void checkForTimeout(int connectTimeout, int readTimeout) throws IOException {

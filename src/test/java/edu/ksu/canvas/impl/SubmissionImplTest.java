@@ -1,8 +1,9 @@
 package edu.ksu.canvas.impl;
 
 import edu.ksu.canvas.CanvasTestBase;
-import edu.ksu.canvas.interfaces.SubmissionWriter;
 import edu.ksu.canvas.model.Progress;
+import edu.ksu.canvas.model.assignment.Submission;
+import edu.ksu.canvas.requestOptions.GetSubmissionsOptions;
 import edu.ksu.canvas.requestOptions.MultipleSubmissionsOptions;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,9 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import static org.junit.Assert.assertEquals;
 
 public class SubmissionImplTest extends CanvasTestBase {
     private static final Logger LOG = LoggerFactory.getLogger(SubmissionImplTest.class);
@@ -27,13 +32,13 @@ public class SubmissionImplTest extends CanvasTestBase {
     public static final String STUDENT_ID_1 = "52359";
     public static final String STUDENT_ID_2 = "90605";
 
-    SubmissionWriter submissionWriter;
+    SubmissionImpl submissionImpl;
 
     @Before
     public void setup() {
         String url =  baseUrl  + "/api/v1/sections/" + SECTION_ID + "/assignments/" + ASSIGNEMNET_ID + "/submissions/update_grades";
         fakeRestClient.addSuccessResponse(url, "SampleJson/Progress.json");
-        submissionWriter = new SubmissionImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE, false);
+        submissionImpl = new SubmissionImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE, false);
     }
 
     @Test
@@ -46,7 +51,7 @@ public class SubmissionImplTest extends CanvasTestBase {
         map.put(STUDENT_ID_2, studentSubmissionOption2);
         multpleSubmissionsOptions.setStudentSubmissionOptionMap(map);
 
-        Optional<Progress> optional = submissionWriter.gradeMultipleSubmissionsBySection(multpleSubmissionsOptions);
+        Optional<Progress> optional = submissionImpl.gradeMultipleSubmissionsBySection(multpleSubmissionsOptions);
         Assert.assertTrue("Expected optional to not be empty, containing a Progress object.", optional.isPresent());
 
         Progress progress = optional.get();
@@ -55,4 +60,16 @@ public class SubmissionImplTest extends CanvasTestBase {
         Assert.assertEquals("Expected progress object did not match returned progress object.", "canvas.example.edu/api/v1/progress/61111111", progress.getUrl());
     }
 
+    @Test
+    public void testListCourseSubmissionsForMultipleAssignments() throws IOException {
+        String url = baseUrl + "/api/v1/courses/1234/students/submissions?student_ids[]=12345";
+        fakeRestClient.addSuccessResponse(url, "SampleJson/submission/submissionResponse.json");
+        GetSubmissionsOptions options = new GetSubmissionsOptions("1234");
+        options.userIds(Collections.singletonList("12345"));
+        List<Submission> submissions = submissionImpl.listCourseSubmissionsForMultipleAssignments(options);
+
+        assertEquals(2, submissions.size());
+        assertEquals("46399308", submissions.get(0).getId().toString());
+        assertEquals("12345", submissions.get(1).getUserId().toString());
+    }
 }
