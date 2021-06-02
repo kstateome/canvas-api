@@ -39,16 +39,16 @@ public class ContentMigrationUTest extends CanvasTestBase {
     private MigrationIssueReader migrationIssueReader;
     private SelectiveDataReader selectiveDataReader;
 
-    private static final Integer ARBITRARY_USER_ID = 899123456;
+    private static final Long ARBITRARY_USER_ID = 899123456L;
     private static final String ARBITRARY_COURSE_ID = "20732";
     private static final String ARBITRARY_DESTINATION_COURSE_ID = "20711";
     private static final String ARBITRARY_DESTINATION_COURSE_ID_2 = "20712";
     private static final String ARBITRARY_DESTINATION_COURSE_ID_3 = "20713";
     private static final String ARBITRARY_DESTINATION_COURSE_ID_4 = "20714";
-    private static final Integer ARBITRARY_CONTENT_MIGRATION_ID = 44;
-    private static final Integer ARBITRARY_CONTENT_MIGRATION_ID_SELECTIVE = 45;
-    private static final Integer ARBITRARY_CONTENT_MIGRATION_ID_ISSUES = 46;
-    private static final Integer ARBITRARY_CONTENT_MIGRATION_ID_FILE = 47;
+    private static final Long ARBITRARY_CONTENT_MIGRATION_ID = 44L;
+    private static final Long ARBITRARY_CONTENT_MIGRATION_ID_SELECTIVE = 45L;
+    private static final Long ARBITRARY_CONTENT_MIGRATION_ID_ISSUES = 46L;
+    private static final Long ARBITRARY_CONTENT_MIGRATION_ID_FILE = 47L;
 
     @Before
     public void setupData() {

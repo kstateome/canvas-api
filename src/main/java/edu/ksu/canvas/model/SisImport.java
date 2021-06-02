@@ -15,7 +15,7 @@ import java.util.List;
 public class SisImport extends BaseCanvasModel implements Serializable {
     public static final long serialVersionUID = 1L;
 
-    private Integer id;
+    private Long id;
 
     private Instant createdAt;
     private Instant startedAt;
@@ -32,7 +32,7 @@ public class SisImport extends BaseCanvasModel implements Serializable {
     private Boolean addSisStickiness;
     private Boolean clearSisStickiness;
     private String diffingDataSetIdentifier;
-    private Integer diffedAgainstImportId;
+    private Long diffedAgainstImportId;
     private String diffingDropStatus;
     private Boolean skipDeletes;
     private Integer changeThreshold;
@@ -44,11 +44,11 @@ public class SisImport extends BaseCanvasModel implements Serializable {
     private User user;
     private Object csvAttachments;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -221,11 +221,11 @@ public class SisImport extends BaseCanvasModel implements Serializable {
     }
 
     @CanvasField(postKey = "diffed_against_import_id")
-    public Integer getDiffedAgainstImportId() {
+    public Long getDiffedAgainstImportId() {
         return diffedAgainstImportId;
     }
 
-    public void setDiffedAgainstImportId(Integer diffedAgainstImportId) {
+    public void setDiffedAgainstImportId(Long diffedAgainstImportId) {
         this.diffedAgainstImportId = diffedAgainstImportId;
     }
 

@@ -58,7 +58,7 @@ public class Course extends BaseCanvasModel implements Serializable {
     // Only used when asking for the course image
     private String imageDownloadUrl;
     // Only used when setting course image
-    private Integer imageId;
+    private Long imageId;
     private String imageUrl;
     private String publicDescription;
     // Only used when pushing a course status change to Canvas
@@ -433,11 +433,11 @@ public class Course extends BaseCanvasModel implements Serializable {
     }
 
     @CanvasField(postKey = "image_id")
-    public Integer getImageId() {
+    public Long getImageId() {
         return imageId;
     }
 
-    public void setImageId(Integer imageId) {
+    public void setImageId(Long imageId) {
         this.imageId = imageId;
     }
 

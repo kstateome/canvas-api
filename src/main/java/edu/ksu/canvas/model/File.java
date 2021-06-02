@@ -7,9 +7,9 @@ import java.time.Instant;
  */
 public class File {
 
-    private Integer id;
+    private Long id;
     private String uuid;
-    private Integer folderId;
+    private Long folderId;
     private String displayName;
     private String filename;
     // private String content-type;
@@ -31,11 +31,11 @@ public class File {
     private String mediaEntryId;
     private Boolean lockedForUser;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -47,11 +47,11 @@ public class File {
         this.uuid = uuid;
     }
 
-    public Integer getFolderId() {
+    public Long getFolderId() {
         return folderId;
     }
 
-    public void setFolderId(Integer folderId) {
+    public void setFolderId(Long folderId) {
         this.folderId = folderId;
     }
 

@@ -20,17 +20,17 @@ public class AuthenticationLog extends BaseCanvasModel implements Serializable {
 
     public class AuthenticationEvent {
 
-        private Integer id;
+        private Long id;
         private EventType eventType;
         private AuthenticationEventLinks links;
 
         private Instant createdAt;
 
-        public Integer getId() {
+        public Long getId() {
             return id;
         }
 
-        public void setId(Integer id) {
+        public void setId(Long id) {
             this.id = id;
         }
 

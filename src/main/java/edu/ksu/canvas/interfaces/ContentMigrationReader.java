@@ -31,7 +31,7 @@ public interface ContentMigrationReader extends CanvasReader<ContentMigration, C
      * @return A ContentMigration object
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<ContentMigration> getUserContentMigration(String userId, Integer id) throws IOException;
+    Optional<ContentMigration> getUserContentMigration(String userId, Long id) throws IOException;
 
     /**
      * Returns a list of user content migrations.
@@ -48,7 +48,7 @@ public interface ContentMigrationReader extends CanvasReader<ContentMigration, C
      * @return A ContentMigration object
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<ContentMigration> getGroupContentMigration(String groupId, Integer id) throws IOException;
+    Optional<ContentMigration> getGroupContentMigration(String groupId, Long id) throws IOException;
 
     /**
      * Returns a list of group content migrations.
@@ -65,7 +65,7 @@ public interface ContentMigrationReader extends CanvasReader<ContentMigration, C
      * @return A ContentMigration object
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<ContentMigration> getAccountContentMigration(String accountId, Integer id) throws IOException;
+    Optional<ContentMigration> getAccountContentMigration(String accountId, Long id) throws IOException;
 
     /**
      * Returns a list of account content migrations.

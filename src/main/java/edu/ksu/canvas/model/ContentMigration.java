@@ -14,7 +14,7 @@ public class ContentMigration extends BaseCanvasModel implements Serializable {
     private String migrationIssuesUrl;
     private Integer migrationIssuesCount;
     private String progressUrl;
-    private Integer userId;
+    private Long userId;
 
     private Instant createdAt;
     private Instant startedAt;
@@ -83,11 +83,11 @@ public class ContentMigration extends BaseCanvasModel implements Serializable {
         this.progressUrl = progressUrl;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
