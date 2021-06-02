@@ -7,12 +7,6 @@
   <version>1.9.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <parent>
-    <groupId>org.assistments</groupId>
-    <artifactId>repoManagementParentPom</artifactId>
-    <version>1.0</version>
-  </parent>
-
   <name>Canvas API Library</name>
   <description>A native Java library to talk to the Canvas REST API</description>
   <url>https://github.com/kstateome/canvas-api</url>
@@ -40,7 +34,7 @@
       <organization>Kansas State University, Office of Mediated Education</organization>
     </developer>
   </developers>
-  
+
   <scm>
     <connection>scm:git:ssh://git@github.com/kstateome/canvas-api.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/kstateome/canvas-api.git</developerConnection>
@@ -165,7 +159,7 @@
     </profile>
     <profile>
       <id>ossrh-deploy</id>
-	  <distributionManagement>
+      <distributionManagement>
         <snapshotRepository>
           <id>ossrh</id>
           <url>https://oss.sonatype.org/content/repositories/snapshots</url>
@@ -400,13 +394,13 @@
       <version>4.13.1</version>
       <scope>test</scope>
     </dependency>
-      <dependency>
+    <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-beans</artifactId>
       <version>4.2.0.RELEASE</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
+     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
       <version>4.2.0.RELEASE</version>
