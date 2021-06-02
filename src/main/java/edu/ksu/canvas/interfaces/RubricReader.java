@@ -11,7 +11,7 @@ public interface RubricReader extends CanvasReader<Rubric, RubricReader> {
     /**
      * Get a single rubric by ID from an account.
      * @param options Request parameters
-     * @return
+     * @return The requested rubric object associated with an account
      * @throws IOException When there is an error communicating with Canvas
      */
     Optional<Rubric> getRubricInAccount(GetRubricOptions options) throws IOException;
@@ -19,7 +19,7 @@ public interface RubricReader extends CanvasReader<Rubric, RubricReader> {
     /**
      * Get a single rubric by ID from a course.
      * @param options Request parameters
-     * @return The requested rubric object
+     * @return The requested rubric object associated with a course
      * @throws IOException When there is an error communicating with Canvas
      */
     Optional<Rubric> getRubricInCourse(GetRubricOptions options) throws IOException;
