@@ -19,7 +19,7 @@ import java.util.Optional;
 
 public class SisImportImpl extends BaseImpl<SisImport, SisImportReader, SisImportWriter> implements SisImportReader, SisImportWriter {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SisImportWriter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SisImportImpl.class);
 
     public SisImportImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
                       int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {

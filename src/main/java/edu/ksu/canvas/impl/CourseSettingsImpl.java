@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class CourseSettingsImpl extends BaseImpl<CourseSettings, CourseSettingsReader, CourseSettingsWriter> implements CourseSettingsReader, CourseSettingsWriter {
-    private static final Logger LOG = LoggerFactory.getLogger(CourseReader.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CourseSettingsImpl.class);
 
     public CourseSettingsImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
                       int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {

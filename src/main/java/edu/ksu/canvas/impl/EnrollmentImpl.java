@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentReader, EnrollmentWriter> implements EnrollmentReader,EnrollmentWriter {
-    private static final Logger LOG = LoggerFactory.getLogger(CourseReader.class);
+    private static final Logger LOG = LoggerFactory.getLogger(EnrollmentImpl.class);
 
     public EnrollmentImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
                           int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {

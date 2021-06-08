@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter> implements SectionReader,
         SectionWriter {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SectionReader.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SectionsImpl.class);
 
     public SectionsImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
                         int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {

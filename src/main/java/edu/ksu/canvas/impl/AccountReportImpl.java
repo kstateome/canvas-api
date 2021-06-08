@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class AccountReportImpl extends BaseImpl<AccountReport, AccountReportReader, AccountReportWriter> implements AccountReportReader, AccountReportWriter {
-    private static final Logger LOG = LoggerFactory.getLogger(AccountReport.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AccountReportImpl.class);
 
     public AccountReportImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
                              int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {

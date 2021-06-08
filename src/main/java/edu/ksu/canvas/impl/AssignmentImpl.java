@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, AssignmentWriter> implements AssignmentReader, AssignmentWriter{
-    private static final Logger LOG = LoggerFactory.getLogger(AssignmentReader.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AssignmentImpl.class);
 
     public AssignmentImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
                           int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {
