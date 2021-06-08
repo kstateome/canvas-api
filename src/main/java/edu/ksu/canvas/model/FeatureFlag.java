@@ -1,6 +1,8 @@
 package edu.ksu.canvas.model;
 
-public class FeatureFlag {
+import java.io.Serializable;
+
+public class FeatureFlag implements Serializable {
 
     public enum State {on, off, allowed}
 

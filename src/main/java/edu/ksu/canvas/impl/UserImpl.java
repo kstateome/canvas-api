@@ -18,12 +18,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements UserReader, UserWriter{
     private static final Logger LOG = LoggerFactory.getLogger(UserImpl.class);
@@ -42,12 +40,12 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
     @Override
     public Optional<User> createUser(User user, CreateUserOptions options) throws InvalidOauthTokenException, IOException {
         String createdUrl = buildCanvasUrl("accounts/" + CanvasConstants.ACCOUNT_ID + "/users", Collections.emptyMap());
-        LOG.debug("create URl for user creation : " + createdUrl);
+        LOG.debug("create URl for user creation : {}", createdUrl);
         Map<String, List<String>> parameterMap = options.getOptionsMap();
         parameterMap.putAll(user.toPostMap(serializeNulls));
         Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, parameterMap);
         if (response.getErrorHappened() || (response.getResponseCode() != 200)) {
-            LOG.debug("Failed to create user, error message: " + response.toString());
+            LOG.debug("Failed to create user, error message: {}", response);
             return Optional.empty();
         }
         return responseParser.parseToObject(User.class, response);
@@ -58,7 +56,7 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
         if(user == null || user.getId() == 0) {
             throw new IllegalArgumentException("User to update must not be null and have a Canvas ID assigned");
         }
-        LOG.debug("updating user in Canvas: " + user.getId());
+        LOG.debug("updating user in Canvas: {}", user.getId());
         String url = buildCanvasUrl("users/" + String.valueOf(user.getId()), Collections.emptyMap());
 
         //I tried to use the JSON POST method but Canvas throws odd permission errors when trying to serialize the user
@@ -71,7 +69,7 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
 
     @Override
     public List<User> getUsersInCourse(GetUsersInCourseOptions options) throws IOException {
-        LOG.debug("Retrieving users in course " + options.getCourseId());
+        LOG.debug("Retrieving users in course {}", options.getCourseId());
         String url = buildCanvasUrl("courses/" + options.getCourseId() + "/users", options.getOptionsMap());
 
         return getListFromCanvas(url);
@@ -79,7 +77,7 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
 
     @Override
     public Optional<User> showUserDetails(String userIdentifier) throws IOException {
-        LOG.debug("Retrieving user details");
+        LOG.debug("Retrieving details for user {}", userIdentifier);
         String url = buildCanvasUrl("users/" + userIdentifier, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(User.class, response);
@@ -87,7 +85,7 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
 
     @Override
     public List<User> getUsersInAccount(GetUsersInAccountOptions options) throws IOException {
-        LOG.debug("Retrieving users for account " + options.getAccountId());
+        LOG.debug("Retrieving users for account {}", options.getAccountId());
         String url = buildCanvasUrl("accounts/" + options.getAccountId() + "/users", options.getOptionsMap());
         return getListFromCanvas(url);
     }

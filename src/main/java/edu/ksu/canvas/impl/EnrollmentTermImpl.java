@@ -32,18 +32,16 @@ public class EnrollmentTermImpl extends BaseImpl<EnrollmentTerm, EnrollmentTermR
 
     @Override
     public List<EnrollmentTerm> getEnrollmentTerms(GetEnrollmentTermOptions options) throws IOException {
-        LOG.debug("getting enrollment term with account id " + options.getAccountId());
+        LOG.debug("getting enrollment term with account id {}", options.getAccountId());
         String url = buildCanvasUrl("accounts/" + options.getAccountId() + "/terms/" , options.getOptionsMap());
-        LOG.debug("Final URL of API call: " + url);
         List<Response> response = canvasMessenger.getFromCanvas(oauthToken, url);
         return parseEnrollmentTermList(response);
     }
 
     @Override
     public Optional<EnrollmentTerm> getEnrollmentTerm(String accountId, String termId) throws IOException {
-        LOG.debug("getting enrollment term with account id " + accountId);
+        LOG.debug("getting enrollment term with account id {}", accountId);
         String url = buildCanvasUrl("accounts/" + accountId + "/terms/" +termId, Collections.emptyMap());
-        LOG.debug("Final URL of API call: " + url);
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return Optional.of(GsonResponseParser.getDefaultGsonParser(serializeNulls).fromJson(response.getContent(), EnrollmentTerm.class));
     }

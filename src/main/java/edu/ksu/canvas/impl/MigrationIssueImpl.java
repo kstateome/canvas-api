@@ -28,14 +28,14 @@ public class MigrationIssueImpl extends BaseImpl<MigrationIssue, MigrationIssueR
 
     @Override
     public List<MigrationIssue> getCourseMigrationIssues(String courseId, Long migrationId) throws IOException {
-        LOG.debug("listing the migration issues for a content migration for the course");
+        LOG.debug("listing the migration issues for a content migration {} for the course {}", migrationId, courseId);
         String url = buildCanvasUrl("courses/" + courseId + "/content_migrations/" + migrationId.toString() + "/migration_issues", Collections.emptyMap());
         return getListFromCanvas(url);
     }
 
     @Override
     public Optional<MigrationIssue> getCourseMigrationIssue(String courseId, Long migrationId, Long issueId) throws IOException {
-        LOG.debug("listing a migration issue for a content migration for the course");
+        LOG.debug("getting the migration issue {} for content migration {} in course {}", issueId, migrationId, courseId);
         String url = buildCanvasUrl("courses/" + courseId + "/content_migrations/" + migrationId.toString() + "/migration_issues/" + issueId.toString(), Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(MigrationIssue.class, response);
@@ -43,14 +43,14 @@ public class MigrationIssueImpl extends BaseImpl<MigrationIssue, MigrationIssueR
 
     @Override
     public List<MigrationIssue> getUserMigrationIssues(String userId, Long migrationId) throws IOException {
-        LOG.debug("listing the migration issues for a content migration for the course");
+        LOG.debug("listing the migration issues for content migration {} for user {}", migrationId, userId);
         String url = buildCanvasUrl("users/" + userId + "/content_migrations/" + migrationId.toString() + "/migration_issues", Collections.emptyMap());
         return getListFromCanvas(url);
     }
 
     @Override
     public Optional<MigrationIssue> getUserMigrationIssue(String userId, Long migrationId, Long issueId) throws IOException {
-        LOG.debug("listing a migration issue for a content migration for the course");
+        LOG.debug("getting migration issue {} for content migration {} for user {}", issueId, migrationId, userId);
         String url = buildCanvasUrl("users/" + userId + "/content_migrations/" + migrationId.toString() + "/migration_issues/" + issueId.toString(), Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(MigrationIssue.class, response);
@@ -58,14 +58,14 @@ public class MigrationIssueImpl extends BaseImpl<MigrationIssue, MigrationIssueR
 
     @Override
     public List<MigrationIssue> getGroupMigrationIssues(String groupId, Long migrationId) throws IOException {
-        LOG.debug("listing the migration issues for a content migration for the group");
+        LOG.debug("listing the migration issues for content migration {} for the group {}", migrationId, groupId);
         String url = buildCanvasUrl("groups/" + groupId + "/content_migrations/" + migrationId.toString() + "/migration_issues", Collections.emptyMap());
         return getListFromCanvas(url);
     }
 
     @Override
     public Optional<MigrationIssue> getGroupMigrationIssue(String groupId, Long migrationId, Long issueId) throws IOException {
-        LOG.debug("listing a migration issue for a content migration for the group");
+        LOG.debug("getting migration issue {} for content migration {} for the group {}", issueId, migrationId, groupId);
         String url = buildCanvasUrl("groups/" + groupId + "/content_migrations/" + migrationId.toString() + "/migration_issues/" + issueId.toString(), Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(MigrationIssue.class, response);
@@ -73,14 +73,14 @@ public class MigrationIssueImpl extends BaseImpl<MigrationIssue, MigrationIssueR
 
     @Override
     public List<MigrationIssue> getAccountMigrationIssues(String accountId, Long migrationId) throws IOException {
-        LOG.debug("listing the migration issues for a content migration for the account");
+        LOG.debug("listing the migration issues for content migration {} for the account {}", migrationId, accountId);
         String url = buildCanvasUrl("accounts/" + accountId + "/content_migrations/" + migrationId.toString() + "/migration_issues", Collections.emptyMap());
         return getListFromCanvas(url);
     }
 
     @Override
     public Optional<MigrationIssue> getAccountMigrationIssue(String accountId, Long migrationId, Long issueId) throws IOException {
-        LOG.debug("listing a migration issue for a content migration for the account");
+        LOG.debug("getting migration issue {} for content migration {} for the account {}", issueId, migrationId, accountId);
         String url = buildCanvasUrl("accounts/" + accountId + "/content_migrations/" + migrationId.toString() + "/migration_issues/" + issueId.toString(), Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(MigrationIssue.class, response);

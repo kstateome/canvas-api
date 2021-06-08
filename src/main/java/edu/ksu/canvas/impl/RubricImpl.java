@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,9 +41,8 @@ public class RubricImpl extends BaseImpl<Rubric, RubricReader, RubricWriter> imp
         if(StringUtils.isBlank(options.getCanvasId()) || options.getRubricId() == null) {
             throw new IllegalArgumentException(("Course and rubric IDs must be supplied"));
         }
-        LOG.info("Retrieving rubric {} in course {}", options.getRubricId(), options.getCanvasId());
+        LOG.debug("Retrieving rubric {} in course {}", options.getRubricId(), options.getCanvasId());
         String url = buildCanvasUrl(String.format("courses/%s/rubrics/%d", options.getCanvasId(), options.getRubricId()), options.getOptionsMap());
-        LOG.info(url);
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(Rubric.class, response);
     }

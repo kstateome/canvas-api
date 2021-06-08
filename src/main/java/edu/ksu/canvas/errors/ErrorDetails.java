@@ -1,7 +1,5 @@
 package edu.ksu.canvas.errors;
 
-import java.util.List;
-
 /**
   * This allows you to retrieve more information about what was wrong with your request.
  */

@@ -2,7 +2,6 @@ package edu.ksu.canvas.requestOptions;
 
 import com.google.common.collect.ImmutableList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GetQuizSubmissionsOptions extends BaseOptions {

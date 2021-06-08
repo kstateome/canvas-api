@@ -1,7 +1,6 @@
 package edu.ksu.canvas.impl;
 
 import com.google.gson.reflect.TypeToken;
-import edu.ksu.canvas.interfaces.CanvasReader;
 import edu.ksu.canvas.interfaces.FeatureFlagReader;
 import edu.ksu.canvas.interfaces.FeatureFlagWriter;
 import edu.ksu.canvas.model.FeatureFlag;

@@ -41,7 +41,7 @@ public class ConversationImpl extends BaseImpl<Conversation, ConversationReader,
 
     @Override
     public Optional<Conversation> getSingleConversation(GetSingleConversationOptions options) throws IOException {
-        LOG.debug("getting single conversation: " + options.getConversationId());
+        LOG.debug("getting single conversation: {}", options.getConversationId());
         String url = buildCanvasUrl("conversations/" + options.getConversationId(), Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(Conversation.class, response);
@@ -65,7 +65,7 @@ public class ConversationImpl extends BaseImpl<Conversation, ConversationReader,
 
     @Override
     public Optional<Conversation> editConversation(Conversation conversation) throws IOException {
-        LOG.debug("Editing conversation: " + conversation.getId());
+        LOG.debug("Editing conversation: {}", conversation.getId());
         String url = buildCanvasUrl("conversations/" + conversation.getId(), Collections.emptyMap());
         Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, conversation.toJsonObject(serializeNulls));
         return responseParser.parseToObject(Conversation.class, response);
@@ -73,7 +73,7 @@ public class ConversationImpl extends BaseImpl<Conversation, ConversationReader,
 
     @Override
     public Optional<Conversation> addMessage(AddMessageToConversationOptions options) throws IOException {
-        LOG.debug("Adding message to conversation: " + options.getConversationId());
+        LOG.debug("Adding message to conversation: {}", options.getConversationId());
         String url = buildCanvasUrl("conversations/" + options.getConversationId() + "/add_message", options.getOptionsMap());
         Response response = canvasMessenger.sendToCanvas(oauthToken, url, Collections.emptyMap());
         return responseParser.parseToObject(Conversation.class, response);

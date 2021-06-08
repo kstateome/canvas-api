@@ -28,14 +28,14 @@ public class ProgressImpl extends BaseImpl<Progress, ProgressReader, ProgressWri
 
     @Override
     public Optional<Progress> getProgress(String url) throws IOException {
-        LOG.debug("getting the progress of an asynchronous API operation with url " + url);
+        LOG.debug("getting the progress of an asynchronous API operation with url {}", url);
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(Progress.class, response);
     }
 
     @Override
     public Optional<Progress> getProgress(Long progressId) throws IOException {
-        LOG.debug("getting the progress of an asynchronous operation by ID: " + progressId);
+        LOG.debug("getting the progress of an asynchronous operation by ID: {}", progressId);
         String url = buildCanvasUrl(String.format("progress/%d", progressId), Collections.emptyMap());
         return responseParser.parseToObject(Progress.class, canvasMessenger.getSingleResponseFromCanvas(oauthToken, url));
     }

@@ -44,7 +44,7 @@ public class QuizSubmissionQuestionImpl extends BaseImpl<QuizSubmissionQuestion,
         if(options == null || answerArrayJson == null) {
             throw new IllegalArgumentException("options and answers must not be null");
         }
-        LOG.debug("answering questions for quiz submission: " + options.getQuizSubmissionid());
+        LOG.debug("answering questions for quiz submission: {}", options.getQuizSubmissionid());
         String url = buildCanvasUrl("quiz_submissions/" + options.getQuizSubmissionid() + "/questions", options.getOptionsMap());
         JsonObject requestBody = new JsonObject();
 

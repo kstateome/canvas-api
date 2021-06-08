@@ -35,21 +35,21 @@ public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentReader, Enrol
 
     @Override
     public List<Enrollment> getUserEnrollments(GetEnrollmentOptions options) throws IOException {
-        LOG.debug("Retrieving user enrollments for user " + options.getObjectId());
+        LOG.debug("Retrieving user enrollments for user {}", options.getObjectId());
         String url = buildCanvasUrl("users/" + options.getObjectId() + "/enrollments", options.getOptionsMap());
         return getListFromCanvas(url);
     }
 
     @Override
     public List<Enrollment> getSectionEnrollments(GetEnrollmentOptions options) throws IOException {
-        LOG.debug("Retrieving section enrollments for section " + options.getObjectId());
+        LOG.debug("Retrieving section enrollments for section {}", options.getObjectId());
         String url = buildCanvasUrl("sections/" + options.getObjectId() + "/enrollments", options.getOptionsMap());
         return getListFromCanvas(url);
     }
 
     @Override
     public List<Enrollment> getCourseEnrollments(GetEnrollmentOptions options) throws IOException {
-        LOG.debug("Retrieving course enrollments for course " + options.getObjectId());
+        LOG.debug("Retrieving course enrollments for course {}", options.getObjectId());
         String url = buildCanvasUrl("courses/" + options.getObjectId() + "/enrollments", options.getOptionsMap());
         return getListFromCanvas(url);
     }
@@ -68,7 +68,7 @@ public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentReader, Enrol
         if (enrollment.getCourseId() == null || enrollment.getCourseId() == 0) {
             throw new IllegalArgumentException("Required CourseId in enrollment was not found.");
         }
-        LOG.debug(String.format("Enrolling user %s in course %d", enrollment.getUserId(), enrollment.getCourseId()));
+        LOG.debug("Enrolling user {} in course {}", enrollment.getUserId(), enrollment.getCourseId());
         return enrollUser(enrollment, false);
     }
 
@@ -77,7 +77,7 @@ public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentReader, Enrol
         if (StringUtils.isBlank(enrollment.getCourseSectionId())) {
             throw new IllegalArgumentException("Required CourseSectionId in enrollment was not found.");
         }
-        LOG.debug(String.format("Enrolling user %s in section %s", enrollment.getUserId(), enrollment.getCourseSectionId()));
+        LOG.debug("Enrolling user {} in section {}", enrollment.getUserId(), enrollment.getCourseSectionId());
         return enrollUser(enrollment,true);
     }
 
@@ -88,13 +88,13 @@ public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentReader, Enrol
 
     @Override
     public Optional<Enrollment> dropUser(String courseId, String enrollmentId, UnEnrollOptions unEnrollOption) throws IOException {
-        LOG.debug(String.format("Removing enrollment %s from course %s", enrollmentId, courseId));
+        LOG.debug("Removing enrollment {} from course {}", enrollmentId, courseId);
         Map<String, List<String>> postParams = new HashMap<>();
         postParams.put("task", Collections.singletonList(unEnrollOption.toString()));
         String url = buildCanvasUrl("courses/" + courseId + "/enrollments/" + enrollmentId, Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, postParams);
         if (response.getErrorHappened() ||  response.getResponseCode() != 200) {
-            LOG.error("Failed to drop user from course, error message: " + response.toString());
+            LOG.error("Failed to drop user from course, error message: {}", response);
             return Optional.empty();
         }
         return responseParser.parseToObject(Enrollment.class, response);
@@ -107,10 +107,10 @@ public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentReader, Enrol
         } else {
             createdUrl = buildCanvasUrl("courses/" + enrollment.getCourseId() + "/enrollments", Collections.emptyMap());
         }
-        LOG.debug("create URl for course enrollments: "+ createdUrl);
+        LOG.debug("create URl for course enrollments: {}", createdUrl);
         Response response = canvasMessenger.sendToCanvas(oauthToken, createdUrl, enrollment.toPostMap(serializeNulls));
         if (response.getErrorHappened() ||  response.getResponseCode() != 200) {
-            LOG.error("Failed to enroll in course, error message: " + response.toString());
+            LOG.error("Failed to enroll in course, error message: {}", response);
             return Optional.empty();
         }
         return responseParser.parseToObject(Enrollment.class,response);

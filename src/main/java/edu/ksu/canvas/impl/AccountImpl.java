@@ -29,7 +29,7 @@ public class AccountImpl extends BaseImpl<Account, AccountReader, AccountWriter>
 
     @Override
     public Optional<Account> getSingleAccount(String accountId) throws IOException {
-        LOG.debug("getting account " + accountId);
+        LOG.debug("getting account {}", accountId);
         String url = buildCanvasUrl("accounts/" + accountId, Collections.emptyMap());
 
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
@@ -48,7 +48,7 @@ public class AccountImpl extends BaseImpl<Account, AccountReader, AccountWriter>
 
     @Override
     public List<Account> getSubAccounts(GetSubAccountsOptions options) throws IOException {
-        LOG.debug("Getting list of sub-accounts for account " + options.getAccountId());
+        LOG.debug("Getting list of sub-accounts for account {}", options.getAccountId());
         String url = buildCanvasUrl("accounts/" + options.getAccountId() + "/sub_accounts", options.getOptionsMap());
         return getListFromCanvas(url);
     }
@@ -91,9 +91,8 @@ public class AccountImpl extends BaseImpl<Account, AccountReader, AccountWriter>
         Map<String, List<String>> postParams = new HashMap<>();
         String deleteUrl = buildCanvasUrl("accounts/" + parentAccountId+ "/sub_accounts/"+ accountId, Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, deleteUrl, postParams);
-        LOG.debug("response "+ response.toString());
         if (response.getErrorHappened() || response.getResponseCode() != 200) {
-            LOG.debug("Failed to delete course, error message: " + response.toString());
+            LOG.debug("Failed to delete course, error message: {}", response.toString());
             return false;
         }
         Optional<Delete> responseParsed = responseParser.parseToObject(Delete.class, response);

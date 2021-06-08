@@ -37,7 +37,7 @@ public class Conversation extends BaseCanvasModel implements Serializable {
 
     public enum ConversationFlags { last_author, attachments, media_objects }
 
-    public class Message {
+    public class Message implements Serializable {
         private Long id;
         private Long authorId;
         private Date createdAt;

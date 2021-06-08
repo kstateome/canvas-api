@@ -31,7 +31,7 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
 
     @Override
     public Optional<Page> getCoursePage(String courseId, String pageUrl) throws IOException {
-        LOG.debug("retrieving page " + pageUrl + " for course " + courseId);
+        LOG.debug("retrieving page {} for course {}", pageUrl, courseId);
         String encodedUrl = URLEncoder.encode(pageUrl, CanvasConstants.URLENCODING_TYPE);
         String url = buildCanvasUrl("courses/" + courseId + "/pages/" + encodedUrl, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
@@ -40,7 +40,7 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
 
     @Override
     public Optional<Page> getGroupPage(String groupId, String pageUrl) throws IOException {
-        LOG.debug("retrieving page " + pageUrl + " for group " + groupId);
+        LOG.debug("retrieving page {} for group {}", pageUrl, groupId);
         String encodedUrl = URLEncoder.encode(pageUrl, CanvasConstants.URLENCODING_TYPE);
         String url = buildCanvasUrl("groups/" + groupId + "/pages/" + encodedUrl, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
@@ -49,7 +49,7 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
 
     @Override
     public Optional<Page> updateCoursePage(Page page, String courseId) throws IOException {
-        LOG.debug("Updating page in course" + courseId);
+        LOG.debug("Updating page in course {}", courseId);
         String encodedUrl = URLEncoder.encode(page.getUrl(), CanvasConstants.URLENCODING_TYPE);
         String url = buildCanvasUrl("courses/" + courseId + "/pages/" + encodedUrl, Collections.emptyMap());
         Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, page.toJsonObject(serializeNulls));
@@ -58,14 +58,14 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
 
     @Override
     public List<Page> listPagesInCourse(String courseId) throws IOException {
-        LOG.debug("fetching all pages for course " + courseId);
+        LOG.debug("fetching all pages for course {}", courseId);
         String url = buildCanvasUrl("courses/" + courseId + "/pages", Collections.emptyMap());
         return getListFromCanvas(url);
     }
 
     @Override
     public List<Page> listPagesInGroup(String groupId) throws IOException {
-        LOG.debug("fetching all pages for course " + groupId);
+        LOG.debug("fetching all pages for group {}", groupId);
         String url = buildCanvasUrl("groups/" + groupId + "/pages", Collections.emptyMap());
         return getListFromCanvas(url);
     }

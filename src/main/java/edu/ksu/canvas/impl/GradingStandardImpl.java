@@ -27,28 +27,28 @@ public class GradingStandardImpl extends BaseImpl<GradingStandard, GradingStanda
 
     @Override
     public List<GradingStandard> listGradingStandardsInCourse(String courseId) throws IOException {
-        LOG.debug("listing grading standards in course " + courseId);
+        LOG.debug("listing grading standards in course {}", courseId);
         String url = buildCanvasUrl(String.format("courses/%s/grading_standards", courseId), Collections.emptyMap());
         return getListFromCanvas(url);
     }
 
     @Override
     public List<GradingStandard> listGradingStandardsInAccount(String accountId) throws IOException {
-        LOG.debug("listing grading standards in account " + accountId);
+        LOG.debug("listing grading standards in account {}", accountId);
         String url = buildCanvasUrl(String.format("accounts/%s/grading_standards", accountId), Collections.emptyMap());
         return getListFromCanvas(url);
     }
 
     @Override
     public Optional<GradingStandard> getGradingStandardInCourse(String courseId, Long gradingStandardId) throws IOException {
-        LOG.debug("getting grading standard " + gradingStandardId + " from course " + courseId);
+        LOG.debug("getting grading standard {} from course {}", gradingStandardId, courseId);
         String url = buildCanvasUrl(String.format("courses/%s/grading_standards/%d", courseId, gradingStandardId), Collections.emptyMap());
         return getFromCanvas(url);
     }
 
     @Override
     public Optional<GradingStandard> getGradingStandardInAccount(String accountId, Long gradingStandardId) throws IOException {
-        LOG.debug("getting grading standard " + gradingStandardId + " from account " + accountId);
+        LOG.debug("getting grading standard {} from account {}", gradingStandardId, accountId);
         String url = buildCanvasUrl(String.format("accounts/%s/grading_standards/%d", accountId, gradingStandardId), Collections.emptyMap());
         return getFromCanvas(url);
     }

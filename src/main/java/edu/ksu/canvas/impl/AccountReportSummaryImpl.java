@@ -25,7 +25,7 @@ public class AccountReportSummaryImpl extends BaseImpl<AccountReportSummary, Acc
 
     @Override
     public List<AccountReportSummary> listAvailableReports(String accountId) throws IOException {
-        LOG.debug("Retrieving available reports for account " + accountId);
+        LOG.debug("Retrieving available reports for account {}", accountId);
         String url = buildCanvasUrl("accounts/" + accountId + "/reports", Collections.emptyMap());
 
         return getListFromCanvas(url);

@@ -75,7 +75,7 @@ public class GsonResponseParser implements ResponseParser {
                     ZonedDateTime zdt = ZonedDateTime.parse(json.getAsString());
                     return Date.from(zdt.toInstant());
                 } catch(DateTimeParseException e) {
-                    LOG.error("error parsing date from Canvas: " + json.getAsString());
+                    LOG.error("error parsing date from Canvas: {}", json.getAsString());
                     throw new JsonParseException(e);
                 }
             }

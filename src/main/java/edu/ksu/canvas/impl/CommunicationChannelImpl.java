@@ -40,7 +40,7 @@ public class CommunicationChannelImpl extends BaseImpl<CommunicationChannel, Com
 
     @Override
     public Optional<CommunicationChannel> createCommunicationChannel(CreateCommunicationChannelOptions options) throws IOException {
-        LOG.debug("Creating communication channel for user " + options.getUserId());
+        LOG.debug("Creating communication channel for user {}", options.getUserId());
         if(StringUtils.isAnyBlank(options.getUserId())) {
             throw new IllegalArgumentException("User ID is required to create a communication channel");
         }
@@ -52,7 +52,7 @@ public class CommunicationChannelImpl extends BaseImpl<CommunicationChannel, Com
 
     @Override
     public Optional<CommunicationChannel> deleteCommunicationChannel(CommunicationChannel cc) throws IOException {
-        LOG.debug(String.format("Deleting communication channel %s for user %s", cc.getId(), cc.getUserId()));
+        LOG.debug("Deleting communication channel {} for user {}", cc.getId(), cc.getUserId());
         if(StringUtils.isAnyBlank(cc.getUserId(), cc.getId())) {
             throw new IllegalArgumentException("User ID and communication channel ID are required to delete a communication channel");
         }

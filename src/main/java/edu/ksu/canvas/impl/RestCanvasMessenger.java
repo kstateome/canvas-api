@@ -42,12 +42,12 @@ public class RestCanvasMessenger implements CanvasMessenger {
 
 
     public List<Response> getFromCanvas(@NotNull OauthToken oauthToken, @NotNull String url, Consumer<Response> callback) throws InvalidOauthTokenException, IOException {
-        LOG.debug("Sending GET request to: " + url);
+        LOG.debug("Sending GET request to: {}", url);
         final List<Response> responses = new ArrayList<>();
         while (StringUtils.isNotBlank(url)) {
             Response response = getSingleResponseFromCanvas(oauthToken, url);
             if (response.getErrorHappened() || response.getResponseCode() != 200) {
-                LOG.error("Errors retrieving responses from canvas for url:  " + url);
+                LOG.error("Errors retrieving responses from canvas for url:  {}", url);
                 return Collections.emptyList();
             }
             responses.add(response);
@@ -91,7 +91,7 @@ public class RestCanvasMessenger implements CanvasMessenger {
 
     @Override
     public Response getSingleResponseFromCanvas(@NotNull OauthToken oauthToken, @NotNull String url) throws InvalidOauthTokenException, IOException {
-        LOG.debug("Sending GET request to: " + url);
+        LOG.debug("Sending GET request to: {}", url);
         return restClient.sendApiGet(oauthToken, url, connectTimeout, readTimeout);
     }
 

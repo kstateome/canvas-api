@@ -69,16 +69,16 @@ public class TestLauncher {
         CanvasApiFactory apiFactory = new CanvasApiFactory(canvasUrl);
         AccountReader acctReader = apiFactory.getReader(AccountReader.class, oauthToken);
         Account rootAccount = acctReader.getSingleAccount("1").get();
-        LOG.info("Got account from Canvas: " + rootAccount.getName());
+        LOG.info("Got account from Canvas: {}",  rootAccount.getName());
     }
 
     public void getOwnCourses() throws IOException {
         CanvasApiFactory apiFactory = new CanvasApiFactory(canvasUrl);
         CourseReader courseReader = apiFactory.getReader(CourseReader.class, oauthToken);
         List<Course> myCourses = courseReader.listCurrentUserCourses(new ListCurrentUserCoursesOptions());
-        LOG.info("Got " + myCourses.size() + " courses back from Canvas: ");
+        LOG.info("Got {} courses back from Canvas: ",  myCourses.size());
         for(Course course : myCourses) {
-            LOG.info("  " + course.getName());
+            LOG.info("  course {}, name: {}", course.getId(), course.getName());
         }
     }
 }

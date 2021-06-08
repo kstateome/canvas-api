@@ -30,7 +30,7 @@ public class LoginImpl extends BaseImpl<Login, LoginReader, LoginWriter> impleme
 
     @Override
     public List<Login> getLoginForUser(String userId) throws IOException {
-        LOG.debug("Retrieving logins for user id " + userId);
+        LOG.debug("Retrieving logins for user id {}", userId);
         String url = buildCanvasUrl(String.format("users/%s/logins", userId), emptyMap());
 
         return getListFromCanvas(url);
@@ -38,7 +38,7 @@ public class LoginImpl extends BaseImpl<Login, LoginReader, LoginWriter> impleme
 
     @Override
     public Optional<Login> updateLogin(Login login) throws IOException {
-        LOG.debug(String.format("Updating login %s on account %s", login.getId(), login.getAccountId()));
+        LOG.debug("Updating login {} on account {}", login.getId(), login.getAccountId());
         if(StringUtils.isAnyBlank(login.getAccountId(), login.getId())) {
             throw new IllegalArgumentException("Account ID and Login ID are required to update a login");
         }
@@ -50,7 +50,7 @@ public class LoginImpl extends BaseImpl<Login, LoginReader, LoginWriter> impleme
 
     @Override
     public Optional<Login> deleteLogin(Login login) throws IOException {
-        LOG.debug(String.format("Deleting login %s for user %s", login.getId(), login.getUserId()));
+        LOG.debug("Deleting login {} for user {}", login.getId(), login.getUserId());
         if(StringUtils.isAnyBlank(login.getUserId(), login.getId())) {
             throw new IllegalArgumentException("User ID and Login ID are required to delete a login");
         }

@@ -37,7 +37,7 @@ public class CanvasApiFactory {
      * @param canvasBaseUrl The base URL used to access your Canvas instance
      */
     public CanvasApiFactory(String canvasBaseUrl) {
-        LOG.debug("Creating Canvas API factory with base URL: " + canvasBaseUrl);
+        LOG.debug("Creating Canvas API factory with base URL: {}", canvasBaseUrl);
         this.canvasBaseUrl = canvasBaseUrl;
         this.connectTimeout = DEFAULT_CONNECT_TIMEOUT_MS;
         this.readTimeout = DEFAULT_READ_TIMEOUT_MS;
@@ -51,6 +51,7 @@ public class CanvasApiFactory {
      * @param readTimeout Read timeout in milliseconds. If this is too low, longer API queries could time out prematurely
      */
     public CanvasApiFactory(String canvasBaseUrl, int connectTimeout, int readTimeout) {
+        LOG.debug("Creating Canvas API factory with base URL: {}, connect timeout: {}, read timeout: {}", canvasBaseUrl, connectTimeout, readTimeout);
         this.canvasBaseUrl = canvasBaseUrl;
         this.connectTimeout = connectTimeout;
         this.readTimeout = readTimeout;
@@ -81,7 +82,7 @@ public class CanvasApiFactory {
      * @return An instance of the requested reader class
      */
     public <T extends CanvasReader> T getReader(Class<T> type, OauthToken oauthToken, Integer paginationPageSize) {
-        LOG.debug("Factory call to instantiate class: " + type.getName());
+        LOG.debug("Factory call to instantiate reader class: {}", type.getName());
         RestClient restClient = new RefreshingRestClient();
 
         @SuppressWarnings("unchecked")
@@ -91,7 +92,7 @@ public class CanvasApiFactory {
             throw new UnsupportedOperationException("No implementation for requested interface found: " + type.getName());
         }
 
-        LOG.debug("got class: " + concreteClass);
+        LOG.debug("got class: {}", concreteClass);
         try {
             Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class,
                     OauthToken.class, RestClient.class, Integer.TYPE, Integer.TYPE, Integer.class, Boolean.class);
@@ -124,7 +125,7 @@ public class CanvasApiFactory {
      * @return An instantiated instance of the requested writer type
      */
     public <T extends CanvasWriter> T getWriter(Class<T> type, OauthToken oauthToken, Boolean serializeNulls) {
-        LOG.debug("Factory call to instantiate class: " + type.getName());
+        LOG.debug("Factory call to instantiate writer class: {}", type.getName());
         RestClient restClient = new RefreshingRestClient();
 
         @SuppressWarnings("unchecked")
@@ -134,7 +135,7 @@ public class CanvasApiFactory {
             throw new UnsupportedOperationException("No implementation for requested interface found: " + type.getName());
         }
 
-        LOG.debug("got writer class: " + concreteClass);
+        LOG.debug("got writer class: {}", concreteClass);
         try {
             Constructor<T> constructor = concreteClass.getConstructor(String.class, Integer.class, OauthToken.class,
                     RestClient.class, Integer.TYPE, Integer.TYPE, Integer.class, Boolean.class);

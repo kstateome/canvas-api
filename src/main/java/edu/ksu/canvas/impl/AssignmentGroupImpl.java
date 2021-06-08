@@ -44,14 +44,14 @@ public class AssignmentGroupImpl extends BaseImpl<AssignmentGroup, AssignmentGro
 
     @Override
     public Optional<AssignmentGroup> getAssignmentGroup(GetAssignmentGroupOptions options) throws IOException {
-        LOG.debug("Fetching assignment group " + options.getAssignmentGroupId() + " from course " + options.getCourseId());
+        LOG.debug("Fetching assignment group {} from course {}", options.getAssignmentGroupId(), options.getCourseId());
         String url = buildCanvasUrl("courses/" + options.getCourseId() + "/assignment_groups/" + options.getAssignmentGroupId(), options.getOptionsMap());
         return getFromCanvas(url);
     }
 
     @Override
     public List<AssignmentGroup> listAssignmentGroup(ListAssignmentGroupOptions options) throws IOException {
-        LOG.debug("Listing assignment groups in course " + options.getCourseId());
+        LOG.debug("Listing assignment groups in course {}", options.getCourseId());
         String url = buildCanvasUrl("courses/" + options.getCourseId() + "/assignment_groups", options.getOptionsMap());
         return getListFromCanvas(url);
     }
@@ -61,7 +61,7 @@ public class AssignmentGroupImpl extends BaseImpl<AssignmentGroup, AssignmentGro
         if(StringUtils.isBlank(courseId)) {
             throw new IllegalArgumentException("Must supply a course ID when creating an assignment group");
         }
-        LOG.debug("Creating new assignment group in course " + courseId + ", group name: " + assignmentGroup.getName());
+        LOG.debug("Creating new assignment group in course {}, group name: {}", courseId, assignmentGroup.getName());
         String url = buildCanvasUrl("courses/" + courseId + "/assignment_groups", Collections.emptyMap());
         Response response = canvasMessenger.sendToCanvas(oauthToken, url, assignmentGroup.toPostMap(serializeNulls));
         return responseParser.parseToObject(AssignmentGroup.class, response);
@@ -72,7 +72,7 @@ public class AssignmentGroupImpl extends BaseImpl<AssignmentGroup, AssignmentGro
         if(StringUtils.isBlank(courseId) || assignmentGroup == null || assignmentGroup.getId() == null || assignmentGroup.getId() == 0l) {
             throw new IllegalArgumentException("Course ID and assignment group ID must be provided");
         }
-        LOG.debug("Modifying assignment group " + assignmentGroup.getId() + " in course " + courseId);
+        LOG.debug("Modifying assignment group {} in course {}", assignmentGroup.getId(), courseId);
         String url = buildCanvasUrl("courses/" + courseId + "/assignment_groups/" + assignmentGroup.getId(), Collections.emptyMap());
         Response response = canvasMessenger.putToCanvas(oauthToken, url, assignmentGroup.toPostMap(serializeNulls));
         return responseParser.parseToObject(AssignmentGroup.class, response);
@@ -80,7 +80,7 @@ public class AssignmentGroupImpl extends BaseImpl<AssignmentGroup, AssignmentGro
 
     @Override
     public Optional<AssignmentGroup> deleteAssignmentGroup(DeleteAssignmentGroupOptions options) throws IOException {
-        LOG.debug("Deleting assignment group " + options.getAssignmentGroupId() + " from course " + options.getCourseId());
+        LOG.debug("Deleting assignment group {} from course", options.getAssignmentGroupId(), options.getCourseId());
         String url = buildCanvasUrl("courses/" + options.getCourseId() + "/assignment_groups/" + options.getAssignmentGroupId(), options.getOptionsMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, Collections.emptyMap());
         return responseParser.parseToObject(AssignmentGroup.class, response);

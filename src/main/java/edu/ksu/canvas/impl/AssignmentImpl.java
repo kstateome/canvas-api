@@ -67,7 +67,7 @@ public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, Assig
         postParams.put("event", Collections.singletonList("delete"));
         String createdUrl = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentId, Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, createdUrl, postParams);
-        LOG.debug("response " + response.toString());
+        LOG.debug("response {}", response.toString());
         if(response.getErrorHappened() || response.getResponseCode() != 200){
             LOG.debug("Failed to delete assignment, error message: " + response.toString());
             return Optional.empty();

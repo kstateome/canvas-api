@@ -53,7 +53,7 @@ public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionR
 
     @Override
     public Optional<QuizSubmission> completeQuizSubmission(CompleteQuizSubmissionOptions options) throws IOException {
-        LOG.debug("completing quiz submission for user/course/quiz: " + masqueradeAs + "/" + options.getCourseId() + "/" + options.getQuizId());
+        LOG.debug("completing quiz submission for user/course/quiz: {}/{}/{}", masqueradeAs, options.getCourseId(), options.getQuizId());
         String url = buildCanvasUrl("courses/" + options.getCourseId() + "/quizzes/" + options.getQuizId() +
                 "/submissions/" + options.getSubmissionId() + "/complete", options.getOptionsMap());
         Response response = canvasMessenger.sendToCanvas(oauthToken, url, Collections.emptyMap());

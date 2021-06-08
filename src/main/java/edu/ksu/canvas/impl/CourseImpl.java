@@ -59,7 +59,6 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
             path = "courses/";
         }
         String url = buildCanvasUrl(path + options.getCourseId(), options.getOptionsMap());
-        LOG.debug("Final URL of API call: " + url);
 
         return retrieveCourseFromCanvas(oauthToken, url);
     }
@@ -68,7 +67,6 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
     public Optional<Course> getSingleCourse(String accountId, GetSingleCourseOptions options) throws IOException {
         LOG.debug("getting course {} in account {}", options.getCourseId(), accountId);
         String url = buildCanvasUrl("accounts/"+ accountId+ "/courses/"+ options.getCourseId(), options.getOptionsMap());
-        LOG.debug("Final URL of API call: " + url);
         return retrieveCourseFromCanvas(oauthToken, url);
     }
 
@@ -134,7 +132,7 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
         String url = buildCanvasUrl(path + options.getCourseId(), Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, options.getOptionsMap());
         if (response.getErrorHappened() || response.getResponseCode() != 200) {
-            LOG.debug("Failed to delete course, error message: " + response.toString());
+            LOG.debug("Failed to delete course, error message: {}", response);
             return false;
         }
 

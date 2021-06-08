@@ -3,7 +3,6 @@ package edu.ksu.canvas.interfaces;
 import edu.ksu.canvas.model.AuthenticationLog;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 
 public interface AuthenticationLogReader extends CanvasReader<AuthenticationLog, AuthenticationLogReader> {

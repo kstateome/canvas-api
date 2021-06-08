@@ -59,21 +59,21 @@ public class CalendarEventImpl extends BaseImpl<CalendarEvent, CalendarReader, C
 
     @Override
     public List<CalendarEvent> listCalendarEvents(String userId, ListCalendarEventsOptions options) throws  IOException {
-        LOG.debug("List calendar events for "+ userId);
+        LOG.debug("List calendar events for user {}", userId);
         String url = buildCanvasUrl("users/" + userId + "/calendar_events", options.getOptionsMap());
         return getListFromCanvas(url);
     }
 
     @Override
     public Optional<CalendarEvent> getCalendarEvent(Long id) throws IOException {
-        LOG.debug("Getting calendar event: "+ id);
+        LOG.debug("Getting calendar event: {}", id);
         String url = buildCanvasUrl("/calendar_events/"+ id.toString(), Collections.emptyMap());
         return getFromCanvas(url);
     }
 
     @Override
     public Optional<CalendarEvent> deleteCalendarEvent(DeleteCalendarEventOptions options) throws IOException {
-        LOG.debug("Deleting calendar event: "+ options.getId());
+        LOG.debug("Deleting calendar event: {}", options.getId());
         String url = buildCanvasUrl("/calendar_events/"+ options.getId(), Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, options.getOptionsMap());
         LOG.debug("response " + response.toString());
@@ -98,7 +98,7 @@ public class CalendarEventImpl extends BaseImpl<CalendarEvent, CalendarReader, C
 
     @Override
     public Optional<CalendarEvent> editCalendarEvent(CalendarEvent calendarEvent) throws IOException {
-        LOG.debug("Modify calendar event " + calendarEvent.getId());
+        LOG.debug("Modify calendar event {}", calendarEvent.getId());
         String url = buildCanvasUrl("calendar_events/"+ calendarEvent.getId(), Collections.emptyMap());
         Map<String, List<String>> parameters = calendarEvent.toPostMap(false);
         addChildData(calendarEvent, parameters);

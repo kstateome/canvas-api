@@ -67,7 +67,7 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
     protected Optional<T> getFromCanvas(String url) throws IOException {
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         if (response.getErrorHappened() || response.getResponseCode() != 200) {
-            LOG.warn("Error " + response.getResponseCode() + "on GET from url " + url);
+            LOG.warn("Error {} on GET from url {}", response.getResponseCode(), url);
             throw new IOException("Error accessing url " + url);
         }
         return responseParser.parseToObject(objectType(), response);
@@ -91,12 +91,12 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
 
     @Override
     public READERTYPE readAsCanvasUser(String masqueradeAs) {
-        return (READERTYPE) readAsUser(masqueradeAs, CanvasConstants.MASQUERADE_CANVAS_USER);
+        return readAsUser(masqueradeAs, CanvasConstants.MASQUERADE_CANVAS_USER);
     }
 
     @Override
     public READERTYPE readAsSisUser(String masqueradeAs) {
-        return (READERTYPE) readAsUser(masqueradeAs, CanvasConstants.MASQUERADE_SIS_USER);
+        return readAsUser(masqueradeAs, CanvasConstants.MASQUERADE_SIS_USER);
     }
 
     private READERTYPE readAsUser(String masqueradeAs, String masqueradeType){
@@ -107,12 +107,12 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
 
     @Override
     public WRITERTYPE writeAsCanvasUser(String masqueradeAs) {
-        return (WRITERTYPE) writeAsUser(masqueradeAs, CanvasConstants.MASQUERADE_CANVAS_USER);
+        return writeAsUser(masqueradeAs, CanvasConstants.MASQUERADE_CANVAS_USER);
     }
 
     @Override
     public WRITERTYPE writeAsSisUser(String masqueradeAs) {
-        return (WRITERTYPE) writeAsUser(masqueradeAs, CanvasConstants.MASQUERADE_SIS_USER);
+        return writeAsUser(masqueradeAs, CanvasConstants.MASQUERADE_SIS_USER);
     }
 
     private WRITERTYPE writeAsUser(String masqueradeAs, String masqueradeType){
@@ -146,8 +146,7 @@ public abstract class BaseImpl<T, READERTYPE extends CanvasReader, WRITERTYPE ex
 
         Map<String, List<String>> nonEmptyParams = stripEmptyParams(allParameters);
 
-        String finalUrl = CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, canvasMethod, nonEmptyParams);
-        return finalUrl;
+        return CanvasURLBuilder.buildCanvasUrl(canvasBaseUrl, apiVersion, canvasMethod, nonEmptyParams);
     }
 
     /**

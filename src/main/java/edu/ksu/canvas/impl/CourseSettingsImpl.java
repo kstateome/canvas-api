@@ -28,7 +28,7 @@ public class CourseSettingsImpl extends BaseImpl<CourseSettings, CourseSettingsR
 
     @Override
     public Optional<CourseSettings> getCourseSettings(String courseId) throws IOException {
-        LOG.debug("getting course settings for " + courseId);
+        LOG.debug("getting course settings for {}", courseId);
         String url = buildCanvasUrl(String.format("courses/%s/settings", courseId), Collections.emptyMap());
         Response response =  canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(CourseSettings.class, response);
@@ -36,7 +36,7 @@ public class CourseSettingsImpl extends BaseImpl<CourseSettings, CourseSettingsR
 
     @Override
     public Optional<CourseSettings> updateCourseSettings(String courseId, CourseSettings settings) throws IOException {
-        LOG.debug("updating course settings for " + courseId);
+        LOG.debug("updating course settings for {}", courseId);
         String url = buildCanvasUrl(String.format("courses/%s/settings", courseId), Collections.emptyMap());
         Response response = canvasMessenger.putToCanvas(oauthToken, url, settings.toPostMap(serializeNulls));
         return responseParser.parseToObject(CourseSettings.class, response);

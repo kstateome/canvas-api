@@ -29,14 +29,14 @@ public class TabImpl extends BaseImpl<Tab, TabReader, TabWriter> implements TabR
 
     @Override
     public List<Tab> listAvailableCourseTabs(String courseId, boolean includeExternalTools) throws IOException {
-        LOG.debug("Retrieving tabs for course " + courseId);
+        LOG.debug("Retrieving tabs for course {}", courseId);
         String url = buildCanvasUrl(String.format("courses/%s/tabs", courseId), Collections.emptyMap());
         return getListFromCanvas(url);
     }
 
     @Override
     public Optional<Tab> updateCourseTab(UpdateCourseTabOptions options) throws IOException {
-        LOG.debug(String.format("Updating tab %s for course %s", options.getCourseId(), options.getTabId()));
+        LOG.debug("Updating tab {} for course {}", options.getCourseId(), options.getTabId());
         String url = buildCanvasUrl(String.format("courses/%s/tabs/%s", options.getCourseId(), options.getTabId()),
                 Collections.emptyMap());
         Response response = canvasMessenger.putToCanvas(oauthToken, url, options.getOptionsMap());

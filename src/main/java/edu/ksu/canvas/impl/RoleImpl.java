@@ -26,7 +26,7 @@ public class RoleImpl extends BaseImpl<Role, RoleReader, RoleWriter> implements 
 
     @Override
     public List<Role> listRoles(ListRolesOptions options) throws IOException {
-        LOG.debug("Retrieving roles for account " + options.getAccountId());
+        LOG.debug("Retrieving roles for account {}", options.getAccountId());
         String url = buildCanvasUrl("accounts/" + options.getAccountId() + "/roles", options.getOptionsMap());
         return getListFromCanvas(url);
     }
