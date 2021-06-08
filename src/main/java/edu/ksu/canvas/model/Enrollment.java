@@ -25,10 +25,10 @@ public class Enrollment extends BaseCanvasModel implements Serializable {
     private String enrollmentState;
     private Boolean limitPrivilegesToCourseSection;
     private String sisImportId;
-    private Integer rootAccountId;
+    private Long rootAccountId;
     private String type;
     private String userId;
-    private Integer associatedUserId;
+    private Long associatedUserId;
     private String role;
     private Date createdAt;
     private Date updatedAt;
@@ -132,11 +132,11 @@ public class Enrollment extends BaseCanvasModel implements Serializable {
         this.sisImportId = sisImportId;
     }
 
-    public Integer getRootAccountId() {
+    public Long getRootAccountId() {
         return rootAccountId;
     }
 
-    public void setRootAccountId(Integer rootAccountId) {
+    public void setRootAccountId(Long rootAccountId) {
         this.rootAccountId = rootAccountId;
     }
 
@@ -158,11 +158,11 @@ public class Enrollment extends BaseCanvasModel implements Serializable {
         this.userId = userId;
     }
 
-    public Integer getAssociatedUserId() {
+    public Long getAssociatedUserId() {
         return associatedUserId;
     }
 
-    public void setAssociatedUserId(Integer associatedUserId) {
+    public void setAssociatedUserId(Long associatedUserId) {
         this.associatedUserId = associatedUserId;
     }
 

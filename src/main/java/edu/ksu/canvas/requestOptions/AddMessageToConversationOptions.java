@@ -6,19 +6,19 @@ import edu.ksu.canvas.requestOptions.CreateConversationOptions.MediaCommentType;
 
 public class AddMessageToConversationOptions extends BaseOptions {
 
-    private Integer conversationId;
+    private Long conversationId;
 
     /**
      * Create parameters to add a message. Conversation ID and message body are required.
      * @param conversationId The ID of the Conversation to add a message to
      * @param body The contents of the message
      */
-    public AddMessageToConversationOptions(Integer conversationId, String body) {
+    public AddMessageToConversationOptions(Long conversationId, String body) {
         this.conversationId = conversationId;
         addSingleItem("body", body);
     }
 
-    public Integer getConversationId() {
+    public Long getConversationId() {
         return conversationId;
     }
 
@@ -28,7 +28,7 @@ public class AddMessageToConversationOptions extends BaseOptions {
      * @param attachmentIds IDs of files to attach to conversation
      * @return This object to allow adding more options
      */
-    public AddMessageToConversationOptions attachmentIds(List<Integer> attachmentIds) {
+    public AddMessageToConversationOptions attachmentIds(List<Long> attachmentIds) {
         addNumberList("attachment_ids[]", attachmentIds);
         return this;
     }
@@ -38,7 +38,7 @@ public class AddMessageToConversationOptions extends BaseOptions {
      * @param mediaCommentId Media comment ID of media to associate
      * @return This object to allow adding more options
      */
-    public AddMessageToConversationOptions mediaCommentId(Integer mediaCommentId) {
+    public AddMessageToConversationOptions mediaCommentId(Long mediaCommentId) {
         addSingleItem("media_comment_id", mediaCommentId.toString());
         return this;
     }
@@ -70,7 +70,7 @@ public class AddMessageToConversationOptions extends BaseOptions {
      * @param messages List of message IDs
      * @return This object to allow adding more options
      */
-    public AddMessageToConversationOptions includedMessages(List<Integer> messages) {
+    public AddMessageToConversationOptions includedMessages(List<Long> messages) {
         addNumberList("included_messages[]", messages);
         return this;
     }

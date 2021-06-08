@@ -32,7 +32,7 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
     @Test
     public void testRetrieveQuizAnswer() throws Exception {
         String someCourseId = "123456";
-        Integer someQUizId = 123456;
+        Long someQUizId = 123456L;
         String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion,
                 "courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions", Collections.emptyMap());  Response notErroredResponse = new Response();
         notErroredResponse.setErrorHappened(false);
@@ -48,7 +48,7 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
     @Test(expected = JsonSyntaxException.class)
     public void testListAssignments_responseInvalid() throws Exception {
         String someCourseId = "123456";
-        Integer someQUizId = 123456;
+        Long someQUizId = 123456L;
         Response erroredResponse = new Response();
         erroredResponse.setResponseCode(401);
         String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion,
@@ -62,7 +62,7 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
     public void testSisUserMasqueradeRetrieveQuizAnswer() throws Exception {
         String someUserId = "899123456";
         String someCourseId = "123456";
-        Integer someQUizId = 123456;
+        Long someQUizId = 123456L;
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
         Response notErroredResponse = new Response();
         notErroredResponse.setErrorHappened(false);
@@ -79,7 +79,7 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
     public void testSisUserMasqueradeListAssignments_responseInvalid() throws Exception {
         String someUserId = "899123456";
         String someCourseId = "123456";
-        Integer someQUizId = 123456;
+        Long someQUizId = 123456L;
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
         Response erroredResponse = new Response();
         erroredResponse.setResponseCode(401);
@@ -91,7 +91,7 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
     public void testCanvasUserMasqueradeRetrieveQuizAnswer() throws Exception {
         String someUserId = "899123456";
         String someCourseId = "123456";
-        Integer someQUizId = 123456;
+        Long someQUizId = 123456L;
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions?as_user_id=" + someUserId;
         Response notErroredResponse = new Response();
         notErroredResponse.setErrorHappened(false);
@@ -108,7 +108,7 @@ public class QuizQuestionRetrieverUTest extends CanvasTestBase {
     public void testCanvasUserMasqueradeListAssignments_responseInvalid() throws Exception {
         String someUserId = "899123456";
         String someCourseId = "123456";
-        Integer someQUizId = 123456;
+        Long someQUizId = 123456L;
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/quizzes/" + someQUizId + "/questions?as_user_id=" + someUserId;
         Response erroredResponse = new Response();
         erroredResponse.setResponseCode(401);

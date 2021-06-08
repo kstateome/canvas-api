@@ -17,7 +17,7 @@ public interface ExternalToolReader extends CanvasReader<ExternalTool, ExternalT
      * @return The requested tool's configuration
      * @throws IOException if there is an error communicating with Canvas
      */
-    public Optional<ExternalTool> getExternalToolInAccount(String accountId, Integer toolId) throws IOException;
+    public Optional<ExternalTool> getExternalToolInAccount(String accountId, Long toolId) throws IOException;
 
     /**
      * Retrieve a specific external tool configuration in a given course
@@ -26,7 +26,7 @@ public interface ExternalToolReader extends CanvasReader<ExternalTool, ExternalT
      * @return The requested tool's configuration
      * @throws IOException if there is an error communicating with Canvas
      */
-    public Optional<ExternalTool> getExternalToolInCourse(String courseId, Integer toolId) throws IOException;
+    public Optional<ExternalTool> getExternalToolInCourse(String courseId, Long toolId) throws IOException;
 
     /**
      * Return a list of external tools registered to an account

@@ -12,7 +12,7 @@ import edu.ksu.canvas.annotation.CanvasObject;
 public class MigrationIssue extends BaseCanvasModel implements Serializable {
     public static final long serialVersionUID = 1L;
 
-    private Integer id;
+    private Long id;
     private String contentMigrationUrl;
     private String description;
     private String workflowState;
@@ -23,11 +23,11 @@ public class MigrationIssue extends BaseCanvasModel implements Serializable {
     private String createdAt;
     private String updatedAt;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

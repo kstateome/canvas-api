@@ -33,9 +33,9 @@ public class QuizRetrieverUTest extends CanvasTestBase {
     public void testListCourseQuizzes() throws Exception {
         String someCourseId = "123";
         Quiz quiz1 = new Quiz();
-        quiz1.setId(1);
+        quiz1.setId(1L);
         Quiz quiz2 = new Quiz();
-        quiz2.setId(2);
+        quiz2.setId(2L);
         Response notErroredResponse = new Response();
         notErroredResponse.setErrorHappened(false);
         notErroredResponse.setResponseCode(200);
@@ -79,9 +79,9 @@ public class QuizRetrieverUTest extends CanvasTestBase {
         String someUserId = "899123456";
         String someCourseId = "123";
         Quiz quiz1 = new Quiz();
-        quiz1.setId(1);
+        quiz1.setId(1L);
         Quiz quiz2 = new Quiz();
-        quiz2.setId(2);
+        quiz2.setId(2L);
         Response notErroredResponse = new Response();
         notErroredResponse.setErrorHappened(false);
         notErroredResponse.setResponseCode(200);
@@ -127,9 +127,9 @@ public class QuizRetrieverUTest extends CanvasTestBase {
         String someUserId = "899123456";
         String someCourseId = "123";
         Quiz quiz1 = new Quiz();
-        quiz1.setId(1);
+        quiz1.setId(1L);
         Quiz quiz2 = new Quiz();
-        quiz2.setId(2);
+        quiz2.setId(2L);
         Response notErroredResponse = new Response();
         notErroredResponse.setErrorHappened(false);
         notErroredResponse.setResponseCode(200);

@@ -74,7 +74,7 @@ public class CreateConversationOptions extends BaseOptions {
      * @param attachmentIds IDs of files to attach to conversation
      * @return This object to allow adding more options
      */
-    public CreateConversationOptions attachmentIds(List<Integer> attachmentIds) {
+    public CreateConversationOptions attachmentIds(List<Long> attachmentIds) {
         addNumberList("attachment_ids[]", attachmentIds);
         return this;
     }

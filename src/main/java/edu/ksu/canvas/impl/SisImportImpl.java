@@ -28,7 +28,7 @@ public class SisImportImpl extends BaseImpl<SisImport, SisImportReader, SisImpor
     }
 
     @Override
-    public  Optional<SisImport> getSisImport(String accountId, Integer id) throws IOException {
+    public  Optional<SisImport> getSisImport(String accountId, Long id) throws IOException {
         LOG.debug("getting sis import");
         String url = buildCanvasUrl("accounts/" + accountId + "/sis_imports/" + id.toString(), Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);

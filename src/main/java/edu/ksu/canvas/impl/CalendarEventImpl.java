@@ -65,7 +65,7 @@ public class CalendarEventImpl extends BaseImpl<CalendarEvent, CalendarReader, C
     }
 
     @Override
-    public Optional<CalendarEvent> getCalendarEvent(Integer id) throws IOException {
+    public Optional<CalendarEvent> getCalendarEvent(Long id) throws IOException {
         LOG.debug("Getting calendar event: "+ id);
         String url = buildCanvasUrl("/calendar_events/"+ id.toString(), Collections.emptyMap());
         return getFromCanvas(url);

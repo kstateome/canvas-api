@@ -124,7 +124,7 @@ public class GetEnrollmentOptions extends BaseOptions {
      * @param gradingPeriod Grading period to restrict reported grades to
      * @return This object to allow adding more options
      */
-    public GetEnrollmentOptions gradingPeriodId(Integer gradingPeriod) {
+    public GetEnrollmentOptions gradingPeriodId(Long gradingPeriod) {
         addSingleItem("grading_period_id", gradingPeriod.toString());
         return this;
     }

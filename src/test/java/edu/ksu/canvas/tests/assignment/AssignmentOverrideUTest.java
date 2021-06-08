@@ -41,7 +41,7 @@ public class AssignmentOverrideUTest extends CanvasTestBase {
     @Test(expected = JsonSyntaxException.class)
     public void testListAssignments_responseInvalid() throws Exception {
         String someCourseId = "14";
-        Integer someAssignmentId = 80;
+        Long someAssignmentId = 80L;
         Response erroredResponse = new Response();
         erroredResponse.setResponseCode(401);
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments/" + someAssignmentId + "/overrides";
@@ -53,24 +53,24 @@ public class AssignmentOverrideUTest extends CanvasTestBase {
     @Test
     public void testRetrieveAssignmentOverride() throws Exception {
         AssignmentOverride assignmentOverride1 = new AssignmentOverride();
-        assignmentOverride1.setId(4);
+        assignmentOverride1.setId(4L);
         String someCourseId = "14";
-        Integer someAssignmentId = 80;
-        Integer someAssignmentOverrideId = 4;
+        Long someAssignmentId = 80L;
+        Long someAssignmentOverrideId = 4L;
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments/" + someAssignmentId + "/overrides/" + someAssignmentOverrideId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/AssignmentOverride.json");
         Optional<AssignmentOverride> assignmentOverride = assignmentOverrideReader.getAssignmentOverride(someCourseId, someAssignmentId, someAssignmentOverrideId);
         
         Assert.assertTrue(assignmentOverride.isPresent());
-        Assert.assertEquals(new Integer(4), assignmentOverride.map(AssignmentOverride::getId).orElse(0));
+        Assert.assertEquals(new Long(4), assignmentOverride.map(AssignmentOverride::getId).orElse(0L));
     }
 
     @Test
     public void testRetrieveAssignmentOverrides() throws Exception {
         AssignmentOverride assignmentOverride = new AssignmentOverride();
-        assignmentOverride.setId(4);
+        assignmentOverride.setId(4L);
         String someCourseId = "14";
-        Integer someAssignmentId = 80;
+        Long someAssignmentId = 80L;
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments/" + someAssignmentId + "/overrides";
         fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/AssignmentOverrideList.json");
         List<AssignmentOverride> assignmentOverrides = assignmentOverrideReader.listAssignmentOverrides(someCourseId, someAssignmentId);
@@ -84,9 +84,9 @@ public class AssignmentOverrideUTest extends CanvasTestBase {
     @Test
     public void testCreateAssignmentOverride() throws Exception {
         String someCourseId = "14";
-        Integer someAssignmentId = 80;
+        Long someAssignmentId = 80L;
         AssignmentOverride assignmentOverride1 = new AssignmentOverride();
-        assignmentOverride1.setId(4);
+        assignmentOverride1.setId(4L);
         assignmentOverride1.setTitle("Section1");
         assignmentOverride1.setAssignmentId(someAssignmentId);
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments/" + someAssignmentId + "/overrides";

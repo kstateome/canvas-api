@@ -41,7 +41,7 @@ public class AccountReaderUTest extends CanvasTestBase {
         fakeRestClient.addSuccessResponse(url, "SampleJson/account/RootAccount.json");
         Optional<Account> optionalAccount = accountReader.getSingleAccount(ROOT_ACCOUNT_ID);
         Assert.assertTrue(optionalAccount.isPresent());
-        Assert.assertEquals(new Integer(1), optionalAccount.get().getId());
+        Assert.assertEquals(new Long(1), optionalAccount.get().getId());
     }
 
     @Test

@@ -1,4 +1,4 @@
-package edu.ksu.canvas.contentmigration;
+package edu.ksu.canvas.contentMigration;
 
 import edu.ksu.canvas.CanvasApiFactory;
 import edu.ksu.canvas.interfaces.ContentMigrationReader;
@@ -70,7 +70,7 @@ public class ContentMigrationIT {
         CreateCourseContentMigrationOptions createCourseContentMigrationOptions = new CreateCourseContentMigrationOptions(destinationCourse, course, MigrationType.course_copy_importer, false);
         Optional<ContentMigration> response = writer.createCourseContentMigration(createCourseContentMigrationOptions);
         assertNotNull(response.get().getProgressUrl());
-        Integer migrationId = response.get().getId();
+        Long migrationId = response.get().getId();
         assertNotNull(migrationId);
         assertEquals(user, response.get().getUserId().toString());
         assertEquals(MigrationType.course_copy_importer.toString(), response.get().getMigrationType());

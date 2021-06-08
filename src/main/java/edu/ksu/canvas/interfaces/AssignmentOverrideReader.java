@@ -14,7 +14,7 @@ public interface AssignmentOverrideReader extends CanvasReader<AssignmentOverrid
      * @return List of assignment overrides
      * @throws IOException When there is an error communicating with Canvas
      */
-    List<AssignmentOverride> listAssignmentOverrides(String courseId, Integer assignmentId) throws IOException;
+    List<AssignmentOverride> listAssignmentOverrides(String courseId, Long assignmentId) throws IOException;
     
     /***
      * Returns details of the the override with the given id.
@@ -24,5 +24,5 @@ public interface AssignmentOverrideReader extends CanvasReader<AssignmentOverrid
      * @return The requested assigment override object
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<AssignmentOverride> getAssignmentOverride(String courseId, Integer assignmentId, Integer overrideId) throws IOException;
+    Optional<AssignmentOverride> getAssignmentOverride(String courseId, Long assignmentId, Long overrideId) throws IOException;
 }

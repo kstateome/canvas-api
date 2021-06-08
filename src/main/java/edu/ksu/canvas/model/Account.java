@@ -13,10 +13,10 @@ import java.io.Serializable;
 public class Account extends BaseCanvasModel implements Serializable {
     public static final long serialVersionUID = 1L;
 
-    private Integer id;
+    private Long id;
     private String name;
-    private Integer parentAccountId; // The account's parent ID, or null if this is the root account
-    private Integer rootAccountId; // The ID of the root account, or null if this is the root account
+    private Long parentAccountId; // The account's parent ID, or null if this is the root account
+    private Long rootAccountId; // The ID of the root account, or null if this is the root account
     private Long defaultStorageQuotaMb;
     private Long defaultUserStorageQuotaMb;
     private Long defaultGroupStorageQuotaMb;
@@ -29,11 +29,11 @@ public class Account extends BaseCanvasModel implements Serializable {
     private String workflowState; //todo: Should be an enum
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -46,19 +46,19 @@ public class Account extends BaseCanvasModel implements Serializable {
         this.name = name;
     }
 
-    public Integer getParentAccountId() {
+    public Long getParentAccountId() {
         return parentAccountId;
     }
 
-    public void setParentAccountId(Integer parentAccountId) {
+    public void setParentAccountId(Long parentAccountId) {
         this.parentAccountId = parentAccountId;
     }
 
-    public Integer getRootAccountId() {
+    public Long getRootAccountId() {
         return rootAccountId;
     }
 
-    public void setRootAccountId(Integer rootAccountId) {
+    public void setRootAccountId(Long rootAccountId) {
         this.rootAccountId = rootAccountId;
     }
 

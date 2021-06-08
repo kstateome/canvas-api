@@ -1,8 +1,6 @@
 package edu.ksu.canvas.requestOptions;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 public class CreateCourseContentMigrationOptions extends CreateContentMigrationOptions {
 
@@ -37,7 +35,7 @@ public class CreateCourseContentMigrationOptions extends CreateContentMigrationO
         return selectiveImport;
     }
 
-    public CreateContentMigrationOptions questionBank(Integer questionBankId) {
+    public CreateContentMigrationOptions questionBank(Long questionBankId) {
         addSingleItem("settings[question_bank_id]", questionBankId.toString());
         return this;
     }
@@ -52,7 +50,7 @@ public class CreateCourseContentMigrationOptions extends CreateContentMigrationO
         return this;
     }
 
-    public CreateContentMigrationOptions insertIntoModule(Integer insertIntoModuleId) {
+    public CreateContentMigrationOptions insertIntoModule(Long insertIntoModuleId) {
         addSingleItem("settings[insert_into_module_id]", insertIntoModuleId.toString());
         return this;
     }
@@ -62,12 +60,12 @@ public class CreateCourseContentMigrationOptions extends CreateContentMigrationO
         return this;
     }
 
-    public CreateContentMigrationOptions insertIntoModulePosition(Integer insertIntoModulePosition) {
+    public CreateContentMigrationOptions insertIntoModulePosition(Long insertIntoModulePosition) {
         addSingleItem("settings[insert_into_module_position]", insertIntoModulePosition.toString());
         return this;
     }
 
-    public CreateContentMigrationOptions moveToAssignmentGroup(Integer moveToAssignmentGroup) {
+    public CreateContentMigrationOptions moveToAssignmentGroup(Long moveToAssignmentGroup) {
         addSingleItem("settings[move_to_assignment_group_id]", moveToAssignmentGroup.toString());
         return this;
     }

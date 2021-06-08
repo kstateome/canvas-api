@@ -31,16 +31,16 @@ public class ExternalToolImpl extends BaseImpl<ExternalTool, ExternalToolReader,
     }
 
     @Override
-    public Optional<ExternalTool> getExternalToolInCourse(String courseId, Integer toolId) throws IOException {
+    public Optional<ExternalTool> getExternalToolInCourse(String courseId, Long toolId) throws IOException {
         return getExternalTool("courses", courseId, toolId);
     }
 
     @Override
-    public Optional<ExternalTool> getExternalToolInAccount(String accountId, Integer toolId) throws IOException {
+    public Optional<ExternalTool> getExternalToolInAccount(String accountId, Long toolId) throws IOException {
         return getExternalTool("accounts", accountId, toolId);
     }
 
-    private Optional<ExternalTool> getExternalTool(String objectType, String objectId, Integer toolId) throws IOException {
+    private Optional<ExternalTool> getExternalTool(String objectType, String objectId, Long toolId) throws IOException {
         LOG.debug("Getting external tool " + toolId + " from " + objectType + " " + objectId);
         if(StringUtils.isBlank(objectId) || toolId == null) {
             throw new IllegalArgumentException("course/account ID and tool ID cannot be blank");
@@ -116,14 +116,14 @@ public class ExternalToolImpl extends BaseImpl<ExternalTool, ExternalToolReader,
         return responseParser.parseToObject(ExternalTool.class, response);
     }
 
-    public Optional<ExternalTool> deleteExternalToolInCourse(String courseId, Integer toolId) throws IOException {
+    public Optional<ExternalTool> deleteExternalToolInCourse(String courseId, Long toolId) throws IOException {
         LOG.debug("Deleting external tool " + toolId + " from course " + courseId);
         String url = buildCanvasUrl("courses/" + courseId + "/external_tools/" + toolId, Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, Collections.emptyMap());
         return responseParser.parseToObject(ExternalTool.class, response);
     }
 
-    public Optional<ExternalTool> deleteExternalToolInAccount(String accountId, Integer toolId) throws IOException {
+    public Optional<ExternalTool> deleteExternalToolInAccount(String accountId, Long toolId) throws IOException {
         LOG.debug("Deleting external tool " + toolId + " from account " + accountId);
         String url = buildCanvasUrl("accounts/" + accountId + "/external_tools/" + toolId, Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, Collections.emptyMap());

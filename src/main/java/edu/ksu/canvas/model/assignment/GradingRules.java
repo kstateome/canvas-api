@@ -16,7 +16,7 @@ public class GradingRules extends BaseCanvasModel implements Serializable {
     // Number of highest scores to be dropped for each user.
     private Integer dropHighest;
     // Assignment IDs that should never be dropped.
-    private List<Integer> neverDrop;
+    private List<Long> neverDrop;
 
     public Integer getDropLowest() {
         return dropLowest;
@@ -34,11 +34,11 @@ public class GradingRules extends BaseCanvasModel implements Serializable {
         this.dropHighest = dropHighest;
     }
 
-    public List<Integer> getNeverDrop() {
+    public List<Long> getNeverDrop() {
         return neverDrop;
     }
 
-    public void setNeverDrop(List<Integer> neverDrop) {
+    public void setNeverDrop(List<Long> neverDrop) {
         this.neverDrop = neverDrop;
     }
 

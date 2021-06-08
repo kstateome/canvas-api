@@ -3,7 +3,7 @@ package edu.ksu.canvas.requestOptions;
 public class GetSelectiveDataOptions extends BaseOptions {
 
     private String itemId;
-    private Integer migrationId;
+    private Long migrationId;
     private String type;
 
     /**
@@ -13,7 +13,7 @@ public class GetSelectiveDataOptions extends BaseOptions {
      * @param migrationId        The id of the migration
      * @param type               Optional value for filtering the available selective data by type, i.e. assignments, quizzes, discussion_topics, etc.
      */
-    public GetSelectiveDataOptions(final String itemId, final Integer migrationId, String type) {
+    public GetSelectiveDataOptions(final String itemId, final Long migrationId, String type) {
         this.itemId = itemId;
         this.migrationId = migrationId;
         this.type = type;
@@ -30,11 +30,11 @@ public class GetSelectiveDataOptions extends BaseOptions {
         this.itemId = itemId;
     }
 
-    public Integer getMigrationId() {
+    public Long getMigrationId() {
         return migrationId;
     }
 
-    public void setMigrationId(final Integer migrationId) {
+    public void setMigrationId(final Long migrationId) {
         this.migrationId = migrationId;
     }
 

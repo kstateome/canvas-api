@@ -24,7 +24,7 @@ public class SubmissionImplTest extends CanvasTestBase {
     private static final Logger LOG = LoggerFactory.getLogger(SubmissionImplTest.class);
     public static final String COURSE_ID = "37836";
     public static final String SECTION_ID = "41478";
-    public static final int ASSIGNEMNET_ID = 409522;
+    public static final long ASSIGNEMNET_ID = 409522;
     public static final String SOME_COMMENT_1 = "SOME COMMENT 1";
     public static final String GRADE_1 = "5";
     public static final String SOME_COMMENT_2 = "COMMENT 2";

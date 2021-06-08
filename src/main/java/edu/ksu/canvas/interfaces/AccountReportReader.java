@@ -25,5 +25,5 @@ public interface AccountReportReader extends CanvasReader<AccountReport, Account
      * @return a report outlining the status of its run, or a summary of its completed run
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<AccountReport> reportStatus(String accountId, String report, Integer id) throws IOException;
+    Optional<AccountReport> reportStatus(String accountId, String report, Long id) throws IOException;
 }

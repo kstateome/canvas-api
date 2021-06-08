@@ -30,5 +30,5 @@ public interface AccountReportWriter extends CanvasWriter<AccountReport, Account
      * @throws IOException When there is an error communicating with Canvas
      * @see <a href="https://canvas.instructure.com/doc/api/account_reports.html#method.account_reports.destroy">Account Report API documentation</a>
      */
-    Optional<AccountReport> deleteReport(String accountId, String report, Integer reportId) throws IOException;
+    Optional<AccountReport> deleteReport(String accountId, String report, Long reportId) throws IOException;
 }

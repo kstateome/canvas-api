@@ -118,7 +118,7 @@ public class CalendarEvent extends BaseCanvasModel implements Serializable {
         }
     }
 
-    private Integer id;
+    private Long id;
     private String title;
     // These are both considered to be in UTC.
     private Instant startAt;
@@ -133,7 +133,7 @@ public class CalendarEvent extends BaseCanvasModel implements Serializable {
     private WorkflowState workflowState;
     private Boolean hidden;
     private String parentEventId;
-    private Integer childEventsCount;
+    private Long childEventsCount;
     private List<CalendarEvent> childEvents;
     private List<ChildEvent> childEventsData;
     private String url;
@@ -146,12 +146,12 @@ public class CalendarEvent extends BaseCanvasModel implements Serializable {
     private String appointmentGroupUrl;
     private Boolean reservation;
     private ParticipantType participantType;
-    private Integer participantsPerAppointment;
-    private Integer availableSlots;
+    private Long participantsPerAppointment;
+    private Long availableSlots;
     private User user;
 
-    private Integer duplicateCount;
-    private Integer duplicateInterval;
+    private Long duplicateCount;
+    private Long duplicateInterval;
     private Frequency duplicateFrequency;
     private Boolean duplicateAppend;
     // TODO Group models aren't yet done.
@@ -215,11 +215,11 @@ public class CalendarEvent extends BaseCanvasModel implements Serializable {
         return serialVersionUID;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -326,11 +326,11 @@ public class CalendarEvent extends BaseCanvasModel implements Serializable {
         this.parentEventId = parentEventId;
     }
 
-    public Integer getChildEventsCount() {
+    public Long getChildEventsCount() {
         return childEventsCount;
     }
 
-    public void setChildEventsCount(Integer childEventsCount) {
+    public void setChildEventsCount(Long childEventsCount) {
         this.childEventsCount = childEventsCount;
     }
 
@@ -415,19 +415,19 @@ public class CalendarEvent extends BaseCanvasModel implements Serializable {
         this.participantType = participantType;
     }
 
-    public Integer getParticipantsPerAppointment() {
+    public Long getParticipantsPerAppointment() {
         return participantsPerAppointment;
     }
 
-    public void setParticipantsPerAppointment(Integer participantsPerAppointment) {
+    public void setParticipantsPerAppointment(Long participantsPerAppointment) {
         this.participantsPerAppointment = participantsPerAppointment;
     }
 
-    public Integer getAvailableSlots() {
+    public Long getAvailableSlots() {
         return availableSlots;
     }
 
-    public void setAvailableSlots(Integer availableSlots) {
+    public void setAvailableSlots(Long availableSlots) {
         this.availableSlots = availableSlots;
     }
 
@@ -440,20 +440,20 @@ public class CalendarEvent extends BaseCanvasModel implements Serializable {
     }
 
     @CanvasField(postKey = "count", overrideObjectKey = "calendar_event[duplicate]")
-    public Integer getDuplicateCount() {
+    public Long getDuplicateCount() {
         return duplicateCount;
     }
 
-    public void setDuplicateCount(Integer duplicateCount) {
+    public void setDuplicateCount(Long duplicateCount) {
         this.duplicateCount = duplicateCount;
     }
 
     @CanvasField(postKey = "interval", overrideObjectKey = "calendar_event[duplicate]")
-    public Integer getDuplicateInterval() {
+    public Long getDuplicateInterval() {
         return duplicateInterval;
     }
 
-    public void setDuplicateInterval(Integer duplicateInterval) {
+    public void setDuplicateInterval(Long duplicateInterval) {
         this.duplicateInterval = duplicateInterval;
     }
 

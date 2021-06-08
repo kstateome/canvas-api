@@ -27,7 +27,7 @@ public class CourseSettings  extends BaseCanvasModel implements Serializable {
     private Boolean restrictStudentPastView;
     private Boolean restrictStudentFutureView;
     private Boolean showAnnouncementsOnHomePage;
-    private Integer homePageAnnouncementLimit;
+    private Long homePageAnnouncementLimit;
     private String imageUrl;
     private String imageId;
     private String image;
@@ -156,11 +156,11 @@ public class CourseSettings  extends BaseCanvasModel implements Serializable {
     }
 
     @CanvasField(postKey = "home_page_announcement_limit")
-    public Integer getHomePageAnnouncementLimit() {
+    public Long getHomePageAnnouncementLimit() {
         return homePageAnnouncementLimit;
     }
 
-    public void setHomePageAnnouncementLimit(Integer homePageAnnouncementLimit) {
+    public void setHomePageAnnouncementLimit(Long homePageAnnouncementLimit) {
         this.homePageAnnouncementLimit = homePageAnnouncementLimit;
     }
 

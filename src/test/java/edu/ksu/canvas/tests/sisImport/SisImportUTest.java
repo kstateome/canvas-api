@@ -24,7 +24,7 @@ public class SisImportUTest extends CanvasTestBase {
     private FakeRestClient fakeRestClient;
 
     private static final String ARBITRARY_ACCOUNT_ID = "9";
-    private static final Integer ARBITRARY_SIS_IMPORT_ID = 65632;
+    private static final Long ARBITRARY_SIS_IMPORT_ID = 65632L;
     private static final Integer ARBITRARY_SIS_IMPORT_PROGRESS = 100;
 
     @Before

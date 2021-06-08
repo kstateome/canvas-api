@@ -39,7 +39,7 @@ public class AccountReportImpl extends BaseImpl<AccountReport, AccountReportRead
     }
 
     @Override
-    public Optional<AccountReport> reportStatus(String accountId, String report, Integer id) throws IOException {
+    public Optional<AccountReport> reportStatus(String accountId, String report, Long id) throws IOException {
         LOG.debug("Retrieving information about report ID " + id + " of report " + report + " for account " + accountId);
         String url = buildCanvasUrl("accounts/" + accountId + "/reports/" + report + "/" + id, Collections.emptyMap());
 
@@ -55,7 +55,7 @@ public class AccountReportImpl extends BaseImpl<AccountReport, AccountReportRead
     }
 
     @Override
-    public Optional<AccountReport> deleteReport(String accountId, String report, Integer reportId) throws IOException {
+    public Optional<AccountReport> deleteReport(String accountId, String report, Long reportId) throws IOException {
         LOG.debug("Deleting report ID " + reportId + " for report " + report + " on behalf of account " + accountId);
         String url = buildCanvasUrl("accounts/" + accountId + "/reports/" + report + "/" + reportId, Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, Collections.emptyMap());

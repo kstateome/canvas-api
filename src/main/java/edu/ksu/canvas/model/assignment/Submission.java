@@ -15,11 +15,11 @@ import java.util.Map;
 public class Submission extends BaseCanvasModel implements Serializable {
     private static final long serialVersionUID = 2L;
 
-    private Integer id;
-    private Integer assignmentId;
+    private Long id;
+    private Long assignmentId;
     private Assignment assignment;
     private Course course;
-    private Integer attempt;
+    private Long attempt;
     private String body;
     private String grade;
     private Boolean gradeMatchesCurrentSubmission;
@@ -30,8 +30,8 @@ public class Submission extends BaseCanvasModel implements Serializable {
     private String submissionType;
     private Date submittedAt;
     private String url;
-    private Integer userId;
-    private Integer gradeId;
+    private Long userId;
+    private Long gradeId;
     private User user;
     private Boolean late;
     private Boolean assigmentVisible;
@@ -41,19 +41,19 @@ public class Submission extends BaseCanvasModel implements Serializable {
     private Map<String, SubmissionRubricAssessment> rubricAssessment;
     private RubricAssessment fullRubricAssessment;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getAssignmentId() {
+    public Long getAssignmentId() {
         return assignmentId;
     }
 
-    public void setAssignmentId(Integer assignmentId) {
+    public void setAssignmentId(Long assignmentId) {
         this.assignmentId = assignmentId;
     }
 
@@ -74,11 +74,11 @@ public class Submission extends BaseCanvasModel implements Serializable {
     }
 
     @CanvasField(postKey = "attempt", array = false)
-    public Integer getAttempt() {
+    public Long getAttempt() {
         return attempt;
     }
 
-    public void setAttempt(Integer attempt) {
+    public void setAttempt(Long attempt) {
         this.attempt = attempt;
     }
 
@@ -162,19 +162,19 @@ public class Submission extends BaseCanvasModel implements Serializable {
         this.url = url;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public Integer getGradeId() {
+    public Long getGradeId() {
         return gradeId;
     }
 
-    public void setGradeId(Integer gradeId) {
+    public void setGradeId(Long gradeId) {
         this.gradeId = gradeId;
     }
 

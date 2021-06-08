@@ -19,7 +19,7 @@ public class CalendarEventTest {
     @Test
     public void testCopyConstructorCreationFields() {
         CalendarEvent event = new CalendarEvent();
-        event.setId(1);
+        event.setId(1L);
         event.setTitle("Title");
         event.setStartAt(Instant.now());
         event.setEndAt(Instant.now());

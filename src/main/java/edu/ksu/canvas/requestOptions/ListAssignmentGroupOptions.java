@@ -80,7 +80,7 @@ public class ListAssignmentGroupOptions extends BaseOptions{
      * @param periodId The ID of the appropriate period
      * @return this to continue building options
      */
-    public ListAssignmentGroupOptions gradingPeriodId (Integer periodId){
+    public ListAssignmentGroupOptions gradingPeriodId (Long periodId){
         addSingleItem("grading_period_id", periodId.toString());
         return this;
     }

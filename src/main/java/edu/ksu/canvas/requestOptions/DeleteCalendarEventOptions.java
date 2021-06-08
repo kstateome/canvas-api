@@ -2,16 +2,16 @@ package edu.ksu.canvas.requestOptions;
 
 public class DeleteCalendarEventOptions extends BaseOptions {
 
-    private Integer id;
+    private Long id;
 
     /**
      * @param id The calendar event to delete.
      */
-    public DeleteCalendarEventOptions(Integer id) {
+    public DeleteCalendarEventOptions(Long id) {
         this.id = id;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 

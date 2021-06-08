@@ -42,7 +42,7 @@ public class ListCurrentUserCoursesOptions extends BaseOptions {
      * @param roleId The ID of the role to restrict the list to
      * @return This object to allow adding more options
      */
-    public ListCurrentUserCoursesOptions withEnrollmentRoleId(Integer roleId) {
+    public ListCurrentUserCoursesOptions withEnrollmentRoleId(Long roleId) {
         addSingleItem("enrollment_role_id", roleId.toString());
         return this;
     }

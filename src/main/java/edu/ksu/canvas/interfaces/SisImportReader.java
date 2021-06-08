@@ -13,5 +13,5 @@ public interface SisImportReader extends CanvasReader<SisImport, SisImportReader
      * @return A SisImport object
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<SisImport> getSisImport(String accountId, Integer id) throws IOException;
+    Optional<SisImport> getSisImport(String accountId, Long id) throws IOException;
 }

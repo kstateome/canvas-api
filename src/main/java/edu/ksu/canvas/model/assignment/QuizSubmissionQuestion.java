@@ -12,16 +12,16 @@ import java.util.List;
 public class QuizSubmissionQuestion implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
+    private Long id;
     private Boolean flagged;
-    private List<Integer> answer; //Set to JSON object, because it can either be an array or a String.
+    private List<Long> answer; //Set to JSON object, because it can either be an array or a String.
     private List<QuizAnswer> answers;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -33,11 +33,11 @@ public class QuizSubmissionQuestion implements Serializable {
         this.flagged = flagged;
     }
 
-    public List<Integer> getAnswer() {
+    public List<Long> getAnswer() {
         return answer;
     }
 
-    public void setAnswer(List<Integer> answer) {
+    public void setAnswer(List<Long> answer) {
         this.answer = answer;
     }
 

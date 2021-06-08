@@ -8,10 +8,10 @@ import java.util.Map;
 public class MultipleSubmissionsOptions extends BaseOptions {
 
     private String objectId;
-    private Integer assignmentId;
+    private Long assignmentId;
     private Map<String, StudentSubmissionOption> studentSubmissionOptionMap;
 
-    public MultipleSubmissionsOptions(String objectId, Integer assignemnetId, Map<String, StudentSubmissionOption> studentSubmissionOptionMap) {
+    public MultipleSubmissionsOptions(String objectId, Long assignemnetId, Map<String, StudentSubmissionOption> studentSubmissionOptionMap) {
         this.objectId = objectId;
         this.assignmentId = assignemnetId;
         this.studentSubmissionOptionMap = studentSubmissionOptionMap;
@@ -33,11 +33,11 @@ public class MultipleSubmissionsOptions extends BaseOptions {
         this.studentSubmissionOptionMap = studentSubmissionOptionMap;
     }
 
-    public Integer getAssignmentId() {
+    public Long getAssignmentId() {
         return assignmentId;
     }
 
-    public void setAssignmentId(Integer assignmentId) {
+    public void setAssignmentId(Long assignmentId) {
         this.assignmentId = assignmentId;
     }
 

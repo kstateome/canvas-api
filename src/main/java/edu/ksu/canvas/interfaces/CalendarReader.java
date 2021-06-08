@@ -41,6 +41,6 @@ public interface CalendarReader extends CanvasReader<CalendarEvent, CalendarRead
      * @return The requested calendar event object
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<CalendarEvent> getCalendarEvent(Integer id) throws IOException;
+    Optional<CalendarEvent> getCalendarEvent(Long id) throws IOException;
 
 }

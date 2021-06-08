@@ -34,9 +34,9 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
     public void testListCourseAssignments() throws Exception {
         String someCourseId = "123456";
         Assignment assignment1 = new Assignment();
-        assignment1.setId(1);
+        assignment1.setId(1L);
         Assignment assignment2 = new Assignment();
-        assignment2.setId(2);
+        assignment2.setId(2L);
         Response notErroredResponse = new Response();
         notErroredResponse.setErrorHappened(false);
         notErroredResponse.setResponseCode(200);
@@ -63,7 +63,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
     @Test
     public void testRetrieveAssignment() throws Exception {
         String someCourseId = "1234";
-        Integer someAssignmentId = 123;
+        Long someAssignmentId = 123L;
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments/" + someAssignmentId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/MinimalAssignment.json");
         Optional<Assignment> assignment = assignmentReader.getSingleAssignment(new GetSingleAssignmentOptions(someCourseId, someAssignmentId));
@@ -76,9 +76,9 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         String someUserId = "899123456";
         String someCourseId = "123456";
         Assignment assignment1 = new Assignment();
-        assignment1.setId(1);
+        assignment1.setId(1L);
         Assignment assignment2 = new Assignment();
-        assignment2.setId(2);
+        assignment2.setId(2L);
         Response notErroredResponse = new Response();
         notErroredResponse.setErrorHappened(false);
         notErroredResponse.setResponseCode(200);
@@ -106,7 +106,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
     public void testSisUserMasqueradingRetriveAssignment() throws Exception{
         String someUserId = "8991123123";
         String someCourseId = "1234";
-        Integer someAssignmentId = 123;
+        Long someAssignmentId = 123L;
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments/" + someAssignmentId + "?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + someUserId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/MinimalAssignment.json");
         Optional<Assignment> assignment = assignmentReader.readAsSisUser(someUserId).getSingleAssignment(new GetSingleAssignmentOptions(someCourseId, someAssignmentId));
@@ -119,9 +119,9 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
         String someUserId = "899123456";
         String someCourseId = "123456";
         Assignment assignment1 = new Assignment();
-        assignment1.setId(1);
+        assignment1.setId(1L);
         Assignment assignment2 = new Assignment();
-        assignment2.setId(2);
+        assignment2.setId(2L);
         Response notErroredResponse = new Response();
         notErroredResponse.setErrorHappened(false);
         notErroredResponse.setResponseCode(200);
@@ -149,7 +149,7 @@ public class AssignmentRetrieverUTest extends CanvasTestBase {
     public void testCanvasUserMasqueradingRetriveAssignment() throws Exception{
         String someUserId = "8991123123";
         String someCourseId = "1234";
-        Integer someAssignmentId = 123;
+        Long someAssignmentId = 123L;
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments/" + someAssignmentId + "?as_user_id=" + someUserId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/MinimalAssignment.json");
         Optional<Assignment> assignment = assignmentReader.readAsCanvasUser(someUserId).getSingleAssignment(new GetSingleAssignmentOptions(someCourseId, someAssignmentId));

@@ -21,12 +21,12 @@ public class Section extends BaseCanvasModel implements Serializable {
     private String integrationId;
     private String sisImportId;
     private String enrollmentRole;
-    private Integer courseId;
+    private Long courseId;
     private String sisCourseId;
     private Date startAt;
     private Date endAt;
-    private Integer nonxlistCourseId;
-    private Integer totalStudents;
+    private Long nonxlistCourseId;
+    private Long totalStudents;
     private Boolean restrictEnrollmentsToSectionDates;
     private List<User> students;
 
@@ -72,11 +72,11 @@ public class Section extends BaseCanvasModel implements Serializable {
         this.sisImportId = sisImportId;
     }
 
-    public Integer getCourseId() {
+    public Long getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(Integer courseId) {
+    public void setCourseId(Long courseId) {
         this.courseId = courseId;
     }
 
@@ -106,19 +106,19 @@ public class Section extends BaseCanvasModel implements Serializable {
         this.endAt = endAt;
     }
 
-    public Integer getNonxlistCourseId() {
+    public Long getNonxlistCourseId() {
         return nonxlistCourseId;
     }
 
-    public void setNonxlistCourseId(Integer nonxlistCourseId) {
+    public void setNonxlistCourseId(Long nonxlistCourseId) {
         this.nonxlistCourseId = nonxlistCourseId;
     }
 
-    public Integer getTotalStudents() {
+    public Long getTotalStudents() {
         return totalStudents;
     }
 
-    public void setTotalStudents(Integer totalStudents) {
+    public void setTotalStudents(Long totalStudents) {
         this.totalStudents = totalStudents;
     }
 

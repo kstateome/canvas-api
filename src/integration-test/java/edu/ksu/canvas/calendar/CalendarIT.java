@@ -81,7 +81,7 @@ public class CalendarIT {
 
         assertTrue(writtenCalendarEvent.isPresent());
 
-        Integer id = writtenCalendarEvent.get().getId();
+        Long id = writtenCalendarEvent.get().getId();
         Optional<CalendarEvent> readCalendarEvent = reader.getCalendarEvent(id);
         assertTrue(readCalendarEvent.isPresent());
         assertEquals(writtenCalendarEvent, readCalendarEvent);
@@ -101,9 +101,9 @@ public class CalendarIT {
             event.setContextCode("course_" + course);
             event.setStartAt(Instant.now());
             event.setEndAt(Instant.now().plus(1, ChronoUnit.HOURS));
-            event.setDuplicateCount(9);
+            event.setDuplicateCount(9L);
             event.setDuplicateFrequency(CalendarEvent.Frequency.DAILY);
-            event.setDuplicateInterval(1);
+            event.setDuplicateInterval(1L);
             event.setDuplicateAppend(true);
             writer.createCalendarEvent(event);
         }

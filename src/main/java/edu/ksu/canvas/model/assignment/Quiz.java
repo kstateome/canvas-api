@@ -17,14 +17,14 @@ import java.util.List;
 public class Quiz extends BaseCanvasModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
+    private Long id;
     private String title;
     private String htmlUrl;
     private String mobileUrl;
     private String previewUrl;
     private String description;
     private String quizType;
-    private Integer assignmentGroupId;
+    private Long assignmentGroupId;
     private Double timeLimit; //in minutes
     private Boolean shuffleAnswers;
     private String hideResults;
@@ -34,9 +34,9 @@ public class Quiz extends BaseCanvasModel implements Serializable {
     private String hideCorrectAnswersAt;
     private Boolean oneTimeResults;
     private String scoringPolicy;
-    private Integer allowedAttempts;
+    private Long allowedAttempts;
     private Boolean oneQuestionAtATime;
-    private Integer questionCount;
+    private Long questionCount;
     private Double pointsPossible;
     private Boolean cantGoBack;
     private String accessCode;
@@ -53,15 +53,15 @@ public class Quiz extends BaseCanvasModel implements Serializable {
     private String quizExtensionsUrl;
     private QuizPermission permissions;
     private List<AssignmentDate> allDates;
-    private Integer versionNumber;
+    private Long versionNumber;
     private List<String> questionTypes;
-    private Integer assignmentId;
+    private Long assignmentId;
 
-    public Integer getAssignmentId() {
+    public Long getAssignmentId() {
         return assignmentId;
     }
 
-    public void setAssignmentId(Integer assignmentId) {
+    public void setAssignmentId(Long assignmentId) {
         this.assignmentId = assignmentId;
     }
 
@@ -73,11 +73,11 @@ public class Quiz extends BaseCanvasModel implements Serializable {
         this.questionTypes = questionTypes;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -133,11 +133,11 @@ public class Quiz extends BaseCanvasModel implements Serializable {
     }
 
     @CanvasField(postKey = "assignment_group_id")
-    public Integer getAssignmentGroupId() {
+    public Long getAssignmentGroupId() {
         return assignmentGroupId;
     }
 
-    public void setAssignmentGroupId(Integer assignmentGroupId) {
+    public void setAssignmentGroupId(Long assignmentGroupId) {
         this.assignmentGroupId = assignmentGroupId;
     }
 
@@ -229,11 +229,11 @@ public class Quiz extends BaseCanvasModel implements Serializable {
         this.oneQuestionAtATime = oneQuestionAtATime;
     }
 
-    public Integer getQuestionCount() {
+    public Long getQuestionCount() {
         return questionCount;
     }
 
-    public void setQuestionCount(Integer questionCount) {
+    public void setQuestionCount(Long questionCount) {
         this.questionCount = questionCount;
     }
 
@@ -364,11 +364,11 @@ public class Quiz extends BaseCanvasModel implements Serializable {
         this.allDates = allDates;
     }
 
-    public Integer getVersionNumber() {
+    public Long getVersionNumber() {
         return versionNumber;
     }
 
-    public void setVersionNumber(Integer versionNumber) {
+    public void setVersionNumber(Long versionNumber) {
         this.versionNumber = versionNumber;
     }
 
@@ -512,11 +512,11 @@ public class Quiz extends BaseCanvasModel implements Serializable {
         return result;
     }
 
-    public Integer getAllowedAttempts() {
+    public Long getAllowedAttempts() {
         return allowedAttempts;
     }
 
-    public void setAllowedAttempts(Integer allowedAttempts) {
+    public void setAllowedAttempts(Long allowedAttempts) {
         this.allowedAttempts = allowedAttempts;
     }
 }

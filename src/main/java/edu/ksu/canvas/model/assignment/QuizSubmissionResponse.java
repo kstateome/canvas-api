@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class QuizSubmissionResponse {
     private final List<QuizSubmission> quizSubmissions;
     private final Map<Long, User> users;
-    private final Map<Integer, Quiz> quizzes;
+    private final Map<Long, Quiz> quizzes;
 
     public QuizSubmissionResponse(final List<QuizSubmission> quizSubmissions, final List<User> users, final List<Quiz> quizzes) {
         this.quizSubmissions = ImmutableList.copyOf(quizSubmissions);
@@ -64,7 +64,7 @@ public class QuizSubmissionResponse {
      * are queried by specific quiz ID.
      * @return Quiz associated with these submissions
      */
-    public Map<Integer, Quiz> getQuizzes() {
+    public Map<Long, Quiz> getQuizzes() {
         return quizzes;
     }
 
@@ -73,7 +73,7 @@ public class QuizSubmissionResponse {
      * @param quizId Canvas ID of the quiz
      * @return The requested Quiz object if found
      */
-    public Optional<Quiz> getQuiz(final int quizId) {
+    public Optional<Quiz> getQuiz(final long quizId) {
         return Optional.ofNullable(quizzes.get(quizId));
     }
 }
