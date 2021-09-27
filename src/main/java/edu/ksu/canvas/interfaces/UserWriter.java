@@ -36,4 +36,25 @@ public interface UserWriter extends CanvasWriter<User, UserWriter> {
      * @throws IOException When there is an error communicating with Canvas
      */
     Optional<User> updateUser(User user) throws InvalidOauthTokenException, IOException;
+
+    /**
+     * Merge a user into another user.
+     * @param fromUserId The fromUserId is the user that was deleted in the user_merge process.
+     * @param destinationUserId The destinationUserId is the user that remains, that is being split.
+     * @return An Optional object that may include the merged user
+     * @throws InvalidOauthTokenException When the supplied OAuth token is not valid
+     * @throws IOException When there is an error communicating with Canvas
+     */
+    Optional<User> mergeUsers(String fromUserId, String destinationUserId) throws InvalidOauthTokenException, IOException;
+
+    /**
+     * Merge a user into another user in a specific account. When finding users by SIS ids in different accounts the destination_account_id is required.
+     * @param fromUserId The fromUserId is the user that was deleted in the user_merge process.
+     * @param destinationAccountId The account can also be identified by passing the domain in destination_account_id.
+     * @param destinationUserId The destinationUserId is the user that remains, that is being split.
+     * @return An Optional object that may include the merged user
+     * @throws InvalidOauthTokenException When the supplied OAuth token is not valid
+     * @throws IOException When there is an error communicating with Canvas
+     */
+    Optional<User> mergeUsersIntoAccount(String fromUserId, String destinationAccountId, String destinationUserId) throws InvalidOauthTokenException, IOException;
 }

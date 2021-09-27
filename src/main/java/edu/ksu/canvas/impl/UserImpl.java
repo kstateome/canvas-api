@@ -93,6 +93,24 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
     }
 
     @Override
+    public Optional<User> mergeUsers(String fromUserId, String destinationUserId) throws InvalidOauthTokenException, IOException {
+        LOG.debug("Merging user {} into {}", fromUserId, destinationUserId);
+        String mergeUserUrl = buildCanvasUrl(String.format("users/%s/merge_into/%s", fromUserId, destinationUserId), Collections.emptyMap());
+        LOG.debug("Merge operation URL: {}", mergeUserUrl);
+        Response response = canvasMessenger.putToCanvas(oauthToken, mergeUserUrl, Collections.emptyMap());
+        return responseParser.parseToObject(User.class, response);
+    }
+
+    @Override
+    public Optional<User> mergeUsersIntoAccount(String fromUserId, String destinationAccountId, String destinationUserId) throws InvalidOauthTokenException, IOException {
+        LOG.debug("Merging user {} into the user {} and the account {}", fromUserId, destinationUserId, destinationAccountId);
+        String mergeUserUrl = buildCanvasUrl(String.format("users/%s/merge_into/accounts/%s/users/%s", fromUserId, destinationAccountId, destinationUserId), Collections.emptyMap());
+        LOG.debug("Merge operation URL: {}", mergeUserUrl);
+        Response response = canvasMessenger.putToCanvas(oauthToken, mergeUserUrl, Collections.emptyMap());
+        return responseParser.parseToObject(User.class, response);
+    }
+
+    @Override
     protected Type listType() {
         return new TypeToken<List<User>>() {
         }.getType();
