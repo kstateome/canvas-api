@@ -4,6 +4,7 @@ import edu.ksu.canvas.CanvasTestBase;
 import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.impl.UserImpl;
 import edu.ksu.canvas.interfaces.UserReader;
+import edu.ksu.canvas.interfaces.UserWriter;
 import edu.ksu.canvas.model.User;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.net.Response;
@@ -23,12 +24,15 @@ public class UserRetrieverUTest extends CanvasTestBase {
     @Autowired
     private FakeRestClient fakeRestClient;
     private UserReader userReader;
+    private UserWriter userWriter;
 
     private static final String someCourseId = "123";
 
     @Before
     public void setupData() {
         userReader = new UserImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT,
+                SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE, false);
+        userWriter = new UserImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT,
                 SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE, false);
     }
 
@@ -154,4 +158,28 @@ public class UserRetrieverUTest extends CanvasTestBase {
         List<User> result = userReader.getUsersInAccount(options);
         Assert.assertEquals(1, result.size());
     }
+
+    @Test
+    public void testMergeUsers() throws Exception {
+        String userId = "1";
+        String destinationUserId = "2";
+        String url = baseUrl + String.format("/api/v1/users/%s/merge_into/%s", userId, destinationUserId);
+        fakeRestClient.addSuccessResponse(url, "SampleJson/user/User2.json");
+        Optional<User> result = userWriter.mergeUsers(userId, destinationUserId);
+        User user = result.get();
+        Assert.assertEquals(destinationUserId, String.valueOf(user.getId()));
+    }
+
+    @Test
+    public void testMergeUsersIntoAccount() throws Exception {
+        String userId = "1";
+        String destinationUserId = "2";
+        String accountId = "1";
+        String url = baseUrl + String.format("/api/v1/users/%s/merge_into/accounts/%s/users/%s", userId, accountId, destinationUserId);
+        fakeRestClient.addSuccessResponse(url, "SampleJson/user/User2.json");
+        Optional<User> result = userWriter.mergeUsersIntoAccount(userId, accountId, destinationUserId);
+        User user = result.get();
+        Assert.assertEquals(destinationUserId, String.valueOf(user.getId()));
+    }
+
 }
