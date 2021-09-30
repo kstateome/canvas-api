@@ -2,6 +2,7 @@ package edu.ksu.canvas.model;
 
 import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
+import edu.ksu.canvas.model.sisimport.SisImportErrorsAttachment;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -40,7 +41,7 @@ public class SisImport extends BaseCanvasModel implements Serializable {
 	
     private List<List<String>> processingWarnings = null;
     private List<List<String>> processingErrors = null;
-    private Object errorsAttachment;
+    private SisImportErrorsAttachment errorsAttachment;
     private User user;
     private Object csvAttachments;
 
@@ -132,11 +133,11 @@ public class SisImport extends BaseCanvasModel implements Serializable {
     }
 
     @CanvasField(postKey = "errors_attachment")
-    public Object getErrorsAttachment() {
+    public SisImportErrorsAttachment getErrorsAttachment() {
         return errorsAttachment;
     }
 
-    public void setErrorsAttachment(Object errorsAttachment) {
+    public void setErrorsAttachment(SisImportErrorsAttachment errorsAttachment) {
         this.errorsAttachment = errorsAttachment;
     }
 
