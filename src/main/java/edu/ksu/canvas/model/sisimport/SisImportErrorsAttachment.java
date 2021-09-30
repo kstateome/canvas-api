@@ -1,6 +1,4 @@
 package edu.ksu.canvas.model.sisimport;
-import edu.ksu.canvas.annotation.CanvasField;
-import edu.ksu.canvas.annotation.CanvasObject;
 import edu.ksu.canvas.model.BaseCanvasModel;
 
 import java.io.Serializable;
@@ -10,7 +8,6 @@ import java.time.Instant;
  * Class to represent Canvas Sis Imports Errors Attachment
  * See <a href="https://canvas.instructure.com/doc/api/sis_imports.html#SisImport">SisImport</a> documentation.
  */
- @CanvasObject(postKey = "errors_attachment")
 public class SisImportErrorsAttachment extends BaseCanvasModel implements Serializable {
     public static final long serialVersionUID = 1L;
 
@@ -52,7 +49,6 @@ public class SisImportErrorsAttachment extends BaseCanvasModel implements Serial
         this.uuid = uuid;
     }
 
-    @CanvasField(postKey = "folder_id")
     public String getFolderId() {
         return folderId;
     }
@@ -61,7 +57,6 @@ public class SisImportErrorsAttachment extends BaseCanvasModel implements Serial
         this.folderId = folderId;
     }
 
-    @CanvasField(postKey = "display_name")
     public String getDisplayName() {
         return displayName;
     }
@@ -78,7 +73,6 @@ public class SisImportErrorsAttachment extends BaseCanvasModel implements Serial
         this.filename = filename;
     }
 
-    @CanvasField(postKey = "upload_status")
     public String getUploadStatus() {
         return uploadStatus;
     }
@@ -87,7 +81,6 @@ public class SisImportErrorsAttachment extends BaseCanvasModel implements Serial
         this.uploadStatus = uploadStatus;
     }
 
-    @CanvasField(postKey = "content-type")
     public String getContentType() {
         return contentType;
     }
@@ -112,7 +105,6 @@ public class SisImportErrorsAttachment extends BaseCanvasModel implements Serial
         this.size = size;
     }
 
-    @CanvasField(postKey = "created_at")
     public Instant getCreatedAt() {
         return createdAt;
     }
@@ -121,7 +113,6 @@ public class SisImportErrorsAttachment extends BaseCanvasModel implements Serial
         this.createdAt = createdAt;
     }
 
-    @CanvasField(postKey = "updated_at")
     public Instant getUpdatedAt() {
         return updatedAt;
     }
@@ -130,7 +121,6 @@ public class SisImportErrorsAttachment extends BaseCanvasModel implements Serial
         this.updatedAt = updatedAt;
     }
 
-    @CanvasField(postKey = "unlock_at")
     public Instant getUnlockAt() {
         return unlockAt;
     }
@@ -155,7 +145,6 @@ public class SisImportErrorsAttachment extends BaseCanvasModel implements Serial
         this.hidden = hidden;
     }
 
-    @CanvasField(postKey = "lock_at")
     public Instant getLockAt() {
         return lockAt;
     }
@@ -164,7 +153,6 @@ public class SisImportErrorsAttachment extends BaseCanvasModel implements Serial
         this.lockAt = lockAt;
     }
 
-    @CanvasField(postKey = "hidden_for_user")
     public boolean getHiddenForUser() {
         return hiddenForUser;
     }
@@ -173,7 +161,6 @@ public class SisImportErrorsAttachment extends BaseCanvasModel implements Serial
         this.hiddenForUser = hiddenForUser;
     }
 
-    @CanvasField(postKey = "thumbnail_url")
     public String getThumbnailUrl() {
         return thumbnailUrl;
     }
@@ -182,7 +169,6 @@ public class SisImportErrorsAttachment extends BaseCanvasModel implements Serial
         this.thumbnailUrl = thumbnailUrl;
     }
 
-    @CanvasField(postKey = "modified_at")
     public Instant getModifiedAt() {
         return modifiedAt;
     }
@@ -191,7 +177,6 @@ public class SisImportErrorsAttachment extends BaseCanvasModel implements Serial
         this.modifiedAt = modifiedAt;
     }
 
-    @CanvasField(postKey = "mime_class")
     public String getMimeClass() {
         return mimeClass;
     }
@@ -200,7 +185,6 @@ public class SisImportErrorsAttachment extends BaseCanvasModel implements Serial
         this.mimeClass = mimeClass;
     }
 
-    @CanvasField(postKey = "media_entry_id")
     public String getMediaEntryId() {
         return mediaEntryId;
     }
@@ -209,7 +193,6 @@ public class SisImportErrorsAttachment extends BaseCanvasModel implements Serial
         this.mediaEntryId = mediaEntryId;
     }
 
-    @CanvasField(postKey = "locked_for_user")
     public boolean getLockedForUser() {
         return lockedForUser;
     }
