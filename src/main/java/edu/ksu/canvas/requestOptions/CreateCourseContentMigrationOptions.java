@@ -4,11 +4,20 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public class CreateCourseContentMigrationOptions extends CreateContentMigrationOptions {
+public class CreateCourseContentMigrationOptions extends CreateContentMigrationOptions<CreateCourseContentMigrationOptions> {
 
     private final String destinationCourseId;
 
-    private final boolean selectiveImport;
+    /**
+     * Constructs object to hold API options for the creating a course content migration.
+     *
+     * @param destinationCourseId      The id of the destination course
+     * @param migrationType            Course copy content
+     */
+    public CreateCourseContentMigrationOptions(String destinationCourseId, MigrationType migrationType) {
+        super(migrationType);
+        this.destinationCourseId = destinationCourseId;
+    }
 
     /**
      * Constructs object to hold API options for the creating a course content migration.
@@ -21,9 +30,8 @@ public class CreateCourseContentMigrationOptions extends CreateContentMigrationO
      */
     public CreateCourseContentMigrationOptions(String destinationCourseId, String sourceCourseId, MigrationType migrationType, boolean selectiveImport, String... selectedData) {
         super(sourceCourseId, migrationType);
+        this.selectiveImport(selectiveImport);
         this.destinationCourseId = destinationCourseId;
-        this.selectiveImport = selectiveImport;
-        addSingleItem("selective_import", Boolean.toString(selectiveImport));
         for(String item : selectedData) {
             addSingleItem(item, "1");
         }
@@ -32,77 +40,78 @@ public class CreateCourseContentMigrationOptions extends CreateContentMigrationO
     public String getDestinationCourseId() {
         return destinationCourseId;
     }
-
-    public boolean isSelectiveImport() {
-        return selectiveImport;
+    
+    public CreateCourseContentMigrationOptions selectiveImport(boolean selectiveImport) {
+        addSingleItem("selective_import", Boolean.toString(selectiveImport));
+        return this;
     }
 
-    public CreateContentMigrationOptions questionBank(Integer questionBankId) {
+    public CreateCourseContentMigrationOptions questionBank(Integer questionBankId) {
         addSingleItem("settings[question_bank_id]", questionBankId.toString());
         return this;
     }
 
-    public CreateContentMigrationOptions questionBankName(String questionBankName) {
+    public CreateCourseContentMigrationOptions questionBankName(String questionBankName) {
         addSingleItem("settings[question_bank_name]", questionBankName);
         return this;
     }
 
-    public CreateContentMigrationOptions overwriteQuizzes(Boolean overwriteQuizzes) {
+    public CreateCourseContentMigrationOptions overwriteQuizzes(Boolean overwriteQuizzes) {
         addSingleItem("settings[overwrite_quizzes]", overwriteQuizzes.toString());
         return this;
     }
 
-    public CreateContentMigrationOptions insertIntoModule(Integer insertIntoModuleId) {
+    public CreateCourseContentMigrationOptions insertIntoModule(Integer insertIntoModuleId) {
         addSingleItem("settings[insert_into_module_id]", insertIntoModuleId.toString());
         return this;
     }
 
-    public CreateContentMigrationOptions insertIntoModuleType(String insertIntoModuleType) {
+    public CreateCourseContentMigrationOptions insertIntoModuleType(String insertIntoModuleType) {
         addSingleItem("settings[insert_into_module_type]", insertIntoModuleType);
         return this;
     }
 
-    public CreateContentMigrationOptions insertIntoModulePosition(Integer insertIntoModulePosition) {
+    public CreateCourseContentMigrationOptions insertIntoModulePosition(Integer insertIntoModulePosition) {
         addSingleItem("settings[insert_into_module_position]", insertIntoModulePosition.toString());
         return this;
     }
 
-    public CreateContentMigrationOptions moveToAssignmentGroup(Integer moveToAssignmentGroup) {
+    public CreateCourseContentMigrationOptions moveToAssignmentGroup(Integer moveToAssignmentGroup) {
         addSingleItem("settings[move_to_assignment_group_id]", moveToAssignmentGroup.toString());
         return this;
     }
 
-    public CreateContentMigrationOptions shiftDates(Boolean shiftDates) {
+    public CreateCourseContentMigrationOptions shiftDates(Boolean shiftDates) {
         addSingleItem("date_shift_options[shift_dates]", shiftDates.toString());
         return this;
     }
 
-    public CreateContentMigrationOptions removeDates(Boolean removeDates) {
+    public CreateCourseContentMigrationOptions removeDates(Boolean removeDates) {
         addSingleItem("date_shift_options[remove_dates]", removeDates.toString());
         return this;
     }
 
-    public CreateContentMigrationOptions oldStartDate(Date oldStartDate) {
+    public CreateCourseContentMigrationOptions oldStartDate(Date oldStartDate) {
         addSingleItem("date_shift_options[old_start_date]", oldStartDate.toString());
         return this;
     }
 
-    public CreateContentMigrationOptions oldEndDate(Date oldEndDate) {
+    public CreateCourseContentMigrationOptions oldEndDate(Date oldEndDate) {
         addSingleItem("date_shift_options[old_end_date]", oldEndDate.toString());
         return this;
     }
 
-    public CreateContentMigrationOptions newStartDate(Date newStartDate) {
+    public CreateCourseContentMigrationOptions newStartDate(Date newStartDate) {
         addSingleItem("date_shift_options[new_start_date]", newStartDate.toString());
         return this;
     }
 
-    public CreateContentMigrationOptions newEndDate(Date newEndDate) {
+    public CreateCourseContentMigrationOptions newEndDate(Date newEndDate) {
         addSingleItem("date_shift_options[new_end_date]", newEndDate.toString());
         return this;
     }
 
-    public CreateContentMigrationOptions daySubstitutions(Integer dayX, Integer newDay) {
+    public CreateCourseContentMigrationOptions daySubstitutions(Integer dayX, Integer newDay) {
         addSingleItem("date_shift_options[day_substitutions]["+dayX+"]", newDay.toString());
         return this;
     }

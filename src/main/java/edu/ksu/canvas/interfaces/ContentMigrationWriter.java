@@ -13,12 +13,12 @@ public interface ContentMigrationWriter extends CanvasWriter<ContentMigration, C
     Optional<ContentMigration> createCourseContentMigration(CreateCourseContentMigrationOptions options) throws IOException;
     Optional<ContentMigration> updateCourseContentMigration(Integer id, CreateCourseContentMigrationOptions options) throws IOException;
 
-    Optional<ContentMigration> createUserContentMigration(CreateContentMigrationOptions options) throws IOException;
-    Optional<ContentMigration> updateUserContentMigration(Integer id, CreateContentMigrationOptions options) throws IOException;
+    Optional<ContentMigration> createUserContentMigration(String userId, CreateContentMigrationOptions options) throws IOException;
+    Optional<ContentMigration> updateUserContentMigration(String userId, Integer id, CreateContentMigrationOptions options) throws IOException;
 
-    Optional<ContentMigration> createGroupContentMigration(CreateContentMigrationOptions options) throws IOException;
-    Optional<ContentMigration> updateGroupContentMigration(Integer id, CreateContentMigrationOptions options) throws IOException;
+    Optional<ContentMigration> createGroupContentMigration(String groupId, CreateContentMigrationOptions options) throws IOException;
+    Optional<ContentMigration> updateGroupContentMigration(String groupId, Integer id, CreateContentMigrationOptions options) throws IOException;
 
-    Optional<ContentMigration> createAccountContentMigration(CreateContentMigrationOptions options) throws IOException;
-    Optional<ContentMigration> updateAccountContentMigration(Integer id, CreateContentMigrationOptions options) throws IOException;
+    Optional<ContentMigration> createAccountContentMigration(String accountId, CreateContentMigrationOptions options) throws IOException;
+    Optional<ContentMigration> updateAccountContentMigration(String accountId, Integer id, CreateContentMigrationOptions options) throws IOException;
 }
