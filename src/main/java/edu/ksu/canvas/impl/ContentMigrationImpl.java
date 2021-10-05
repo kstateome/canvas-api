@@ -76,17 +76,17 @@ public class ContentMigrationImpl extends BaseImpl<ContentMigration, ContentMigr
     }
 
     @Override
-    public Optional<ContentMigration> createUserContentMigration(CreateContentMigrationOptions options) throws IOException {
+    public Optional<ContentMigration> createUserContentMigration(String userId, CreateContentMigrationOptions options) throws IOException {
         LOG.debug("creating user content migration");
-        String url = buildCanvasUrl("users/" + options.getSourceCourseId() + "/content_migrations", Collections.emptyMap());
+        String url = buildCanvasUrl("users/" + userId + "/content_migrations", Collections.emptyMap());
         Response response = canvasMessenger.sendToCanvas(oauthToken, url, options.getOptionsMap());
         return responseParser.parseToObject(ContentMigration.class, response);
     }
 
     @Override
-    public Optional<ContentMigration> updateUserContentMigration(Integer id, CreateContentMigrationOptions options) throws IOException {
+    public Optional<ContentMigration> updateUserContentMigration(String userId, Integer id, CreateContentMigrationOptions options) throws IOException {
         LOG.debug("updating user content migration");
-        String url = buildCanvasUrl("users/" + options.getSourceCourseId() + "/content_migrations/" + id.toString(), Collections.emptyMap());
+        String url = buildCanvasUrl("users/" + userId + "/content_migrations/" + id.toString(), Collections.emptyMap());
         Response response = canvasMessenger.putToCanvas(oauthToken, url, options.getOptionsMap());
         return responseParser.parseToObject(ContentMigration.class, response);
     }
@@ -108,17 +108,17 @@ public class ContentMigrationImpl extends BaseImpl<ContentMigration, ContentMigr
     }
 
     @Override
-    public Optional<ContentMigration> createGroupContentMigration(CreateContentMigrationOptions options) throws IOException {
+    public Optional<ContentMigration> createGroupContentMigration(String groupId, CreateContentMigrationOptions options) throws IOException {
         LOG.debug("creating group content migration");
-        String url = buildCanvasUrl("groups/" + options.getSourceCourseId() + "/content_migrations", Collections.emptyMap());
+        String url = buildCanvasUrl("groups/" + groupId + "/content_migrations", Collections.emptyMap());
         Response response = canvasMessenger.sendToCanvas(oauthToken, url, options.getOptionsMap());
         return responseParser.parseToObject(ContentMigration.class, response);
     }
 
     @Override
-    public Optional<ContentMigration> updateGroupContentMigration(Integer id, CreateContentMigrationOptions options) throws IOException {
+    public Optional<ContentMigration> updateGroupContentMigration(String groupId, Integer id, CreateContentMigrationOptions options) throws IOException {
         LOG.debug("updating group content migration");
-        String url = buildCanvasUrl("groups/" + options.getSourceCourseId() + "/content_migrations/" + id.toString(), Collections.emptyMap());
+        String url = buildCanvasUrl("groups/" + groupId + "/content_migrations/" + id.toString(), Collections.emptyMap());
         Response response = canvasMessenger.putToCanvas(oauthToken, url, options.getOptionsMap());
         return responseParser.parseToObject(ContentMigration.class, response);
     }
@@ -140,17 +140,17 @@ public class ContentMigrationImpl extends BaseImpl<ContentMigration, ContentMigr
     }
 
     @Override
-    public Optional<ContentMigration> createAccountContentMigration(CreateContentMigrationOptions options) throws IOException {
+    public Optional<ContentMigration> createAccountContentMigration(String accountId, CreateContentMigrationOptions options) throws IOException {
         LOG.debug("creating account content migration");
-        String url = buildCanvasUrl("accounts/" + options.getSourceCourseId() + "/content_migrations", Collections.emptyMap());
+        String url = buildCanvasUrl("accounts/" + accountId + "/content_migrations", Collections.emptyMap());
         Response response = canvasMessenger.sendToCanvas(oauthToken, url, options.getOptionsMap());
         return responseParser.parseToObject(ContentMigration.class, response);
     }
 
     @Override
-    public Optional<ContentMigration> updateAccountContentMigration(Integer id, CreateContentMigrationOptions options) throws IOException {
+    public Optional<ContentMigration> updateAccountContentMigration(String accountId, Integer id, CreateContentMigrationOptions options) throws IOException {
         LOG.debug("updating account content migration");
-        String url = buildCanvasUrl("accounts/" + options.getSourceCourseId() + "/content_migrations/" + id.toString(), Collections.emptyMap());
+        String url = buildCanvasUrl("accounts/" + accountId + "/content_migrations/" + id.toString(), Collections.emptyMap());
         Response response = canvasMessenger.putToCanvas(oauthToken, url, options.getOptionsMap());
         return responseParser.parseToObject(ContentMigration.class, response);
     }
