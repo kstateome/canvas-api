@@ -109,6 +109,8 @@ then if that completes successfully a release bundle can be pushed to the stagin
     
 We don't automatically close the staged artifacts so after checking that the files are ok you can login to the [repository](https://oss.sonatype.org/) and release it.
 
+After releasing to maven central create a new release in GitHub and use the feature to automatically build the changelog of everything that's changed.
+
 ## Notes
 
 Currently this library is hand coded, however there is a machine readable API specification at
