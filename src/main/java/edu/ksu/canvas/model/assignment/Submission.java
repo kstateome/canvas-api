@@ -35,6 +35,7 @@ public class Submission extends BaseCanvasModel implements Serializable {
     private Boolean late;
     private Boolean assigmentVisible;
     private Boolean excused;
+    private Boolean missing;
     private String workflowState;
     private List<Submission> submissionHistory;
 
@@ -205,6 +206,14 @@ public class Submission extends BaseCanvasModel implements Serializable {
 
     public void setExcused(Boolean excused) {
         this.excused = excused;
+    }
+
+    public Boolean getMissing() {
+        return missing;
+    }
+
+    public void setMissing(Boolean missing) {
+        this.missing = missing;
     }
 
     public String getWorkflowState() {
