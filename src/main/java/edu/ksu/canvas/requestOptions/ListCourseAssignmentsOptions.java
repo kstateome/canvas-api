@@ -18,6 +18,13 @@ public class ListCourseAssignmentsOptions extends BaseOptions {
         public String toString() { return name().toLowerCase(); }
     }
 
+    public enum OrderBy {
+        POSITION, NAME, DUE_AT;
+
+        @Override
+        public String toString() { return name().toLowerCase(); }
+    }
+
     private String courseId;
 
     public ListCourseAssignmentsOptions(String courseId) {
@@ -79,4 +86,15 @@ public class ListCourseAssignmentsOptions extends BaseOptions {
         addSingleItem("bucket", bucket.toString());
         return this;
     }
+
+    /**
+     * Determines the order of the assignments. Defaults to “position”.
+     * @param orderBy Allowed orderBy values
+     * @return this to continue building options
+     */
+    public ListCourseAssignmentsOptions orderBy(OrderBy orderBy) {
+        addSingleItem("order_by", orderBy.toString());
+        return this;
+    }
+
 }
