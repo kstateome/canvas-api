@@ -44,7 +44,7 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     private Boolean postToSis;
     private String integrationId;
     private Object integrationData;
-    private String muted;
+    private Boolean muted;
     private Double pointsPossible;
     private List<String> submissionTypes;
     private String gradingType;
@@ -298,11 +298,11 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     }
 
     @CanvasField(postKey = "muted")
-    public String getMuted() {
+    public Boolean isMuted() {
         return muted;
     }
 
-    public void setMuted(String muted) {
+    public void setMuted(Boolean muted) {
         this.muted = muted;
     }
 
