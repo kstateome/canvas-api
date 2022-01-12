@@ -58,6 +58,7 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     private Boolean notifyOfUpdate;
     private Boolean omitFromFinalGrade;
     private List<String> assignmentVisibility;
+    private Boolean postManually;
 
     public Integer getId() {
         return id;
@@ -407,7 +408,16 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     public void setOmitFromFinalGrade(Boolean omitFromFinalGrade) {
         this.omitFromFinalGrade = omitFromFinalGrade;
     }
-    
+
+    @CanvasField(postKey = "post_manually")
+    public Boolean isPostManually() {
+        return postManually;
+    }
+
+    public void setPostManually(Boolean postManually) {
+        this.postManually = postManually;
+    }
+
     @CanvasField(postKey = "assignment_visibility")
     public List<String> getAssignmentVisibility() {
         return assignmentVisibility;
