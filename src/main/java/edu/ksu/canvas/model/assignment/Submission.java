@@ -7,6 +7,7 @@ import edu.ksu.canvas.model.Course;
 import edu.ksu.canvas.model.User;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class Submission extends BaseCanvasModel implements Serializable {
     private List<SubmissionComment> submissionComments;
     private String submissionType;
     private Date submittedAt;
+    private Instant postedAt;
     private String url;
     private Integer userId;
     private Integer gradeId;
@@ -151,6 +153,15 @@ public class Submission extends BaseCanvasModel implements Serializable {
     public void setSubmittedAt(Date submittedAt) {
         this.submittedAt = submittedAt;
     }
+
+    public Instant getPostedAt() {
+        return postedAt;
+    }
+
+    public void setPostedAt(Instant postedAt) {
+        this.postedAt = postedAt;
+    }
+
 
     public String getUrl() {
         return url;
