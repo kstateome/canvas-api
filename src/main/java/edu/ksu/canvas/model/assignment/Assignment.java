@@ -44,7 +44,7 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     private Boolean postToSis;
     private String integrationId;
     private Object integrationData;
-    private String muted;
+    private Boolean muted;
     private Double pointsPossible;
     private List<String> submissionTypes;
     private String gradingType;
@@ -58,6 +58,7 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     private Boolean notifyOfUpdate;
     private Boolean omitFromFinalGrade;
     private List<String> assignmentVisibility;
+    private Boolean postManually;
 
     public Integer getId() {
         return id;
@@ -297,11 +298,11 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     }
 
     @CanvasField(postKey = "muted")
-    public String getMuted() {
+    public Boolean isMuted() {
         return muted;
     }
 
-    public void setMuted(String muted) {
+    public void setMuted(Boolean muted) {
         this.muted = muted;
     }
 
@@ -407,7 +408,16 @@ public class Assignment extends BaseCanvasModel implements Serializable{
     public void setOmitFromFinalGrade(Boolean omitFromFinalGrade) {
         this.omitFromFinalGrade = omitFromFinalGrade;
     }
-    
+
+    @CanvasField(postKey = "post_manually")
+    public Boolean isPostManually() {
+        return postManually;
+    }
+
+    public void setPostManually(Boolean postManually) {
+        this.postManually = postManually;
+    }
+
     @CanvasField(postKey = "assignment_visibility")
     public List<String> getAssignmentVisibility() {
         return assignmentVisibility;
