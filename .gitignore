@@ -1,4 +1,6 @@
 target/
+.classpath
+.project
 .settings
 integration.properties
 rebel.xml
