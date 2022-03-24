@@ -32,7 +32,7 @@ public class Submission extends BaseCanvasModel implements Serializable {
     private Instant postedAt;
     private String url;
     private Integer userId;
-    private Integer gradeId;
+    private Integer graderId;
     private User user;
     private Boolean late;
     private Boolean assigmentVisible;
@@ -40,6 +40,7 @@ public class Submission extends BaseCanvasModel implements Serializable {
     private Boolean missing;
     private String workflowState;
     private List<Submission> submissionHistory;
+    private Instant gradedAt;
 
     public Integer getId() {
         return id;
@@ -179,12 +180,12 @@ public class Submission extends BaseCanvasModel implements Serializable {
         this.userId = userId;
     }
 
-    public Integer getGradeId() {
-        return gradeId;
+    public Integer getGraderId() {
+        return graderId;
     }
 
-    public void setGradeId(Integer gradeId) {
-        this.gradeId = gradeId;
+    public void setGraderId(Integer graderId) {
+        this.graderId = graderId;
     }
 
     public User getUser() {
@@ -243,4 +244,11 @@ public class Submission extends BaseCanvasModel implements Serializable {
         this.submissionHistory = submissionHistory;
     }
 
+    public Instant getGradedAt() {
+    	return gradedAt;
+    }
+
+    public void setGradedAt(Instant gradedAt) {
+    	this.gradedAt = gradedAt;
+    }
 }
