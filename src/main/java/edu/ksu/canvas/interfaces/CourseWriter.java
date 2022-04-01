@@ -2,7 +2,9 @@ package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.Course;
 import edu.ksu.canvas.model.Deposit;
+import edu.ksu.canvas.model.Progress;
 import edu.ksu.canvas.requestOptions.DeleteCourseOptions;
+import edu.ksu.canvas.requestOptions.UpdateCoursesOptions;
 import edu.ksu.canvas.requestOptions.UploadOptions;
 
 import java.io.IOException;
@@ -36,6 +38,14 @@ public interface CourseWriter extends CanvasWriter<Course, CourseWriter> {
      */
     Optional<Course> updateCourse(String id, Course course) throws IOException;
 
+    /**
+     * Update multiple courses in an account. Operates asynchronously
+     * @param accountId The ID of the account with the courses to update
+     * @param updateCoursesOptions (specifying the course IDs and the event type)
+     * @return The progress object created by Canvas
+     * @throws IOException When there is an error communicating with Canvas
+     */
+    Optional<Progress> updateCourses(String accountId, UpdateCoursesOptions updateCoursesOptions) throws IOException;
 
     /**
      * @param courseId The ID of the course you wish to delete

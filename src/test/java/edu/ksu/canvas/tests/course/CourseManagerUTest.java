@@ -4,8 +4,10 @@ import edu.ksu.canvas.CanvasTestBase;
 import edu.ksu.canvas.impl.CourseImpl;
 import edu.ksu.canvas.interfaces.CourseWriter;
 import edu.ksu.canvas.model.Course;
+import edu.ksu.canvas.model.Progress;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.requestOptions.DeleteCourseOptions;
+import edu.ksu.canvas.requestOptions.UpdateCoursesOptions;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,6 +15,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class CourseManagerUTest extends CanvasTestBase {
@@ -149,5 +153,19 @@ public class CourseManagerUTest extends CanvasTestBase {
         fakeRestClient.addSuccessResponse(url, "SampleJson/course/DeleteCourseSuccess.json");
         Boolean deleted = courseWriter.writeAsCanvasUser(ARBITRARY_USER_ID).deleteCourse(ARBITRARY_COURSE_ID);
         Assert.assertTrue("course deletion did not return true", deleted);
+    }
+
+    @Test
+    public void testCourseUpdates() throws IOException {
+        UpdateCoursesOptions updateCoursesOptions = new UpdateCoursesOptions(UpdateCoursesOptions.EventType.DELETE);
+        List<String> courseIds = new ArrayList<>();
+        courseIds.add(ARBITRARY_COURSE_ID);
+        updateCoursesOptions.courseIds(courseIds);
+
+        String url = baseUrl + "/api/v1/accounts/"+ ARBITRARY_ACCOUNT_ID + "/courses";
+        fakeRestClient.addSuccessResponse(url, "SampleJson/Progress.json");
+        Optional<Progress> optional = courseWriter.updateCourses(ARBITRARY_ACCOUNT_ID, updateCoursesOptions);
+        Assert.assertTrue("Expected optional to not be empty, containing a Progress object.", optional.isPresent());
+
     }
 }
