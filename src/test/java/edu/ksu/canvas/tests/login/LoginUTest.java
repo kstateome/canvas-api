@@ -8,6 +8,7 @@ import edu.ksu.canvas.interfaces.LoginWriter;
 import edu.ksu.canvas.model.Login;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.net.Response;
+import edu.ksu.canvas.requestOptions.CreateLoginOptions;
 import edu.ksu.canvas.util.CanvasURLBuilder;
 import org.junit.Assert;
 import org.junit.Before;
@@ -49,6 +50,20 @@ public class LoginUTest extends CanvasTestBase {
         Assert.assertEquals(2, logins.size());
         Assert.assertTrue(logins.stream().map(Login::getUniqueId).filter("test@email.com"::equals).findFirst().isPresent());
         Assert.assertTrue(logins.stream().map(Login::getUniqueId).filter("test2@email.com"::equals).findFirst().isPresent());
+    }
+
+    @Test
+    public void testCreateLogin() throws Exception {
+        String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion, "accounts/" + someAccountId + "/logins/", Collections.emptyMap());
+        fakeRestClient.addSuccessResponse(url, "SampleJson/login/CreateLogin.json");
+
+        Login login = new Login();
+        login.setAccountId(someAccountId);
+        login.setUniqueId(updatedId);
+        login.setSisUserId(updatedId);
+        Optional<Login> loginResponse = loginWriter.createLogin(login, new CreateLoginOptions());
+        Assert.assertEquals(updatedId, loginResponse.get().getUniqueId());
+        Assert.assertEquals(updatedId, loginResponse.get().getSisUserId());
     }
 
     @Test
