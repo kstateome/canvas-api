@@ -1,0 +1,11 @@
+{
+	"errors": {
+		"sis_source_id": [
+			{
+				"attribute": "sis_source_id",
+				"type": "SIS ID \"123\" is already in use",
+				"message": "SIS ID \"123\" is already in use"
+			}
+		]
+	}
+}
