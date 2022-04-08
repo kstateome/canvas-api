@@ -102,4 +102,21 @@ public class ErrorsJsonTest {
         assertNotNull(error.getMessage());
         assertNotNull(error.getType());
     }
+
+    @Test
+    public void testFailedCourseSisIdError() {
+        InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream("/SampleJson/course/CreateCourseSisidError.json"));
+        Gson gson = GsonResponseParser.getDefaultGsonParser(false);
+        GenericErrorResponse response = gson.fromJson(reader, GenericErrorResponse.class);
+        assertNotNull(response);
+        assertNotNull(response.getErrors());
+        assertNotNull(response.getErrors().get("sis_source_id"));
+        assertEquals(1, response.getErrors().get("sis_source_id").size());
+        List<ErrorDetails> errors = response.getErrors().get("sis_source_id");
+        assertNotNull(errors);
+        ErrorDetails error = errors.get(0);
+        assertEquals("sis_source_id", error.getAttribute());
+        assertNotNull(error.getMessage());
+        assertNotNull(error.getType());
+    }
 }
