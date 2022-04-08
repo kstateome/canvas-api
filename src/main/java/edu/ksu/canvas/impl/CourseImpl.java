@@ -5,6 +5,7 @@ import edu.ksu.canvas.interfaces.CourseReader;
 import edu.ksu.canvas.interfaces.CourseWriter;
 import edu.ksu.canvas.model.Course;
 import edu.ksu.canvas.model.Deposit;
+import edu.ksu.canvas.model.Progress;
 import edu.ksu.canvas.model.status.Conclude;
 import edu.ksu.canvas.model.status.Delete;
 import edu.ksu.canvas.net.Response;
@@ -100,6 +101,17 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
         String url = buildCanvasUrl("courses/" + encode(id), Collections.emptyMap());
         Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, course.toJsonObject(serializeNulls));
         return responseParser.parseToObject(Course.class, response);
+    }
+
+    @Override
+    public Optional<Progress> updateCourses(String accountId, UpdateCoursesOptions updateCoursesOptions) throws IOException {
+        String url = buildCanvasUrl("accounts/"+ accountId+ "/courses", Collections.emptyMap());
+        Response response = canvasMessenger.putToCanvas(oauthToken, url, updateCoursesOptions.getOptionsMap());
+
+        Progress progress = GsonResponseParser.getDefaultGsonParser(serializeNulls).fromJson(response.getContent(), Progress.class);
+        LOG.debug("ProgressId from update courses response: " + progress.getId());
+
+        return Optional.of(progress);
     }
 
     @Override
