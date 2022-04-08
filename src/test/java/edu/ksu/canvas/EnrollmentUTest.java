@@ -62,6 +62,7 @@ public class EnrollmentUTest extends CanvasTestBase {
         Assert.assertEquals("Expected shortName in object to match shortName in json", "Jane Doe", firstUser.getShortName());
         Assert.assertEquals("Expected sisUserId in object to match sisUserId in json", "SIS_001", firstUser.getSisUserId());
         Assert.assertEquals("Expected loginId in object to match loginId in json", "user1", firstUser.getLoginId());
+        Assert.assertEquals(firstEnrollment.getSisUserId(), firstUser.getSisUserId());
     }
 
     @Test

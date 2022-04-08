@@ -23,6 +23,7 @@
     "course_integration_id": null,
     "sis_section_id": null,
     "section_integration_id": null,
+    "sis_user_id": "SIS_001",
     "html_url": "http://canvas.example.edu/courses/25/users/38",
     "grades": {
       "html_url": "http://canvas.example.edu/courses/25/grades/68794",
@@ -76,6 +77,7 @@
     "course_integration_id": null,
     "sis_section_id": null,
     "section_integration_id": null,
+    "sis_user_id": "SIS_002",
     "html_url": "http://canvas.example.edu/courses/25/users/68794",
     "user": {
       "id": 68794,
@@ -120,6 +122,7 @@
     "course_integration_id": null,
     "sis_section_id": null,
     "section_integration_id": null,
+    "sis_user_id": "SIS_003",
     "html_url": "http://canvas.example.edu/courses/25/users/38264",
     "user": {
       "id": 38264,

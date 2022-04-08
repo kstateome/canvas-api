@@ -39,6 +39,7 @@ public class Enrollment extends BaseCanvasModel implements Serializable {
     private Grade grades;
     private User user;
     private Long roleId;
+    private String sisUserId;
 
     public long getId() {
         return id;
@@ -237,6 +238,14 @@ public class Enrollment extends BaseCanvasModel implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getSisUserId() {
+        return sisUserId;
+    }
+
+    public void setSisUserId(String sisUserId) {
+        this.sisUserId = sisUserId;
     }
 
     @Override
