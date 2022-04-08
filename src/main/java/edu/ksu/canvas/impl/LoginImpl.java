@@ -9,6 +9,7 @@ import edu.ksu.canvas.model.Login;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
+import edu.ksu.canvas.requestOptions.CreateLoginOptions;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class LoginImpl extends BaseImpl<Login, LoginReader, LoginWriter> implements LoginReader, LoginWriter {
@@ -34,6 +36,19 @@ public class LoginImpl extends BaseImpl<Login, LoginReader, LoginWriter> impleme
         String url = buildCanvasUrl(String.format("users/%s/logins", userId), emptyMap());
 
         return getListFromCanvas(url);
+    }
+
+    @Override
+    public Optional<Login> createLogin(Login login, CreateLoginOptions options) throws IOException {
+        LOG.debug(String.format("Creating login on account %s", login.getAccountId()));
+        if(StringUtils.isAnyBlank(login.getAccountId())) {
+            throw new IllegalArgumentException("Account ID is required to create a login");
+        }
+        String url = buildCanvasUrl(String.format("accounts/%s/logins/", login.getAccountId()), emptyMap());
+        Map<String, List<String>> parameterMap = options.getOptionsMap();
+        parameterMap.putAll(login.toPostMap(serializeNulls));
+        Response response = canvasMessenger.sendToCanvas(oauthToken, url, parameterMap);
+        return responseParser.parseToObject(Login.class, response);
     }
 
     @Override
