@@ -1,11 +1,12 @@
 package edu.ksu.canvas.interfaces;
 
-import edu.ksu.canvas.model.assignment.Submission;
-import edu.ksu.canvas.requestOptions.GetSubmissionsOptions;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+
+import edu.ksu.canvas.model.assignment.Submission;
+import edu.ksu.canvas.requestOptions.GetMultipleSubmissionsOptions;
+import edu.ksu.canvas.requestOptions.GetSubmissionsOptions;
 
 public interface SubmissionReader  extends CanvasReader<Submission, SubmissionReader> {
     /**
@@ -25,6 +26,15 @@ public interface SubmissionReader  extends CanvasReader<Submission, SubmissionRe
      * @throws IOException When there is an error communicating with Canvas
      */
     List<Submission> getSectionSubmissions(GetSubmissionsOptions options) throws IOException;
+    
+    /**
+     * Retrieve a list of multiple assignment submissions from a course
+     *
+     * @param options Options class containing required and optional parameters for this API call
+     * @return List of assignment submissions in the course with the course ID
+     * @throws IOException When there is an error communicating with Canvas
+     */
+    List<Submission> getCourseSubmissionMultipleAssignments(GetMultipleSubmissionsOptions options) throws IOException;
 
     /**
      * Retrieve a single assignment submission from a course
