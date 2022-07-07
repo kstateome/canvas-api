@@ -329,6 +329,11 @@ public class SimpleRestClient implements RestClient {
                 LOG.debug("User's token is invalid. It might need refreshing");
                 throw new InvalidOauthTokenException();
             }
+            // On recent Canvas installations they should return a 403 for unauthorized
+            LOG.error("User is not authorized to perform this action");
+            throw new UnauthorizedException();
+        }
+        if (statusCode == 403) {
             LOG.error("User is not authorized to perform this action");
             throw new UnauthorizedException();
         }
