@@ -470,6 +470,10 @@ public class Course extends BaseCanvasModel implements Serializable {
     public Boolean getConcluded() {
         return concluded;
     }
+    
+    public void setConcluded(Boolean concluded) {
+        this.concluded = concluded;
+    }
 
     @CanvasField(postKey = "public_description")
     public String getPublicDescription() {
