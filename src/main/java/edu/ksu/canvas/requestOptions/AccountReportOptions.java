@@ -105,4 +105,15 @@ public class AccountReportOptions extends BaseOptions {
         addSingleItem("parameters[include_deleted]", parameter);
         return this;
     }
+
+    /**
+     * This is an undocumented parameter, when set it prevents the notification from being sent to the user
+     * who initiated the report.
+     * @param parameter true/false
+     * @return The AccountReportOptions.
+     */
+    public AccountReportOptions skipMessage(String parameter) {
+        addSingleItem("parameters[skip_message]", parameter);
+        return this;
+    }
 }
