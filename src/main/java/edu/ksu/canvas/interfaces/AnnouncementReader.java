@@ -14,6 +14,6 @@ import java.util.List;
  */
 public interface AnnouncementReader extends CanvasReader<Announcement, AnnouncementReader> {
 
-	List<Announcement> listCourseAnnouncements(ListCourseAnnouncementsOptions options) throws IOException;
+    List<Announcement> listCourseAnnouncements(ListCourseAnnouncementsOptions options) throws IOException;
 
 }

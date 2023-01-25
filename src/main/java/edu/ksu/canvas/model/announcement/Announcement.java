@@ -10,6 +10,6 @@ import java.io.Serializable;
  */
 public class Announcement extends DiscussionTopic implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
 }
