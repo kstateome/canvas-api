@@ -12,6 +12,11 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
+/**
+ * An Announcement is really just a DiscussionTopic, but Canvas has
+ * a separate API call for fetching the ones posted under the
+ * Announcements tab rather than the Discussions tab. That's handled here.
+ */
 public class AnnouncementImpl extends BaseImpl<Announcement, AnnouncementReader, AnnouncementWriter> implements AnnouncementReader, AnnouncementWriter {
 
 	public AnnouncementImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient, int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {
