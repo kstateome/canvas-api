@@ -6,3 +6,4 @@ rebel-remote.xml
 *.iml
 *.idea
 release.properties
+/discussion_test/
