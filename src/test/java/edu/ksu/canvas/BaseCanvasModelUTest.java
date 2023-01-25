@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BaseCanvasModelUTest {
-    public static final String CLASS_POST_KEY = "com/canvacord/test";
+    public static final String CLASS_POST_KEY = "test";
     public static final String CLASS_POST_KEY_OVERRIDE = "override";
     public static final String FIELD1_POST_KEY = "field1Key";
     public static final String FIELD2_POST_KEY = "field2Key";
