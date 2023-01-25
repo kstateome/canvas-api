@@ -14,8 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class DiscussionTopicImpl extends BaseImpl<DiscussionTopic, DiscussionTopicReader, DiscussionTopicWriter> implements DiscussionTopicReader, DiscussionTopicWriter {
 	private static final Logger LOG = LoggerFactory.getLogger(DiscussionTopicImpl.class);
@@ -40,17 +39,30 @@ public class DiscussionTopicImpl extends BaseImpl<DiscussionTopic, DiscussionTop
 
 	@Override
 	public Optional<DiscussionTopic> createDiscussionTopic(String courseId, DiscussionTopic discussionTopic, boolean isAnnouncement) throws IOException {
-		return Optional.empty();
+		String url = buildCanvasUrl("courses/" + courseId + "/discussion_topics", Collections.emptyMap());
+		Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, discussionTopic.toJsonObject(serializeNulls));
+		return responseParser.parseToObject(DiscussionTopic.class, response);
 	}
 
 	@Override
 	public Optional<DiscussionTopic> deleteDiscussionTopic(String courseId, Long discussionTopicId) throws IOException {
-		return Optional.empty();
+		Map<String, List<String>> postParams = new HashMap<>();
+		postParams.put("event", Collections.singletonList("delete"));
+		String createdURL = buildCanvasUrl("courses/" + courseId + "/discussion_topics/" + discussionTopicId, Collections.emptyMap());
+		Response response = canvasMessenger.deleteFromCanvas(oauthToken, createdURL, postParams);
+		LOG.debug("response {}", response.toString());
+		if (response.getErrorHappened() || response.getResponseCode() != 200) {
+			LOG.debug("Failed to delete discussion topic, error message: " + response);
+			return Optional.empty();
+		}
+		return responseParser.parseToObject(DiscussionTopic.class, response);
 	}
 
 	@Override
 	public Optional<DiscussionTopic> editDiscussionTopic(String courseId, DiscussionTopic discussionTopic) throws IOException {
-		return Optional.empty();
+		String url = buildCanvasUrl("courses/" + courseId + "/discussion_topics", Collections.emptyMap());
+		Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, discussionTopic.toJsonObject(serializeNulls));
+		return responseParser.parseToObject(DiscussionTopic.class, response);
 	}
 
 	@Override
