@@ -39,7 +39,7 @@ public class DiscussionTopicImpl extends BaseImpl<DiscussionTopic, DiscussionTop
 	}
 
 	@Override
-	public Optional<DiscussionTopic> createDiscussionTopic(String courseId, DiscussionTopic discussionTopic) throws IOException {
+	public Optional<DiscussionTopic> createDiscussionTopic(String courseId, DiscussionTopic discussionTopic, boolean isAnnouncement) throws IOException {
 		return Optional.empty();
 	}
 
