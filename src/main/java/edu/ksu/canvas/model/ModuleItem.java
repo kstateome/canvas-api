@@ -16,6 +16,7 @@ public class ModuleItem extends BaseCanvasModel implements Serializable {
 	private String pageUrl; /* only for 'Page' type */
 	private String externalUrl; /* only for 'ExternalUrl' and 'ExternalTool' types */
 	private Boolean newTab; /* only for 'ExternalTool' type */
+	private CompletionRequirement completionRequirement;
 	private Boolean published;
 
 	public Long getId() {
@@ -114,11 +115,48 @@ public class ModuleItem extends BaseCanvasModel implements Serializable {
 		this.newTab = newTab;
 	}
 
+	public CompletionRequirement getCompletionRequirement() {
+		return completionRequirement;
+	}
+
+	public void setCompletionRequirement(CompletionRequirement completionRequirement) {
+		this.completionRequirement = completionRequirement;
+	}
+
 	public Boolean getPublished() {
 		return published;
 	}
 
 	public void setPublished(Boolean published) {
 		this.published = published;
+	}
+
+	public class CompletionRequirement extends BaseCanvasModel implements Serializable {
+		private String type;
+		private java.math.BigDecimal minScore;
+		private Boolean completed;
+
+		public java.math.BigDecimal getMinScore() {
+			return minScore;
+		}
+
+		public void setMinScore(java.math.BigDecimal minScore) {
+			this.minScore = minScore;
+		}
+
+		public Boolean getCompleted() {
+			return completed;
+		}
+
+		public void setCompleted(Boolean completed) {
+			this.completed = completed;
+		}
+
+		public String getType() {
+			return type;
+		}
+		public void setType(String type) {
+			this.type = type;
+		}
 	}
 }

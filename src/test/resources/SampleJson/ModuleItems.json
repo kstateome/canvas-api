@@ -1,0 +1,63 @@
+[
+	{
+		"id": 9012239,
+		"indent": 0,
+		"position": 1,
+		"title": "Android 101",
+		"type": "Assignment",
+		"module_id": 1059720,
+		"html_url": "https://mobiledev.instructure.com/courses/833052/modules/items/9012239",
+		"content_id": 2241839,
+		"url": "https://mobiledev.instructure.com/api/v1/courses/833052/assignments/2241839",
+		"completion_requirement": {
+			"type": "must_submit",
+			"completed": true
+		}
+	},
+	{
+		"id": 9012244,
+		"indent": 0,
+		"position": 2,
+		"title": "Favorite App Video",
+		"type": "Assignment",
+		"module_id": 1059720,
+		"html_url": "https://mobiledev.instructure.com/courses/833052/modules/items/9012244",
+		"content_id": 2241864,
+		"url": "https://mobiledev.instructure.com/api/v1/courses/833052/assignments/2241864",
+		"completion_requirement": {
+			"type": "min_score",
+			"min_score": "5",
+			"completed": true
+		}
+	},
+	{
+		"id": 9012248,
+		"indent": 0,
+		"position": 3,
+		"title": "Android vs. iOS",
+		"type": "Discussion",
+		"module_id": 1059720,
+		"html_url": "https://mobiledev.instructure.com/courses/833052/modules/items/9012248",
+		"content_id": 1369942,
+		"url": "https://mobiledev.instructure.com/api/v1/courses/833052/discussion_topics/1369942",
+		"completion_requirement": {
+			"type": "must_contribute",
+			"completed": false
+		}
+	},
+	{
+		"id": 9012251,
+		"indent": 0,
+		"position": 4,
+		"title": "Easy Quiz",
+		"type": "Quiz",
+		"module_id": 1059720,
+		"html_url": "https://mobiledev.instructure.com/courses/833052/modules/items/9012251",
+		"content_id": 757314,
+		"url": "https://mobiledev.instructure.com/api/v1/courses/833052/quizzes/757314",
+		"completion_requirement": {
+			"type": "must_submit",
+			"completed": true
+		}
+	}
+]
