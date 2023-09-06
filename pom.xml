@@ -345,12 +345,12 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.27</version>
+      <version>1.7.36</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>1.7.27</version>
+      <version>1.7.36</version>
       <!-- This is so that TestLauncher has an implementation but projects using this library don't get it -->
       <optional>true</optional>
     </dependency>
@@ -406,7 +406,7 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
-      <version>1.7.27</version>
+      <version>1.7.36</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
