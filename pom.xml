@@ -340,36 +340,36 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>30.1-jre</version>
+      <version>32.1.2-jre</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.27</version>
+      <version>1.7.36</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>1.7.27</version>
+      <version>1.7.36</version>
       <!-- This is so that TestLauncher has an implementation but projects using this library don't get it -->
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
-      <version>4.5.13</version>
+      <version>4.5.14</version>
     </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpmime</artifactId>
-      <version>4.5.2</version>
+      <version>4.5.14</version>
     </dependency>
 
     <!-- Everything below is for testing -->
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
-      <version>4.5.6</version>
+      <version>4.5.14</version>
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
@@ -382,19 +382,19 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-beans</artifactId>
-      <version>5.3.18</version>
+      <version>5.3.29</version>
       <scope>test</scope>
     </dependency>
       <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
-      <version>5.3.18</version>
+      <version>5.3.29</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
-      <version>5.3.18</version>
+      <version>5.3.29</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -406,7 +406,7 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
-      <version>1.7.27</version>
+      <version>1.7.36</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
