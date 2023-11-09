@@ -15,6 +15,8 @@ public class Role extends BaseCanvasModel implements Serializable {
     private long id;
     private String label;
     private String baseRoleType;
+    private boolean isAccountRole;
+    private String workflowState;
 
     public long getId() {
         return id;
@@ -33,5 +35,21 @@ public class Role extends BaseCanvasModel implements Serializable {
     }
     public void setBaseRoleType(String baseRoleType) {
         this.baseRoleType = baseRoleType;
+    }
+
+    public boolean isAccountRole() {
+        return isAccountRole;
+    }
+
+    public void setAccountRole(boolean accountRole) {
+        isAccountRole = accountRole;
+    }
+
+    public String getWorkflowState() {
+        return workflowState;
+    }
+
+    public void setWorkflowState(String workflowState) {
+        this.workflowState = workflowState;
     }
 }

@@ -5,6 +5,7 @@
         "label": "Account Admin",
         "base_role_type": "AccountMembership",
         "workflow_state": "built_in",
+        "is_account_role": true,
         "permissions": {
             "view_analytics": {
                 "enabled": true,
