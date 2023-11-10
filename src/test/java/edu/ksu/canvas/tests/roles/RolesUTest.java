@@ -36,6 +36,13 @@ public class RolesUTest extends CanvasTestBase {
         List<Role> rolesList = roleReader.listRoles(options);
         Assert.assertNotNull(rolesList);
         Assert.assertEquals(1, rolesList.size());
+        Role role = rolesList.iterator().next();
+        Assert.assertEquals(1, role.getId());
+        Assert.assertEquals("Account Admin", role.getLabel());
+        Assert.assertEquals("AccountMembership", role.getBaseRoleType());
+        Assert.assertEquals(true, role.isAccountRole());
+        Assert.assertEquals("built_in", role.getWorkflowState());
+        
     }
 
 }
