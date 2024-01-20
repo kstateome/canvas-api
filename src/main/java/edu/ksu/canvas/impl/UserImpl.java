@@ -91,6 +91,13 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
     }
 
     @Override
+    public void terminateUserSessions(String userId) throws IOException {
+        LOG.debug("Terminating user sessions for user {}", userId);
+        String url = buildCanvasUrl("users/" + userId + "/sessions", Collections.emptyMap());
+        canvasMessenger.deleteFromCanvas(oauthToken, url, Collections.emptyMap());
+    }
+
+    @Override
     protected Type listType() {
         return new TypeToken<List<User>>() {
         }.getType();

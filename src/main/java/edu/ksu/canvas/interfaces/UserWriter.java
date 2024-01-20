@@ -36,4 +36,13 @@ public interface UserWriter extends CanvasWriter<User, UserWriter> {
      * @throws IOException When there is an error communicating with Canvas
      */
     Optional<User> updateUser(User user) throws InvalidOauthTokenException, IOException;
+
+    /**
+     * Terminates all login sessions for the given user ID.
+     * This includes expiring all access tokens for OAuth applications
+     * @param userId The user ID to operate on
+     * @throws InvalidOauthTokenException When the supplied OAuth token is not valid
+     * @throws IOException When there is an error communicating with Canvas
+     */
+    void terminateUserSessions(String userId) throws InvalidOauthTokenException, IOException;
 }
