@@ -19,6 +19,8 @@ public class User extends BaseCanvasModel implements Serializable {
 
     private long id;
     private String name;
+    private String firstName;
+    private String lastName;
     private String sortableName;
     private String shortName;
     private String sisUserId;
@@ -62,6 +64,8 @@ public class User extends BaseCanvasModel implements Serializable {
         this.bio = other.bio;
         this.createdAt = other.createdAt;
         this.confirmationUrl = other.confirmationUrl;
+        this.firstName = other.firstName;
+        this.lastName = other.lastName;
     }
 
     public long getId() {
@@ -79,6 +83,16 @@ public class User extends BaseCanvasModel implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @CanvasField(postKey = "first_name")
+    public String getFirstName() {
+        return firstName;
+    }
+
+    @CanvasField(postKey = "last_name")
+    public String getLastName() {
+        return lastName;
     }
 
     @CanvasField(postKey = "sortable_name")
