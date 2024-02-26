@@ -1,6 +1,7 @@
 package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.Account;
+import edu.ksu.canvas.model.User;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -30,4 +31,12 @@ public interface AccountWriter extends CanvasWriter<Account, AccountWriter> {
      * @throws IOException When there is an error communicating with Canvas
      */
      Boolean deleteAccount(String parentAccountId, String accountId) throws IOException;
+
+    /**
+     * @param userId The ID of the user to delete.
+     * @param accountId The ID of the account to delete the user from
+     * @return the user who was deleted
+     * @throws IOException When there is an error communicating with Canvas
+     */
+     User deleteUser(String userId, String accountId) throws IOException;
 }
