@@ -32,5 +32,11 @@ public interface AccountWriter extends CanvasWriter<Account, AccountWriter> {
      */
      Boolean deleteAccount(String parentAccountId, String accountId) throws IOException;
 
-    User deleteUser(Integer userId) throws IOException;
+    /**
+     * @param userId The ID of the user to delete.
+     * @param accountId The ID of the account to delete the user from
+     * @return the user who was deleted
+     * @throws IOException When there is an error communicating with Canvas
+     */
+     User deleteUser(String userId, String accountId) throws IOException;
 }

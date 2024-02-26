@@ -2,7 +2,6 @@ package edu.ksu.canvas.impl;
 
 
 import com.google.gson.reflect.TypeToken;
-import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.interfaces.AccountReader;
 import edu.ksu.canvas.interfaces.AccountWriter;
 import edu.ksu.canvas.model.Account;
@@ -103,14 +102,14 @@ public class AccountImpl extends BaseImpl<Account, AccountReader, AccountWriter>
         return responseParsed.map(r -> r.getDelete()).orElse(false);
     }
 
-    public User deleteUser(Integer userId) throws IOException {
+    public User deleteUser(String userId, String accountId) throws IOException {
         Map<String, List<String>> postParams = new HashMap<>();
-        String deleteUrl = buildCanvasUrl("accounts/" + CanvasConstants.ACCOUNT_ID + "/users/" + userId, Collections.emptyMap());
+        String deleteUrl = buildCanvasUrl("accounts/" + accountId + "/users/" + userId, Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, deleteUrl, postParams);
         if (response.getErrorHappened() || ( response.getResponseCode() != 200)) {
             LOG.debug("Failed to delete user, error message: " + response);
         }
         Optional<DeletedUserResponse> responseParsed = responseParser.parseToObject(DeletedUserResponse.class, response);
-        return responseParsed.map(r -> r.getUser()).orElse(null);
+        return responseParsed.map(DeletedUserResponse::getUser).orElse(null);
     }
 }
