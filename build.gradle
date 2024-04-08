@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        url = uri('https://repo.maven.apache.org/maven2/')
+    }
+
+    maven {
+        url = uri('https://artifactory.colorado.edu/artifactory/software-engineering-maven')
+    }
+}
+
+dependencies {
+    implementation("javax.validation:validation-api:1.1.0.Final")
+    implementation("com.google.code.gson:gson:2.3")
+    implementation("org.apache.commons:commons-lang3:3.4")
+    implementation("com.google.guava:guava:30.1-jre")
+    implementation("org.slf4j:slf4j-api:1.7.27")
+    implementation("org.slf4j:slf4j-simple:1.7.27")
+    implementation("org.apache.httpcomponents:httpclient:4.5.2")
+    implementation("org.apache.httpcomponents:httpmime:4.5.2")
+    testImplementation("org.apache.httpcomponents:httpclient:4.5.6:tests")
+    testImplementation("junit:junit:4.13.1")
+    testImplementation("org.springframework:spring-beans:4.2.0.RELEASE")
+    testImplementation("org.springframework:spring-context:4.2.0.RELEASE")
+    testImplementation("org.springframework:spring-test:4.2.0.RELEASE")
+    testImplementation("org.mockito:mockito-core:1.10.19")
+    testImplementation("org.slf4j:slf4j-log4j12:1.7.27")
+}
+
+group = "edu.ksu.canvas"
+version = "2.1.0-SNAPSHOT"
+description = "Canvas API Library"
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
