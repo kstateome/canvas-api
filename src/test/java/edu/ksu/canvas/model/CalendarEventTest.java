@@ -1,23 +1,23 @@
 package edu.ksu.canvas.model;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 import java.util.Collections;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CalendarEventTest {
+class CalendarEventTest {
 
     @Test
-    public void testCopyConstructorEmpty() {
+    void testCopyConstructorEmpty() {
         CalendarEvent event = new CalendarEvent();
         CalendarEvent other = new CalendarEvent(event);
         assertEquals(event, other);
     }
 
     @Test
-    public void testCopyConstructorCreationFields() {
+    void testCopyConstructorCreationFields() {
         CalendarEvent event = new CalendarEvent();
         event.setId(1L);
         event.setTitle("Title");

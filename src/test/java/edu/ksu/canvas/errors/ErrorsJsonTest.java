@@ -2,18 +2,20 @@ package edu.ksu.canvas.errors;
 
 import com.google.gson.Gson;
 import edu.ksu.canvas.impl.GsonResponseParser;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 import java.io.InputStreamReader;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class ErrorsJsonTest {
+
+class ErrorsJsonTest {
 
     @Test
-    public void testFailedDuplicateId() {
+    void testFailedDuplicateId() {
         InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream("/SampleJson/user/UserCreateFailedDuplicateId.json"));
         Gson gson = GsonResponseParser.getDefaultGsonParser(false);
         UserErrorResponse response = gson.fromJson(reader, UserErrorResponse.class);
@@ -32,7 +34,7 @@ public class ErrorsJsonTest {
     }
 
     @Test
-    public void testFailedIntegrationId() {
+    void testFailedIntegrationId() {
         InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream("/SampleJson/user/UserCreateFailedIntegrationId.json"));
         Gson gson = GsonResponseParser.getDefaultGsonParser(false);
         UserErrorResponse response = gson.fromJson(reader, UserErrorResponse.class);
@@ -51,7 +53,7 @@ public class ErrorsJsonTest {
     }
 
     @Test
-    public void testFailedSisId() {
+    void testFailedSisId() {
         InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream("/SampleJson/user/UserCreateFailedSisId.json"));
         Gson gson = GsonResponseParser.getDefaultGsonParser(false);
         UserErrorResponse response = gson.fromJson(reader, UserErrorResponse.class);
@@ -70,7 +72,7 @@ public class ErrorsJsonTest {
     }
 
     @Test
-    public void testFailedLoginUniqueId() {
+    void testFailedLoginUniqueId() {
         InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream("/SampleJson/login/LoginUpdateFailedUniqueId.json"));
         Gson gson = GsonResponseParser.getDefaultGsonParser(false);
         GenericErrorResponse response = gson.fromJson(reader, GenericErrorResponse.class);
@@ -87,7 +89,7 @@ public class ErrorsJsonTest {
     }
 
     @Test
-    public void testFailedCourseDateError() {
+    void testFailedCourseDateError() {
         InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream("/SampleJson/course/CreateCourseDateError.json"));
         Gson gson = GsonResponseParser.getDefaultGsonParser(false);
         GenericErrorResponse response = gson.fromJson(reader, GenericErrorResponse.class);

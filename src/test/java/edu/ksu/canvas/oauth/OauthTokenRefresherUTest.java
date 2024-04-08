@@ -1,20 +1,18 @@
 package edu.ksu.canvas.oauth;
 
 import edu.ksu.canvas.LocalServerTestBase;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 
-@RunWith(JUnit4.class)
-public class OauthTokenRefresherUTest extends LocalServerTestBase {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+
+class OauthTokenRefresherUTest extends LocalServerTestBase {
 
     @Test
-    public void successfulRefresh() throws Exception {
+    void successfulRefresh() throws Exception {
         registerUrlResponse("/login/oauth2/*", "/SampleJson/oauth/SuccessfulAccessTokenResponse.json", 200, Collections.emptyMap());
         OauthTokenRefresher refresher = new OauthTokenRefresher("", "", baseUrl);
 
@@ -24,22 +22,22 @@ public class OauthTokenRefresherUTest extends LocalServerTestBase {
     }
 
     @Test
-    public void invalidTokenReturnsNull() throws Exception {
+    void invalidTokenReturnsNull() throws Exception {
         registerUrlResponse("/login/oauth2/*", "/SampleJson/oauth/InvalidRefreshTokenResponse.json", 400, Collections.emptyMap());
         OauthTokenRefresher refresher = new OauthTokenRefresher("", "", baseUrl);
 
         TokenRefreshResponse response = refresher.getNewToken("");
 
-        assertNull("An invalid refresh token should return null", response);
+        assertNull(response, "An invalid refresh token should return null");
     }
 
     @Test
-    public void invalidClientIdReturnsNull() throws Exception {
+    void invalidClientIdReturnsNull() throws Exception {
         registerUrlResponse("/login/oauth2/*", "/SampleJson/oauth/InvalidClientIdResponse.json", 401, Collections.emptyMap());
         OauthTokenRefresher refresher = new OauthTokenRefresher("", "", baseUrl);
 
         TokenRefreshResponse response = refresher.getNewToken("");
 
-        assertNull("An invalid refresh token should return null", response);
+        assertNull(response, "An invalid refresh token should return null");
     }
 }

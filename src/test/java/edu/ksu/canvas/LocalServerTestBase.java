@@ -4,8 +4,9 @@ import edu.ksu.canvas.net.SimpleRestClientUTest;
 import edu.ksu.canvas.util.JsonTestUtil;
 import org.apache.http.HttpHost;
 import org.apache.http.entity.StringEntity;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+
 
 import java.util.Map;
 
@@ -17,12 +18,12 @@ public class LocalServerTestBase extends org.apache.http.localserver.LocalServer
     protected String baseUrl;
     protected HttpHost httpHost;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         super.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         server.stop();
         super.shutDown();

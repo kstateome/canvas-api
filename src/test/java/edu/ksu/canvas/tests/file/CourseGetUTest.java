@@ -1,30 +1,28 @@
 package edu.ksu.canvas.tests.file;
 
 import edu.ksu.canvas.CanvasTestBase;
-import edu.ksu.canvas.impl.CourseImpl;
 import edu.ksu.canvas.impl.FileImpl;
-import edu.ksu.canvas.interfaces.CourseReader;
 import edu.ksu.canvas.interfaces.FileReader;
-import edu.ksu.canvas.model.Course;
 import edu.ksu.canvas.model.File;
 import edu.ksu.canvas.net.FakeRestClient;
-import edu.ksu.canvas.requestOptions.GetSingleCourseOptions;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CourseGetUTest extends CanvasTestBase {
     @Autowired
     private FakeRestClient fakeRestClient;
     private FileReader fileReader;
 
-    @Before
+    @BeforeEach
     public void setupData() {
         fileReader  = new FileImpl(baseUrl,apiVersion,SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT,
                 SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE, false);

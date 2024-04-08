@@ -6,35 +6,36 @@ import edu.ksu.canvas.interfaces.CourseReader;
 import edu.ksu.canvas.model.Course;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.requestOptions.GetSingleCourseOptions;
-import edu.ksu.canvas.requestOptions.ListCurrentUserCoursesOptions;
-import edu.ksu.canvas.requestOptions.ListUserCoursesOptions;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class CourseGetUTest extends CanvasTestBase {
+
+class CourseGetUTest extends CanvasTestBase {
     @Autowired
     private FakeRestClient fakeRestClient;
     private CourseReader courseReader;
 
-    @Before
-    public void setupData() {
+    @BeforeEach
+    void setupData() {
         courseReader = new CourseImpl(baseUrl,apiVersion,SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT,
                 SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE, false);
     }
 
     @Test
-    public void testGettingCourses() throws IOException {
+    void testGettingCourses() throws IOException {
         String url = baseUrl + "/api/v1/courses/1234?include[]=course_image";
         fakeRestClient.addSuccessResponse(url, "SampleJson/course/GetCourseIncludeCourseImage.json");
         Optional<Course> optionalCourse = courseReader.getSingleCourse(new GetSingleCourseOptions("1234").includes(Collections.singletonList(GetSingleCourseOptions.Include.COURSE_IMAGE)));

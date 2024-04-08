@@ -1,18 +1,18 @@
 package edu.ksu.canvas.oauth;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class RefreshableTokenUTest {
+@ExtendWith(MockitoExtension.class)
+class RefreshableTokenUTest {
     private static final long EXPIRE_TIME_SECONDS = 3600;
     private static final long DEFAULT_TIME_DELTA_MS = 1000;
     private final String refreshToken = "arbitraryToken";
@@ -23,8 +23,8 @@ public class RefreshableTokenUTest {
     private OauthTokenRefresher tokenRefresher;
     private RefreshableOauthToken token;
 
-    @Before
-    public void setup() {
+    @BeforeEach
+    void setup() {
         firstToken.setAccessToken("firstToken");
         firstToken.setExpiresIn(EXPIRE_TIME_SECONDS);
         secondToken.setAccessToken("secondToken");
@@ -32,16 +32,16 @@ public class RefreshableTokenUTest {
     }
 
     @Test
-    public void tokenIsRefreshedUponConstruction() throws Exception {
+    void tokenIsRefreshedUponConstruction() throws Exception {
         when(tokenRefresher.getNewToken(refreshToken)).thenReturn(secondToken);
 
         token = new RefreshableOauthTokenForTests(tokenRefresher, refreshToken, DEFAULT_TIME_DELTA_MS);
 
-        assertEquals("Expected token to be refreshed upon construction", secondToken.getAccessToken(), token.getAccessToken());
+        assertEquals(secondToken.getAccessToken(), token.getAccessToken(), "Expected token to be refreshed upon construction");
     }
 
     @Test
-    public void tokenIsChangedWhenTokenExists() throws Exception {
+    void tokenIsChangedWhenTokenExists() throws Exception {
         when(tokenRefresher.getNewToken(refreshToken))
                 .thenReturn(firstToken)
                 .thenReturn(secondToken);
@@ -49,11 +49,11 @@ public class RefreshableTokenUTest {
 
         token.refresh();
 
-        assertEquals("Expected new token to be token returned from refresh service", secondToken.getAccessToken(), token.getAccessToken());
+        assertEquals(secondToken.getAccessToken(), token.getAccessToken(), "Expected new token to be token returned from refresh service");
     }
 
     @Test
-    public void tokenIsRefreshedWhenExpireTimeReached() throws Exception {
+    void tokenIsRefreshedWhenExpireTimeReached() throws Exception {
         firstToken.setExpiresIn(1l);
         long timeDelta = 1001l;
         when(tokenRefresher.getNewToken(refreshToken))
@@ -63,11 +63,11 @@ public class RefreshableTokenUTest {
 
         String accessToken = token.getAccessToken();
 
-        assertEquals("Expected token to be refreshed when expire time is reached", secondToken.getAccessToken(), accessToken);
+        assertEquals(secondToken.getAccessToken(), accessToken, "Expected token to be refreshed when expire time is reached");
     }
 
     @Test
-    public void tokenIsNotRefreshedWhenNotExpired() throws Exception {
+    void tokenIsNotRefreshedWhenNotExpired() throws Exception {
         when(tokenRefresher.getNewToken(refreshToken))
                 .thenReturn(firstToken)
                 .thenReturn(secondToken);
@@ -75,11 +75,11 @@ public class RefreshableTokenUTest {
 
         String accessToken = token.getAccessToken();
 
-        assertEquals("Expected token to not be refreshed when not expired", firstToken.getAccessToken(), accessToken);
+        assertEquals(firstToken.getAccessToken(), accessToken, "Expected token to not be refreshed when not expired");
     }
 
     @Test
-    public void tokenIsNotExpiredWhenNullTimeToLive() throws Exception {
+    void tokenIsNotExpiredWhenNullTimeToLive() throws Exception {
         firstToken.setExpiresIn(null);
         when(tokenRefresher.getNewToken(refreshToken))
                 .thenReturn(firstToken)
@@ -88,11 +88,11 @@ public class RefreshableTokenUTest {
 
         String accessToken = token.getAccessToken();
 
-        assertEquals("Expected token to not be refreshed when expire time is null", firstToken.getAccessToken(), accessToken);
+        assertEquals(firstToken.getAccessToken(), accessToken, "Expected token to not be refreshed when expire time is null");
     }
 
     @Test
-    public void tokenIsNotExpiredWhen0TimeToLive() throws Exception {
+    void tokenIsNotExpiredWhen0TimeToLive() throws Exception {
         firstToken.setExpiresIn(0l);
         when(tokenRefresher.getNewToken(refreshToken))
                 .thenReturn(firstToken)
@@ -101,17 +101,17 @@ public class RefreshableTokenUTest {
 
         String accessToken = token.getAccessToken();
 
-        assertEquals("Expected token to not be refreshed when expire time is 0", firstToken.getAccessToken(), accessToken);
+        assertEquals(firstToken.getAccessToken(), accessToken, "Expected token to not be refreshed when expire time is 0");
     }
 
     @Test
-    public void createTokenWithAccessTokenThenRefresh() throws Exception {
+    void createTokenWithAccessTokenThenRefresh() throws Exception {
         when(tokenRefresher.getNewToken(refreshToken))
                 .thenReturn(firstToken);
         token = new RefreshableOauthTokenForTests(tokenRefresher, refreshToken, "arbitraryAccessToken", DEFAULT_TIME_DELTA_MS);
         token.refresh();
 
-        assertEquals("", firstToken.getAccessToken(), token.getAccessToken());
+        assertEquals(firstToken.getAccessToken(), token.getAccessToken());
     }
 
     /*

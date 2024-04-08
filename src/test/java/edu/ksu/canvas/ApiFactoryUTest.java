@@ -2,53 +2,58 @@ package edu.ksu.canvas;
 
 import edu.ksu.canvas.interfaces.CanvasReader;
 import edu.ksu.canvas.interfaces.CourseWriter;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 import edu.ksu.canvas.interfaces.CourseReader;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ApiFactoryUTest extends CanvasTestBase {
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+class ApiFactoryUTest extends CanvasTestBase {
 
     private CanvasApiFactory apiFactoryWithDefaultTimeout;
     private CanvasApiFactory apiFactory;
 
-    @Before
-    public void setupFactory() {
+    @BeforeEach
+    void setupFactory() {
         apiFactoryWithDefaultTimeout = new CanvasApiFactory(baseUrl);
         apiFactory = new CanvasApiFactory(baseUrl, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT);
     }
 
     @Test
-    public void testGetCourseReader() {
+    void testGetCourseReader() {
         CourseReader courseReader = apiFactoryWithDefaultTimeout.getReader(CourseReader.class, SOME_OAUTH_TOKEN);
-        Assert.assertNotNull("API factory did not return a course reader object", courseReader);
+        assertNotNull(courseReader, "API factory did not return a course reader object");
     }
 
     @Test
-    public void testGetCourseWriter() {
+    void testGetCourseWriter() {
         CourseWriter courseWriter = apiFactoryWithDefaultTimeout.getWriter(CourseWriter.class, SOME_OAUTH_TOKEN);
-        Assert.assertNotNull("API factory did not return a course writer object", courseWriter);
+        assertNotNull(courseWriter, "API factory did not return a course writer object");
     }
 
     @Test
-    public void testGetWriterWithTimeout() {
+    void testGetWriterWithTimeout() {
         apiFactory = new CanvasApiFactory(baseUrl, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT);
         CourseWriter courseWriter = apiFactory.getWriter(CourseWriter.class, SOME_OAUTH_TOKEN);
-        Assert.assertNotNull("API factory did not return a course writer object", courseWriter);
+        assertNotNull(courseWriter, "API factory did not return a course writer object");
     }
 
     @Test
-    public void testGetReaderWithTimeout() {
+    void testGetReaderWithTimeout() {
         apiFactory = new CanvasApiFactory(baseUrl, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT);
         CourseReader courseReader = apiFactory.getReader(CourseReader.class, SOME_OAUTH_TOKEN);
-        Assert.assertNotNull("API factory did not return a course writer object", courseReader);
+        assertNotNull(courseReader, "API factory did not return a course writer object");
     }
 
-    @Test(expected=UnsupportedOperationException.class)
-    public void testExceptionThrownForInvalidClass() {
+    @Test
+    void testExceptionThrownForInvalidClass() {
         //The base class does not have an implementation.
         //This simulates passing in a new class that hasn't been added to the readerMap yet
-        apiFactoryWithDefaultTimeout.getReader(CanvasReader.class, SOME_OAUTH_TOKEN);
+        assertThrows(UnsupportedOperationException.class, () -> {
+            apiFactoryWithDefaultTimeout.getReader(CanvasReader.class, SOME_OAUTH_TOKEN);
+        });
+
     }
 }

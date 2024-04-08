@@ -18,10 +18,8 @@ import edu.ksu.canvas.requestOptions.CreateContentMigrationOptions.MigrationType
 import edu.ksu.canvas.requestOptions.CreateCourseContentMigrationOptions;
 import edu.ksu.canvas.requestOptions.GetSelectiveDataOptions;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
@@ -31,7 +29,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class ContentMigrationUTest extends CanvasTestBase {
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+class ContentMigrationUTest extends CanvasTestBase {
     @Autowired
     private FakeRestClient fakeRestClient;
     private ContentMigrationReader contentMigrationReader;
@@ -50,8 +54,8 @@ public class ContentMigrationUTest extends CanvasTestBase {
     private static final Long ARBITRARY_CONTENT_MIGRATION_ID_ISSUES = 46L;
     private static final Long ARBITRARY_CONTENT_MIGRATION_ID_FILE = 47L;
 
-    @Before
-    public void setupData() {
+    @BeforeEach
+    void setupData() {
         contentMigrationReader = new ContentMigrationImpl(baseUrl,apiVersion,SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT,
                 SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE, false);
         contentMigrationWriter = new ContentMigrationImpl(baseUrl,apiVersion,SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT,
@@ -63,7 +67,7 @@ public class ContentMigrationUTest extends CanvasTestBase {
     }
 
     @Test
-    public void testCourseContentMigrationCreation() throws IOException {
+    void testCourseContentMigrationCreation() throws IOException {
         String url = baseUrl + "/api/v1/courses/" + ARBITRARY_DESTINATION_COURSE_ID + "/content_migrations";
         fakeRestClient.addSuccessResponse(url, "SampleJson/contentMigration/CreateContentMigrationRunning.json");
         CreateCourseContentMigrationOptions createCourseContentMigrationOptions = new CreateCourseContentMigrationOptions(ARBITRARY_DESTINATION_COURSE_ID, ARBITRARY_COURSE_ID, MigrationType.course_copy_importer, false);
@@ -77,7 +81,7 @@ public class ContentMigrationUTest extends CanvasTestBase {
     }
 
     @Test
-    public void testGetCourseContentMigration() throws IOException {
+    void testGetCourseContentMigration() throws IOException {
         String url = baseUrl + "/api/v1/courses/" + ARBITRARY_DESTINATION_COURSE_ID + "/content_migrations/" + ARBITRARY_CONTENT_MIGRATION_ID;
         fakeRestClient.addSuccessResponse(url, "SampleJson/contentMigration/GetContentMigrationCompleted.json");
         //verifying content from previously created course content migration
@@ -97,7 +101,7 @@ public class ContentMigrationUTest extends CanvasTestBase {
     }
 
     @Test
-    public void testSelectiveCourseContentMigration() throws IOException {
+    void testSelectiveCourseContentMigration() throws IOException {
         String url = baseUrl + "/api/v1/courses/" + ARBITRARY_DESTINATION_COURSE_ID_2 + "/content_migrations";
         fakeRestClient.addSuccessResponse(url, "SampleJson/contentMigration/CreateContentMigrationWaiting.json");
         CreateCourseContentMigrationOptions createCourseContentMigrationOptions = new CreateCourseContentMigrationOptions(ARBITRARY_DESTINATION_COURSE_ID_2, ARBITRARY_COURSE_ID, MigrationType.course_copy_importer, true);
@@ -136,7 +140,7 @@ public class ContentMigrationUTest extends CanvasTestBase {
     }
 
     @Test
-    public void testGetContentCourseMigrationIssues() throws IOException {
+    void testGetContentCourseMigrationIssues() throws IOException {
         String url = baseUrl + "/api/v1/courses/" + ARBITRARY_DESTINATION_COURSE_ID_3 + "/content_migrations/" + ARBITRARY_CONTENT_MIGRATION_ID;
         String migrationUrl = baseUrl + "/api/v1/courses/" + ARBITRARY_DESTINATION_COURSE_ID_3 + "/content_migrations/" + ARBITRARY_CONTENT_MIGRATION_ID_ISSUES + "/migration_issues";
 
@@ -160,7 +164,7 @@ public class ContentMigrationUTest extends CanvasTestBase {
     }
 
     @Test
-    public void testFileContentCourseMigration() throws IOException {
+    void testFileContentCourseMigration() throws IOException {
         String url = baseUrl + "/api/v1/courses/" + ARBITRARY_DESTINATION_COURSE_ID_4 + "/content_migrations";
         fakeRestClient.addSuccessResponse(url, "SampleJson/contentMigration/CreateContentMigrationWithFile.json");
         CreateCourseContentMigrationOptions createCourseContentMigrationOptions = new CreateCourseContentMigrationOptions(ARBITRARY_DESTINATION_COURSE_ID_4, ARBITRARY_COURSE_ID, MigrationType.zip_file_importer, false);
@@ -170,7 +174,7 @@ public class ContentMigrationUTest extends CanvasTestBase {
         assertEquals(ARBITRARY_CONTENT_MIGRATION_ID_FILE, response.get().getId());
         assertEquals(MigrationType.zip_file_importer.toString(), response.get().getMigrationType());
         assertEquals(WorkflowState.pre_processing, response.get().getWorkflowState());
-        assertNotNull("preAttachment", response.get().getPreAttachment());
+        assertNotNull(response.get().getPreAttachment(), "preAttachment");
 
         String tempUrl = "https://tempurl.net/files?token=token";//this is retrieved from the preAttachment json from the response, upload_url field
         Map<String, List<String>> postParameters = new HashMap<>();

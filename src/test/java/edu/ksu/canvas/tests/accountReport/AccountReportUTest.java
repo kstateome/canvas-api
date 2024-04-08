@@ -11,99 +11,109 @@ import edu.ksu.canvas.model.report.AccountReport;
 import edu.ksu.canvas.model.report.AccountReportAttachment;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.util.CanvasURLBuilder;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class AccountReportUTest extends CanvasTestBase {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+class AccountReportUTest extends CanvasTestBase {
     @Autowired
     private FakeRestClient fakeRestClient;
     private AccountReportReader accountReportReader;
 
     private static final String ROOT_ACCOUNT_ID = "1";
 
-    @Before
-    public void setupReader() {
+    @BeforeEach
+    void setupReader() {
         accountReportReader = new AccountReportImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT, SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE, false);
     }
 
     @Test
-    public void testListReportsNoLastRun() throws Exception {
+    void testListReportsNoLastRun() throws Exception {
         String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion, "accounts/" + ROOT_ACCOUNT_ID + "/reports/sis_export_csv", Collections.emptyMap());
         fakeRestClient.addSuccessResponse(url, "SampleJson/accountReport/AccountReportListing.json");
         List<AccountReport> accountReports = accountReportReader.listReports(ROOT_ACCOUNT_ID, "sis_export_csv");
-        Assert.assertEquals(3, accountReports.size());
+        assertEquals(3, accountReports.size());
 
         // First record is a cancellation object
         AccountReport firstReport = accountReports.get(0);
-        Assert.assertEquals("error", firstReport.getStatus());
+        assertEquals("error", firstReport.getStatus());
 
-        Assert.assertTrue(firstReport.getParameters().containsKey("extra_text"));
-        Assert.assertNotNull(firstReport.getParameters().get("extra_text"));
+        assertTrue(firstReport.getParameters().containsKey("extra_text"));
+        assertNotNull(firstReport.getParameters().get("extra_text"));
 
-        Assert.assertNull(firstReport.getCurrentLine());
-        Assert.assertNull(firstReport.getFileUrl());
+        assertNull(firstReport.getCurrentLine());
+        assertNull(firstReport.getFileUrl());
 
         // Second record is a report that's still running
         AccountReport secondReport = accountReports.get(1);
-        Assert.assertEquals("running", secondReport.getStatus());
+        assertEquals("running", secondReport.getStatus());
 
-        Assert.assertTrue(secondReport.getParameters().containsKey("enrollment_term_id"));
-        Assert.assertTrue(secondReport.getParameters().containsKey("enrollments"));
-        Assert.assertTrue(secondReport.getParameters().containsKey("extra_text"));
+        assertTrue(secondReport.getParameters().containsKey("enrollment_term_id"));
+        assertTrue(secondReport.getParameters().containsKey("enrollments"));
+        assertTrue(secondReport.getParameters().containsKey("extra_text"));
 
-        Assert.assertNotNull(secondReport.getParameters().get("enrollment_term_id"));
-        Assert.assertNotNull(secondReport.getParameters().get("enrollments"));
-        Assert.assertNotNull(secondReport.getParameters().get("extra_text"));
+        assertNotNull(secondReport.getParameters().get("enrollment_term_id"));
+        assertNotNull(secondReport.getParameters().get("enrollments"));
+        assertNotNull(secondReport.getParameters().get("extra_text"));
 
-        Assert.assertNotNull(secondReport.getFileUrl());
-        Assert.assertNotNull(secondReport.getCurrentLine());
+        assertNotNull(secondReport.getFileUrl());
+        assertNotNull(secondReport.getCurrentLine());
 
-        Assert.assertNull(secondReport.getAttachment());
+        assertNull(secondReport.getAttachment());
 
         // Third report is a completed report
         AccountReport thirdReport = accountReports.get(2);
-        Assert.assertEquals("complete", thirdReport.getStatus());
+        assertEquals("complete", thirdReport.getStatus());
 
-        Assert.assertTrue(thirdReport.getParameters().containsKey("enrollment_term_id"));
-        Assert.assertTrue(thirdReport.getParameters().containsKey("users"));
-        Assert.assertTrue(thirdReport.getParameters().containsKey("extra_text"));
+        assertTrue(thirdReport.getParameters().containsKey("enrollment_term_id"));
+        assertTrue(thirdReport.getParameters().containsKey("users"));
+        assertTrue(thirdReport.getParameters().containsKey("extra_text"));
 
-        Assert.assertNotNull(thirdReport.getParameters().get("enrollment_term_id"));
-        Assert.assertNotNull(thirdReport.getParameters().get("users"));
-        Assert.assertNotNull(thirdReport.getParameters().get("extra_text"));
+        assertNotNull(thirdReport.getParameters().get("enrollment_term_id"));
+        assertNotNull(thirdReport.getParameters().get("users"));
+        assertNotNull(thirdReport.getParameters().get("extra_text"));
 
-        Assert.assertNotNull(thirdReport.getFileUrl());
-        Assert.assertNotNull(thirdReport.getCurrentLine());
+        assertNotNull(thirdReport.getFileUrl());
+        assertNotNull(thirdReport.getCurrentLine());
 
-        Assert.assertNotNull(thirdReport.getAttachment());
+        assertNotNull(thirdReport.getAttachment());
 
         // Inspecting information about the attachment itself
         AccountReportAttachment attachment = thirdReport.getAttachment();
 
-        Assert.assertNotNull(attachment.getUrl());
-        Assert.assertNotNull(attachment.getContentType());
-        Assert.assertNotNull(attachment.getSize());
+        assertNotNull(attachment.getUrl());
+        assertNotNull(attachment.getContentType());
+        assertNotNull(attachment.getSize());
 
     }
 
     @Test
-    public void testReportStatus() throws Exception {
+    void testReportStatus() throws Exception {
         String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion, "accounts/" + ROOT_ACCOUNT_ID + "/reports/sis_export_csv/2", Collections.emptyMap());
         fakeRestClient.addSuccessResponse(url, "SampleJson/accountReport/SingleAccountReportListing.json");
         Optional<AccountReport> accountReport = accountReportReader.reportStatus(ROOT_ACCOUNT_ID, "sis_export_csv", 2L);
 
-        Assert.assertTrue(accountReport.isPresent());
+        assertTrue(accountReport.isPresent());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testListReportsReportAsEmptyString() throws Exception {
-        accountReportReader.listReports(ROOT_ACCOUNT_ID, "");
+    @Test
+    void testListReportsReportAsEmptyString() throws Exception {
+        assertThrows(IllegalArgumentException.class, () -> {
+            accountReportReader.listReports(ROOT_ACCOUNT_ID, "");
+        });
+
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testListReportsReportAsNullValue() throws Exception {
-        accountReportReader.listReports(ROOT_ACCOUNT_ID, null);
+    @Test
+    void testListReportsReportAsNullValue() throws Exception {
+        assertThrows(IllegalArgumentException.class, () -> {
+            accountReportReader.listReports(ROOT_ACCOUNT_ID, null);
+        });
     }
 }
