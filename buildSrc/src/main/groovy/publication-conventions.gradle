@@ -24,6 +24,7 @@ afterEvaluate {
                 artifactId = jar.archiveBaseName.get()
                 version = project.version
 
+                from components.java
             }
         }
     }
