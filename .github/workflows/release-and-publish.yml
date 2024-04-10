@@ -24,6 +24,7 @@ jobs:
           ./gradlew \
             -PartifactoryUsername=${{ secrets.ARTIFACTORY_USERNAME }} \
             -PartifactoryPassword=${{ secrets.ARTIFACTORY_API_KEY }} \
+            -Prelease="true" \
             -Penvironment=production \
             -Preckon.stage="final" \
             -Preckon.scope="${{ inputs.revision_scope }}" \
