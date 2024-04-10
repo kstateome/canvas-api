@@ -1,0 +1,32 @@
+name: Release new version of artifact
+on:
+  workflow_dispatch:
+    inputs:
+      revision_scope:
+        description: 'What the revision of the application is, according to SemVer.  Valid options are major, minor and patch.'
+        required: true
+        default: 'patch'
+jobs:
+  run-gradle-test:
+    runs-on: ubuntu-latest
+    name: Run release build
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch tags for Reckon usage
+        run: git fetch --unshallow --tags
+      - uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+          cache: "gradle"
+      - name: Assemble and publish
+        run: |
+          ./gradlew \
+            -PartifactoryUsername=${{ secrets.ARTIFACTORY_USERNAME }} \
+            -PartifactoryPassword=${{ secrets.ARTIFACTORY_API_KEY }} \
+            -Penvironment=production \
+            -Preckon.stage="final" \
+            -Preckon.scope="${{ inputs.revision_scope }}" \
+            assemble publish reckonTagCreate reckonTagPush \
+            --refresh-dependencies --no-daemon \
+            -x test
