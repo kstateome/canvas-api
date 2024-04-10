@@ -19,8 +19,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Properties;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.assertEquals;
+import static org.junit.assertNotNull;
 
 public class ContentMigrationIT {
 
@@ -33,7 +33,7 @@ public class ContentMigrationIT {
     private ContentMigrationReader reader;
     private final int MAX_LOOPS = 15;
 
-    @Before
+    @BeforeEach
     public void setUp() throws IOException {
         // Load from root of project
         File config = new File("integration.properties");

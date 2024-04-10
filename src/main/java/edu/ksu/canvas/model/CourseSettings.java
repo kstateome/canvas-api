@@ -40,7 +40,7 @@ public class CourseSettings  extends BaseCanvasModel implements Serializable {
         this.allowFinalGradeOverride = allowFinalGradeOverride;
     }
 
-    @CanvasField(postKey = "allow_student_discussion_topics")
+    @CanvasField(postKey = "allow_student_discussion_topics", array = false)
     public Boolean getAllowStudentDiscussionTopics() {
         return allowStudentDiscussionTopics;
     }
@@ -49,7 +49,7 @@ public class CourseSettings  extends BaseCanvasModel implements Serializable {
         this.allowStudentDiscussionTopics = allowStudentDiscussionTopics;
     }
 
-    @CanvasField(postKey = "allow_student_forum_attachments")
+    @CanvasField(postKey = "allow_student_forum_attachments", array = false)
     public Boolean getAllowStudentForumAttachments() {
         return allowStudentForumAttachments;
     }
@@ -58,7 +58,7 @@ public class CourseSettings  extends BaseCanvasModel implements Serializable {
         this.allowStudentForumAttachments = allowStudentForumAttachments;
     }
 
-    @CanvasField(postKey = "allow_student_discussion_editing")
+    @CanvasField(postKey = "allow_student_discussion_editing", array = false)
     public Boolean getAllowStudentDiscussionEditing() {
         return allowStudentDiscussionEditing;
     }
@@ -67,7 +67,7 @@ public class CourseSettings  extends BaseCanvasModel implements Serializable {
         this.allowStudentDiscussionEditing = allowStudentDiscussionEditing;
     }
 
-    @CanvasField(postKey = "filter_speed_grader_by_student_group")
+    @CanvasField(postKey = "filter_speed_grader_by_student_group", array = false)
     public Boolean getFilterSpeedGraderByStudentGroup() {
         return filterSpeedGraderByStudentGroup;
     }
@@ -92,7 +92,7 @@ public class CourseSettings  extends BaseCanvasModel implements Serializable {
         this.gradingStandardId = gradingStandardId;
     }
 
-    @CanvasField(postKey = "allow_student_organized_groups")
+    @CanvasField(postKey = "allow_student_organized_groups", array = false)
     public Boolean getAllowStudentOrganizedGroups() {
         return allowStudentOrganizedGroups;
     }
@@ -101,7 +101,7 @@ public class CourseSettings  extends BaseCanvasModel implements Serializable {
         this.allowStudentOrganizedGroups = allowStudentOrganizedGroups;
     }
 
-    @CanvasField(postKey = "hide_final_grades")
+    @CanvasField(postKey = "hide_final_grades", array = false)
     public Boolean getHideFinalGrades() {
         return hideFinalGrades;
     }
@@ -110,7 +110,7 @@ public class CourseSettings  extends BaseCanvasModel implements Serializable {
         this.hideFinalGrades = hideFinalGrades;
     }
 
-    @CanvasField(postKey = "hide_distribution_graphs")
+    @CanvasField(postKey = "hide_distribution_graphs", array = false)
     public Boolean getHideDistributionGraphs() {
         return hideDistributionGraphs;
     }
@@ -119,7 +119,7 @@ public class CourseSettings  extends BaseCanvasModel implements Serializable {
         this.hideDistributionGraphs = hideDistributionGraphs;
     }
 
-    @CanvasField(postKey = "lock_all_announcements")
+    @CanvasField(postKey = "lock_all_announcements", array = false)
     public Boolean getLockAllAnnouncements() {
         return lockAllAnnouncements;
     }
@@ -128,7 +128,7 @@ public class CourseSettings  extends BaseCanvasModel implements Serializable {
         this.lockAllAnnouncements = lockAllAnnouncements;
     }
 
-    @CanvasField(postKey = "restrict_student_past_view")
+    @CanvasField(postKey = "restrict_student_past_view", array = false)
     public Boolean getRestrictStudentPastView() {
         return restrictStudentPastView;
     }
@@ -137,7 +137,7 @@ public class CourseSettings  extends BaseCanvasModel implements Serializable {
         this.restrictStudentPastView = restrictStudentPastView;
     }
 
-    @CanvasField(postKey = "restrict_student_future_view")
+    @CanvasField(postKey = "restrict_student_future_view", array = false)
     public Boolean getRestrictStudentFutureView() {
         return restrictStudentFutureView;
     }
@@ -146,7 +146,7 @@ public class CourseSettings  extends BaseCanvasModel implements Serializable {
         this.restrictStudentFutureView = restrictStudentFutureView;
     }
 
-    @CanvasField(postKey = "show_announcements_on_home_page")
+    @CanvasField(postKey = "show_announcements_on_home_page", array = false)
     public Boolean getShowAnnouncementsOnHomePage() {
         return showAnnouncementsOnHomePage;
     }
@@ -155,7 +155,7 @@ public class CourseSettings  extends BaseCanvasModel implements Serializable {
         this.showAnnouncementsOnHomePage = showAnnouncementsOnHomePage;
     }
 
-    @CanvasField(postKey = "home_page_announcement_limit")
+    @CanvasField(postKey = "home_page_announcement_limit", array = false)
     public Long getHomePageAnnouncementLimit() {
         return homePageAnnouncementLimit;
     }

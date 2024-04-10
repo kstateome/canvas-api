@@ -16,7 +16,7 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.UUID;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.assertNotNull;
 
 public class CourseUploadIT {
 
@@ -28,7 +28,7 @@ public class CourseUploadIT {
     private CalendarReader reader;
 
 
-    @Before
+    @BeforeEach
     public void setUp() throws IOException {
         // Load from root of project
         File config = new File("integration.properties");

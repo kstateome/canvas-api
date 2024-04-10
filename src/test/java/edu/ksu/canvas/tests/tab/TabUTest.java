@@ -9,28 +9,29 @@ import edu.ksu.canvas.interfaces.TabWriter;
 import edu.ksu.canvas.model.Tab;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.requestOptions.UpdateCourseTabOptions;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TabUTest extends CanvasTestBase {
+
+class TabUTest extends CanvasTestBase {
 
     @Autowired
     private FakeRestClient fakeRestClient;
 
     private TabWriter tabWriter;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         tabWriter = new TabImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT,
                 SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE, false);
     }
 
     @Test
-    public void testUpdateCourseTab() throws IOException {
+    void testUpdateCourseTab() throws IOException {
         String url = baseUrl + "/api/v1/courses/1234/tabs/files";
         fakeRestClient.addSuccessResponse(url, "SampleJson/tab/UpdateTabSuccess.json");
         UpdateCourseTabOptions options = new UpdateCourseTabOptions("1234", "files");

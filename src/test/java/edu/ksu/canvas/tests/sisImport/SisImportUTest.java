@@ -1,22 +1,20 @@
 package edu.ksu.canvas.tests.sisImport;
 
-import java.io.IOException;
-import java.util.Optional;
-
 import edu.ksu.canvas.CanvasTestBase;
 import edu.ksu.canvas.impl.SisImportImpl;
 import edu.ksu.canvas.interfaces.SisImportReader;
 import edu.ksu.canvas.model.SisImport;
 import edu.ksu.canvas.net.FakeRestClient;
-import edu.ksu.canvas.net.Response;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.Assert.*;
+import java.io.IOException;
+import java.util.Optional;
 
-public class SisImportUTest extends CanvasTestBase {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class SisImportUTest extends CanvasTestBase {
 
     private SisImportReader sisImportReader;
 
@@ -27,14 +25,14 @@ public class SisImportUTest extends CanvasTestBase {
     private static final Long ARBITRARY_SIS_IMPORT_ID = 65632L;
     private static final Integer ARBITRARY_SIS_IMPORT_PROGRESS = 100;
 
-    @Before
-    public void setupData() {
+    @BeforeEach
+    void setupData() {
         sisImportReader = new SisImportImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT,
                 SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE, false);
     }
 
     @Test
-    public void testGetSisImport() throws IOException {
+    void testGetSisImport() throws IOException {
         String url = baseUrl + "/api/v1/accounts/" + ARBITRARY_ACCOUNT_ID + "/sis_imports/" + ARBITRARY_SIS_IMPORT_ID;
         fakeRestClient.addSuccessResponse(url, "SampleJson/sisImport/SisImportCompleted.json");
 

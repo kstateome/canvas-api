@@ -5,22 +5,20 @@ import edu.ksu.canvas.impl.AuthenticationLogImpl;
 import edu.ksu.canvas.interfaces.AuthenticationLogReader;
 import edu.ksu.canvas.model.AuthenticationLog;
 import edu.ksu.canvas.net.FakeRestClient;
-import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.util.CanvasURLBuilder;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class AuthenticationLogUTest extends CanvasTestBase {
+
+class AuthenticationLogUTest extends CanvasTestBase {
     @Autowired
     private FakeRestClient fakeRestClient;
     private AuthenticationLogReader authenticationLogReader;
@@ -29,14 +27,14 @@ public class AuthenticationLogUTest extends CanvasTestBase {
     private static final String ARBITRARY_USER_ID = "165";
     private static final String ARBITRARY_LOGIN_ID = "170";
 
-    @Before
-    public void setupData() {
+    @BeforeEach
+    void setupData() {
         authenticationLogReader = new AuthenticationLogImpl(baseUrl,apiVersion,SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT,
                 SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE, false);
     }
 
     @Test
-    public void testGetAuthenticationLogForUser() throws IOException {
+    void testGetAuthenticationLogForUser() throws IOException {
         String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion, "audit/authentication/users/" + ARBITRARY_USER_ID, Collections.emptyMap());
         fakeRestClient.addSuccessResponse(url, "SampleJson/authenticationLog/AuthenticationLogForUser.json");
 
@@ -56,7 +54,7 @@ public class AuthenticationLogUTest extends CanvasTestBase {
     }
 
     @Test
-    public void testGetAuthenticationLogForAccount() throws IOException {
+    void testGetAuthenticationLogForAccount() throws IOException {
         String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion, "audit/authentication/accounts/" + ARBITRARY_ACCOUNT_ID, Collections.emptyMap());
         fakeRestClient.addSuccessResponse(url, "SampleJson/authenticationLog/AuthenticationLogForAccount.json");
 
@@ -76,7 +74,7 @@ public class AuthenticationLogUTest extends CanvasTestBase {
     }
 
     @Test
-    public void testGetAuthenticationLogForLogin() throws IOException {
+    void testGetAuthenticationLogForLogin() throws IOException {
         String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion, "audit/authentication/logins/" + ARBITRARY_LOGIN_ID, Collections.emptyMap());
         fakeRestClient.addSuccessResponse(url, "SampleJson/authenticationLog/AuthenticationLogForLogin.json");
 

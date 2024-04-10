@@ -1,0 +1,13 @@
+plugins {
+    id "java-library"
+    id "maven-publish"
+    id "org.springframework.boot"
+}
+
+tasks.named("bootJar") {
+    enabled = false
+}
+
+tasks.named("jar") {
+    enabled = true
+}

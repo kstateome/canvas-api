@@ -1,11 +1,14 @@
 package edu.ksu.canvas.impl;
 
 import com.google.gson.Gson;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 
-public class GsonResponseParserInstantTest extends TestCase {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+class GsonResponseParserInstantTest {
 
     /**
      * Simple helper to make JSON literals easier to write in Java
@@ -17,28 +20,32 @@ public class GsonResponseParserInstantTest extends TestCase {
         return json.replace("'", "\"");
     }
 
-    public void testInstantParsingNoZone() {
+    @Test
+    void testInstantParsingNoZone() {
         Gson defaultGsonParser = GsonResponseParser.getDefaultGsonParser(false);
         Sample sample = defaultGsonParser.fromJson(quote("{'instant': '2020-02-20T01:02:03Z'}"), Sample.class);
         assertNotNull(sample);
         assertEquals(Instant.parse("2020-02-20T01:02:03Z"), sample.instant);
     }
 
-    public void testInstantParsingZone() {
+    @Test
+    void testInstantParsingZone() {
         Gson defaultGsonParser = GsonResponseParser.getDefaultGsonParser(false);
         Sample sample = defaultGsonParser.fromJson(quote("{'instant': '2020-02-20T01:02:03-04:00'}"), Sample.class);
         assertNotNull(sample);
         assertEquals(Instant.parse("2020-02-20T05:02:03Z"), sample.instant);
     }
 
-    public void testInstantParsingZonePositive() {
+    @Test
+    void testInstantParsingZonePositive() {
         Gson defaultGsonParser = GsonResponseParser.getDefaultGsonParser(false);
         Sample sample = defaultGsonParser.fromJson(quote("{'instant': '2020-02-20T01:02:03+04:00'}"), Sample.class);
         assertNotNull(sample);
         assertEquals(Instant.parse("2020-02-19T21:02:03Z"), sample.instant);
     }
 
+
     static class Sample {
-        public Instant instant;
+        Instant instant;
     }
 }

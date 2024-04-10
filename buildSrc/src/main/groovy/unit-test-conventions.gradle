@@ -1,0 +1,22 @@
+plugins {
+    id "java-library"
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "failed", "skipped"
+        showStackTraces true
+        exceptionFormat "full"
+        showStandardStreams false
+
+        debug {
+            showStandardStreams true
+        }
+    }
+    // For Mockito wanting to instrument classes that it doesn't have direct access to
+    // See https://stackoverflow.com/a/70441435 for details
+    jvmArgs '--add-opens', 'java.base/java.lang=ALL-UNNAMED'
+}
+
+

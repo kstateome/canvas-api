@@ -2,28 +2,30 @@ package edu.ksu.canvas.net;
 
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.oauth.OauthToken;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyMap;
-import static org.mockito.Matchers.anyString;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyMap;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class RefreshingRestClientUTest {
+@ExtendWith(MockitoExtension.class)
+class RefreshingRestClientUTest {
     @Mock
     private RestClient mockRestClient;
     @InjectMocks
@@ -36,13 +38,13 @@ public class RefreshingRestClientUTest {
     private final Map<String, List<String>> arbitraryMap = Collections.emptyMap();
     private final Response response = new Response();
 
-    @Before
-    public void setupResponse() {
+    @BeforeEach
+    void setupResponse() {
         response.setContent(arbitraryString);
     }
 
     @Test
-    public void invalidOauthTokenCausesRefreshForApiGet() throws Exception {
+    void invalidOauthTokenCausesRefreshForApiGet() throws Exception {
         when(mockRestClient.sendApiGet(any(OauthToken.class), anyString(), anyInt(), anyInt()))
                 .thenThrow(InvalidOauthTokenException.class)
                 .thenReturn(response);
@@ -50,11 +52,11 @@ public class RefreshingRestClientUTest {
         Response returnedResponse = refreshRestClientUTest.sendApiGet(mockToken, arbitraryString, arbitraryInt, arbitraryInt);
 
         verify(mockToken, times(1)).refresh();
-        assertEquals("Expected response to be response returned from mockRestClient", response, returnedResponse);
+        assertEquals(response, returnedResponse, "Expected response to be response returned from mockRestClient");
     }
 
     @Test
-    public void invalidOauthTokenCausesRefreshForApiPost() throws Exception {
+    void invalidOauthTokenCausesRefreshForApiPost() throws Exception {
         when(mockRestClient.sendApiPost(any(OauthToken.class), any(), any(), anyInt(), anyInt()))
                 .thenThrow(InvalidOauthTokenException.class)
                 .thenReturn(response);
@@ -62,11 +64,11 @@ public class RefreshingRestClientUTest {
         Response returnedResponse = refreshRestClientUTest.sendApiPost(mockToken, arbitraryString, arbitraryMap,  arbitraryInt, arbitraryInt);
 
         verify(mockToken, times(1)).refresh();
-        assertEquals("Expected response to be response returned from mockRestClient", response, returnedResponse);
+        assertEquals(response, returnedResponse, "Expected response to be response returned from mockRestClient");
     }
 
     @Test
-    public void invalidOauthTokenCausesRefreshForApiPut() throws Exception {
+    void invalidOauthTokenCausesRefreshForApiPut() throws Exception {
         when(mockRestClient.sendApiPut(any(OauthToken.class), any(), any(), anyInt(), anyInt()))
                 .thenThrow(InvalidOauthTokenException.class)
                 .thenReturn(response);
@@ -74,11 +76,11 @@ public class RefreshingRestClientUTest {
         Response returnedResponse = refreshRestClientUTest.sendApiPut(mockToken, arbitraryString, arbitraryMap, arbitraryInt, arbitraryInt);
 
         verify(mockToken, times(1)).refresh();
-        assertEquals("Expected response to be response returned from mockRestClient", response, returnedResponse);
+        assertEquals(response, returnedResponse, "Expected response to be response returned from mockRestClient");
     }
 
     @Test
-    public void invalidOauthTokenCausesRefreshForApiDelete() throws Exception {
+    void invalidOauthTokenCausesRefreshForApiDelete() throws Exception {
         when(mockRestClient.sendApiDelete(any(OauthToken.class), anyString(), anyMap(), anyInt(), anyInt()))
                 .thenThrow(InvalidOauthTokenException.class)
                 .thenReturn(response);
@@ -86,11 +88,11 @@ public class RefreshingRestClientUTest {
         Response returnedResponse = refreshRestClientUTest.sendApiDelete(mockToken, arbitraryString, arbitraryMap, arbitraryInt, arbitraryInt);
 
         verify(mockToken, times(1)).refresh();
-        assertEquals("Expected response to be response returned from mockRestClient", response, returnedResponse);
+        assertEquals(response, returnedResponse, "Expected response to be response returned from mockRestClient");
     }
 
     @Test
-    public void invalidOauthTokenCausesRefreshForJsonPost() throws Exception {
+    void invalidOauthTokenCausesRefreshForJsonPost() throws Exception {
         when(mockRestClient.sendJsonPost(any(OauthToken.class), anyString(), anyString(), anyInt(), anyInt()))
                 .thenThrow(InvalidOauthTokenException.class)
                 .thenReturn(response);
@@ -98,11 +100,11 @@ public class RefreshingRestClientUTest {
         Response returnedResponse = refreshRestClientUTest.sendJsonPost(mockToken, arbitraryString, arbitraryString, arbitraryInt, arbitraryInt);
 
         verify(mockToken, times(1)).refresh();
-        assertEquals("Expected response to be response returned from mockRestClient", response, returnedResponse);
+        assertEquals(response, returnedResponse, "Expected response to be response returned from mockRestClient");
     }
 
     @Test
-    public void invalidOauthTokenCausesRefreshForJsonPut() throws Exception {
+    void invalidOauthTokenCausesRefreshForJsonPut() throws Exception {
         when(mockRestClient.sendJsonPut(any(OauthToken.class), anyString(), anyString(), anyInt(), anyInt()))
                 .thenThrow(InvalidOauthTokenException.class)
                 .thenReturn(response);
@@ -110,7 +112,7 @@ public class RefreshingRestClientUTest {
         Response returnedResponse = refreshRestClientUTest.sendJsonPut(mockToken, arbitraryString, arbitraryString, arbitraryInt, arbitraryInt);
 
         verify(mockToken, times(1)).refresh();
-        assertEquals("Expected response to be response returned from mockRestClient", response, returnedResponse);
+        assertEquals(response, returnedResponse, "Expected response to be response returned from mockRestClient");
     }
 
 

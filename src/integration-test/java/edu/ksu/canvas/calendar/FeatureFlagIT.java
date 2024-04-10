@@ -16,8 +16,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Properties;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.assertNotNull;
+import static org.junit.assertTrue;
 
 public class FeatureFlagIT {
 
@@ -29,7 +29,7 @@ public class FeatureFlagIT {
     private FeatureFlagWriter writer;
     private FeatureFlagReader reader;
 
-    @Before
+    @BeforeEach
     public void setUp() throws IOException {
         // Load from root of project
         File config = new File("integration.properties");

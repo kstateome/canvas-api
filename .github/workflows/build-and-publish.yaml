@@ -1,0 +1,39 @@
+name: Run tests and Publish Artifacts
+
+on:
+  push:
+    paths-ignore:
+      - "ansible/**"
+      - ".github/**"
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Test, build and publish all projects
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch Tags for Reckon usage
+        run: git fetch --unshallow --tags
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+          cache: 'gradle'
+
+      - name: Test and Compile with Gradle
+        run: |
+          ./gradlew \
+          -PartifactoryUsername="${{ secrets.ARTIFACTORY_USERNAME }}" \
+          -PartifactoryPassword="${{ secrets.ARTIFACTORY_API_KEY }}" \
+          clean check --parallel
+
+      - name: Publish JARs to Artifactory
+        run: |
+          ./gradlew \
+          -PartifactoryUsername="${{ secrets.ARTIFACTORY_USERNAME }}" \
+          -PartifactoryPassword="${{ secrets.ARTIFACTORY_API_KEY }}" \
+          publish --parallel -x check

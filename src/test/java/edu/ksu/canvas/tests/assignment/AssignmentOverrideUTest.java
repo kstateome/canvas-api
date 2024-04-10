@@ -2,56 +2,58 @@ package edu.ksu.canvas.tests.assignment;
 
 import com.google.gson.JsonSyntaxException;
 import edu.ksu.canvas.CanvasTestBase;
-import static edu.ksu.canvas.CanvasTestBase.DEFAULT_PAGINATION_PAGE_SIZE;
-import static edu.ksu.canvas.CanvasTestBase.SOME_CONNECT_TIMEOUT;
-import static edu.ksu.canvas.CanvasTestBase.SOME_OAUTH_TOKEN;
-import static edu.ksu.canvas.CanvasTestBase.SOME_READ_TIMEOUT;
 import edu.ksu.canvas.impl.AssignmentOverrideImpl;
 import edu.ksu.canvas.interfaces.AssignmentOverrideReader;
 import edu.ksu.canvas.interfaces.AssignmentOverrideWriter;
 import edu.ksu.canvas.model.assignment.AssignmentOverride;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.net.Response;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
 
-public class AssignmentOverrideUTest extends CanvasTestBase {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+class AssignmentOverrideUTest extends CanvasTestBase {
     private static final Logger LOG = LoggerFactory.getLogger(AssignmentRetrieverUTest.class);
     @Autowired
     private FakeRestClient fakeRestClient;
     private AssignmentOverrideReader assignmentOverrideReader;
     private AssignmentOverrideWriter assignmentOverrideWriter;
 
-    @Before
-    public void setupData() {
+    @BeforeEach
+    void setupData() {
         assignmentOverrideReader = new AssignmentOverrideImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT,
                 SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE, false);
         assignmentOverrideWriter = new AssignmentOverrideImpl(baseUrl, apiVersion, SOME_OAUTH_TOKEN, fakeRestClient, SOME_CONNECT_TIMEOUT,
                 SOME_READ_TIMEOUT, DEFAULT_PAGINATION_PAGE_SIZE, false);
     }
     
-    @Test(expected = JsonSyntaxException.class)
-    public void testListAssignments_responseInvalid() throws Exception {
+    @Test
+    void testListAssignments_responseInvalid() throws Exception {
         String someCourseId = "14";
         Long someAssignmentId = 80L;
         Response erroredResponse = new Response();
         erroredResponse.setResponseCode(401);
         String url = baseUrl + "/api/v1/courses/" + someCourseId + "/assignments/" + someAssignmentId + "/overrides";
+
         fakeRestClient.addSuccessResponse(url, "InvalidJson.json");
 
-        Assert.assertTrue(assignmentOverrideReader.listAssignmentOverrides(someCourseId, someAssignmentId).isEmpty());
+        assertThrows(JsonSyntaxException.class, () -> {
+            assertTrue(assignmentOverrideReader.listAssignmentOverrides(someCourseId, someAssignmentId).isEmpty());
+        });
     }
     
     @Test
-    public void testRetrieveAssignmentOverride() throws Exception {
+    void testRetrieveAssignmentOverride() throws Exception {
         AssignmentOverride assignmentOverride1 = new AssignmentOverride();
         assignmentOverride1.setId(4L);
         String someCourseId = "14";
@@ -61,12 +63,12 @@ public class AssignmentOverrideUTest extends CanvasTestBase {
         fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/AssignmentOverride.json");
         Optional<AssignmentOverride> assignmentOverride = assignmentOverrideReader.getAssignmentOverride(someCourseId, someAssignmentId, someAssignmentOverrideId);
         
-        Assert.assertTrue(assignmentOverride.isPresent());
-        Assert.assertEquals(new Long(4), assignmentOverride.map(AssignmentOverride::getId).orElse(0L));
+        assertTrue(assignmentOverride.isPresent());
+        assertEquals(new Long(4), assignmentOverride.map(AssignmentOverride::getId).orElse(0L));
     }
 
     @Test
-    public void testRetrieveAssignmentOverrides() throws Exception {
+    void testRetrieveAssignmentOverrides() throws Exception {
         AssignmentOverride assignmentOverride = new AssignmentOverride();
         assignmentOverride.setId(4L);
         String someCourseId = "14";
@@ -75,14 +77,14 @@ public class AssignmentOverrideUTest extends CanvasTestBase {
         fakeRestClient.addSuccessResponse(url, "SampleJson/assignment/AssignmentOverrideList.json");
         List<AssignmentOverride> assignmentOverrides = assignmentOverrideReader.listAssignmentOverrides(someCourseId, someAssignmentId);
         
-        Assert.assertEquals(3, assignmentOverrides.size());
-        Assert.assertTrue(assignmentOverrides.stream().map(AssignmentOverride::getTitle).filter("Sec1"::equals).findFirst().isPresent());
-        Assert.assertTrue(assignmentOverrides.stream().map(AssignmentOverride::getTitle).filter("Sec2"::equals).findFirst().isPresent());
-        Assert.assertTrue(assignmentOverrides.stream().map(AssignmentOverride::getTitle).filter("Sec3"::equals).findFirst().isPresent());
+        assertEquals(3, assignmentOverrides.size());
+        assertTrue(assignmentOverrides.stream().map(AssignmentOverride::getTitle).filter("Sec1"::equals).findFirst().isPresent());
+        assertTrue(assignmentOverrides.stream().map(AssignmentOverride::getTitle).filter("Sec2"::equals).findFirst().isPresent());
+        assertTrue(assignmentOverrides.stream().map(AssignmentOverride::getTitle).filter("Sec3"::equals).findFirst().isPresent());
     }
     
     @Test
-    public void testCreateAssignmentOverride() throws Exception {
+    void testCreateAssignmentOverride() throws Exception {
         String someCourseId = "14";
         Long someAssignmentId = 80L;
         AssignmentOverride assignmentOverride1 = new AssignmentOverride();
@@ -94,8 +96,8 @@ public class AssignmentOverrideUTest extends CanvasTestBase {
         Optional<AssignmentOverride> assignmentOverride = assignmentOverrideWriter.createAssignmentOverride(someCourseId, assignmentOverride1);
         
         System.out.println(assignmentOverride.toString());
-        Assert.assertTrue(assignmentOverride.isPresent());
-        Assert.assertNotNull(assignmentOverride.get().getId());
-        Assert.assertEquals("Sec3", assignmentOverride.get().getTitle());
+        assertTrue(assignmentOverride.isPresent());
+        assertNotNull(assignmentOverride.get().getId());
+        assertEquals("Sec3", assignmentOverride.get().getTitle());
     }
 }

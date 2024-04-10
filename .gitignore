@@ -6,3 +6,6 @@ rebel-remote.xml
 *.iml
 *.idea
 release.properties
+.gradle/
+.idea/
+build/

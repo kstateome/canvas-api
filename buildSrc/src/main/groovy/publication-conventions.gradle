@@ -1,0 +1,33 @@
+plugins {
+    id "maven-publish"
+    id "common-methods"
+}
+
+afterEvaluate {
+    publishing {
+        repositories {
+            maven {
+                url(retrieveRepository())
+                credentials {
+                    username = retrieveUsername()
+                    password = retrievePassword()
+                }
+                authentication {
+                    basic(BasicAuthentication)
+                }
+            }
+        }
+
+        publications {
+            maven(MavenPublication) {
+                groupId = project.group
+                artifactId = jar.archiveBaseName.get()
+                version = project.version
+
+                from components.java
+            }
+        }
+    }
+}
+
+
