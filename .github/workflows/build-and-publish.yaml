@@ -27,6 +27,6 @@ jobs:
       - name: Test and Compile with Gradle, and publish artifacts
         run: |
           ./gradlew \
-          -PgithubUsername="${{ secrets.ARTIFACTORY_USERNAME }}" \
-          -PgithubPassword="${{ secrets.ARTIFACTORY_API_KEY }}" \
+          -PgithubUsername="${{ secrets.REPOSITORY_USERNAME }}" \
+          -PgithubPassword="${{ secrets.REPOSITORY_TOKEN }}" \
           clean check publish --parallel
