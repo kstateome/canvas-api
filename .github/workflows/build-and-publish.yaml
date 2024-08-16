@@ -29,4 +29,4 @@ jobs:
           ./gradlew \
           -PgithubUsername="${{ secrets.REPOSITORY_USERNAME }}" \
           -PgithubPassword="${{ secrets.REPOSITORY_TOKEN }}" \
-          clean check publish --parallel
+          clean check assemble publish --parallel
