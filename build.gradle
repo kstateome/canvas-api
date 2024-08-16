@@ -1,10 +1,14 @@
 plugins {
     id "java-library"
+    id "maven-publish"
     alias(libs.plugins.reckon)
     alias(libs.plugins.ben.manes.versions)
     alias(libs.plugins.sweng.publication)
     alias(libs.plugins.version.catalog.update)
 }
+
+group = "edu.ksu.canvas"
+description = "Canvas API Library"
 
 reckon {
     scopeFromProp()
@@ -43,6 +47,18 @@ test {
     jvmArgs '--add-opens', 'java.base/java.lang=ALL-UNNAMED'
 }
 
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = project.group
+            artifactId = project.name
+            version = project.version
+
+            from components.java
+        }
+    }
+}
+
 dependencies {
     implementation(libs.validation.api)
     implementation(libs.gson)
@@ -62,6 +78,4 @@ dependencies {
     testImplementation(libs.hamcrest)
 }
 
-group = "edu.ksu.canvas"
-description = "Canvas API Library"
 
