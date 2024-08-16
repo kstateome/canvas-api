@@ -1,0 +1,38 @@
+[versions]
+commons-lang3 = "3.16.0"
+gson = "2.11.0"
+guava = "33.2.1-jre"
+hamcrest = "3.0"
+junit-jupiter = "5.11.0"
+org-apache-httpcomponents = "4.5.14"
+org-mockito = "5.12.0"
+org-slf4j = "2.1.0-alpha1"
+org-springframework = "6.1.12"
+plugin-ben-manes-versions = "0.51.0"
+plugin-reckon = "0.18.3"
+plugin-sweng-publication = "2.+"
+plugin-version-catalog-update = "0.8.4"
+validation-api = "2.0.1.Final"
+
+[libraries]
+commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "commons-lang3" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+guava = { module = "com.google.guava:guava", version.ref = "guava" }
+hamcrest = { module = "org.hamcrest:hamcrest", version.ref = "hamcrest" }
+httpclient = { module = "org.apache.httpcomponents:httpclient", version.ref = "org-apache-httpcomponents" }
+httpmime = { module = "org.apache.httpcomponents:httpmime", version.ref = "org-apache-httpcomponents" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "org-mockito" }
+mockito-junit-jupiter = { module = "org.mockito:mockito-junit-jupiter", version.ref = "org-mockito" }
+slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "org-slf4j" }
+slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "org-slf4j" }
+spring-beans = { module = "org.springframework:spring-beans", version.ref = "org-springframework" }
+spring-context = { module = "org.springframework:spring-context", version.ref = "org-springframework" }
+spring-test = { module = "org.springframework:spring-test", version.ref = "org-springframework" }
+validation-api = { module = "javax.validation:validation-api", version.ref = "validation-api" }
+
+[plugins]
+ben-manes-versions = { id = "com.github.ben-manes.versions", version.ref = "plugin-ben-manes-versions" }
+reckon = { id = "org.ajoberstar.reckon", version.ref = "plugin-reckon" }
+sweng-publication = { id = "edu.colorado.oit.se.gradle.github-repository-convention", version.ref = "plugin-sweng-publication" }
+version-catalog-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "plugin-version-catalog-update" }

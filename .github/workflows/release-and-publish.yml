@@ -22,8 +22,8 @@ jobs:
       - name: Assemble and publish
         run: |
           ./gradlew \
-            -PartifactoryUsername=${{ secrets.ARTIFACTORY_USERNAME }} \
-            -PartifactoryPassword=${{ secrets.ARTIFACTORY_API_KEY }} \
+            -PgithubUsername="${{ secrets.ARTIFACTORY_USERNAME }}" \
+            -PgithubPassword="${{ secrets.ARTIFACTORY_API_KEY }}" \
             -Prelease="true" \
             -Penvironment=production \
             -Preckon.stage="final" \

@@ -19,12 +19,12 @@ jobs:
           java-version: 17
           cache: 'gradle'
       - name: Setup Gradle to generate and submit dependency graphs
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/actions/setup-gradle@v3
         with:
           dependency-graph: generate-and-submit
       - name: Run a build and generate the dependency graph which will be submitted post-job
         run: |
           ./gradlew \
-          -PartifactoryUsername="${{ secrets.ARTIFACTORY_USERNAME }}" \
-          -PartifactoryPassword="${{ secrets.ARTIFACTORY_API_KEY }}" \
+          -PgithubUsername="${{ secrets.ARTIFACTORY_USERNAME }}" \
+          -PgithubPassword="${{ secrets.ARTIFACTORY_API_KEY }}" \
           assemble -x test

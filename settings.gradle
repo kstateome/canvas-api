@@ -1,1 +1,12 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven {
+            name = "github"
+            url "https://maven.pkg.github.com/UCBoulder/sweng-gradle-repository-config-plugin"
+            credentials(PasswordCredentials)
+        }
+    }
+}
+
 rootProject.name = "canvas-api"

@@ -1,9 +1,9 @@
 plugins {
-    id "java-conventions"
-    id "unit-test-conventions"
-    id "library-conventions"
-    id "publication-conventions"
-    id("org.ajoberstar.reckon") version "0.13.1"
+    id "java-library"
+    alias(libs.plugins.reckon)
+    alias(libs.plugins.ben.manes.versions)
+    alias(libs.plugins.sweng.publication)
+    alias(libs.plugins.version.catalog.update)
 }
 
 reckon {
@@ -15,23 +15,51 @@ repositories {
     mavenCentral()
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+        vendor = JvmVendorSpec.ADOPTIUM
+    }
+}
+
+tasks.withType(JavaExec).configureEach {
+    javaLauncher.set(javaToolchains.launcherFor(java.toolchain))
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "failed", "skipped"
+        showStackTraces true
+        exceptionFormat "full"
+        showStandardStreams false
+
+        debug {
+            showStandardStreams true
+        }
+    }
+    // For Mockito wanting to instrument classes that it doesn't have direct access to
+    // See https://stackoverflow.com/a/70441435 for details
+    jvmArgs '--add-opens', 'java.base/java.lang=ALL-UNNAMED'
+}
+
 dependencies {
-    implementation("javax.validation:validation-api:1.1.0.Final")
-    implementation("com.google.code.gson:gson:2.9.1")
-    implementation("org.apache.commons:commons-lang3:3.4")
-    implementation('com.google.guava:guava:33.0.0-jre')
-    implementation("org.slf4j:slf4j-api:1.7.27")
-    implementation("org.slf4j:slf4j-simple:1.7.27")
-    implementation("org.apache.httpcomponents:httpclient:4.5.14")
-    implementation("org.apache.httpcomponents:httpmime:4.5.14")
-    testImplementation("org.apache.httpcomponents:httpclient:4.5.14:tests")
-    implementation("org.junit.jupiter:junit-jupiter:5.10.2")
-    testImplementation("org.springframework:spring-beans:6.1.5")
-    testImplementation("org.springframework:spring-context:6.1.5")
-    testImplementation("org.springframework:spring-test:6.1.5")
-    testImplementation("org.mockito:mockito-core:5.3.1")
-    testImplementation("org.mockito:mockito-junit-jupiter:5.3.1")
-    testImplementation("org.hamcrest:hamcrest:2.2")
+    implementation(libs.validation.api)
+    implementation(libs.gson)
+    implementation(libs.commons.lang3)
+    implementation(libs.guava)
+    implementation(libs.slf4j.api)
+    implementation(libs.slf4j.simple)
+    implementation(libs.httpclient)
+    implementation(libs.httpmime)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.httpclient) { artifact { classifier = 'tests' } }
+    testImplementation(libs.spring.beans)
+    testImplementation(libs.spring.context)
+    testImplementation(libs.spring.test)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.junit.jupiter)
+    testImplementation(libs.hamcrest)
 }
 
 group = "edu.ksu.canvas"

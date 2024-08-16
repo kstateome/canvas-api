@@ -24,16 +24,9 @@ jobs:
           java-version: 17
           cache: 'gradle'
 
-      - name: Test and Compile with Gradle
+      - name: Test and Compile with Gradle, and publish artifacts
         run: |
           ./gradlew \
-          -PartifactoryUsername="${{ secrets.ARTIFACTORY_USERNAME }}" \
-          -PartifactoryPassword="${{ secrets.ARTIFACTORY_API_KEY }}" \
-          clean check --parallel
-
-      - name: Publish JARs to Artifactory
-        run: |
-          ./gradlew \
-          -PartifactoryUsername="${{ secrets.ARTIFACTORY_USERNAME }}" \
-          -PartifactoryPassword="${{ secrets.ARTIFACTORY_API_KEY }}" \
-          publish --parallel -x check
+          -PgithubUsername="${{ secrets.ARTIFACTORY_USERNAME }}" \
+          -PgithubPassword="${{ secrets.ARTIFACTORY_API_KEY }}" \
+          clean check publish --parallel
