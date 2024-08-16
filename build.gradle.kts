@@ -1,6 +1,6 @@
 plugins {
-    id "java-library"
-    id "maven-publish"
+    id("java-library")
+    id("maven-publish")
     alias(libs.plugins.reckon)
     alias(libs.plugins.ben.manes.versions)
     alias(libs.plugins.sweng.publication)
@@ -23,38 +23,29 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
         vendor = JvmVendorSpec.ADOPTIUM
+
+        withJavadocJar()
+        withSourcesJar()
     }
 }
 
-tasks.withType(JavaExec).configureEach {
-    javaLauncher.set(javaToolchains.launcherFor(java.toolchain))
-}
-
-test {
+tasks.named<Test>("test") {
     useJUnitPlatform()
     testLogging {
-        events "failed", "skipped"
-        showStackTraces true
-        exceptionFormat "full"
-        showStandardStreams false
-
-        debug {
-            showStandardStreams true
-        }
+        events("started", "passed", "failed", "skipped")
+        testLogging.showStandardStreams = true
+        showStackTraces = true
     }
-    // For Mockito wanting to instrument classes that it doesn't have direct access to
-    // See https://stackoverflow.com/a/70441435 for details
-    jvmArgs '--add-opens', 'java.base/java.lang=ALL-UNNAMED'
 }
 
 publishing {
     publications {
-        maven(MavenPublication) {
-            groupId = project.group
+        create<MavenPublication>("maven") {
+            groupId = "${project.group}"
             artifactId = project.name
-            version = project.version
+            version = "${project.version}"
 
-            from components.java
+            from(components["java"])
         }
     }
 }
@@ -69,7 +60,7 @@ dependencies {
     implementation(libs.httpclient)
     implementation(libs.httpmime)
     testImplementation(libs.junit.jupiter)
-    testImplementation(libs.httpclient) { artifact { classifier = 'tests' } }
+    testImplementation(libs.httpclient) { artifact { classifier = "tests" } }
     testImplementation(libs.spring.beans)
     testImplementation(libs.spring.context)
     testImplementation(libs.spring.test)

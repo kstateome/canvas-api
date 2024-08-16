@@ -3,8 +3,8 @@ pluginManagement {
         gradlePluginPortal()
         maven {
             name = "github"
-            url "https://maven.pkg.github.com/UCBoulder/sweng-gradle-repository-config-plugin"
-            credentials(PasswordCredentials)
+            url = uri("https://maven.pkg.github.com/UCBoulder/sweng-gradle-repository-config-plugin")
+            credentials(PasswordCredentials::class)
         }
     }
 }
