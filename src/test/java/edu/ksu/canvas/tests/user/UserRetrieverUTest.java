@@ -138,6 +138,18 @@ public class UserRetrieverUTest extends CanvasTestBase {
     }
 
     @Test
+    public void testRestoreUserByUserId() throws Exception {
+        String accountId = "1";
+        int userId = 20;
+        String url = baseUrl + "/api/v1/accounts/1/users/" + String.valueOf(userId) + "/restore";
+        fakeRestClient.addSuccessResponse(url, "SampleJson/user/UserById.json");
+        Optional<User> result = userWriter.restoreUser(accountId, String.valueOf(userId));
+        User user = result.get();
+        Assert.assertEquals(userId, user.getId());
+        Assert.assertEquals("2011-05-30T16:45:25Z", user.getCreatedAt().toString());
+    }
+
+    @Test
     public void testGetAllUsersFromAccount() throws Exception {
         String accountId = "1";
         String url = baseUrl + "/api/v1/accounts/" + accountId + "/users";

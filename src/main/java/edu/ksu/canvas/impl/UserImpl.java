@@ -86,6 +86,14 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
     }
 
     @Override
+    public Optional<User> restoreUser(String accountId, String userIdentifier) throws IOException {
+        LOG.debug("Restoring user {}", userIdentifier);
+        String url = buildCanvasUrl("accounts/" + accountId + "/users/" + userIdentifier + "/restore", Collections.emptyMap());
+        Response response = canvasMessenger.putToCanvas(oauthToken, url,  Collections.emptyMap());
+        return responseParser.parseToObject(User.class, response);
+    }
+
+    @Override
     public List<User> getUsersInAccount(GetUsersInAccountOptions options) throws IOException {
         LOG.debug("Retrieving users for account " + options.getAccountId());
         String url = buildCanvasUrl("accounts/" + options.getAccountId() + "/users", options.getOptionsMap());
