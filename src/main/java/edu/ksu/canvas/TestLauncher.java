@@ -26,15 +26,15 @@ public class TestLauncher {
 
     private static final Logger LOG = LoggerFactory.getLogger(TestLauncher.class);
 
-    private String canvasUrl;
-    private OauthToken oauthToken;
+    private final String canvasUrl;
+    private final OauthToken oauthToken;
 
     public static void main(String[] args) {
 
         String canvasUrl = null;
         String oauthToken = null;
         if(args.length != 4) {
-            LOG.error("Must supply two arguments: --canvas_url http://instance.instructure.com --token [Manually generated token]");
+            LOG.error("Must supply two arguments: --canvas_url https://<instance>.instructure.com --token [Manually generated token]");
             System.exit(1);
         }
         for(int i=0; i < args.length; i++) {
@@ -53,7 +53,7 @@ public class TestLauncher {
 
         TestLauncher launcher = new TestLauncher(canvasUrl, oauthToken);
         try {
-            launcher.getRootAccount();
+            //launcher.getRootAccount(); No permission for this as a student?
             launcher.getOwnCourses();
         } catch(Exception e) {
             LOG.error("Problem while executing example methods", e);

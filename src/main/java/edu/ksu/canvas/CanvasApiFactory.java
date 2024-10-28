@@ -1,5 +1,7 @@
 package edu.ksu.canvas;
 
+import com.google.common.reflect.ClassPath;
+import edu.ksu.canvas.annotation.AbstainRegister;
 import edu.ksu.canvas.impl.*;
 import edu.ksu.canvas.interfaces.*;
 import edu.ksu.canvas.net.RestClient;
@@ -8,10 +10,13 @@ import edu.ksu.canvas.oauth.OauthToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Entry point for using the Canvas API library. It constructs concrete
@@ -24,13 +29,14 @@ public class CanvasApiFactory {
 
     public static final Integer CANVAS_API_VERSION = 1;
     private static final Logger LOG = LoggerFactory.getLogger(CanvasApiFactory.class);
+    private static final String IMPLEMENTATION_PACKAGE = "edu.ksu.canvas.impl";
     private static final int DEFAULT_CONNECT_TIMEOUT_MS = 5000;
     private static final int DEFAULT_READ_TIMEOUT_MS = 120000;
-    Map<Class<? extends CanvasReader>, Class<? extends BaseImpl>> readerMap;
-    Map<Class<? extends CanvasWriter>, Class<? extends BaseImpl>> writerMap;
-    private String canvasBaseUrl;
-    private int connectTimeout;
-    private int readTimeout;
+    private final Map<Class<? extends CanvasReader>, Class<? extends BaseImpl>> readerMap = new HashMap<>();
+    private final Map<Class<? extends CanvasWriter>, Class<? extends BaseImpl>> writerMap = new HashMap<>();
+    private final String canvasBaseUrl;
+    private final int connectTimeout;
+    private final int readTimeout;
 
     /**
      * Construct an API factory for a given instance of Canvas.
@@ -41,7 +47,12 @@ public class CanvasApiFactory {
         this.canvasBaseUrl = canvasBaseUrl;
         this.connectTimeout = DEFAULT_CONNECT_TIMEOUT_MS;
         this.readTimeout = DEFAULT_READ_TIMEOUT_MS;
-        setupClassMap();
+        try {
+            setupClassMap();
+        } catch (IOException e) {
+            LOG.error("Error setting up class map", e);
+            throw new RuntimeException("Error setting up class map", e);
+        }
     }
 
     /**
@@ -55,7 +66,12 @@ public class CanvasApiFactory {
         this.canvasBaseUrl = canvasBaseUrl;
         this.connectTimeout = connectTimeout;
         this.readTimeout = readTimeout;
-        setupClassMap();
+        try {
+            setupClassMap();
+        } catch (IOException e) {
+            LOG.error("Error setting up class map", e);
+            throw new RuntimeException("Error setting up class map", e);
+        }
     }
 
     /**
@@ -146,79 +162,29 @@ public class CanvasApiFactory {
         }
     }
 
-    private void setupClassMap() {
-        readerMap = new HashMap<>();
-        writerMap = new HashMap<>();
-        readerMap.put(AccountReader.class, AccountImpl.class);
-        readerMap.put(AdminReader.class, AdminImpl.class);
-        readerMap.put(AssignmentOverrideReader.class, AssignmentOverrideImpl.class);
-        readerMap.put(AssignmentReader.class, AssignmentImpl.class);
-        readerMap.put(ConversationReader.class, ConversationImpl.class);
-        readerMap.put(CourseReader.class, CourseImpl.class);
-        readerMap.put(TabReader.class, TabImpl.class);
-        readerMap.put(EnrollmentReader.class, EnrollmentImpl.class);
-        readerMap.put(QuizQuestionReader.class, QuizQuestionImpl.class);
-        readerMap.put(QuizReader.class, QuizImpl.class);
-        readerMap.put(QuizSubmissionQuestionReader.class, QuizSubmissionQuestionImpl.class);
-        readerMap.put(QuizSubmissionReader.class, QuizSubmissionImpl.class);
-        readerMap.put(SectionReader.class, SectionsImpl.class);
-        readerMap.put(UserReader.class, UserImpl.class);
-        readerMap.put(PageReader.class, PageImpl.class);
-        readerMap.put(EnrollmentTermReader.class, EnrollmentTermImpl.class);
-        readerMap.put(SubmissionReader.class, SubmissionImpl.class);
-        readerMap.put(AssignmentGroupReader.class, AssignmentGroupImpl.class);
-        readerMap.put(RoleReader.class, RoleImpl.class);
-        readerMap.put(ExternalToolReader.class, ExternalToolImpl.class);
-        readerMap.put(FileReader.class, FileImpl.class);
-        readerMap.put(LoginReader.class, LoginImpl.class);
-        readerMap.put(CalendarReader.class, CalendarEventImpl.class);
-        readerMap.put(AccountReportSummaryReader.class, AccountReportSummaryImpl.class);
-        readerMap.put(AccountReportReader.class, AccountReportImpl.class);
-        readerMap.put(ContentMigrationReader.class, ContentMigrationImpl.class);
-        readerMap.put(ProgressReader.class, ProgressImpl.class);
-        readerMap.put(CourseSettingsReader.class, CourseSettingsImpl.class);
-        readerMap.put(GradingStandardReader.class, GradingStandardImpl.class);
-        readerMap.put(ModuleReader.class, ModuleImpl.class);
-        readerMap.put(SisImportReader.class, SisImportImpl.class);
-        readerMap.put(SelectiveDataReader.class, SelectiveDataImpl.class);
-        readerMap.put(MigrationIssueReader.class, MigrationIssueImpl.class);
-        readerMap.put(CommunicationChannelReader.class, CommunicationChannelImpl.class);
-        readerMap.put(AuthenticationLogReader.class, AuthenticationLogImpl.class);
-        readerMap.put(FeatureReader.class, FeatureImpl.class);
-        readerMap.put(FeatureFlagReader.class, FeatureFlagImpl.class);
-        readerMap.put(RubricReader.class, RubricImpl.class);
+    private void setupClassMap() throws IOException {
+        Set<Class<?>> implClasses = ClassPath.from(this.getClass().getClassLoader())
+                .getTopLevelClasses(IMPLEMENTATION_PACKAGE)
+                .stream()
+                .map(ClassPath.ClassInfo::load)
+                .collect(Collectors.toSet());
 
-        writerMap.put(AccountWriter.class, AccountImpl.class);
-        writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImpl.class);
-        writerMap.put(AdminWriter.class, AdminImpl.class);
-        writerMap.put(AssignmentWriter.class, AssignmentImpl.class);
-        writerMap.put(ConversationWriter.class, ConversationImpl.class);
-        writerMap.put(CourseWriter.class, CourseImpl.class);
-        writerMap.put(TabWriter.class, TabImpl.class);
-        writerMap.put(FileWriter.class, FileImpl.class);
-        writerMap.put(EnrollmentWriter.class, EnrollmentImpl.class);
-        writerMap.put(QuizQuestionWriter.class, QuizQuestionImpl.class);
-        writerMap.put(QuizWriter.class, QuizImpl.class);
-        writerMap.put(QuizSubmissionQuestionWriter.class, QuizSubmissionQuestionImpl.class);
-        writerMap.put(QuizSubmissionWriter.class, QuizSubmissionImpl.class);
-        writerMap.put(UserWriter.class, UserImpl.class);
-        writerMap.put(PageWriter.class, PageImpl.class);
-        writerMap.put(SectionWriter.class, SectionsImpl.class);
-        writerMap.put(SubmissionWriter.class, SubmissionImpl.class);
-        writerMap.put(AssignmentGroupWriter.class, AssignmentGroupImpl.class);
-        writerMap.put(RoleWriter.class, RoleImpl.class);
-        writerMap.put(ExternalToolWriter.class, ExternalToolImpl.class);
-        writerMap.put(LoginWriter.class, LoginImpl.class);
-        writerMap.put(CalendarWriter.class, CalendarEventImpl.class);
-        writerMap.put(AccountReportSummaryWriter.class, AccountReportSummaryImpl.class);
-        writerMap.put(AccountReportWriter.class, AccountReportImpl.class);
-        writerMap.put(ContentMigrationWriter.class, ContentMigrationImpl.class);
-        writerMap.put(ProgressWriter.class, ProgressImpl.class);
-        writerMap.put(CourseSettingsWriter.class, CourseSettingsImpl.class);
-        writerMap.put(GradingStandardWriter.class, GradingStandardImpl.class);
-        writerMap.put(SisImportWriter.class, SisImportImpl.class);
-        writerMap.put(CommunicationChannelWriter.class, CommunicationChannelImpl.class);
-        writerMap.put(FeatureFlagWriter.class, FeatureFlagImpl.class);
-        writerMap.put(RubricWriter.class, RubricImpl.class);
+        for (Class<?> implClass : implClasses) {
+            Class<?>[] interfaces = implClass.getInterfaces();
+
+            for (Class<?> interfaze : interfaces) {
+                if (interfaze.isAnnotationPresent(AbstainRegister.class)) {
+                    LOG.debug("Skipped registering: {}", implClass.getCanonicalName());
+                    continue;
+                }
+
+                if (CanvasReader.class.isAssignableFrom(interfaze) && !interfaze.equals(CanvasReader.class)) {
+                    readerMap.put((Class<? extends CanvasReader>) interfaze, (Class<? extends BaseImpl>) implClass);
+                } else if (CanvasWriter.class.isAssignableFrom(interfaze) && !interfaze.equals(CanvasWriter.class)) {
+                    writerMap.put((Class<? extends CanvasWriter>) interfaze, (Class<? extends BaseImpl>) implClass);
+                }
+            }
+        }
     }
+
 }
