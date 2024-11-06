@@ -29,7 +29,7 @@ public class DiscussionTopic extends BaseCanvasModel implements Serializable {
     private Boolean locked;
     private Boolean pinned;
     private Boolean lockedForUser;
-    private String lockInfo;
+    private Object lockInfo;
     private String lockExplanation;
     private String userName;
     // group_topic_children
@@ -216,7 +216,7 @@ public class DiscussionTopic extends BaseCanvasModel implements Serializable {
     }
 
     @CanvasField(postKey = "lock_info")
-    public String getLockInfo() {
+    public Object getLockInfo() {
         return lockInfo;
     }
 

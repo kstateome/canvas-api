@@ -10,6 +10,7 @@ import edu.ksu.canvas.oauth.NonRefreshableOauthToken;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.GetSingleDiscussionTopicOptions;
 import edu.ksu.canvas.requestOptions.ListCurrentUserCoursesOptions;
+import edu.ksu.canvas.requestOptions.ListDiscussionTopicsOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,20 +35,8 @@ public class TestLauncher {
 
     public static void main(String[] args) {
 
-        String canvasUrl = null;
-        String oauthToken = null;
-        if(args.length != 4) {
-            LOG.error("Must supply two arguments: --canvas_url https://<instance>.instructure.com --token [Manually generated token]");
-            System.exit(1);
-        }
-        for(int i=0; i < args.length; i++) {
-            if("--canvas_url".equals(args[i])) {
-                canvasUrl = args[i+1];
-            }
-            if("--token".equals(args[i])) {
-                oauthToken = args[i+1];
-            }
-        }
+        String canvasUrl = System.getenv("CANVAS_URL");
+        String oauthToken = System.getenv("CANVAS_API_TOKEN");
 
         if(canvasUrl == null || oauthToken == null) {
             LOG.error("Canvas URL or OAuth token is blank. Must have to continue!");
@@ -72,9 +61,12 @@ public class TestLauncher {
     public void getDiscussionTopics() throws IOException {
         CanvasApiFactory apiFactory = new CanvasApiFactory(canvasUrl);
         DiscussionTopicReader topicReader = apiFactory.getReader(DiscussionTopicReader.class, oauthToken);
-        DiscussionTopic topic = topicReader.getDiscussionTopic(
-                new GetSingleDiscussionTopicOptions("whatever", "replaced_this_before_committing", GetSingleDiscussionTopicOptions.IdType.COURSES)).get();
-        System.out.println(topic.getTitle());
+        List<DiscussionTopic> topics = topicReader.listDiscussionTopics(new ListDiscussionTopicsOptions("141571", ListDiscussionTopicsOptions.IdType.COURSES).onlyAnnouncements());
+        System.out.println("Got " + topics.size() + " topics back from Canvas: ");
+        for (DiscussionTopic topic : topics) {
+            System.out.println("  topic: " + topic.getTitle());
+            System.out.println(topic.getLockInfo());
+        }
     }
 
     public void getRootAccount() throws IOException {
