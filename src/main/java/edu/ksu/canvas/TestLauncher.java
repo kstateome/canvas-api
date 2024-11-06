@@ -2,10 +2,13 @@ package edu.ksu.canvas;
 
 import edu.ksu.canvas.interfaces.AccountReader;
 import edu.ksu.canvas.interfaces.CourseReader;
+import edu.ksu.canvas.interfaces.DiscussionTopicReader;
 import edu.ksu.canvas.model.Account;
 import edu.ksu.canvas.model.Course;
+import edu.ksu.canvas.model.DiscussionTopic;
 import edu.ksu.canvas.oauth.NonRefreshableOauthToken;
 import edu.ksu.canvas.oauth.OauthToken;
+import edu.ksu.canvas.requestOptions.GetSingleDiscussionTopicOptions;
 import edu.ksu.canvas.requestOptions.ListCurrentUserCoursesOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,8 +56,9 @@ public class TestLauncher {
 
         TestLauncher launcher = new TestLauncher(canvasUrl, oauthToken);
         try {
-            //launcher.getRootAccount(); No permission for this as a student?
+            //launcher.getRootAccount();
             launcher.getOwnCourses();
+            launcher.getDiscussionTopics();
         } catch(Exception e) {
             LOG.error("Problem while executing example methods", e);
         }
@@ -63,6 +67,14 @@ public class TestLauncher {
     public TestLauncher(String canvasUrl, String tokenString) {
         this.canvasUrl = canvasUrl;
         this.oauthToken = new NonRefreshableOauthToken(tokenString);
+    }
+
+    public void getDiscussionTopics() throws IOException {
+        CanvasApiFactory apiFactory = new CanvasApiFactory(canvasUrl);
+        DiscussionTopicReader topicReader = apiFactory.getReader(DiscussionTopicReader.class, oauthToken);
+        DiscussionTopic topic = topicReader.getDiscussionTopic(
+                new GetSingleDiscussionTopicOptions("whatever", "replaced_this_before_committing", GetSingleDiscussionTopicOptions.IdType.COURSES)).get();
+        System.out.println(topic.getTitle());
     }
 
     public void getRootAccount() throws IOException {
