@@ -6,21 +6,16 @@ import org.apache.hc.client5.http.config.ConnectionConfig;
 import org.apache.hc.client5.http.impl.io.BasicHttpClientConnectionManager;
 import org.apache.hc.core5.http.ClassicHttpRequest;
 import org.apache.hc.core5.http.HttpEntity;
-import org.apache.hc.core5.http.ClassicHttpResponse;
-import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
-import org.apache.hc.core5.http.io.support.ClassicRequestBuilder;
-import org.apache.hc.core5.net.URIBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.URI;
 import java.util.concurrent.TimeUnit;
 
 public class OauthTokenRefresher implements Serializable {
@@ -55,25 +50,27 @@ public class OauthTokenRefresher implements Serializable {
         ClassicHttpRequest postRequest = new HttpPost(url);
 
         try {
-            ClassicHttpResponse httpResponse = httpClient.execute(postRequest);
-            int statusCode = httpResponse.getCode();
-            if (statusCode == 401) {
-                LOG.error("Unauthorized refresh token request. Wrong client_id or secret?");
-                return null;
-            }
-            if (statusCode != 200) {
-                LOG.error("Non-200 status code ( " + statusCode + " )returned while requesting an access token at URL " + url);
-                HttpEntity errorEntity = httpResponse.getEntity();
-                if (errorEntity != null) {
-                    String errorBody = EntityUtils.toString(errorEntity);
-                    LOG.error("Response from Canvas: " + errorBody);
+            TokenRefreshResponse token = httpClient.execute(postRequest, response -> {
+                int statusCode = response.getCode();
+                if (statusCode == 401) {
+                    LOG.error("Unauthorized refresh token request. Wrong client_id or secret?");
+                    return null;
                 }
-                return null;
-            }
-            HttpEntity entity = httpResponse.getEntity();
-            String responseBody = EntityUtils.toString(entity);
-            Gson gson = GsonResponseParser.getDefaultGsonParser(false);
-            return gson.fromJson(responseBody, TokenRefreshResponse.class);
+                if (statusCode != 200) {
+                    LOG.error("Non-200 status code ( " + statusCode + " )returned while requesting an access token at URL " + url);
+                    HttpEntity errorEntity = response.getEntity();
+                    if (errorEntity != null) {
+                        String errorBody = EntityUtils.toString(errorEntity);
+                        LOG.error("Response from Canvas: " + errorBody);
+                    }
+                    return null;
+                }
+                HttpEntity entity = response.getEntity();
+                String responseBody = EntityUtils.toString(entity);
+                Gson gson = GsonResponseParser.getDefaultGsonParser(false);
+                return gson.fromJson(responseBody, TokenRefreshResponse.class);
+            });
+            return token;
         } finally {
             httpClient.close();
         }
