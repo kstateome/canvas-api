@@ -2,9 +2,11 @@ package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.Deposit;
 import edu.ksu.canvas.model.File;
+import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 /**
@@ -13,5 +15,5 @@ import java.util.Optional;
  */
 public interface FileWriter extends CanvasWriter<File, FileWriter> {
 
-    Optional<File> upload(Deposit deposit, InputStream in, String filename) throws IOException;
+    Optional<File> upload(Deposit deposit, InputStream in, String filename) throws IOException, URISyntaxException, ParseException;
 }

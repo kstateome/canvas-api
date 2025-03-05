@@ -13,11 +13,13 @@ import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.CompleteQuizSubmissionOptions;
 import edu.ksu.canvas.requestOptions.GetQuizSubmissionsOptions;
 import edu.ksu.canvas.requestOptions.StartQuizSubmissionOptions;
+import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -32,12 +34,12 @@ public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionR
      }
 
     @Override
-    public List<QuizSubmission> getQuizSubmissions(final String courseId, final String quizId) throws IOException {
+    public List<QuizSubmission> getQuizSubmissions(final String courseId, final String quizId) throws IOException, URISyntaxException, ParseException {
         return getQuizSubmissions(new GetQuizSubmissionsOptions(courseId, quizId)).getQuizSubmissions();
     }
 
     @Override
-    public QuizSubmissionResponse getQuizSubmissions(final GetQuizSubmissionsOptions options) throws IOException {
+    public QuizSubmissionResponse getQuizSubmissions(final GetQuizSubmissionsOptions options) throws IOException, URISyntaxException, ParseException {
         final String url = buildCanvasUrl("courses/" + options.getCourseId() + "/quizzes/" + options.getQuizId() + "/submissions", options.getOptionsMap());
         final List<Response> responses = canvasMessenger.getFromCanvas(oauthToken, url);
         final QuizSubmissionWrapper wrapper = parseQuizSubmissionResponses(responses);
@@ -45,14 +47,14 @@ public class QuizSubmissionImpl extends BaseImpl<QuizSubmission, QuizSubmissionR
     }
 
     @Override
-    public Optional<QuizSubmission> startQuizSubmission(StartQuizSubmissionOptions options) throws IOException {
+    public Optional<QuizSubmission> startQuizSubmission(StartQuizSubmissionOptions options) throws IOException, URISyntaxException, ParseException {
         String url = buildCanvasUrl("courses/" + options.getCourseId() + "/quizzes/" + options.getQuizId() + "/submissions", options.getOptionsMap());
         Response response = canvasMessenger.sendToCanvas(oauthToken, url, Collections.emptyMap());
         return Optional.of(parseQuizSubmissionResponse(response).getQuizSubmissions().get(0));
     }
 
     @Override
-    public Optional<QuizSubmission> completeQuizSubmission(CompleteQuizSubmissionOptions options) throws IOException {
+    public Optional<QuizSubmission> completeQuizSubmission(CompleteQuizSubmissionOptions options) throws IOException, URISyntaxException, ParseException {
         LOG.debug("completing quiz submission for user/course/quiz: {}/{}/{}", masqueradeAs, options.getCourseId(), options.getQuizId());
         String url = buildCanvasUrl("courses/" + options.getCourseId() + "/quizzes/" + options.getQuizId() +
                 "/submissions/" + options.getSubmissionId() + "/complete", options.getOptionsMap());

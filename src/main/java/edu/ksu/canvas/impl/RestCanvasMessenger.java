@@ -10,12 +10,14 @@ import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
 import java.io.InputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,12 +38,12 @@ public class RestCanvasMessenger implements CanvasMessenger {
         this.restClient = restClient;
     }
 
-    public List<Response> getFromCanvas(@NotNull OauthToken oauthToken, @NotNull String url) throws InvalidOauthTokenException, IOException {
+    public List<Response> getFromCanvas(@NotNull OauthToken oauthToken, @NotNull String url) throws InvalidOauthTokenException, IOException, URISyntaxException, ParseException {
         return getFromCanvas(oauthToken, url, null);
     }
 
 
-    public List<Response> getFromCanvas(@NotNull OauthToken oauthToken, @NotNull String url, Consumer<Response> callback) throws InvalidOauthTokenException, IOException {
+    public List<Response> getFromCanvas(@NotNull OauthToken oauthToken, @NotNull String url, Consumer<Response> callback) throws InvalidOauthTokenException, IOException, URISyntaxException, ParseException {
         LOG.debug("Sending GET request to: {}", url);
         final List<Response> responses = new ArrayList<>();
         while (StringUtils.isNotBlank(url)) {
@@ -60,43 +62,43 @@ public class RestCanvasMessenger implements CanvasMessenger {
     }
 
     @Override
-    public Response sendToCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String, List<String>> parameters) throws InvalidOauthTokenException, IOException {
+    public Response sendToCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String, List<String>> parameters) throws InvalidOauthTokenException, IOException, URISyntaxException, ParseException {
         return restClient.sendApiPost(oauthToken, url, parameters, connectTimeout, readTimeout);
     }
 
     @Override
-    public Response sendFileToCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String, List<String>> parameters, String fileParameter, String filePath, InputStream is) throws InvalidOauthTokenException, IOException {
+    public Response sendFileToCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String, List<String>> parameters, String fileParameter, String filePath, InputStream is) throws InvalidOauthTokenException, IOException, URISyntaxException, ParseException {
         return restClient.sendApiPostFile(oauthToken, url, parameters, fileParameter, filePath, is, connectTimeout, readTimeout);
     }
 
     @Override
-    public Response sendJsonPostToCanvas(OauthToken oauthToken, String url, JsonObject requestBody) throws InvalidOauthTokenException, IOException {
+    public Response sendJsonPostToCanvas(OauthToken oauthToken, String url, JsonObject requestBody) throws InvalidOauthTokenException, IOException, URISyntaxException, ParseException {
         return restClient.sendJsonPost(oauthToken, url, requestBody.toString(), connectTimeout, readTimeout);
     }
 
     @Override
-    public Response sendJsonPutToCanvas(OauthToken oauthToken, String url, JsonObject requestBody) throws InvalidOauthTokenException, IOException {
+    public Response sendJsonPutToCanvas(OauthToken oauthToken, String url, JsonObject requestBody) throws InvalidOauthTokenException, IOException, URISyntaxException, ParseException {
         return restClient.sendJsonPut(oauthToken, url, requestBody.toString(), connectTimeout, readTimeout);
     }
 
     @Override
-    public Response deleteFromCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String, List<String>> parameters) throws InvalidOauthTokenException, IOException {
+    public Response deleteFromCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String, List<String>> parameters) throws InvalidOauthTokenException, IOException, URISyntaxException, ParseException {
         return restClient.sendApiDelete(oauthToken, url, parameters, connectTimeout, readTimeout);
     }
 
     @Override
-    public Response putToCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String, List<String>> parameters) throws InvalidOauthTokenException, IOException {
+    public Response putToCanvas(@NotNull OauthToken oauthToken, @NotNull String url, @NotNull Map<String, List<String>> parameters) throws InvalidOauthTokenException, IOException, URISyntaxException, ParseException {
         return restClient.sendApiPut(oauthToken, url, parameters, connectTimeout, readTimeout);
     }
 
     @Override
-    public Response getSingleResponseFromCanvas(@NotNull OauthToken oauthToken, @NotNull String url) throws InvalidOauthTokenException, IOException {
+    public Response getSingleResponseFromCanvas(@NotNull OauthToken oauthToken, @NotNull String url) throws InvalidOauthTokenException, IOException, URISyntaxException, ParseException {
         LOG.debug("Sending GET request to: {}", url);
         return restClient.sendApiGet(oauthToken, url, connectTimeout, readTimeout);
     }
 
     @Override
-    public String sendUpload(String uploadUrl, Map<String, List<String>> params, InputStream in, String filename) throws IOException {
+    public String sendUpload(String uploadUrl, Map<String, List<String>> params, InputStream in, String filename) throws IOException, URISyntaxException, ParseException {
         return restClient.sendUpload(uploadUrl, params, in, filename, connectTimeout, readTimeout);
     }
 

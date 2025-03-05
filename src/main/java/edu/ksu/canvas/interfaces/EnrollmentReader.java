@@ -2,8 +2,10 @@ package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.Enrollment;
 import edu.ksu.canvas.requestOptions.GetEnrollmentOptions;
+import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 public interface EnrollmentReader extends CanvasReader<Enrollment, EnrollmentReader> {
@@ -13,7 +15,7 @@ public interface EnrollmentReader extends CanvasReader<Enrollment, EnrollmentRea
      * @return List of the user's enrollments
      * @throws IOException When there is an error communicating with Canvas
      */
-     List<Enrollment> getUserEnrollments(GetEnrollmentOptions options) throws IOException;
+     List<Enrollment> getUserEnrollments(GetEnrollmentOptions options) throws IOException, URISyntaxException, ParseException;
 
      /**
       * Retrieve enrollments in a given section. Object ID in the options class must be a section ID.
@@ -21,7 +23,7 @@ public interface EnrollmentReader extends CanvasReader<Enrollment, EnrollmentRea
       * @return List of enrollments in a section
       * @throws IOException When there is an error communicating with Canvas
       */
-     List<Enrollment> getSectionEnrollments(GetEnrollmentOptions options) throws IOException;
+     List<Enrollment> getSectionEnrollments(GetEnrollmentOptions options) throws IOException, URISyntaxException, ParseException;
 
      /**
       * Retrieve enrollments in a given course. Object ID in the options class must be a course ID.
@@ -29,6 +31,6 @@ public interface EnrollmentReader extends CanvasReader<Enrollment, EnrollmentRea
       * @return List of enrollments in a course
       * @throws IOException When there is an error communicating with Canvas
       */
-     List<Enrollment> getCourseEnrollments(GetEnrollmentOptions options) throws IOException;
+     List<Enrollment> getCourseEnrollments(GetEnrollmentOptions options) throws IOException, URISyntaxException, ParseException;
 
 }

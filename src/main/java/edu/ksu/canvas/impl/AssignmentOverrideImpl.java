@@ -9,11 +9,13 @@ import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 
+import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -29,14 +31,14 @@ public class AssignmentOverrideImpl extends BaseImpl<AssignmentOverride, Assignm
     }
     
     @Override
-    public List<AssignmentOverride> listAssignmentOverrides(String courseId, Long assignmentId) throws IOException {
+    public List<AssignmentOverride> listAssignmentOverrides(String courseId, Long assignmentId) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Retrieving a list of assignment overrides in course {} for assignment {}", courseId, assignmentId);
         String url = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentId + "/overrides", Collections.emptyMap());
         return getListFromCanvas(url);
     }
 
     @Override
-    public Optional<AssignmentOverride> getAssignmentOverride(String courseId, Long assignmentId, Long overrideId) throws IOException {
+    public Optional<AssignmentOverride> getAssignmentOverride(String courseId, Long assignmentId, Long overrideId) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Retrieving an assignment override in course {} for assignment {}", courseId, assignmentId);
         String url = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentId + "/overrides/" + overrideId, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
@@ -44,7 +46,7 @@ public class AssignmentOverrideImpl extends BaseImpl<AssignmentOverride, Assignm
     }
 
     @Override
-    public Optional<AssignmentOverride> createAssignmentOverride(String courseId, AssignmentOverride assignmentOverride) throws IOException {
+    public Optional<AssignmentOverride> createAssignmentOverride(String courseId, AssignmentOverride assignmentOverride) throws IOException, URISyntaxException, ParseException {
         if(assignmentOverride.getAssignmentId() == null) {
             throw new IllegalArgumentException("Assignment override must have an assignment ID");
         }

@@ -10,11 +10,13 @@ import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.GetEnrollmentTermOptions;
+import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -31,7 +33,7 @@ public class EnrollmentTermImpl extends BaseImpl<EnrollmentTerm, EnrollmentTermR
     }
 
     @Override
-    public List<EnrollmentTerm> getEnrollmentTerms(GetEnrollmentTermOptions options) throws IOException {
+    public List<EnrollmentTerm> getEnrollmentTerms(GetEnrollmentTermOptions options) throws IOException, URISyntaxException, ParseException {
         LOG.debug("getting enrollment term with account id {}", options.getAccountId());
         String url = buildCanvasUrl("accounts/" + options.getAccountId() + "/terms/" , options.getOptionsMap());
         List<Response> response = canvasMessenger.getFromCanvas(oauthToken, url);
@@ -39,7 +41,7 @@ public class EnrollmentTermImpl extends BaseImpl<EnrollmentTerm, EnrollmentTermR
     }
 
     @Override
-    public Optional<EnrollmentTerm> getEnrollmentTerm(String accountId, String termId) throws IOException {
+    public Optional<EnrollmentTerm> getEnrollmentTerm(String accountId, String termId) throws IOException, URISyntaxException, ParseException {
         LOG.debug("getting enrollment term with account id {}", accountId);
         String url = buildCanvasUrl("accounts/" + accountId + "/terms/" +termId, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);

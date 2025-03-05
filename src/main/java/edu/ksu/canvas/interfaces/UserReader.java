@@ -3,8 +3,10 @@ package edu.ksu.canvas.interfaces;
 import edu.ksu.canvas.model.User;
 import edu.ksu.canvas.requestOptions.GetUsersInAccountOptions;
 import edu.ksu.canvas.requestOptions.GetUsersInCourseOptions;
+import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +17,7 @@ public interface UserReader extends CanvasReader<User, UserReader> {
      * @return List of users in a course
      * @throws IOException When there is an error communicating with Canvas
      */
-    List<User> getUsersInCourse(GetUsersInCourseOptions options) throws IOException;
+    List<User> getUsersInCourse(GetUsersInCourseOptions options) throws IOException, URISyntaxException, ParseException;
 
     /**
      * Retrieve a specific user details from Canvas by user identifier
@@ -27,7 +29,7 @@ public interface UserReader extends CanvasReader<User, UserReader> {
      * @return The User returned by Canvas or an empty Optional
      * @throws IOException When there is an error communicating with Canvas
      */
-     Optional<User> showUserDetails(String userIdentifier) throws IOException;
+     Optional<User> showUserDetails(String userIdentifier) throws IOException, URISyntaxException, ParseException;
 
     /**
      * Retrieve a list of all users for an account.
@@ -43,5 +45,5 @@ public interface UserReader extends CanvasReader<User, UserReader> {
      * @return List of users in an account
      * @throws IOException When there is an error communicating with Canvas
      */
-     List<User> getUsersInAccount(GetUsersInAccountOptions options) throws IOException;
+     List<User> getUsersInAccount(GetUsersInAccountOptions options) throws IOException, URISyntaxException, ParseException;
 }

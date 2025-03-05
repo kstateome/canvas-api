@@ -1,9 +1,11 @@
 package edu.ksu.canvas.interfaces;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import edu.ksu.canvas.model.report.AccountReportSummary;
+import org.apache.hc.core5.http.ParseException;
 
 public interface AccountReportSummaryReader extends CanvasReader<AccountReportSummary, AccountReportSummaryReader> {
 
@@ -14,5 +16,5 @@ public interface AccountReportSummaryReader extends CanvasReader<AccountReportSu
      * @return a summary list of reports, showing the most recent runs if any exist
      * @throws IOException When there is an error communicating with Canvas
      */
-    List<AccountReportSummary> listAvailableReports(String accountId) throws IOException;
+    List<AccountReportSummary> listAvailableReports(String accountId) throws IOException, URISyntaxException, ParseException;
 }

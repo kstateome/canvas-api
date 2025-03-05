@@ -3,8 +3,10 @@ package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.assignment.AssignmentGroup;
 import edu.ksu.canvas.requestOptions.DeleteAssignmentGroupOptions;
+import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 public interface AssignmentGroupWriter extends CanvasWriter<AssignmentGroup, AssignmentGroupWriter>{
@@ -16,7 +18,7 @@ public interface AssignmentGroupWriter extends CanvasWriter<AssignmentGroup, Ass
      * @return AssignmentGroup object created in Canvas
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<AssignmentGroup> createAssignmentGroup(String courseId, AssignmentGroup assignmentGroup) throws IOException;
+    Optional<AssignmentGroup> createAssignmentGroup(String courseId, AssignmentGroup assignmentGroup) throws IOException, URISyntaxException, ParseException;
 
     /**
      * Modify an existing assignment group in Canvas. It must have an ID assigned by Canvas.
@@ -25,7 +27,7 @@ public interface AssignmentGroupWriter extends CanvasWriter<AssignmentGroup, Ass
      * @return Modified assignment group from Canvas
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<AssignmentGroup> editAssignmentGroup(String courseId, AssignmentGroup assignmentGroup) throws IOException;
+    Optional<AssignmentGroup> editAssignmentGroup(String courseId, AssignmentGroup assignmentGroup) throws IOException, URISyntaxException, ParseException;
 
     /**
      * Delete an assignment group from Canvas.
@@ -34,5 +36,5 @@ public interface AssignmentGroupWriter extends CanvasWriter<AssignmentGroup, Ass
      * @return The deleted assignment group object
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<AssignmentGroup> deleteAssignmentGroup(DeleteAssignmentGroupOptions options) throws IOException;
+    Optional<AssignmentGroup> deleteAssignmentGroup(DeleteAssignmentGroupOptions options) throws IOException, URISyntaxException, ParseException;
 }

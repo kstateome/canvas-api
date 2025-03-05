@@ -3,8 +3,10 @@ package edu.ksu.canvas.interfaces;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
 import edu.ksu.canvas.model.User;
 import edu.ksu.canvas.requestOptions.CreateUserOptions;
+import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 public interface UserWriter extends CanvasWriter<User, UserWriter> {
@@ -15,7 +17,7 @@ public interface UserWriter extends CanvasWriter<User, UserWriter> {
      * @throws InvalidOauthTokenException When the supplied OAuth token is not valid
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<User> createUser(User user) throws InvalidOauthTokenException, IOException;
+    Optional<User> createUser(User user) throws InvalidOauthTokenException, IOException, URISyntaxException, ParseException;
 
     /**
      * Create a new user in Canvas
@@ -25,7 +27,7 @@ public interface UserWriter extends CanvasWriter<User, UserWriter> {
      * @throws InvalidOauthTokenException When the supplied OAuth token is not valid
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<User> createUser (User user, CreateUserOptions options) throws InvalidOauthTokenException, IOException;
+    Optional<User> createUser (User user, CreateUserOptions options) throws InvalidOauthTokenException, IOException, URISyntaxException, ParseException;
 
 
     /**
@@ -35,5 +37,5 @@ public interface UserWriter extends CanvasWriter<User, UserWriter> {
      * @throws InvalidOauthTokenException When the supplied OAuth token is not valid
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<User> updateUser(User user) throws InvalidOauthTokenException, IOException;
+    Optional<User> updateUser(User user) throws InvalidOauthTokenException, IOException, URISyntaxException, ParseException;
 }

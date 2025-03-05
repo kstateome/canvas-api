@@ -9,7 +9,7 @@ import edu.ksu.canvas.exception.ThrottlingException;
 import edu.ksu.canvas.exception.UnauthorizedException;
 import edu.ksu.canvas.oauth.NonRefreshableOauthToken;
 import edu.ksu.canvas.oauth.OauthToken;
-import org.apache.http.HttpHeaders;
+import org.apache.hc.core5.http.HttpHeaders;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

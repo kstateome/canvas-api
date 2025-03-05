@@ -1,12 +1,14 @@
 package edu.ksu.canvas.interfaces;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
 import edu.ksu.canvas.model.assignment.QuizSubmissionQuestion;
 import edu.ksu.canvas.requestOptions.AnswerQuizQuestionOptions;
+import org.apache.hc.core5.http.ParseException;
 
 public interface QuizSubmissionQuestionWriter extends CanvasWriter<QuizSubmissionQuestion, QuizSubmissionQuestionWriter> {
     /**
@@ -17,5 +19,5 @@ public interface QuizSubmissionQuestionWriter extends CanvasWriter<QuizSubmissio
      * @throws IOException When there is an error communicating with Canvas
      */
     List<QuizSubmissionQuestion> answerQuestions(@NotNull AnswerQuizQuestionOptions options, @NotNull String answerArrayJson)
-            throws IOException;
+            throws IOException, URISyntaxException, ParseException;
 }

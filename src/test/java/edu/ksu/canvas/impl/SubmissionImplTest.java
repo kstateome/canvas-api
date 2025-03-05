@@ -6,12 +6,14 @@ import edu.ksu.canvas.model.assignment.Submission;
 import edu.ksu.canvas.requestOptions.GetSubmissionsOptions;
 import edu.ksu.canvas.requestOptions.MultipleSubmissionsOptions;
 
+import org.apache.hc.core5.http.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +46,7 @@ class SubmissionImplTest extends CanvasTestBase {
     }
 
     @Test
-    void sectionGradeSubmissionHappyPath() throws IOException {
+    void sectionGradeSubmissionHappyPath() throws IOException, URISyntaxException, ParseException {
         MultipleSubmissionsOptions multpleSubmissionsOptions = new MultipleSubmissionsOptions(SECTION_ID, ASSIGNEMNET_ID, null);
         Map<String, MultipleSubmissionsOptions.StudentSubmissionOption> map = new HashMap<>();
         MultipleSubmissionsOptions.StudentSubmissionOption studentSubmissionOption1 = multpleSubmissionsOptions.createStudentSubmissionOption(SOME_COMMENT_1, GRADE_1, null, null, null, null);
@@ -63,7 +65,7 @@ class SubmissionImplTest extends CanvasTestBase {
     }
 
     @Test
-    void testListCourseSubmissionsForMultipleAssignments() throws IOException {
+    void testListCourseSubmissionsForMultipleAssignments() throws IOException, URISyntaxException, ParseException {
         String url = baseUrl + "/api/v1/courses/1234/students/submissions?student_ids[]=12345";
         fakeRestClient.addSuccessResponse(url, "SampleJson/submission/submissionResponse.json");
         GetSubmissionsOptions options = new GetSubmissionsOptions("1234");

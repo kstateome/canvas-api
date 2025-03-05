@@ -1,10 +1,12 @@
 package edu.ksu.canvas.interfaces;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 import edu.ksu.canvas.model.report.AccountReport;
 import edu.ksu.canvas.requestOptions.AccountReportOptions;
+import org.apache.hc.core5.http.ParseException;
 
 public interface AccountReportWriter extends CanvasWriter<AccountReport, AccountReportWriter> {
 
@@ -18,7 +20,7 @@ public interface AccountReportWriter extends CanvasWriter<AccountReport, Account
      * @see <a href="https://canvas.instructure.com/doc/api/account_reports.html">Account Report API documentation</a>
      * @see AccountReportOptions
      */
-    Optional<AccountReport> startReport(AccountReportOptions options) throws IOException;
+    Optional<AccountReport> startReport(AccountReportOptions options) throws IOException, URISyntaxException, ParseException;
 
 
     /**
@@ -30,5 +32,5 @@ public interface AccountReportWriter extends CanvasWriter<AccountReport, Account
      * @throws IOException When there is an error communicating with Canvas
      * @see <a href="https://canvas.instructure.com/doc/api/account_reports.html#method.account_reports.destroy">Account Report API documentation</a>
      */
-    Optional<AccountReport> deleteReport(String accountId, String report, Long reportId) throws IOException;
+    Optional<AccountReport> deleteReport(String accountId, String report, Long reportId) throws IOException, URISyntaxException, ParseException;
 }

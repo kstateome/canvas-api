@@ -1,6 +1,7 @@
 package edu.ksu.canvas.interfaces;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import edu.ksu.canvas.requestOptions.GetSingleCourseOptions;
 import edu.ksu.canvas.requestOptions.ListActiveCoursesInAccountOptions;
 import edu.ksu.canvas.requestOptions.ListCurrentUserCoursesOptions;
 import edu.ksu.canvas.requestOptions.ListUserCoursesOptions;
+import org.apache.hc.core5.http.ParseException;
 
 /**
  * Methods to read information from and about courses
@@ -21,7 +23,7 @@ public interface CourseReader extends CanvasReader<Course, CourseReader> {
      * @return List of courses for the user matching any optional criteria
      * @throws IOException When there is an error communicating with Canvas
      */
-     List<Course> listCurrentUserCourses(ListCurrentUserCoursesOptions options) throws IOException;
+     List<Course> listCurrentUserCourses(ListCurrentUserCoursesOptions options) throws IOException, URISyntaxException, ParseException;
 
     /**
      * Returns the list of active courses for the a user
@@ -29,7 +31,7 @@ public interface CourseReader extends CanvasReader<Course, CourseReader> {
      * @return List of courses for the user matching any optional criteria
      * @throws IOException When there is an error communicating with Canvas
      */
-    List<Course> listUserCourses(ListUserCoursesOptions options) throws  IOException;
+    List<Course> listUserCourses(ListUserCoursesOptions options) throws  IOException, URISyntaxException, ParseException;
 
     /**
      * Retrieve a specific course from Canvas by its Canvas ID number
@@ -37,7 +39,7 @@ public interface CourseReader extends CanvasReader<Course, CourseReader> {
      * @return The course returned by Canvas or an empty Optional
      * @throws IOException When there is an error communicating with Canvas
      */
-     Optional<Course> getSingleCourse(GetSingleCourseOptions options) throws IOException;
+     Optional<Course> getSingleCourse(GetSingleCourseOptions options) throws IOException, URISyntaxException, ParseException;
 
     /**
      * Retrieve a specific course from a Canvas account by its Canvas ID number
@@ -46,7 +48,7 @@ public interface CourseReader extends CanvasReader<Course, CourseReader> {
      * @return The course returned by Canvas or an empty Optional
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<Course> getSingleCourse(String accountId, GetSingleCourseOptions options) throws IOException;
+    Optional<Course> getSingleCourse(String accountId, GetSingleCourseOptions options) throws IOException, URISyntaxException, ParseException;
 
     /**
       * Retrieve a list of all courses on a given account
@@ -54,5 +56,5 @@ public interface CourseReader extends CanvasReader<Course, CourseReader> {
       * @return List of courses in the account
       * @throws IOException When there is an error communicating with Canvas
       */
-     List<Course> listActiveCoursesInAccount(ListActiveCoursesInAccountOptions options) throws IOException;
+     List<Course> listActiveCoursesInAccount(ListActiveCoursesInAccountOptions options) throws IOException, URISyntaxException, ParseException;
 }

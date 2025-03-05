@@ -8,11 +8,13 @@ import edu.ksu.canvas.interfaces.SectionWriter;
 import edu.ksu.canvas.model.Section;
 import edu.ksu.canvas.model.User;
 import edu.ksu.canvas.net.FakeRestClient;
+import org.apache.hc.core5.http.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -40,7 +42,7 @@ class SectionManagerUTest extends CanvasTestBase {
     }
 
     @Test
-    void testSectionCreation() throws IOException {
+    void testSectionCreation() throws IOException, URISyntaxException, ParseException {
 
         String sectionName = "someName";
 
@@ -56,7 +58,7 @@ class SectionManagerUTest extends CanvasTestBase {
     }
 
     @Test
-    void testSectionStudents() throws IOException {
+    void testSectionStudents() throws IOException, URISyntaxException, ParseException {
 
         final List<SectionIncludes> includes = Arrays.asList(
                 SectionIncludes.STUDENTS,

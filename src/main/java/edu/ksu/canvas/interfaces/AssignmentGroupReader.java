@@ -3,8 +3,10 @@ package edu.ksu.canvas.interfaces;
 import edu.ksu.canvas.model.assignment.AssignmentGroup;
 import edu.ksu.canvas.requestOptions.GetAssignmentGroupOptions;
 import edu.ksu.canvas.requestOptions.ListAssignmentGroupOptions;
+import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +18,7 @@ public interface AssignmentGroupReader extends CanvasReader<AssignmentGroup, Ass
      * @return List of AssignmentGroups
      * @throws IOException When there is an error communicating with Canvas
      */
-    List<AssignmentGroup> listAssignmentGroup(ListAssignmentGroupOptions options) throws IOException;
+    List<AssignmentGroup> listAssignmentGroup(ListAssignmentGroupOptions options) throws IOException, URISyntaxException, ParseException;
 
     /**
      * Returns the requested assignment group by ID
@@ -24,5 +26,5 @@ public interface AssignmentGroupReader extends CanvasReader<AssignmentGroup, Ass
      * @return The requested assignment group
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<AssignmentGroup> getAssignmentGroup(GetAssignmentGroupOptions options) throws IOException;
+    Optional<AssignmentGroup> getAssignmentGroup(GetAssignmentGroupOptions options) throws IOException, URISyntaxException, ParseException;
 }

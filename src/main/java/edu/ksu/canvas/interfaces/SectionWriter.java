@@ -1,9 +1,11 @@
 package edu.ksu.canvas.interfaces;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 import edu.ksu.canvas.model.Section;
+import org.apache.hc.core5.http.ParseException;
 
 /**
  * Created by japshvincent on 4/28/16.
@@ -21,7 +23,7 @@ public interface SectionWriter extends CanvasWriter<Section, SectionWriter> {
      * @return the newly created section
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<Section> createSection(String courseId, Section section, Boolean enableSisReactivation) throws IOException;
+    Optional<Section> createSection(String courseId, Section section, Boolean enableSisReactivation) throws IOException, URISyntaxException, ParseException;
 
     /**
      * Update a section in Canvas.
@@ -30,7 +32,7 @@ public interface SectionWriter extends CanvasWriter<Section, SectionWriter> {
      * @return the updated section
      * @throws IOException when there is an error communicating with Canvas
      */
-    Optional<Section> updateSection(Section section) throws IOException;
+    Optional<Section> updateSection(Section section) throws IOException, URISyntaxException, ParseException;
 
     /**
      * Delete an existing section in Canvas.
@@ -39,7 +41,7 @@ public interface SectionWriter extends CanvasWriter<Section, SectionWriter> {
      * @return the section object that was deleted
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<Section> deleteSection(String sectionId) throws IOException;
+    Optional<Section> deleteSection(String sectionId) throws IOException, URISyntaxException, ParseException;
 
     /**
      * Move the Section to another course in Canvas.
@@ -49,5 +51,5 @@ public interface SectionWriter extends CanvasWriter<Section, SectionWriter> {
      * @return the section object that was moved
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<Section> crosslist(String sectionId, String courseId) throws IOException;
+    Optional<Section> crosslist(String sectionId, String courseId) throws IOException, URISyntaxException, ParseException;
 }

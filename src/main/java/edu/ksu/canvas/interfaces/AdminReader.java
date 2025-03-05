@@ -2,8 +2,10 @@ package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.AccountAdmin;
 import edu.ksu.canvas.requestOptions.ListAccountAdminsOptions;
+import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 public interface AdminReader extends CanvasReader<AccountAdmin, AdminReader> {
@@ -13,5 +15,5 @@ public interface AdminReader extends CanvasReader<AccountAdmin, AdminReader> {
      * @return List of account admins
      * @throws IOException When there is an error communicating with Canvas
      */
-    List<AccountAdmin> listAccountAdmins(ListAccountAdminsOptions options) throws IOException;
+    List<AccountAdmin> listAccountAdmins(ListAccountAdminsOptions options) throws IOException, URISyntaxException, ParseException;
 }

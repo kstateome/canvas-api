@@ -1,6 +1,7 @@
 package edu.ksu.canvas.tests.tab;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 import edu.ksu.canvas.CanvasTestBase;
@@ -9,6 +10,7 @@ import edu.ksu.canvas.interfaces.TabWriter;
 import edu.ksu.canvas.model.Tab;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.requestOptions.UpdateCourseTabOptions;
+import org.apache.hc.core5.http.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,7 @@ class TabUTest extends CanvasTestBase {
     }
 
     @Test
-    void testUpdateCourseTab() throws IOException {
+    void testUpdateCourseTab() throws IOException, URISyntaxException, ParseException {
         String url = baseUrl + "/api/v1/courses/1234/tabs/files";
         fakeRestClient.addSuccessResponse(url, "SampleJson/tab/UpdateTabSuccess.json");
         UpdateCourseTabOptions options = new UpdateCourseTabOptions("1234", "files");

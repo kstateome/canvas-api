@@ -1,8 +1,10 @@
 package edu.ksu.canvas.interfaces;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import edu.ksu.canvas.model.assignment.QuizQuestion;
+import org.apache.hc.core5.http.ParseException;
 
 public interface QuizQuestionWriter extends CanvasWriter<QuizQuestion, QuizQuestionWriter> {
 
@@ -14,5 +16,5 @@ public interface QuizQuestionWriter extends CanvasWriter<QuizQuestion, QuizQuest
      * @return true if deletion was successful (API returned HTTP 204), false otherwise
      * @throws IOException if there is an error communicating with Canvas
      */
-    public boolean deleteQuizQuestion(String courseId, Long quizId, Long questionId) throws IOException;
+    public boolean deleteQuizQuestion(String courseId, Long quizId, Long questionId) throws IOException, URISyntaxException, ParseException;
 }

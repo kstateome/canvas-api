@@ -1,10 +1,12 @@
 package edu.ksu.canvas.interfaces;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 import edu.ksu.canvas.model.Tab;
 import edu.ksu.canvas.requestOptions.UpdateCourseTabOptions;
+import org.apache.hc.core5.http.ParseException;
 
 /**
  * Methods to modify tabs, which can be applied to courses or groups.
@@ -21,5 +23,5 @@ public interface TabWriter extends CanvasWriter<Tab, TabWriter> {
      * @return modified tab object
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<Tab> updateCourseTab(UpdateCourseTabOptions options) throws IOException;
+    Optional<Tab> updateCourseTab(UpdateCourseTabOptions options) throws IOException, URISyntaxException, ParseException;
 }

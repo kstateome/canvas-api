@@ -2,8 +2,10 @@ package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.CalendarEvent;
 import edu.ksu.canvas.requestOptions.DeleteCalendarEventOptions;
+import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 /**
@@ -19,7 +21,7 @@ public interface CalendarWriter extends CanvasWriter<CalendarEvent, CalendarWrit
      * @return The deleted calendar event
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<CalendarEvent> deleteCalendarEvent(DeleteCalendarEventOptions options) throws IOException;
+    Optional<CalendarEvent> deleteCalendarEvent(DeleteCalendarEventOptions options) throws IOException, URISyntaxException, ParseException;
 
     /**
      * Create a new calendar event in Canvas.
@@ -27,7 +29,7 @@ public interface CalendarWriter extends CanvasWriter<CalendarEvent, CalendarWrit
      * @return The newly created calendar event
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<CalendarEvent> createCalendarEvent(CalendarEvent calendarEvent) throws IOException;
+    Optional<CalendarEvent> createCalendarEvent(CalendarEvent calendarEvent) throws IOException, URISyntaxException, ParseException;
 
     /**
      * Modify a calendar event in Canvas.
@@ -35,6 +37,6 @@ public interface CalendarWriter extends CanvasWriter<CalendarEvent, CalendarWrit
      * @return The updated calendar event
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<CalendarEvent> editCalendarEvent(CalendarEvent calendarEvent) throws IOException;
+    Optional<CalendarEvent> editCalendarEvent(CalendarEvent calendarEvent) throws IOException, URISyntaxException, ParseException;
 
 }

@@ -1,8 +1,10 @@
 package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.GradingStandard;
+import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +16,7 @@ public interface GradingStandardReader extends CanvasReader<GradingStandard, Gra
      * @return A list of grading standards in the course
      * @throws IOException if there is an error communicating with Canvas
      */
-    List<GradingStandard> listGradingStandardsInCourse(String courseId) throws IOException;
+    List<GradingStandard> listGradingStandardsInCourse(String courseId) throws IOException, URISyntaxException, ParseException;
 
     /**
      * List grading standards associated with an account
@@ -22,7 +24,7 @@ public interface GradingStandardReader extends CanvasReader<GradingStandard, Gra
      * @return A list of grading standards in the account
      * @throws IOException if there is an error communicating with Canvas
      */
-    List<GradingStandard> listGradingStandardsInAccount(String accountId) throws IOException;
+    List<GradingStandard> listGradingStandardsInAccount(String accountId) throws IOException, URISyntaxException, ParseException;
 
     /**
      * Get a specific grading standard from within a course
@@ -31,7 +33,7 @@ public interface GradingStandardReader extends CanvasReader<GradingStandard, Gra
      * @return The requested grading standard
      * @throws IOException if there is an error communicating with Canvas
      */
-    Optional<GradingStandard> getGradingStandardInCourse(String courseId, Long gradingStandardId) throws IOException;
+    Optional<GradingStandard> getGradingStandardInCourse(String courseId, Long gradingStandardId) throws IOException, URISyntaxException, ParseException;
 
     /**
      * Get a specific grading standard from within an account
@@ -40,5 +42,5 @@ public interface GradingStandardReader extends CanvasReader<GradingStandard, Gra
      * @return The requested grading standard
      * @throws IOException if there is an error communicating with Canvas
      */
-    Optional<GradingStandard> getGradingStandardInAccount(String accountId, Long gradingStandardId) throws IOException;
+    Optional<GradingStandard> getGradingStandardInAccount(String accountId, Long gradingStandardId) throws IOException, URISyntaxException, ParseException;
 }

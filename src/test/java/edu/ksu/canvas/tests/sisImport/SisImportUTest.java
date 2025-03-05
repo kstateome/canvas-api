@@ -5,11 +5,13 @@ import edu.ksu.canvas.impl.SisImportImpl;
 import edu.ksu.canvas.interfaces.SisImportReader;
 import edu.ksu.canvas.model.SisImport;
 import edu.ksu.canvas.net.FakeRestClient;
+import org.apache.hc.core5.http.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,7 +34,7 @@ class SisImportUTest extends CanvasTestBase {
     }
 
     @Test
-    void testGetSisImport() throws IOException {
+    void testGetSisImport() throws IOException, URISyntaxException, ParseException {
         String url = baseUrl + "/api/v1/accounts/" + ARBITRARY_ACCOUNT_ID + "/sis_imports/" + ARBITRARY_SIS_IMPORT_ID;
         fakeRestClient.addSuccessResponse(url, "SampleJson/sisImport/SisImportCompleted.json");
 

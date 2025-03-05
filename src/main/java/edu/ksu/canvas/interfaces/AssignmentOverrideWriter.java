@@ -1,9 +1,11 @@
 package edu.ksu.canvas.interfaces;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 import edu.ksu.canvas.model.assignment.AssignmentOverride;
+import org.apache.hc.core5.http.ParseException;
 
 public interface AssignmentOverrideWriter extends CanvasWriter<AssignmentOverride, AssignmentOverrideWriter> {
 
@@ -14,5 +16,5 @@ public interface AssignmentOverrideWriter extends CanvasWriter<AssignmentOverrid
      * @return AssignmentOverride object created in Canvas
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<AssignmentOverride> createAssignmentOverride(String courseId, AssignmentOverride assignmentOverride) throws IOException;
+    Optional<AssignmentOverride> createAssignmentOverride(String courseId, AssignmentOverride assignmentOverride) throws IOException, URISyntaxException, ParseException;
 }

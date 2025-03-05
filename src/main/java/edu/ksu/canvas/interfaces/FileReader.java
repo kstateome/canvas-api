@@ -1,8 +1,10 @@
 package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.File;
+import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 /**
@@ -16,5 +18,5 @@ public interface FileReader extends CanvasReader<File, FileReader> {
      * @return The file object wrapped in an optional.
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<File> getFile(String url) throws IOException;
+    Optional<File> getFile(String url) throws IOException, URISyntaxException, ParseException;
 }

@@ -9,7 +9,7 @@ import edu.ksu.canvas.model.assignment.Assignment;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.requestOptions.GetSingleAssignmentOptions;
-import edu.ksu.canvas.requestOptions.ListCourseAssignmentsOptions;;
+import edu.ksu.canvas.requestOptions.ListCourseAssignmentsOptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

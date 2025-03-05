@@ -2,8 +2,10 @@ package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.CalendarEvent;
 import edu.ksu.canvas.requestOptions.ListCalendarEventsOptions;
+import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +24,7 @@ public interface CalendarReader extends CanvasReader<CalendarEvent, CalendarRead
      * @return A list of events matching the query parameters
      * @throws IOException When there is an error communicating with Canvas
      */
-    List<CalendarEvent> listCurrentUserCalendarEvents(ListCalendarEventsOptions options) throws IOException;
+    List<CalendarEvent> listCurrentUserCalendarEvents(ListCalendarEventsOptions options) throws IOException, URISyntaxException, ParseException;
 
     /**
      * Retrieve calendar events for a specified user.
@@ -33,7 +35,7 @@ public interface CalendarReader extends CanvasReader<CalendarEvent, CalendarRead
      * @return A list of events matching the query parameters
      * @throws IOException When there is an error communicating with Canvas
      */
-    List<CalendarEvent> listCalendarEvents(String userId, ListCalendarEventsOptions options) throws  IOException;
+    List<CalendarEvent> listCalendarEvents(String userId, ListCalendarEventsOptions options) throws  IOException, URISyntaxException, ParseException;
 
     /**
      * Retrieve a specific calendar event from Canvas.
@@ -41,6 +43,6 @@ public interface CalendarReader extends CanvasReader<CalendarEvent, CalendarRead
      * @return The requested calendar event object
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<CalendarEvent> getCalendarEvent(Long id) throws IOException;
+    Optional<CalendarEvent> getCalendarEvent(Long id) throws IOException, URISyntaxException, ParseException;
 
 }

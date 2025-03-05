@@ -6,11 +6,13 @@ import edu.ksu.canvas.interfaces.CalendarReader;
 import edu.ksu.canvas.model.CalendarEvent;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.requestOptions.ListCalendarEventsOptions;
+import org.apache.hc.core5.http.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +32,7 @@ class CalendarReaderUTest extends CanvasTestBase {
     }
 
     @Test
-    void testGettingCalendarForCurrentUser() throws IOException {
+    void testGettingCalendarForCurrentUser() throws IOException, URISyntaxException, ParseException {
         String url = baseUrl + "/api/v1/calendar_events";
         fakeRestClient.addSuccessResponse(url, "SampleJson/calendar/CalendarEvents.json");
         List<CalendarEvent> userCalendarEvents = calendarReader.listCurrentUserCalendarEvents(new ListCalendarEventsOptions());
@@ -56,7 +58,7 @@ class CalendarReaderUTest extends CanvasTestBase {
     }
 
     @Test
-    void testGettingCalendarForUser() throws IOException {
+    void testGettingCalendarForUser() throws IOException, URISyntaxException, ParseException {
         String url = baseUrl + "/api/v1/users/73/calendar_events";
         fakeRestClient.addSuccessResponse(url, "SampleJson/calendar/CalendarEvents.json");
         List<CalendarEvent> userCalendarEvents = calendarReader.listCalendarEvents("73", new ListCalendarEventsOptions());
@@ -66,7 +68,7 @@ class CalendarReaderUTest extends CanvasTestBase {
     }
 
     @Test
-    void testGetCalendarEvent() throws IOException {
+    void testGetCalendarEvent() throws IOException, URISyntaxException, ParseException {
         String url = baseUrl + "/api/v1/calendar_events/95";
         fakeRestClient.addSuccessResponse(url, "SampleJson/calendar/CalendarEvent.json");
         Optional<CalendarEvent> calendarEvent = calendarReader.getCalendarEvent(95L);

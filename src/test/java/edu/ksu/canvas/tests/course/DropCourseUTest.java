@@ -6,11 +6,13 @@ import edu.ksu.canvas.impl.EnrollmentImpl;
 import edu.ksu.canvas.interfaces.EnrollmentWriter;
 import edu.ksu.canvas.model.Enrollment;
 import edu.ksu.canvas.net.FakeRestClient;
+import org.apache.hc.core5.http.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,7 +30,7 @@ class DropCourseUTest extends CanvasTestBase {
     }
 
     @Test
-    void testEnrollUser() throws IOException {
+    void testEnrollUser() throws IOException, URISyntaxException, ParseException {
         //should make sure user exists
         String url = baseUrl + "/api/v1/courses/25/enrollments";
         fakeRestClient.addSuccessResponse(url, "SampleJson/EnrollmentResponse.json");
@@ -42,7 +44,7 @@ class DropCourseUTest extends CanvasTestBase {
     }
 
     @Test
-    void testDropEnrolledUser() throws IOException {
+    void testDropEnrolledUser() throws IOException, URISyntaxException, ParseException {
         String url = baseUrl + "/api/v1/courses/25/enrollments/355047";
         fakeRestClient.addSuccessResponse(url, "SampleJson/EnrollmentDeleteResponse.json");
         Optional<Enrollment> dropResponse = enrollmentsWriter.dropUser("25", "355047");
@@ -50,7 +52,7 @@ class DropCourseUTest extends CanvasTestBase {
     }
 
     @Test
-    void testSisUserMasqueradeEnrollUser() throws IOException {
+    void testSisUserMasqueradeEnrollUser() throws IOException, URISyntaxException, ParseException {
         //should make sure user exists
         String userId = "899123456";
         String url = baseUrl + "/api/v1/courses/25/enrollments?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + userId;
@@ -65,7 +67,7 @@ class DropCourseUTest extends CanvasTestBase {
     }
 
     @Test
-    void testSisUserMasqueradeDropEnrolledUser() throws IOException {
+    void testSisUserMasqueradeDropEnrolledUser() throws IOException, URISyntaxException, ParseException {
         String userId = "899123456";
         String url = baseUrl + "/api/v1/courses/25/enrollments/355047?as_user_id=" + CanvasConstants.MASQUERADE_SIS_USER + ":" + userId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/EnrollmentDeleteResponse.json");
@@ -74,7 +76,7 @@ class DropCourseUTest extends CanvasTestBase {
     }
 
     @Test
-    void testCanvasUserMasqueradeEnrollUser() throws IOException {
+    void testCanvasUserMasqueradeEnrollUser() throws IOException, URISyntaxException, ParseException {
         //should make sure user exists
         String userId = "899123456";
         String url = baseUrl + "/api/v1/courses/25/enrollments?as_user_id=" + userId;
@@ -89,7 +91,7 @@ class DropCourseUTest extends CanvasTestBase {
     }
 
     @Test
-    void testCanvasUserMasqueradeDropEnrolledUser() throws IOException {
+    void testCanvasUserMasqueradeDropEnrolledUser() throws IOException, URISyntaxException, ParseException {
         String userId = "899123456";
         String url = baseUrl + "/api/v1/courses/25/enrollments/355047?as_user_id=" + userId;
         fakeRestClient.addSuccessResponse(url, "SampleJson/EnrollmentDeleteResponse.json");

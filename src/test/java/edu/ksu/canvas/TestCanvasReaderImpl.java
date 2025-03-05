@@ -5,9 +5,11 @@ import edu.ksu.canvas.impl.BaseImpl;
 import edu.ksu.canvas.model.TestCanvasModel;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
+import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,11 +19,11 @@ public class TestCanvasReaderImpl extends BaseImpl<TestCanvasModel, TestCanvasRe
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout, CanvasTestBase.DEFAULT_PAGINATION_PAGE_SIZE, false);
     }
 
-    public List<TestCanvasModel> getTestModels(String url) throws IOException {
+    public List<TestCanvasModel> getTestModels(String url) throws IOException, URISyntaxException, ParseException {
         return getListFromCanvas(url);
     }
 
-    public Optional<TestCanvasModel> getTestModel(String url) throws IOException {
+    public Optional<TestCanvasModel> getTestModel(String url) throws IOException, URISyntaxException, ParseException {
         return getFromCanvas(url);
     }
 

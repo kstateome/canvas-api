@@ -13,11 +13,13 @@ import edu.ksu.canvas.requestOptions.ListCourseAssignmentsOptions;
 import edu.ksu.canvas.requestOptions.ListUserAssignmentOptions;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -34,25 +36,25 @@ public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, Assig
     }
 
     @Override
-    public List<Assignment> listCourseAssignments(ListCourseAssignmentsOptions options) throws IOException {
+    public List<Assignment> listCourseAssignments(ListCourseAssignmentsOptions options) throws IOException, ParseException, URISyntaxException {
         String url = buildCanvasUrl("courses/" + options.getCourseId() + "/assignments" , options.getOptionsMap());
         return getListFromCanvas(url);
     }
 
-    public List<Assignment> listUserAssignments(ListUserAssignmentOptions options) throws IOException {
+    public List<Assignment> listUserAssignments(ListUserAssignmentOptions options) throws IOException, URISyntaxException, ParseException {
         String url = buildCanvasUrl("users/" + options.getUserId() + "/courses/" + options.getCourseId() + "/assignments", options.getOptionsMap());
         return getListFromCanvas(url);
     }
 
     @Override
-    public Optional<Assignment> getSingleAssignment(GetSingleAssignmentOptions options) throws IOException {
+    public Optional<Assignment> getSingleAssignment(GetSingleAssignmentOptions options) throws IOException, URISyntaxException, ParseException {
         String url = buildCanvasUrl("courses/" + options.getCourseId() + "/assignments/" + options.getAssignmentId(), options.getOptionsMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(Assignment.class, response);
     }
 
     @Override
-    public Optional<Assignment> createAssignment(String courseId, Assignment assignment) throws IOException {
+    public Optional<Assignment> createAssignment(String courseId, Assignment assignment) throws IOException, URISyntaxException, ParseException {
         if(StringUtils.isBlank(assignment.getName())) {
             throw new IllegalArgumentException("Assignment must have a name");
         }
@@ -62,7 +64,7 @@ public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, Assig
     }
 
     @Override
-    public Optional<Assignment> deleteAssignment(String courseId, Long assignmentId) throws IOException {
+    public Optional<Assignment> deleteAssignment(String courseId, Long assignmentId) throws IOException, URISyntaxException, ParseException {
         Map<String, List<String>> postParams = new HashMap<>();
         postParams.put("event", Collections.singletonList("delete"));
         String createdUrl = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentId, Collections.emptyMap());
@@ -76,7 +78,7 @@ public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, Assig
     }
 
     @Override
-    public Optional<Assignment> editAssignment(String courseId, Assignment assignment) throws IOException {
+    public Optional<Assignment> editAssignment(String courseId, Assignment assignment) throws IOException, URISyntaxException, ParseException {
         String url = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignment.getId(), Collections.emptyMap());
         Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, assignment.toJsonObject(serializeNulls));
         return responseParser.parseToObject(Assignment.class, response);

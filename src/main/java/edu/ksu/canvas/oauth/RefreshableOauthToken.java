@@ -1,6 +1,7 @@
 package edu.ksu.canvas.oauth;
 
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
+import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,14 +39,14 @@ public class RefreshableOauthToken implements OauthToken {
      * @param tokenRefresher Token refresher service
      * @param refreshToken The permanent refresh token
      */
-    public RefreshableOauthToken(OauthTokenRefresher tokenRefresher, String refreshToken) {
+    public RefreshableOauthToken(OauthTokenRefresher tokenRefresher, String refreshToken) throws ParseException {
         this.refreshToken = refreshToken;
         this.tokenRefresher = tokenRefresher;
         refresh();
     }
 
     @Override
-    public void refresh() {
+    public void refresh() throws ParseException {
         try {
             TokenRefreshResponse refreshResponse = tokenRefresher.getNewToken(refreshToken);
             if(refreshResponse == null) {
@@ -60,7 +61,7 @@ public class RefreshableOauthToken implements OauthToken {
     }
 
     @Override
-    public String getAccessToken() {
+    public String getAccessToken() throws ParseException {
         if (tokenExpiration.isExpired()) {
             refresh();
         }

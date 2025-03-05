@@ -22,11 +22,13 @@ import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.AnswerQuizQuestionOptions;
+import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,7 +42,7 @@ public class QuizSubmissionQuestionImpl extends BaseImpl<QuizSubmissionQuestion,
     }
 
     @Override
-    public List<QuizSubmissionQuestion> answerQuestions(AnswerQuizQuestionOptions options, String answerArrayJson) throws IOException {
+    public List<QuizSubmissionQuestion> answerQuestions(AnswerQuizQuestionOptions options, String answerArrayJson) throws IOException, URISyntaxException, ParseException {
         if(options == null || answerArrayJson == null) {
             throw new IllegalArgumentException("options and answers must not be null");
         }

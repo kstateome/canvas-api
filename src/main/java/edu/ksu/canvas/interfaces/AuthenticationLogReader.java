@@ -1,8 +1,10 @@
 package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.AuthenticationLog;
+import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 public interface AuthenticationLogReader extends CanvasReader<AuthenticationLog, AuthenticationLogReader> {
@@ -13,7 +15,7 @@ public interface AuthenticationLogReader extends CanvasReader<AuthenticationLog,
      * @return An authentication log
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<AuthenticationLog> getAuthenticationLogForAccount(String accountId) throws IOException;
+    Optional<AuthenticationLog> getAuthenticationLogForAccount(String accountId) throws IOException, URISyntaxException, ParseException;
 
     /**
      * Returns an authentication log.
@@ -21,7 +23,7 @@ public interface AuthenticationLogReader extends CanvasReader<AuthenticationLog,
      * @return An authentication log
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<AuthenticationLog> getAuthenticationLogForLogin(String loginId) throws IOException;
+    Optional<AuthenticationLog> getAuthenticationLogForLogin(String loginId) throws IOException, URISyntaxException, ParseException;
 
     /**
      * Returns an authentication log.
@@ -29,5 +31,5 @@ public interface AuthenticationLogReader extends CanvasReader<AuthenticationLog,
      * @return An authentication log
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<AuthenticationLog> getAuthenticationLogForUser(String userId) throws IOException;
+    Optional<AuthenticationLog> getAuthenticationLogForUser(String userId) throws IOException, URISyntaxException, ParseException;
 }

@@ -7,11 +7,13 @@ import edu.ksu.canvas.model.Module;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.ListModulesOptions;
+import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.util.List;
 
 public class ModuleImpl extends BaseImpl<Module, ModuleReader, CanvasWriter> implements ModuleReader {
@@ -22,7 +24,7 @@ public class ModuleImpl extends BaseImpl<Module, ModuleReader, CanvasWriter> imp
     }
 
     @Override
-    public List<Module> getModulesInCourse(final ListModulesOptions options) throws IOException {
+    public List<Module> getModulesInCourse(final ListModulesOptions options) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Retrieving modules for course {}", options.getCourseId());
         String url = buildCanvasUrl(String.format("courses/%d/modules", options.getCourseId()), options.getOptionsMap());
         return getListFromCanvas(url);

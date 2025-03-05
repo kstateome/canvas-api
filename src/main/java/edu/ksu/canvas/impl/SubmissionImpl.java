@@ -14,11 +14,13 @@ import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.GetSubmissionsOptions;
 import edu.ksu.canvas.requestOptions.MultipleSubmissionsOptions;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +46,7 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
     }
 
     @Override
-    public List<Submission> getCourseSubmissions(final GetSubmissionsOptions options) throws IOException {
+    public List<Submission> getCourseSubmissions(final GetSubmissionsOptions options) throws IOException, URISyntaxException, ParseException {
         if(StringUtils.isBlank(options.getCanvasId()) || options.getAssignmentId() == null) {
             throw new IllegalArgumentException("Course and assignment IDs are required for this API call");
         }
@@ -55,7 +57,7 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
 
     @Override
     public List<Submission> listCourseSubmissionsForMultipleAssignments(GetSubmissionsOptions options)
-            throws IOException {
+            throws IOException, URISyntaxException, ParseException {
         if (StringUtils.isBlank(options.getCanvasId())) {
             throw new IllegalArgumentException("Course ID is required for this API call");
         }
@@ -66,7 +68,7 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
     }
 
     @Override
-    public List<Submission> getSectionSubmissions(final GetSubmissionsOptions options) throws IOException {
+    public List<Submission> getSectionSubmissions(final GetSubmissionsOptions options) throws IOException, URISyntaxException, ParseException {
         if(StringUtils.isBlank(options.getCanvasId()) || options.getAssignmentId() == null) {
             throw new IllegalArgumentException("Section and assignment IDs are required for this API call");
         }
@@ -76,7 +78,7 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
     }
 
     @Override
-    public Optional<Submission> getSingleCourseSubmission(final GetSubmissionsOptions options) throws IOException {
+    public Optional<Submission> getSingleCourseSubmission(final GetSubmissionsOptions options) throws IOException, URISyntaxException, ParseException {
         if(StringUtils.isAnyBlank(options.getCanvasId(), options.getUserId()) || options.getAssignmentId() == null) {
             throw new IllegalArgumentException("Course, assignment and user ID are all required for this API call");
         }
@@ -86,7 +88,7 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
     }
 
     @Override
-    public Optional<Submission> getSingleSectionSubmission(final GetSubmissionsOptions options) throws IOException {
+    public Optional<Submission> getSingleSectionSubmission(final GetSubmissionsOptions options) throws IOException, URISyntaxException, ParseException {
         if(StringUtils.isAnyBlank(options.getCanvasId(), options.getUserId()) || options.getAssignmentId() == null) {
             throw new IllegalArgumentException("Section, assignment and user ID are all required for this API call");
         }
@@ -96,7 +98,7 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
     }
 
     @Override
-    public Optional<Progress> gradeMultipleSubmissionsBySection(MultipleSubmissionsOptions options) throws IOException {
+    public Optional<Progress> gradeMultipleSubmissionsBySection(MultipleSubmissionsOptions options) throws IOException, URISyntaxException, ParseException {
 
         LOG.debug("assignment submission for section {}", options.getObjectId());
         String url = buildCanvasUrl("sections/" + options.getObjectId() + "/assignments/" + options.getAssignmentId() + "/submissions/update_grades", options.getOptionsMap());
@@ -105,7 +107,7 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
     }
 
     @Override
-    public Optional<Progress> gradeMultipleSubmissionsByCourse(MultipleSubmissionsOptions options) throws IOException {
+    public Optional<Progress> gradeMultipleSubmissionsByCourse(MultipleSubmissionsOptions options) throws IOException, URISyntaxException, ParseException {
 
         LOG.debug("assignment submission for course {}", options.getObjectId());
         String url = buildCanvasUrl("courses/" + options.getObjectId() + "/assignments/" + options.getAssignmentId() + "/submissions/update_grades", options.getOptionsMap());
@@ -113,7 +115,7 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
         return gradeMultipleSubmissions(options, url);
     }
 
-    private Optional<Progress> gradeMultipleSubmissions(MultipleSubmissionsOptions options, String url) throws IOException {
+    private Optional<Progress> gradeMultipleSubmissions(MultipleSubmissionsOptions options, String url) throws IOException, URISyntaxException, ParseException {
         Gson gson = GsonResponseParser.getDefaultGsonParser(serializeNulls);
         JsonObject jsonObject = new JsonObject();
         jsonObject.add("grade_data", gson.toJsonTree(options.getStudentSubmissionOptionMap()));

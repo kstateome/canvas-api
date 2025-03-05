@@ -8,11 +8,13 @@ import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.ListAccountAdminsOptions;
 
+import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.util.List;
 
 public class AdminImpl extends BaseImpl<AccountAdmin, AdminReader, AdminWriter> implements AdminReader, AdminWriter {
@@ -25,7 +27,7 @@ public class AdminImpl extends BaseImpl<AccountAdmin, AdminReader, AdminWriter> 
     }
 
     @Override
-    public List<AccountAdmin> listAccountAdmins(ListAccountAdminsOptions options) throws IOException {
+    public List<AccountAdmin> listAccountAdmins(ListAccountAdminsOptions options) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Getting list of account admins");
         String url = buildCanvasUrl("accounts/" + options.getAccountId() + "/admins", options.getOptionsMap());
         return getListFromCanvas(url);

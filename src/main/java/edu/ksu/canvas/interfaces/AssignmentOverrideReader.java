@@ -1,7 +1,10 @@
 package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.assignment.AssignmentOverride;
+import org.apache.hc.core5.http.ParseException;
+
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +17,7 @@ public interface AssignmentOverrideReader extends CanvasReader<AssignmentOverrid
      * @return List of assignment overrides
      * @throws IOException When there is an error communicating with Canvas
      */
-    List<AssignmentOverride> listAssignmentOverrides(String courseId, Long assignmentId) throws IOException;
+    List<AssignmentOverride> listAssignmentOverrides(String courseId, Long assignmentId) throws IOException, URISyntaxException, ParseException;
     
     /***
      * Returns details of the the override with the given id.
@@ -24,5 +27,5 @@ public interface AssignmentOverrideReader extends CanvasReader<AssignmentOverrid
      * @return The requested assigment override object
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<AssignmentOverride> getAssignmentOverride(String courseId, Long assignmentId, Long overrideId) throws IOException;
+    Optional<AssignmentOverride> getAssignmentOverride(String courseId, Long assignmentId, Long overrideId) throws IOException, URISyntaxException, ParseException;
 }

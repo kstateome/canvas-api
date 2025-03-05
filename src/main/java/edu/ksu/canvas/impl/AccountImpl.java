@@ -11,11 +11,13 @@ import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.GetSubAccountsOptions;
 import edu.ksu.canvas.requestOptions.ListAccountOptions;
+import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.util.*;
 
 public class AccountImpl extends BaseImpl<Account, AccountReader, AccountWriter> implements AccountReader, AccountWriter {
@@ -28,7 +30,7 @@ public class AccountImpl extends BaseImpl<Account, AccountReader, AccountWriter>
     }
 
     @Override
-    public Optional<Account> getSingleAccount(String accountId) throws IOException {
+    public Optional<Account> getSingleAccount(String accountId) throws IOException, URISyntaxException, ParseException {
         LOG.debug("getting account {}", accountId);
         String url = buildCanvasUrl("accounts/" + accountId, Collections.emptyMap());
 
@@ -40,21 +42,21 @@ public class AccountImpl extends BaseImpl<Account, AccountReader, AccountWriter>
     }
 
     @Override
-    public List<Account> listAccounts(ListAccountOptions options) throws IOException {
+    public List<Account> listAccounts(ListAccountOptions options) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Listing accounts for current user ");
         String url = buildCanvasUrl("accounts", options.getOptionsMap());
         return getListFromCanvas(url);
     }
 
     @Override
-    public List<Account> getSubAccounts(GetSubAccountsOptions options) throws IOException {
+    public List<Account> getSubAccounts(GetSubAccountsOptions options) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Getting list of sub-accounts for account {}", options.getAccountId());
         String url = buildCanvasUrl("accounts/" + options.getAccountId() + "/sub_accounts", options.getOptionsMap());
         return getListFromCanvas(url);
     }
 
     @Override
-    public List<Account> listAccountsForCourseAdmins() throws IOException {
+    public List<Account> listAccountsForCourseAdmins() throws IOException, URISyntaxException, ParseException {
         LOG.debug("Getting list of accounts by admin course enrollments");
         String url = buildCanvasUrl("course_accounts", Collections.emptyMap());
         return getListFromCanvas(url);
@@ -71,7 +73,7 @@ public class AccountImpl extends BaseImpl<Account, AccountReader, AccountWriter>
     }
 
     @Override
-    public Optional<Account> createAccount(String accountId, Account account) throws IOException {
+    public Optional<Account> createAccount(String accountId, Account account) throws IOException, URISyntaxException, ParseException {
         LOG.debug("creating account");
         String url = buildCanvasUrl("accounts/" + accountId + "/sub_accounts", Collections.emptyMap());
         Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, account.toJsonObject(serializeNulls));
@@ -79,7 +81,7 @@ public class AccountImpl extends BaseImpl<Account, AccountReader, AccountWriter>
     }
 
     @Override
-    public Optional<Account> updateAccount(Account account) throws IOException {
+    public Optional<Account> updateAccount(Account account) throws IOException, URISyntaxException, ParseException {
         LOG.debug("updating account");
         String url = buildCanvasUrl("accounts/" + account.getId(), Collections.emptyMap());
         Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, account.toJsonObject(serializeNulls));
@@ -87,7 +89,7 @@ public class AccountImpl extends BaseImpl<Account, AccountReader, AccountWriter>
     }
 
     @Override
-    public Boolean deleteAccount(String parentAccountId, String accountId) throws IOException {
+    public Boolean deleteAccount(String parentAccountId, String accountId) throws IOException, URISyntaxException, ParseException {
         Map<String, List<String>> postParams = new HashMap<>();
         String deleteUrl = buildCanvasUrl("accounts/" + parentAccountId+ "/sub_accounts/"+ accountId, Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, deleteUrl, postParams);

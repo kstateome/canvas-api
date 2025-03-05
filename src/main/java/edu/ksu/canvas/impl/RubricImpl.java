@@ -9,11 +9,13 @@ import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.GetRubricOptions;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +28,7 @@ public class RubricImpl extends BaseImpl<Rubric, RubricReader, RubricWriter> imp
     }
 
     @Override
-    public Optional<Rubric> getRubricInAccount(GetRubricOptions options) throws IOException {
+    public Optional<Rubric> getRubricInAccount(GetRubricOptions options) throws IOException, URISyntaxException, ParseException {
         if(StringUtils.isBlank(options.getCanvasId()) || options.getRubricId() == null) {
             throw new IllegalArgumentException(("Account and rubric IDs must be supplied"));
         }
@@ -37,7 +39,7 @@ public class RubricImpl extends BaseImpl<Rubric, RubricReader, RubricWriter> imp
     }
 
     @Override
-    public Optional<Rubric> getRubricInCourse(GetRubricOptions options) throws IOException {
+    public Optional<Rubric> getRubricInCourse(GetRubricOptions options) throws IOException, URISyntaxException, ParseException {
         if(StringUtils.isBlank(options.getCanvasId()) || options.getRubricId() == null) {
             throw new IllegalArgumentException(("Course and rubric IDs must be supplied"));
         }

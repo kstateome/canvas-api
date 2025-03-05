@@ -18,11 +18,13 @@ import edu.ksu.canvas.requestOptions.CreateContentMigrationOptions.MigrationType
 import edu.ksu.canvas.requestOptions.CreateCourseContentMigrationOptions;
 import edu.ksu.canvas.requestOptions.GetSelectiveDataOptions;
 
+import org.apache.hc.core5.http.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -67,7 +69,7 @@ class ContentMigrationUTest extends CanvasTestBase {
     }
 
     @Test
-    void testCourseContentMigrationCreation() throws IOException {
+    void testCourseContentMigrationCreation() throws IOException, URISyntaxException, ParseException {
         String url = baseUrl + "/api/v1/courses/" + ARBITRARY_DESTINATION_COURSE_ID + "/content_migrations";
         fakeRestClient.addSuccessResponse(url, "SampleJson/contentMigration/CreateContentMigrationRunning.json");
         CreateCourseContentMigrationOptions createCourseContentMigrationOptions = new CreateCourseContentMigrationOptions(ARBITRARY_DESTINATION_COURSE_ID, ARBITRARY_COURSE_ID, MigrationType.course_copy_importer, false);
@@ -81,7 +83,7 @@ class ContentMigrationUTest extends CanvasTestBase {
     }
 
     @Test
-    void testGetCourseContentMigration() throws IOException {
+    void testGetCourseContentMigration() throws IOException, URISyntaxException, ParseException {
         String url = baseUrl + "/api/v1/courses/" + ARBITRARY_DESTINATION_COURSE_ID + "/content_migrations/" + ARBITRARY_CONTENT_MIGRATION_ID;
         fakeRestClient.addSuccessResponse(url, "SampleJson/contentMigration/GetContentMigrationCompleted.json");
         //verifying content from previously created course content migration
@@ -101,7 +103,7 @@ class ContentMigrationUTest extends CanvasTestBase {
     }
 
     @Test
-    void testSelectiveCourseContentMigration() throws IOException {
+    void testSelectiveCourseContentMigration() throws IOException, URISyntaxException, ParseException {
         String url = baseUrl + "/api/v1/courses/" + ARBITRARY_DESTINATION_COURSE_ID_2 + "/content_migrations";
         fakeRestClient.addSuccessResponse(url, "SampleJson/contentMigration/CreateContentMigrationWaiting.json");
         CreateCourseContentMigrationOptions createCourseContentMigrationOptions = new CreateCourseContentMigrationOptions(ARBITRARY_DESTINATION_COURSE_ID_2, ARBITRARY_COURSE_ID, MigrationType.course_copy_importer, true);
@@ -140,7 +142,7 @@ class ContentMigrationUTest extends CanvasTestBase {
     }
 
     @Test
-    void testGetContentCourseMigrationIssues() throws IOException {
+    void testGetContentCourseMigrationIssues() throws IOException, URISyntaxException, ParseException {
         String url = baseUrl + "/api/v1/courses/" + ARBITRARY_DESTINATION_COURSE_ID_3 + "/content_migrations/" + ARBITRARY_CONTENT_MIGRATION_ID;
         String migrationUrl = baseUrl + "/api/v1/courses/" + ARBITRARY_DESTINATION_COURSE_ID_3 + "/content_migrations/" + ARBITRARY_CONTENT_MIGRATION_ID_ISSUES + "/migration_issues";
 
@@ -164,7 +166,7 @@ class ContentMigrationUTest extends CanvasTestBase {
     }
 
     @Test
-    void testFileContentCourseMigration() throws IOException {
+    void testFileContentCourseMigration() throws IOException, URISyntaxException, ParseException {
         String url = baseUrl + "/api/v1/courses/" + ARBITRARY_DESTINATION_COURSE_ID_4 + "/content_migrations";
         fakeRestClient.addSuccessResponse(url, "SampleJson/contentMigration/CreateContentMigrationWithFile.json");
         CreateCourseContentMigrationOptions createCourseContentMigrationOptions = new CreateCourseContentMigrationOptions(ARBITRARY_DESTINATION_COURSE_ID_4, ARBITRARY_COURSE_ID, MigrationType.zip_file_importer, false);

@@ -11,11 +11,13 @@ import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +33,7 @@ public class CommunicationChannelImpl extends BaseImpl<CommunicationChannel, Com
     }
 
     @Override
-    public List<CommunicationChannel> getCommunicationChannelsForUser(String userId) throws IOException {
+    public List<CommunicationChannel> getCommunicationChannelsForUser(String userId) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Retrieving communication channels for user id " + userId);
         String url = buildCanvasUrl(String.format("users/%s/communication_channels", userId), emptyMap());
 
@@ -39,7 +41,7 @@ public class CommunicationChannelImpl extends BaseImpl<CommunicationChannel, Com
     }
 
     @Override
-    public Optional<CommunicationChannel> createCommunicationChannel(CreateCommunicationChannelOptions options) throws IOException {
+    public Optional<CommunicationChannel> createCommunicationChannel(CreateCommunicationChannelOptions options) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Creating communication channel for user {}", options.getUserId());
         if(StringUtils.isAnyBlank(options.getUserId())) {
             throw new IllegalArgumentException("User ID is required to create a communication channel");
@@ -51,7 +53,7 @@ public class CommunicationChannelImpl extends BaseImpl<CommunicationChannel, Com
     }
 
     @Override
-    public Optional<CommunicationChannel> deleteCommunicationChannel(CommunicationChannel cc) throws IOException {
+    public Optional<CommunicationChannel> deleteCommunicationChannel(CommunicationChannel cc) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Deleting communication channel {} for user {}", cc.getId(), cc.getUserId());
         if(StringUtils.isAnyBlank(cc.getUserId(), cc.getId())) {
             throw new IllegalArgumentException("User ID and communication channel ID are required to delete a communication channel");

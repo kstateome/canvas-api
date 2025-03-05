@@ -6,11 +6,13 @@ import edu.ksu.canvas.interfaces.AuthenticationLogReader;
 import edu.ksu.canvas.model.AuthenticationLog;
 import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.util.CanvasURLBuilder;
+import org.apache.hc.core5.http.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -34,7 +36,7 @@ class AuthenticationLogUTest extends CanvasTestBase {
     }
 
     @Test
-    void testGetAuthenticationLogForUser() throws IOException {
+    void testGetAuthenticationLogForUser() throws IOException, URISyntaxException, ParseException {
         String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion, "audit/authentication/users/" + ARBITRARY_USER_ID, Collections.emptyMap());
         fakeRestClient.addSuccessResponse(url, "SampleJson/authenticationLog/AuthenticationLogForUser.json");
 
@@ -54,7 +56,7 @@ class AuthenticationLogUTest extends CanvasTestBase {
     }
 
     @Test
-    void testGetAuthenticationLogForAccount() throws IOException {
+    void testGetAuthenticationLogForAccount() throws IOException, URISyntaxException, ParseException {
         String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion, "audit/authentication/accounts/" + ARBITRARY_ACCOUNT_ID, Collections.emptyMap());
         fakeRestClient.addSuccessResponse(url, "SampleJson/authenticationLog/AuthenticationLogForAccount.json");
 
@@ -74,7 +76,7 @@ class AuthenticationLogUTest extends CanvasTestBase {
     }
 
     @Test
-    void testGetAuthenticationLogForLogin() throws IOException {
+    void testGetAuthenticationLogForLogin() throws IOException, URISyntaxException, ParseException {
         String url = CanvasURLBuilder.buildCanvasUrl(baseUrl, apiVersion, "audit/authentication/logins/" + ARBITRARY_LOGIN_ID, Collections.emptyMap());
         fakeRestClient.addSuccessResponse(url, "SampleJson/authenticationLog/AuthenticationLogForLogin.json");
 

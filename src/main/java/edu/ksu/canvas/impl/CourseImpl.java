@@ -13,11 +13,13 @@ import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.*;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -36,20 +38,20 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
     }
 
     @Override
-    public List<Course> listCurrentUserCourses(ListCurrentUserCoursesOptions options) throws IOException {
+    public List<Course> listCurrentUserCourses(ListCurrentUserCoursesOptions options) throws IOException, URISyntaxException, ParseException {
         LOG.debug("listing courses for user");
         String url = buildCanvasUrl("courses/", options.getOptionsMap());
         return getListFromCanvas(url);
     }
 
-    public List<Course> listUserCourses(ListUserCoursesOptions options) throws  IOException {
+    public List<Course> listUserCourses(ListUserCoursesOptions options) throws IOException, URISyntaxException, ParseException {
         LOG.debug("listing course for user {}", options.getUserId());
         String url = buildCanvasUrl("users/" + options.getUserId() + "/courses", options.getOptionsMap());
         return getListFromCanvas(url);
     }
 
     @Override
-    public Optional<Course> getSingleCourse(GetSingleCourseOptions options) throws IOException {
+    public Optional<Course> getSingleCourse(GetSingleCourseOptions options) throws IOException, URISyntaxException, ParseException {
         LOG.debug("getting course {}", options.getCourseId());
         String path = "";
         String accountId = options.getAccount();
@@ -64,13 +66,13 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
     }
 
     @Override
-    public Optional<Course> getSingleCourse(String accountId, GetSingleCourseOptions options) throws IOException {
+    public Optional<Course> getSingleCourse(String accountId, GetSingleCourseOptions options) throws IOException, URISyntaxException, ParseException {
         LOG.debug("getting course {} in account {}", options.getCourseId(), accountId);
         String url = buildCanvasUrl("accounts/"+ accountId+ "/courses/"+ options.getCourseId(), options.getOptionsMap());
         return retrieveCourseFromCanvas(oauthToken, url);
     }
 
-    private Optional<Course> retrieveCourseFromCanvas(OauthToken oauthToken, String url) throws IOException {
+    private Optional<Course> retrieveCourseFromCanvas(OauthToken oauthToken, String url) throws IOException, URISyntaxException, ParseException {
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         if (response.getErrorHappened() || response.getResponseCode() != 200) {
             return Optional.empty();
@@ -79,7 +81,7 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
     }
 
     @Override
-    public Optional<Course> createCourse(String accountId, Course course) throws IOException {
+    public Optional<Course> createCourse(String accountId, Course course) throws IOException, URISyntaxException, ParseException {
         LOG.debug("creating course in account {}", accountId);
         String url = buildCanvasUrl("accounts/" + accountId + "/courses", Collections.emptyMap());
         Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, course.toJsonObject(serializeNulls));
@@ -87,7 +89,7 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
     }
 
     @Override
-    public Optional<Course> updateCourse(Course course) throws IOException {
+    public Optional<Course> updateCourse(Course course) throws IOException, URISyntaxException, ParseException {
         LOG.debug("updating course{}", course.getId());
         String url = buildCanvasUrl("courses/" + course.getId(), Collections.emptyMap());
         Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, course.toJsonObject(serializeNulls));
@@ -95,7 +97,7 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
     }
 
     @Override
-    public Optional<Course> updateCourse(String id, Course course) throws IOException {
+    public Optional<Course> updateCourse(String id, Course course) throws IOException, URISyntaxException, ParseException {
         LOG.debug("updating course {}", id);
         // TODO At some point we need to sort this out better throughout the library
         String url = buildCanvasUrl("courses/" + encode(id), Collections.emptyMap());
@@ -104,7 +106,7 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
     }
 
     @Override
-    public Boolean deleteCourse(String courseId) throws IOException {
+    public Boolean deleteCourse(String courseId) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Deleting course {}", courseId);
         Map<String, List<String>> postParams = new HashMap<>();
         postParams.put("event", Collections.singletonList("delete"));
@@ -120,7 +122,7 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
     }
 
     @Override
-    public Boolean deleteCourse(DeleteCourseOptions options) throws IOException {
+    public Boolean deleteCourse(DeleteCourseOptions options) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Deleting course {}", options.getCourseId());
         String path = "";
         String accountId = options.getAccountId();
@@ -149,20 +151,20 @@ public class CourseImpl extends BaseImpl<Course, CourseReader, CourseWriter> imp
     }
 
     @Override
-    public List<Course> listActiveCoursesInAccount(ListActiveCoursesInAccountOptions options) throws IOException {
+    public List<Course> listActiveCoursesInAccount(ListActiveCoursesInAccountOptions options) throws IOException, URISyntaxException, ParseException {
         String url = buildCanvasUrl("accounts/" + options.getAccountId() + "/courses", options.getOptionsMap());
         return getListFromCanvas(url);
     }
 
     @Override
-    public Optional<Deposit> uploadFile(String courseId, UploadOptions uploadOptions) throws IOException {
+    public Optional<Deposit> uploadFile(String courseId, UploadOptions uploadOptions) throws IOException, URISyntaxException, ParseException {
         String url = buildCanvasUrl("courses/"+ courseId+ "/files", Collections.emptyMap());
         Response response = canvasMessenger.sendToCanvas(oauthToken, url, uploadOptions.getOptionsMap());
         return responseParser.parseToObject(Deposit.class, response);
     }
 
     @Override
-    public Optional<Progress> batchUpdateCourseState(String accountId, Course.CourseEvent event, String... courseIds) throws IOException {
+    public Optional<Progress> batchUpdateCourseState(String accountId, Course.CourseEvent event, String... courseIds) throws IOException, URISyntaxException, ParseException {
         if(StringUtils.isBlank(accountId) || event == null || courseIds == null || courseIds.length == 0) {
             throw new IllegalArgumentException("Must supply account, event, and list of courses");
         }

@@ -1,9 +1,11 @@
 package edu.ksu.canvas.interfaces;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import edu.ksu.canvas.model.Tab;
+import org.apache.hc.core5.http.ParseException;
 
 /**
  * Methods to read information about tabs, which can be applied to courses
@@ -22,5 +24,5 @@ public interface TabReader extends CanvasReader<Tab, TabReader> {
      * @return list of available tabs
      * @throws IOException When there is an error communicating with Canvas
      */
-    List<Tab> listAvailableCourseTabs(String courseId, boolean includeExternalTools) throws IOException;
+    List<Tab> listAvailableCourseTabs(String courseId, boolean includeExternalTools) throws IOException, URISyntaxException, ParseException;
 }

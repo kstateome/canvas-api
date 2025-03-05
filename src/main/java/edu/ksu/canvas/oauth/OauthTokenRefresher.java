@@ -2,18 +2,26 @@ package edu.ksu.canvas.oauth;
 
 import com.google.gson.Gson;
 import edu.ksu.canvas.impl.GsonResponseParser;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
+import org.apache.hc.client5.http.config.ConnectionConfig;
+import org.apache.hc.client5.http.impl.io.BasicHttpClientConnectionManager;
+import org.apache.hc.core5.http.ClassicHttpRequest;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.ClassicHttpResponse;
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
+import org.apache.hc.core5.http.ParseException;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.http.io.support.ClassicRequestBuilder;
+import org.apache.hc.core5.net.URIBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.URI;
+import java.util.concurrent.TimeUnit;
 
 public class OauthTokenRefresher implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -31,22 +39,24 @@ public class OauthTokenRefresher implements Serializable {
         this.canvasUrl = canvasUrl;
     }
 
-    public TokenRefreshResponse getNewToken(String refreshToken) throws IOException {
+    public TokenRefreshResponse getNewToken(String refreshToken) throws IOException, ParseException {
         LOG.debug("Getting a fresh OAuth access token");
-        RequestConfig config = RequestConfig.custom()
-                .setConnectTimeout(TIMEOUT_SECONDS*1000)
-                .setSocketTimeout(TIMEOUT_SECONDS*1000)
-                .build();
+        ConnectionConfig connConfig = ConnectionConfig.custom()
+            .setConnectTimeout(TIMEOUT_SECONDS*1000, TimeUnit.MILLISECONDS)
+            .setSocketTimeout(TIMEOUT_SECONDS*1000, TimeUnit.MILLISECONDS)
+            .build();
+        BasicHttpClientConnectionManager cm = new BasicHttpClientConnectionManager();
+        cm.setConnectionConfig(connConfig);
         CloseableHttpClient httpClient = HttpClientBuilder.create()
-                .setDefaultRequestConfig(config)
+                .setConnectionManager(cm)
                 .build();
 
-        String url = canvasUrl + "/login/oauth2/token?grant_type=refresh_token&client_id=" + clientId + "&client_secret=" + clientSecret + "&refresh_token=" + refreshToken;
-        HttpPost postRequest = new HttpPost(url);
+        String url = (canvasUrl + "/login/oauth2/token?grant_type=refresh_token&client_id=" + clientId + "&client_secret=" + clientSecret + "&refresh_token=" + refreshToken);
+        ClassicHttpRequest postRequest = new HttpPost(url);
 
         try {
-            HttpResponse httpResponse = httpClient.execute(postRequest);
-            int statusCode = httpResponse.getStatusLine().getStatusCode();
+            ClassicHttpResponse httpResponse = httpClient.execute(postRequest);
+            int statusCode = httpResponse.getCode();
             if (statusCode == 401) {
                 LOG.error("Unauthorized refresh token request. Wrong client_id or secret?");
                 return null;
@@ -65,7 +75,6 @@ public class OauthTokenRefresher implements Serializable {
             Gson gson = GsonResponseParser.getDefaultGsonParser(false);
             return gson.fromJson(responseBody, TokenRefreshResponse.class);
         } finally {
-            postRequest.releaseConnection();
             httpClient.close();
         }
     }

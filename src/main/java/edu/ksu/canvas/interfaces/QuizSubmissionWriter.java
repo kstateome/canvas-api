@@ -3,8 +3,10 @@ package edu.ksu.canvas.interfaces;
 import edu.ksu.canvas.model.assignment.QuizSubmission;
 import edu.ksu.canvas.requestOptions.CompleteQuizSubmissionOptions;
 import edu.ksu.canvas.requestOptions.StartQuizSubmissionOptions;
+import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 public interface QuizSubmissionWriter extends CanvasWriter<QuizSubmission, QuizSubmissionWriter> {
@@ -15,7 +17,7 @@ public interface QuizSubmissionWriter extends CanvasWriter<QuizSubmission, QuizS
      * @return The quiz submission object created by Canvas
      * @throws IOException If there is an error talking to Canvas
      */
-    Optional<QuizSubmission> startQuizSubmission(StartQuizSubmissionOptions options)throws IOException;
+    Optional<QuizSubmission> startQuizSubmission(StartQuizSubmissionOptions options)throws IOException, URISyntaxException, ParseException;
 
     /**
      * Finish a quiz submission. This turns it in and grades it. After this call, no further modifications are allowed.
@@ -23,5 +25,5 @@ public interface QuizSubmissionWriter extends CanvasWriter<QuizSubmission, QuizS
      * @return The quiz submission object returned by Canvas
      * @throws IOException If there is an error talking to Canvas
      */
-    Optional<QuizSubmission> completeQuizSubmission(CompleteQuizSubmissionOptions options) throws IOException;
+    Optional<QuizSubmission> completeQuizSubmission(CompleteQuizSubmissionOptions options) throws IOException, URISyntaxException, ParseException;
 }

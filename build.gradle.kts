@@ -21,7 +21,7 @@ repositories {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(21)
         vendor = JvmVendorSpec.ADOPTIUM
 
         withJavadocJar()
@@ -57,10 +57,10 @@ dependencies {
     implementation(libs.guava)
     implementation(libs.slf4j.api)
     implementation(libs.slf4j.simple)
-    implementation(libs.httpclient)
-    implementation(libs.httpmime)
+    implementation(libs.httpclient5)
     testImplementation(libs.junit.jupiter)
-    testImplementation(libs.httpclient) { artifact { classifier = "tests" } }
+    testImplementation(libs.httpclient5)
+    testImplementation(libs.httpclient5.testing)
     testImplementation(libs.spring.beans)
     testImplementation(libs.spring.context)
     testImplementation(libs.spring.test)

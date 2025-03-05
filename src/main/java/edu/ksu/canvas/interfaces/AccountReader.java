@@ -3,8 +3,10 @@ package edu.ksu.canvas.interfaces;
 import edu.ksu.canvas.model.Account;
 import edu.ksu.canvas.requestOptions.GetSubAccountsOptions;
 import edu.ksu.canvas.requestOptions.ListAccountOptions;
+import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +21,7 @@ public interface AccountReader extends CanvasReader<Account, AccountReader> {
      * @return The requested account from Canvas
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<Account> getSingleAccount(String accountId) throws IOException;
+    Optional<Account> getSingleAccount(String accountId) throws IOException, URISyntaxException, ParseException;
 
     /**
      * Return a list of accounts that the current user can view or manage.
@@ -27,7 +29,7 @@ public interface AccountReader extends CanvasReader<Account, AccountReader> {
      * @return List of accounts
      * @throws IOException When there is an error communicating with Canvas
      */
-    List<Account> listAccounts(ListAccountOptions options) throws IOException;
+    List<Account> listAccounts(ListAccountOptions options) throws IOException, URISyntaxException, ParseException;
 
     /**
      * Return a list of sub-accounts to the given account
@@ -35,12 +37,12 @@ public interface AccountReader extends CanvasReader<Account, AccountReader> {
      * @return List of sub-accounts
      * @throws IOException When there is an error communicating with Canvas
      */
-    List<Account> getSubAccounts(GetSubAccountsOptions options) throws IOException;
+    List<Account> getSubAccounts(GetSubAccountsOptions options) throws IOException, URISyntaxException, ParseException;
 
     /**
      * List accounts that the current user can view through their admin course enrollments
      * @return List of accounts
      * @throws IOException When there is an error communicating with Canvas
      */
-    List<Account> listAccountsForCourseAdmins() throws IOException;
+    List<Account> listAccountsForCourseAdmins() throws IOException, URISyntaxException, ParseException;
 }

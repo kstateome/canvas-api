@@ -2,8 +2,10 @@ package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.EnrollmentTerm;
 import edu.ksu.canvas.requestOptions.GetEnrollmentTermOptions;
+import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +17,7 @@ public interface EnrollmentTermReader  extends CanvasReader<EnrollmentTerm, Enro
      * @return the list of enrollment terms for that account
      * @throws IOException When there is an error communicating with Canvas
      */
-    List<EnrollmentTerm> getEnrollmentTerms(GetEnrollmentTermOptions options) throws IOException;
+    List<EnrollmentTerm> getEnrollmentTerms(GetEnrollmentTermOptions options) throws IOException, URISyntaxException, ParseException;
 
     /**
      * Get a single enrollment term.
@@ -24,6 +26,6 @@ public interface EnrollmentTermReader  extends CanvasReader<EnrollmentTerm, Enro
      * @return an Optional EnrollmentTerm for the ID.
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<EnrollmentTerm> getEnrollmentTerm(String accountId, String termId) throws IOException;
+    Optional<EnrollmentTerm> getEnrollmentTerm(String accountId, String termId) throws IOException, URISyntaxException, ParseException;
 
 }

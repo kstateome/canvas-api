@@ -8,11 +8,13 @@ import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.CreateSisImportOptions;
+import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +30,7 @@ public class SisImportImpl extends BaseImpl<SisImport, SisImportReader, SisImpor
     }
 
     @Override
-    public  Optional<SisImport> getSisImport(String accountId, Long id) throws IOException {
+    public  Optional<SisImport> getSisImport(String accountId, Long id) throws IOException, URISyntaxException, ParseException {
         LOG.debug("getting sis import");
         String url = buildCanvasUrl("accounts/" + accountId + "/sis_imports/" + id.toString(), Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
@@ -36,7 +38,7 @@ public class SisImportImpl extends BaseImpl<SisImport, SisImportReader, SisImpor
     }
 
     @Override
-    public Optional<SisImport> createSisImport(CreateSisImportOptions options) throws IOException {
+    public Optional<SisImport> createSisImport(CreateSisImportOptions options) throws IOException, URISyntaxException, ParseException {
         LOG.debug("creating sis import");
         String url = buildCanvasUrl("accounts/" + options.getAccountId() + "/sis_imports", Collections.emptyMap());
         Response response = canvasMessenger.sendFileToCanvas(oauthToken, url, options.getOptionsMap(), CreateSisImportOptions.ATTACHMENT, options.getFilePath(), options.getInputStream());

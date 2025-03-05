@@ -8,11 +8,13 @@ import edu.ksu.canvas.model.CourseSettings;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
+import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +29,7 @@ public class CourseSettingsImpl extends BaseImpl<CourseSettings, CourseSettingsR
     }
 
     @Override
-    public Optional<CourseSettings> getCourseSettings(String courseId) throws IOException {
+    public Optional<CourseSettings> getCourseSettings(String courseId) throws IOException, URISyntaxException, ParseException {
         LOG.debug("getting course settings for {}", courseId);
         String url = buildCanvasUrl(String.format("courses/%s/settings", courseId), Collections.emptyMap());
         Response response =  canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
@@ -35,7 +37,7 @@ public class CourseSettingsImpl extends BaseImpl<CourseSettings, CourseSettingsR
     }
 
     @Override
-    public Optional<CourseSettings> updateCourseSettings(String courseId, CourseSettings settings) throws IOException {
+    public Optional<CourseSettings> updateCourseSettings(String courseId, CourseSettings settings) throws IOException, URISyntaxException, ParseException {
         LOG.debug("updating course settings for {}", courseId);
         String url = buildCanvasUrl(String.format("courses/%s/settings", courseId), Collections.emptyMap());
         Response response = canvasMessenger.putToCanvas(oauthToken, url, settings.toPostMap(serializeNulls));

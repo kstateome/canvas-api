@@ -1,5 +1,6 @@
 package edu.ksu.canvas.oauth;
 
+import org.apache.hc.core5.http.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -128,7 +129,7 @@ class RefreshableTokenUTest {
             this.timeDelta = timeDelta;
         }
 
-        RefreshableOauthTokenForTests(OauthTokenRefresher tokenRefresher, String refreshToken, long timeDelta) {
+        RefreshableOauthTokenForTests(OauthTokenRefresher tokenRefresher, String refreshToken, long timeDelta) throws ParseException {
             super(tokenRefresher, refreshToken);
             this.timeDelta = timeDelta;
         }

@@ -2,11 +2,13 @@ package edu.ksu.canvas.impl;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +32,7 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
     }
 
     @Override
-    public Optional<Page> getCoursePage(String courseId, String pageUrl) throws IOException {
+    public Optional<Page> getCoursePage(String courseId, String pageUrl) throws IOException, URISyntaxException, ParseException {
         LOG.debug("retrieving page {} for course {}", pageUrl, courseId);
         String encodedUrl = URLEncoder.encode(pageUrl, CanvasConstants.URLENCODING_TYPE);
         String url = buildCanvasUrl("courses/" + courseId + "/pages/" + encodedUrl, Collections.emptyMap());
@@ -39,7 +41,7 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
     }
 
     @Override
-    public Optional<Page> getGroupPage(String groupId, String pageUrl) throws IOException {
+    public Optional<Page> getGroupPage(String groupId, String pageUrl) throws IOException, URISyntaxException, ParseException {
         LOG.debug("retrieving page {} for group {}", pageUrl, groupId);
         String encodedUrl = URLEncoder.encode(pageUrl, CanvasConstants.URLENCODING_TYPE);
         String url = buildCanvasUrl("groups/" + groupId + "/pages/" + encodedUrl, Collections.emptyMap());
@@ -48,7 +50,7 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
     }
 
     @Override
-    public Optional<Page> updateCoursePage(Page page, String courseId) throws IOException {
+    public Optional<Page> updateCoursePage(Page page, String courseId) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Updating page in course {}", courseId);
         String encodedUrl = URLEncoder.encode(page.getUrl(), CanvasConstants.URLENCODING_TYPE);
         String url = buildCanvasUrl("courses/" + courseId + "/pages/" + encodedUrl, Collections.emptyMap());
@@ -57,14 +59,14 @@ public class PageImpl extends BaseImpl<Page, PageReader, PageWriter> implements 
     }
 
     @Override
-    public List<Page> listPagesInCourse(String courseId) throws IOException {
+    public List<Page> listPagesInCourse(String courseId) throws IOException, URISyntaxException, ParseException {
         LOG.debug("fetching all pages for course {}", courseId);
         String url = buildCanvasUrl("courses/" + courseId + "/pages", Collections.emptyMap());
         return getListFromCanvas(url);
     }
 
     @Override
-    public List<Page> listPagesInGroup(String groupId) throws IOException {
+    public List<Page> listPagesInGroup(String groupId) throws IOException, URISyntaxException, ParseException {
         LOG.debug("fetching all pages for group {}", groupId);
         String url = buildCanvasUrl("groups/" + groupId + "/pages", Collections.emptyMap());
         return getListFromCanvas(url);

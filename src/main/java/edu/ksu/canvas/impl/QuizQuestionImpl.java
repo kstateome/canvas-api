@@ -9,11 +9,13 @@ import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.GetQuizQuestionsOptions;
 
+import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class QuizQuestionImpl extends BaseImpl<QuizQuestion, QuizQuestionReader,
     }
 
     @Override
-    public List<QuizQuestion> getQuizQuestions(GetQuizQuestionsOptions options) throws IOException {
+    public List<QuizQuestion> getQuizQuestions(GetQuizQuestionsOptions options) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Fetching quiz questions for quiz {} in course {}", options.getQuizId(), options.getCourseId());
         String url = buildCanvasUrl("courses/" + options.getCourseId() + "/quizzes/" + options.getQuizId() + "/questions",
                 options.getOptionsMap());
@@ -35,7 +37,7 @@ public class QuizQuestionImpl extends BaseImpl<QuizQuestion, QuizQuestionReader,
     }
 
     @Override
-    public boolean deleteQuizQuestion(String courseId, Long quizId, Long questionId) throws IOException {
+    public boolean deleteQuizQuestion(String courseId, Long quizId, Long questionId) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Deleting quiz question in course {}, quiz {}, question {}", courseId, quizId, questionId);
         String url = buildCanvasUrl("courses/" + courseId + "/quizzes/" + quizId + "/questions/" + questionId, Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, Collections.emptyMap());

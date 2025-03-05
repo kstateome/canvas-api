@@ -11,8 +11,11 @@ import edu.ksu.canvas.oauth.OauthToken;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.Optional;
+
+import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,14 +30,14 @@ public class ProgressImpl extends BaseImpl<Progress, ProgressReader, ProgressWri
     }
 
     @Override
-    public Optional<Progress> getProgress(String url) throws IOException {
+    public Optional<Progress> getProgress(String url) throws IOException, URISyntaxException, ParseException {
         LOG.debug("getting the progress of an asynchronous API operation with url {}", url);
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(Progress.class, response);
     }
 
     @Override
-    public Optional<Progress> getProgress(Long progressId) throws IOException {
+    public Optional<Progress> getProgress(Long progressId) throws IOException, URISyntaxException, ParseException {
         LOG.debug("getting the progress of an asynchronous operation by ID: {}", progressId);
         String url = buildCanvasUrl(String.format("progress/%d", progressId), Collections.emptyMap());
         return responseParser.parseToObject(Progress.class, canvasMessenger.getSingleResponseFromCanvas(oauthToken, url));

@@ -11,11 +11,13 @@ import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.ListExternalToolsOptions;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -31,16 +33,16 @@ public class ExternalToolImpl extends BaseImpl<ExternalTool, ExternalToolReader,
     }
 
     @Override
-    public Optional<ExternalTool> getExternalToolInCourse(String courseId, Long toolId) throws IOException {
+    public Optional<ExternalTool> getExternalToolInCourse(String courseId, Long toolId) throws IOException, URISyntaxException, ParseException {
         return getExternalTool("courses", courseId, toolId);
     }
 
     @Override
-    public Optional<ExternalTool> getExternalToolInAccount(String accountId, Long toolId) throws IOException {
+    public Optional<ExternalTool> getExternalToolInAccount(String accountId, Long toolId) throws IOException, URISyntaxException, ParseException {
         return getExternalTool("accounts", accountId, toolId);
     }
 
-    private Optional<ExternalTool> getExternalTool(String objectType, String objectId, Long toolId) throws IOException {
+    private Optional<ExternalTool> getExternalTool(String objectType, String objectId, Long toolId) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Getting external tool {} from {} {}", toolId, objectType, objectId);
         if(StringUtils.isBlank(objectId) || toolId == null) {
             throw new IllegalArgumentException("course/account ID and tool ID cannot be blank");
@@ -50,41 +52,41 @@ public class ExternalToolImpl extends BaseImpl<ExternalTool, ExternalToolReader,
     }
 
     @Override
-    public List<ExternalTool> listExternalToolsInAccount(ListExternalToolsOptions options) throws IOException {
+    public List<ExternalTool> listExternalToolsInAccount(ListExternalToolsOptions options) throws IOException, URISyntaxException, ParseException {
         return listExternalTools("accounts", options.getId(), options.getOptionsMap());
     }
 
     @Override
-    public List<ExternalTool> listExternalToolsInCourse(ListExternalToolsOptions options) throws IOException {
+    public List<ExternalTool> listExternalToolsInCourse(ListExternalToolsOptions options) throws IOException, URISyntaxException, ParseException {
         return listExternalTools("courses", options.getId(), options.getOptionsMap());
     }
 
     @Override
-    public List<ExternalTool> listExternalToolsInGroup(ListExternalToolsOptions options) throws IOException {
+    public List<ExternalTool> listExternalToolsInGroup(ListExternalToolsOptions options) throws IOException, URISyntaxException, ParseException {
         return listExternalTools("groups", options.getId(), options.getOptionsMap());
     }
 
-    private List<ExternalTool> listExternalTools(String objectType, String objectId, Map<String, List<String>> optionsMap) throws IOException {
+    private List<ExternalTool> listExternalTools(String objectType, String objectId, Map<String, List<String>> optionsMap) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Getting list of external tools from {}: {}", objectType, objectId);
         String url = buildCanvasUrl(objectType + "/" + objectId + "/external_tools", optionsMap);
         return getListFromCanvas(url);
     }
 
     @Override
-    public Optional<ExternalTool> createExternalToolInCourse(String courseId, ExternalTool tool) throws IOException {
+    public Optional<ExternalTool> createExternalToolInCourse(String courseId, ExternalTool tool) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Creating external tool \"{}\" in course {}", tool.getName(), courseId);
         String url = buildCanvasUrl("courses/" + courseId + "/external_tools", Collections.emptyMap());
         return createExternalTool(url, tool);
     }
 
     @Override
-    public Optional<ExternalTool> createExternalToolInAccount(String accountId, ExternalTool tool) throws IOException {
+    public Optional<ExternalTool> createExternalToolInAccount(String accountId, ExternalTool tool) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Creating external tool \"{} \" in account {}", tool.getName(), accountId);
         String url = buildCanvasUrl("accounts/" + accountId + "/external_tools", Collections.emptyMap());
         return createExternalTool(url, tool);
     }
 
-    private Optional<ExternalTool> createExternalTool(String url, ExternalTool tool) throws IOException {
+    private Optional<ExternalTool> createExternalTool(String url, ExternalTool tool) throws IOException, URISyntaxException, ParseException {
         ensureToolValidForCreation(tool);
         Gson gson = GsonResponseParser.getDefaultGsonParser(serializeNulls);
         JsonObject toolJson = gson.toJsonTree(tool).getAsJsonObject();
@@ -93,20 +95,20 @@ public class ExternalToolImpl extends BaseImpl<ExternalTool, ExternalToolReader,
     }
 
     @Override
-    public Optional<ExternalTool> editExternalToolInCourse(String courseId, ExternalTool tool) throws IOException {
+    public Optional<ExternalTool> editExternalToolInCourse(String courseId, ExternalTool tool) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Editing external tool \"{}\" in course {}", tool.getName(), courseId);
         String url = buildCanvasUrl("courses/" + courseId + "/external_tools/" + tool.getId(), Collections.emptyMap());
         return editExternalTool(url, tool);
     }
 
     @Override
-    public Optional<ExternalTool> editExternalToolInAccount(String accountId, ExternalTool tool) throws IOException {
+    public Optional<ExternalTool> editExternalToolInAccount(String accountId, ExternalTool tool) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Editing external tool \"{}\" in course {}", tool.getName(), accountId);
         String url = buildCanvasUrl("accounts/" + accountId + "/external_tools/" + tool.getId(), Collections.emptyMap());
         return editExternalTool(url, tool);
     }
 
-    private Optional<ExternalTool> editExternalTool(String url, ExternalTool tool) throws IOException {
+    private Optional<ExternalTool> editExternalTool(String url, ExternalTool tool) throws IOException, URISyntaxException, ParseException {
         if(tool.getId() == null) {
             throw new IllegalArgumentException("Tool being edited must have a tool ID");
         }
@@ -116,14 +118,14 @@ public class ExternalToolImpl extends BaseImpl<ExternalTool, ExternalToolReader,
         return responseParser.parseToObject(ExternalTool.class, response);
     }
 
-    public Optional<ExternalTool> deleteExternalToolInCourse(String courseId, Long toolId) throws IOException {
+    public Optional<ExternalTool> deleteExternalToolInCourse(String courseId, Long toolId) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Deleting external tool {} from course {}", toolId, courseId);
         String url = buildCanvasUrl("courses/" + courseId + "/external_tools/" + toolId, Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, Collections.emptyMap());
         return responseParser.parseToObject(ExternalTool.class, response);
     }
 
-    public Optional<ExternalTool> deleteExternalToolInAccount(String accountId, Long toolId) throws IOException {
+    public Optional<ExternalTool> deleteExternalToolInAccount(String accountId, Long toolId) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Deleting external tool {} from account {}", toolId, accountId);
         String url = buildCanvasUrl("accounts/" + accountId + "/external_tools/" + toolId, Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, Collections.emptyMap());

@@ -8,11 +8,13 @@ import edu.ksu.canvas.net.FakeRestClient;
 import edu.ksu.canvas.requestOptions.ListCurrentUserCoursesOptions;
 import edu.ksu.canvas.requestOptions.ListUserCoursesOptions;
 
+import org.apache.hc.core5.http.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,7 +36,7 @@ class CourseListingUTest extends CanvasTestBase {
     }
 
     @Test
-    void testGettingCoursesForCurrentUser() throws IOException {
+    void testGettingCoursesForCurrentUser() throws IOException, URISyntaxException, ParseException {
         String url = baseUrl + "/api/v1/courses";
         fakeRestClient.addSuccessResponse(url, "SampleJson/course/UserCourseListResponse.json");
         List<Course> userCourses = courseReader.listCurrentUserCourses(new ListCurrentUserCoursesOptions());
@@ -42,7 +44,7 @@ class CourseListingUTest extends CanvasTestBase {
     }
 
     @Test
-    void testGettingCoursesForUser() throws IOException {
+    void testGettingCoursesForUser() throws IOException, URISyntaxException, ParseException {
         String url = baseUrl + "/api/v1/users/" + ARBITRARY_USER_ID + "/courses";
         fakeRestClient.addSuccessResponse(url, "SampleJson/course/UserCourseListResponse.json");
         ListUserCoursesOptions listUserCoursesOptions = new ListUserCoursesOptions(ARBITRARY_USER_ID);
@@ -54,7 +56,7 @@ class CourseListingUTest extends CanvasTestBase {
     }
 
     @Test
-    void testGettingCoursesForUserUsingSisLoginId() throws IOException {
+    void testGettingCoursesForUserUsingSisLoginId() throws IOException, URISyntaxException, ParseException {
         String url = baseUrl + "/api/v1/users/sis_login_id:" + ARBITRARY_LOGIN_ID + "/courses";
         fakeRestClient.addSuccessResponse(url, "SampleJson/course/UserCourseListResponse.json");
         ListUserCoursesOptions listUserCoursesOptions = new ListUserCoursesOptions("sis_login_id:" + ARBITRARY_LOGIN_ID);

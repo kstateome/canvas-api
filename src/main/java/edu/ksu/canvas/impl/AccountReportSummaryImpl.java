@@ -7,11 +7,13 @@ import edu.ksu.canvas.model.report.AccountReportSummary;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 
+import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class AccountReportSummaryImpl extends BaseImpl<AccountReportSummary, Acc
     }
 
     @Override
-    public List<AccountReportSummary> listAvailableReports(String accountId) throws IOException {
+    public List<AccountReportSummary> listAvailableReports(String accountId) throws IOException, URISyntaxException, ParseException {
         LOG.debug("Retrieving available reports for account {}", accountId);
         String url = buildCanvasUrl("accounts/" + accountId + "/reports", Collections.emptyMap());
 

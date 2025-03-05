@@ -1,9 +1,11 @@
 package edu.ksu.canvas.interfaces;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 import edu.ksu.canvas.model.assignment.Quiz;
+import org.apache.hc.core5.http.ParseException;
 
 public interface QuizWriter extends CanvasWriter<Quiz, QuizWriter> {
     /**
@@ -13,5 +15,5 @@ public interface QuizWriter extends CanvasWriter<Quiz, QuizWriter> {
      * @return The updated Quiz object
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<Quiz> updateQuiz(Quiz quiz, String courseId) throws IOException;
+    Optional<Quiz> updateQuiz(Quiz quiz, String courseId) throws IOException, URISyntaxException, ParseException;
 }

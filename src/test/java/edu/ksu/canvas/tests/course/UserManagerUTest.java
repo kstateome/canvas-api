@@ -6,11 +6,13 @@ import edu.ksu.canvas.impl.UserImpl;
 import edu.ksu.canvas.interfaces.UserWriter;
 import edu.ksu.canvas.model.User;
 import edu.ksu.canvas.net.FakeRestClient;
+import org.apache.hc.core5.http.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,7 +30,7 @@ class UserManagerUTest extends CanvasTestBase {
     }
 
     @Test
-    void testCreateUser() throws IOException {
+    void testCreateUser() throws IOException, URISyntaxException, ParseException {
         User user = new User();
         user.setName("somestring4");
         user.setLoginId("somestring4");
@@ -47,7 +49,7 @@ class UserManagerUTest extends CanvasTestBase {
     }
 
     @Test
-    void testSisUserMasqueradeCreateUser() throws IOException {
+    void testSisUserMasqueradeCreateUser() throws IOException, URISyntaxException, ParseException {
         User user = new User();
         String userId = "899123456";
         user.setName("somestring4");
@@ -60,7 +62,7 @@ class UserManagerUTest extends CanvasTestBase {
         assertNotNull(response.get().getId());
     }
     @Test
-    void testCanvasUserMasqueradeCreateUser() throws IOException {
+    void testCanvasUserMasqueradeCreateUser() throws IOException, URISyntaxException, ParseException {
         User user = new User();
         String userId = "899123456";
         user.setName("somestring4");

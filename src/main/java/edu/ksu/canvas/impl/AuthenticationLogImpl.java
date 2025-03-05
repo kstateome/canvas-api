@@ -7,11 +7,13 @@ import edu.ksu.canvas.model.AuthenticationLog;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
+import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -27,21 +29,21 @@ public class AuthenticationLogImpl extends BaseImpl<AuthenticationLog, Authentic
     }
 
     @Override
-    public Optional<AuthenticationLog> getAuthenticationLogForAccount(String accountId) throws IOException {
+    public Optional<AuthenticationLog> getAuthenticationLogForAccount(String accountId) throws IOException, URISyntaxException, ParseException {
         String url = buildCanvasUrl("/audit/authentication/accounts/" + accountId, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(AuthenticationLog.class, response);
     }
 
     @Override
-    public Optional<AuthenticationLog> getAuthenticationLogForLogin(String loginId) throws IOException {
+    public Optional<AuthenticationLog> getAuthenticationLogForLogin(String loginId) throws IOException, URISyntaxException, ParseException {
         String url = buildCanvasUrl("/audit/authentication/logins/" + loginId, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(AuthenticationLog.class, response);
     }
 
     @Override
-    public Optional<AuthenticationLog> getAuthenticationLogForUser(String userId) throws IOException {
+    public Optional<AuthenticationLog> getAuthenticationLogForUser(String userId) throws IOException, URISyntaxException, ParseException {
         String url = buildCanvasUrl("/audit/authentication/users/" + userId, Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(AuthenticationLog.class, response);

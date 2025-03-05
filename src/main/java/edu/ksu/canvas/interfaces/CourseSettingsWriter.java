@@ -1,8 +1,10 @@
 package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.CourseSettings;
+import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 public interface CourseSettingsWriter extends CanvasWriter<CourseSettings, CourseSettingsWriter> {
@@ -16,5 +18,5 @@ public interface CourseSettingsWriter extends CanvasWriter<CourseSettings, Cours
      * @return The updated course settings
      * @throws IOException When there is an error communicating with Canvas
      */
-    Optional<CourseSettings> updateCourseSettings(String courseId, CourseSettings settings) throws IOException;
+    Optional<CourseSettings> updateCourseSettings(String courseId, CourseSettings settings) throws IOException, URISyntaxException, ParseException;
 }
