@@ -1,6 +1,8 @@
 package edu.ksu.canvas.interfaces;
 
 
+import edu.ksu.canvas.impl.BaseImpl;
+
 import java.util.List;
 import java.util.function.Consumer;
 

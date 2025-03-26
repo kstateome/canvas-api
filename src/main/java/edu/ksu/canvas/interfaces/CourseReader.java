@@ -24,7 +24,7 @@ public interface CourseReader extends CanvasReader<Course, CourseReader> {
      List<Course> listCurrentUserCourses(ListCurrentUserCoursesOptions options) throws IOException;
 
     /**
-     * Returns the list of active courses for the a user
+     * Returns the list of active courses for the user
      * @param options The object holding options for this API call
      * @return List of courses for the user matching any optional criteria
      * @throws IOException When there is an error communicating with Canvas
