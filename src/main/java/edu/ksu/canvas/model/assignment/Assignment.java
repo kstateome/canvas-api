@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Class to represent Canvas assigmnents.
+ * Class to represent Canvas assignments.
  * See <a href="https://canvas.instructure.com/doc/api/assignments.html#Assignment">Canvas assignment</a> documentation.
  */
 @CanvasObject(postKey = "assignment")
