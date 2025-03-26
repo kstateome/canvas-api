@@ -31,7 +31,7 @@ public class GetEnrollmentOptions extends BaseOptions {
     }
 
     public enum EnrollmentState {
-        ACTIVE, INVITED, CREATION_PENDING, DELETED, REJECTED, COMPLETED, INACTIVE, ALL;
+        ACTIVE, INVITED, CREATION_PENDING, CURRENT_AND_CONCLUDED, DELETED, REJECTED, COMPLETED, INACTIVE, CURRENT_AND_INVITED, CURRENT_AND_FUTURE, CURRENT_FUTURE_AND_RESTRICTED, ALL;
 
         @Override
         public String toString() {
