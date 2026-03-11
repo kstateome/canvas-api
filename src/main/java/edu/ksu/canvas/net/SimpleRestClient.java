@@ -343,7 +343,7 @@ public class SimpleRestClient implements RestClient {
             LOG.error("User is not authorized to perform this action");
             throw new UnauthorizedException();
         }
-        if(statusCode == 403) {
+        if(statusCode == 429) {
             LOG.error("Canvas has throttled this request. Requested URL: " + uri);
             throw new ThrottlingException(extractErrorMessageFromResponse(httpResponse), String.valueOf(uri));
         }

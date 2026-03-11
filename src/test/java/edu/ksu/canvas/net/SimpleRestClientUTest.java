@@ -50,10 +50,10 @@ public class SimpleRestClientUTest extends LocalServerTestBase {
     }
 
     @Test
-    void http403ThrottlingThrowsException() throws Exception {
+    void http429ThrottlingThrowsException() throws Exception {
         String url = "/throttledUrl";
         //Using blank JSON because I haven't been able to observe this error so I don't know what payload it returns
-        registerUrlResponse(url, "/SampleJson/BlankResponse.json", 403, Collections.emptyMap());
+        registerUrlResponse(url, "/SampleJson/BlankResponse.json", 429, Collections.emptyMap());
 
         assertThrows(ThrottlingException.class, () -> {
             restClient.sendApiGet(emptyAdminToken, baseUrl + url, 100, 100);
