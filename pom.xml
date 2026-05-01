@@ -59,6 +59,7 @@
     <maven-source-plugin.release.version>2.4</maven-source-plugin.release.version>
     <maven-javadoc-plugin.release.version>2.10.4</maven-javadoc-plugin.release.version>
     <nexus-staging-maven-plugin.version>1.7.0</nexus-staging-maven-plugin.version>
+    <error_prone_annotations.version>2.48.0</error_prone_annotations.version>
   </properties>
 
   <developers>
@@ -175,6 +176,11 @@
         <version>${jacoco.version}</version>
         <classifier>runtime</classifier>
       </dependency>
+      <dependency>
+        <groupId>com.google.errorprone</groupId>
+        <artifactId>error_prone_annotations</artifactId>
+        <version>${error_prone_annotations.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -185,6 +191,19 @@
           <groupId>org.owasp</groupId>
           <artifactId>dependency-check-maven</artifactId>
           <version>${dependency-check-maven.version}</version>
+          <configuration>
+            <enableNodeAudit>true</enableNodeAudit>
+            <failBuildOnCVSS>8</failBuildOnCVSS>
+            <nvdApiKey>${nvd.api.key}</nvdApiKey>
+            <ossIndexAnalyzerEnabled>false</ossIndexAnalyzerEnabled>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -231,6 +250,7 @@
                   <requireMavenVersion>
                     <version>(3.9,)</version>
                   </requireMavenVersion>
+                  <dependencyConvergence/>
                 </rules>
               </configuration>
             </execution>
