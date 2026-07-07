@@ -1,14 +1,14 @@
 package edu.ksu.canvas.errors;
 
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpResponse;
+import org.apache.hc.core5.http.ClassicHttpRequest;
+import org.apache.hc.core5.http.ClassicHttpResponse;
 
 /**
  * This allows additional specific behaviour for handling errors.
  */
 public interface ErrorHandler {
 
-    boolean shouldHandle(HttpRequest httpRequest, HttpResponse httpResponse);
+    boolean shouldHandle(ClassicHttpRequest httpRequest, ClassicHttpResponse httpResponse);
 
-    void handle(HttpRequest httpRequest, HttpResponse httpResponse);
+    void handle(ClassicHttpRequest httpRequest, ClassicHttpResponse httpResponse);
 }

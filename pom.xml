@@ -32,11 +32,10 @@
     <commons-lang3.version>3.20.0</commons-lang3.version>
     <guava.version>33.6.0-jre</guava.version>
     <slf4j.version>2.0.17</slf4j.version>
-    <httpclient.version>4.5.14</httpclient.version>
-    <httpclient.tests.version>4.5.14</httpclient.tests.version>
-    <httpmime.version>4.5.14</httpmime.version>
+    <httpclient5.version>5.6.2</httpclient5.version>
+    <httpcore5.version>5.4.2</httpcore5.version>
     <junit.version>4.13.2</junit.version>
-    <spring.version>6.2.18</spring.version>
+    <spring.version>6.2.19</spring.version>
     <mockito.version>5.23.0</mockito.version>
     <jacoco.version>0.8.14</jacoco.version>
 
@@ -125,20 +124,19 @@
         <version>${slf4j.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.apache.httpcomponents</groupId>
-        <artifactId>httpclient</artifactId>
-        <version>${httpclient.version}</version>
+        <groupId>org.apache.httpcomponents.client5</groupId>
+        <artifactId>httpclient5</artifactId>
+        <version>${httpclient5.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.apache.httpcomponents</groupId>
-        <artifactId>httpmime</artifactId>
-        <version>${httpmime.version}</version>
+        <groupId>org.apache.httpcomponents.core5</groupId>
+        <artifactId>httpcore5</artifactId>
+        <version>${httpcore5.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.apache.httpcomponents</groupId>
-        <artifactId>httpclient</artifactId>
-        <version>${httpclient.tests.version}</version>
-        <classifier>tests</classifier>
+        <groupId>org.apache.httpcomponents.core5</groupId>
+        <artifactId>httpcore5-testing</artifactId>
+        <version>${httpcore5.version}</version>
       </dependency>
       <dependency>
         <groupId>junit</groupId>
@@ -532,19 +530,18 @@
       <optional>true</optional>
     </dependency>
     <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
+      <groupId>org.apache.httpcomponents.client5</groupId>
+      <artifactId>httpclient5</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpmime</artifactId>
+      <groupId>org.apache.httpcomponents.core5</groupId>
+      <artifactId>httpcore5</artifactId>
     </dependency>
 
     <!-- Everything below is for testing -->
     <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
-      <classifier>tests</classifier>
+      <groupId>org.apache.httpcomponents.core5</groupId>
+      <artifactId>httpcore5-testing</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>

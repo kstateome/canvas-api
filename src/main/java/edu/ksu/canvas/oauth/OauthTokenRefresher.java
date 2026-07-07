@@ -2,13 +2,14 @@ package edu.ksu.canvas.oauth;
 
 import com.google.gson.Gson;
 import edu.ksu.canvas.impl.GsonResponseParser;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.ClassicHttpResponse;
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.util.Timeout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,10 +35,10 @@ public class OauthTokenRefresher implements Serializable {
     public TokenRefreshResponse getNewToken(String refreshToken) throws IOException {
         LOG.debug("Getting a fresh OAuth access token");
         RequestConfig config = RequestConfig.custom()
-                .setConnectTimeout(TIMEOUT_SECONDS*1000)
-                .setSocketTimeout(TIMEOUT_SECONDS*1000)
+                .setConnectTimeout(Timeout.ofSeconds(TIMEOUT_SECONDS))
+                .setResponseTimeout(Timeout.ofSeconds(TIMEOUT_SECONDS))
                 .build();
-        CloseableHttpClient httpClient = HttpClientBuilder.create()
+        CloseableHttpClient httpClient = HttpClients.custom()
                 .setDefaultRequestConfig(config)
                 .build();
 
@@ -45,8 +46,8 @@ public class OauthTokenRefresher implements Serializable {
         HttpPost postRequest = new HttpPost(url);
 
         try {
-            HttpResponse httpResponse = httpClient.execute(postRequest);
-            int statusCode = httpResponse.getStatusLine().getStatusCode();
+            ClassicHttpResponse httpResponse = httpClient.execute(postRequest);
+            int statusCode = httpResponse.getCode();
             if (statusCode == 401) {
                 LOG.error("Unauthorized refresh token request. Wrong client_id or secret?");
                 return null;
@@ -55,17 +56,27 @@ public class OauthTokenRefresher implements Serializable {
                 LOG.error("Non-200 status code ( " + statusCode + " )returned while requesting an access token at URL " + url);
                 HttpEntity errorEntity = httpResponse.getEntity();
                 if (errorEntity != null) {
-                    String errorBody = EntityUtils.toString(errorEntity);
-                    LOG.error("Response from Canvas: " + errorBody);
+                    try {
+                        String errorBody = EntityUtils.toString(errorEntity);
+                        LOG.error("Response from Canvas: " + errorBody);
+                    } catch (org.apache.hc.core5.http.ParseException e) {
+                        LOG.error("Failed to parse error response body", e);
+                    }
                 }
                 return null;
             }
             HttpEntity entity = httpResponse.getEntity();
-            String responseBody = EntityUtils.toString(entity);
-            Gson gson = GsonResponseParser.getDefaultGsonParser(false);
-            return gson.fromJson(responseBody, TokenRefreshResponse.class);
+            try {
+                String responseBody = EntityUtils.toString(entity);
+                Gson gson = GsonResponseParser.getDefaultGsonParser(false);
+                return gson.fromJson(responseBody, TokenRefreshResponse.class);
+            } catch (org.apache.hc.core5.http.ParseException e) {
+                throw new IOException("Failed to parse token response", e);
+            }
+        } catch (IOException e) {
+            throw e;
         } finally {
-            postRequest.releaseConnection();
+            postRequest.reset();
             httpClient.close();
         }
     }
