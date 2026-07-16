@@ -1,7 +1,7 @@
 @Library('jenkins-shared-libs') _
 def config = [ appName: 'canvas-api',
-               podName: 'java-11-maven-3.5.2.yaml',
-               containerName: 'jdk-11-maven',
+               podName: 'java-21-maven-3.9.9.yaml',
+               containerName: 'jdk-21-maven',
                runUnitTests: true,
                runIntegrationTests: false,
                runSonar: true
