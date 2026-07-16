@@ -5,7 +5,7 @@ import edu.ksu.canvas.errors.UserErrorResponse;
 import edu.ksu.canvas.exception.*;
 import edu.ksu.canvas.oauth.NonRefreshableOauthToken;
 import edu.ksu.canvas.oauth.OauthToken;
-import org.apache.http.HttpHeaders;
+import org.apache.hc.core5.http.HttpHeaders;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
