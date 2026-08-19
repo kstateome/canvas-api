@@ -63,11 +63,13 @@
         <groupId>org.owasp</groupId>
         <artifactId>dependency-check-maven</artifactId>
         <version>12.2.0</version>
-        <inherited>false</inherited>
         <configuration>
+          <!-- <failBuildOnCVSS>8</failBuildOnCVSS> -->
+          <nvdApiKey>${nvd.api.key}</nvdApiKey>
           <ossIndexServerId>ossindex</ossIndexServerId>
           <scanPlugins>true</scanPlugins>
         </configuration>
+        <inherited>false</inherited>
         <executions>
           <execution>
             <id>aggregate-check</id>
