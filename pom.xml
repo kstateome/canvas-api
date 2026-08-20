@@ -62,7 +62,24 @@
       <plugin>
         <groupId>org.owasp</groupId>
         <artifactId>dependency-check-maven</artifactId>
-        <version>6.1.5</version>
+        <version>12.2.0</version>
+        <configuration>
+          <!-- <failBuildOnCVSS>8</failBuildOnCVSS> -->
+          <nvdApiKey>${nvd.api.key}</nvdApiKey>
+          <ossIndexServerId>ossindex</ossIndexServerId>
+          <scanPlugins>false</scanPlugins>
+          <autoUpdate>true</autoUpdate>
+        </configuration>
+        <inherited>false</inherited>
+        <executions>
+          <execution>
+            <id>aggregate-check</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>aggregate</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -98,7 +115,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.0.0-M3</version>
+        <version>3.6.3</version>
         <executions>
           <execution>
             <id>enforce-maven</id>
@@ -431,7 +448,11 @@
       <plugin>
         <groupId>org.owasp</groupId>
         <artifactId>dependency-check-maven</artifactId>
-        <version>6.1.5</version>
+        <version>12.2.0</version>
+        <configuration>
+          <ossIndexServerId>ossindex</ossIndexServerId>
+          <scanPlugins>false</scanPlugins>
+        </configuration>
         <reportSets>
           <reportSet>
             <id>aggregate</id>
