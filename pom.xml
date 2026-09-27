@@ -44,12 +44,12 @@
 
   <distributionManagement>
     <repository>
-      <id>ome-appdev-release</id>
-      <url>https://artifactory.ome.k-state.edu/artifactory/ome-appdev-release</url>
+      <id>appdev-release</id>
+      <url>https://artifactory.its.ksu.edu/artifactory/appdev-release</url>
     </repository>
     <snapshotRepository>
-      <id>ome-appdev-snapshot</id>
-      <url>https://artifactory.ome.k-state.edu/artifactory/ome-appdev-snapshot</url>
+      <id>appdev-snapshot</id>
+      <url>https://artifactory.its.ksu.edu/artifactory/appdev-snapshot</url>
     </snapshotRepository>
     <site>
       <id>canvas-api-site</id>
