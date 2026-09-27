@@ -2,8 +2,8 @@ package edu.ksu.canvas;
 
 import edu.ksu.canvas.impl.*;
 import edu.ksu.canvas.interfaces.*;
-import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.net.RefreshingRestClient;
+import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -188,6 +188,9 @@ public class CanvasApiFactory {
         readerMap.put(FeatureFlagReader.class, FeatureFlagImpl.class);
         readerMap.put(RubricReader.class, RubricImpl.class);
 
+        readerMap.put(DiscussionTopicReader.class, DiscussionTopicImpl.class);
+        readerMap.put(AnnouncementReader.class, AnnouncementImpl.class);
+
         writerMap.put(AccountWriter.class, AccountImpl.class);
         writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImpl.class);
         writerMap.put(AdminWriter.class, AdminImpl.class);
@@ -220,5 +223,8 @@ public class CanvasApiFactory {
         writerMap.put(CommunicationChannelWriter.class, CommunicationChannelImpl.class);
         writerMap.put(FeatureFlagWriter.class, FeatureFlagImpl.class);
         writerMap.put(RubricWriter.class, RubricImpl.class);
+
+        writerMap.put(DiscussionTopicWriter.class, DiscussionTopicImpl.class);
+        writerMap.put(AnnouncementWriter.class, AnnouncementImpl.class);
     }
 }
